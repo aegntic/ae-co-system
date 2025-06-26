@@ -356,3 +356,7 @@ test-isolated/
 .turbo/
 generated/
 .generated/
+
+# Nested git repositories (we'll handle these separately)
+**/.git/
+!.git/
