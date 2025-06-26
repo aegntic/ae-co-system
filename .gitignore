@@ -1,0 +1,358 @@
+# ae-co-system .gitignore
+# Comprehensive gitignore for multi-language ecosystem
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.cert
+credentials.json
+.credentials
+secrets/
+.secrets/
+*.secret
+
+# Dependencies
+node_modules/
+*/node_modules/
+**/node_modules/
+.venv/
+*/.venv/
+**/.venv/
+venv/
+*/venv/
+**/venv/
+*_env/
+__pycache__/
+*/__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+.Python
+
+# Package manager files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnpm-store/
+
+# Build outputs
+dist/
+*/dist/
+**/dist/
+build/
+*/build/
+**/build/
+out/
+*/out/
+**/out/
+target/
+*/target/
+**/target/
+.next/
+*/.next/
+**/.next/
+.nuxt/
+.vuepress/dist/
+*.egg-info/
+.eggs/
+*.egg
+develop-eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+MANIFEST
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+logs/
+*.log
+
+# Testing
+coverage/
+*/coverage/
+*.lcov
+.nyc_output/
+.pytest_cache/
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-*
+.netrwhist
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+.directory
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+.tmp/
+.temp/
+
+# Cache directories
+.cache/
+*/.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+.tsc-cache/
+.turbo/
+.nx/cache/
+
+# TypeScript
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# Rust
+Cargo.lock
+**/Cargo.lock
+**/*.rs.bk
+*.rs.bk
+
+# Python specific
+*.so
+develop-eggs/
+downloads/
+.installed.cfg
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
+.pdm.toml
+__pypackages__/
+uv.lock
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Deployment artifacts
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
+.netlify
+.vercel
+.deployment/secrets/
+.deployment/**/*.env
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# AI Model files (large binaries)
+*.ckpt
+*.safetensors
+*.bin
+*.pth
+*.onnx
+*.h5
+*.pb
+*.tflite
+*.pkl
+*.joblib
+*.model
+
+# Large media files
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.wmv
+*.flv
+*.m4v
+
+# ComfyUI specific
+ComfyUI/models/checkpoints/
+ComfyUI/models/clip/
+ComfyUI/models/vae/
+ComfyUI/models/loras/
+ComfyUI/output/
+ComfyUI/input/
+ComfyUI/temp/
+ComfyUI/user/
+
+# DAILYDOCO specific
+DAILYDOCO/.deployment/scripts/*.env
+DAILYDOCO/.deployment/configs/production.*
+DAILYDOCO/.deployment/secrets/
+DAILYDOCO/temp-repos/
+DAILYDOCO/test-isolated/
+DAILYDOCO/.turbo/
+
+# 4site specific  
+4site/deployment/secrets/
+4site/*/secrets/
+4site/**/.env
+4site/**/dist/
+4site/**/node_modules/
+
+# MCP server data
+mcp-servers/*/data/
+aegntic-MCP/data/
+aegntic-MCP/logs/
+
+# ae-startup specific (large extracted images)
+ae-startup/ai_docs/extracted_images/
+
+# Tauri specific
+src-tauri/target/
+src-tauri/WixTools/
+
+# Electron
+electron-dist/
+electron-builder-cache/
+
+# Lock files (DO NOT IGNORE - needed for reproducible builds)
+!package-lock.json
+!yarn.lock
+!pnpm-lock.yaml
+!bun.lock
+!Cargo.lock
+!uv.lock
+!poetry.lock
+
+# Allow specific files
+!.gitignore
+!.gitkeep
+!.env.example
+!.env.template
+
+# Nx specific
+.nx/cache/
+.nx/workspace-data/
+
+# Monorepo specific
+lerna-debug.log
+packages/*/lib
+packages/*/dist
+
+# Firebase
+**/serviceAccountKey.json
+**/.firebaserc
+**/firebase-debug.log
+
+# Jetbrains
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# macOS
+.AppleDouble
+.LSOverride
+Icon
+.DocumentRevisions-V100
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.Trash-*
+.nfs*
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+*.original
+
+# Archives (optional - uncomment if needed)
+# *.zip
+# *.tar.gz
+# *.rar
+# *.7z
+
+# Certificates and keys
+*.pem
+*.key
+*.crt
+*.csr
+*.der
+*.p7b
+*.p12
+*.pfx
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Optional - Project specific ignores
+temp-repos/
+test-isolated/
+.turbo/
+generated/
+.generated/
