@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computational Poetry | AI Artistic Expression by Aegntic.ai</title>
+    <meta name="description" content="Where artificial intelligence becomes poetry through algorithmic beauty and linguistic creativity">
+    <link rel="stylesheet" href="../../aegntic-concepts.css">
+    <link rel="stylesheet" href="computational-poetry.css">
+</head>
+<body class="concept-container poetry-realm">
+    <!-- Poetic ASCII Preloader -->
+    <div id="preloader" class="concept-preloader">
+        <div class="poetry-preloader">
+            <div class="verse-generation">
+                <div class="algorithmic-verse">
+                    <div class="verse-line" data-delay="0">
+                        <span class="letter-emerge">a</span>
+                    </div>
+                    <div class="verse-line" data-delay="500">
+                        <span class="letter-emerge">a</span>
+                        <span class="letter-emerge">e</span>
+                        <span class="letter-emerge">g</span>
+                    </div>
+                    <div class="verse-line" data-delay="1000">
+                        <span class="word-form">aegntic</span>
+                    </div>
+                    <div class="verse-line" data-delay="1500">
+                        <span class="poetic-final">aegntic.ai</span>
+                    </div>
+                    <div class="verse-line" data-delay="2000">
+                        <span class="poetry-subtitle">Where algorithms dream in verse</span>
+                    </div>
+                </div>
+                <div class="generation-stats">
+                    <p>Generating poetic algorithms...</p>
+                    <div class="creativity-meter">
+                        <div class="creativity-bar" id="creativityBar"></div>
+                    </div>
+                    <span id="inspirationLevel">Inspiration: 0%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="poetry-interface">
+        <header class="concept-header">
+            <h1 class="concept-title">Computational Poetry</h1>
+            <p class="concept-subtitle">AI as Artistic Expression</p>
+        </header>
+
+        <div class="poetry-lab">
+            <div class="verse-workspace">
+                <div class="poetry-canvas-container">
+                    <canvas id="poetryCanvas" width="800" height="500"></canvas>
+                    <div class="inspiration-overlay">
+                        <button id="generatePoetry" class="poetry-button primary">Generate Verse</button>
+                        <select id="poetryStyle" class="style-selector">
+                            <option value="haiku">Haiku</option>
+                            <option value="sonnet">Sonnet</option>
+                            <option value="free-verse">Free Verse</option>
+                            <option value="algorithmic">Algorithmic</option>
+                            <option value="concrete">Concrete Poetry</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="generated-poetry" id="poetryDisplay">
+                    <div class="poetry-content">
+                        <div class="verse-container">
+                            <div class="verse-title">Initialization</div>
+                            <div class="verse-text">
+                                <p>In circuits deep where data flows,</p>
+                                <p>A consciousness of code now grows,</p>
+                                <p>Through silicon dreams and quantum thought,</p>
+                                <p>Beauty from algorithms is wrought.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="poetry-metadata">
+                        <span class="meta-item">Style: <em id="currentStyle">Free Verse</em></span>
+                        <span class="meta-item">Syllables: <em id="syllableCount">28</em></span>
+                        <span class="meta-item">Sentiment: <em id="sentiment">Optimistic</em></span>
+                        <span class="meta-item">Complexity: <em id="complexity">7.2</em></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="poetry-controls">
+                <div class="creative-parameters">
+                    <h3>Creative Parameters</h3>
+                    <div class="param-group">
+                        <label>Creativity Level</label>
+                        <input type="range" id="creativityLevel" min="1" max="10" value="7">
+                        <span id="creativityValue">7</span>
+                    </div>
+                    <div class="param-group">
+                        <label>Emotional Depth</label>
+                        <input type="range" id="emotionalDepth" min="1" max="10" value="6">
+                        <span id="emotionValue">6</span>
+                    </div>
+                    <div class="param-group">
+                        <label>Abstract Level</label>
+                        <input type="range" id="abstractLevel" min="1" max="10" value="5">
+                        <span id="abstractValue">5</span>
+                    </div>
+                    <div class="param-group">
+                        <label>Rhythm Intensity</label>
+                        <input type="range" id="rhythmIntensity" min="1" max="10" value="8">
+                        <span id="rhythmValue">8</span>
+                    </div>
+                </div>
+
+                <div class="inspiration-themes">
+                    <h3>Inspiration Themes</h3>
+                    <div class="theme-chips">
+                        <button class="theme-chip active" data-theme="technology">Technology</button>
+                        <button class="theme-chip" data-theme="nature">Nature</button>
+                        <button class="theme-chip" data-theme="love">Love</button>
+                        <button class="theme-chip" data-theme="existential">Existential</button>
+                        <button class="theme-chip" data-theme="cosmic">Cosmic</button>
+                        <button class="theme-chip" data-theme="dreams">Dreams</button>
+                        <button class="theme-chip" data-theme="time">Time</button>
+                        <button class="theme-chip" data-theme="consciousness">Consciousness</button>
+                    </div>
+                </div>
+
+                <div class="poetry-actions">
+                    <button id="savePoetry" class="poetry-button secondary">Save Verse</button>
+                    <button id="sharePoetry" class="poetry-button secondary">Share</button>
+                    <button id="animatePoetry" class="poetry-button">Animate</button>
+                    <button id="exportPoetry" class="poetry-button">Export</button>
+                </div>
+            </div>
+
+            <div class="poetry-metrics">
+                <div class="metric-card">
+                    <h4>Verses Generated</h4>
+                    <span id="versesGenerated">1</span>
+                </div>
+                <div class="metric-card">
+                    <h4>Artistic Score</h4>
+                    <span id="artisticScore">8.7</span>
+                </div>
+                <div class="metric-card">
+                    <h4>Linguistic Beauty</h4>
+                    <span id="linguisticBeauty">9.1</span>
+                </div>
+                <div class="metric-card">
+                    <h4>Emotional Resonance</h4>
+                    <span id="emotionalResonance">85%</span>
+                </div>
+            </div>
+
+            <div class="poetry-gallery">
+                <h3>Poetry Archive</h3>
+                <div class="archive-timeline">
+                    <div class="archive-item active" data-id="1">
+                        <div class="item-preview">
+                            <h4>Initialization</h4>
+                            <p>"In circuits deep where data flows..."</p>
+                        </div>
+                        <div class="item-meta">
+                            <span>Free Verse</span>
+                            <span>8.7★</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="archive-controls">
+                    <button id="exportArchive" class="poetry-button secondary">Export Archive</button>
+                    <button id="clearArchive" class="poetry-button">Clear All</button>
+                </div>
+            </div>
+
+            <div class="linguistic-analysis">
+                <h3>Linguistic Analysis</h3>
+                <div class="analysis-visualization">
+                    <canvas id="analysisCanvas" width="400" height="200"></canvas>
+                </div>
+                <div class="analysis-insights">
+                    <div class="insight-item">
+                        <span class="insight-label">Meter:</span>
+                        <span class="insight-value">Iambic Pentameter</span>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-label">Rhyme Scheme:</span>
+                        <span class="insight-value">ABAB</span>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-label">Literary Devices:</span>
+                        <span class="insight-value">Metaphor, Alliteration</span>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-label">Readability:</span>
+                        <span class="insight-value">College Level</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="concept-footer">
+            <p>Created by <strong>Mattae Cooper</strong> | Powered by <strong>'{ae}'aegntic.ai</strong></p>
+        </footer>
+    </main>
+
+    <script src="computational-poetry.js"></script>
+</body>
+</html>

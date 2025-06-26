@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  web-dashboard:
+    build:
+      context: ./apps/web-dashboard
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    networks:
+      - dailydoco
+
+  api-server:
+    build:
+      context: ./apps/api-server
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=development
+    networks:
+      - dailydoco
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=dailydoco
+      - POSTGRES_USER=dailydoco
+      - POSTGRES_PASSWORD=dailydoco
+    ports:
+      - "5432:5432"
+    networks:
+      - dailydoco
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - dailydoco
+
+networks:
+  dailydoco:
+    driver: bridge
+
+volumes:
+  postgres_data:

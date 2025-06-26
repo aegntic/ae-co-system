@@ -1,0 +1,114 @@
+{
+  "gmail_account": "aegntic@gmail.com",
+  "domains": [
+    {
+      "domain": "prompt.fail",
+      "email": "claube@prompt.fail",
+      "name": "Claude Prompt"
+    },
+    {
+      "domain": "4site.pro",
+      "email": "contact@4site.pro",
+      "name": "4Site Projects"
+    },
+    {
+      "domain": "aegntic.com",
+      "email": "info@aegntic.com",
+      "name": "Aegntic Info"
+    }
+  ],
+  "filters": [
+    {
+      "criteria": {
+        "to": "claube@prompt.fail",
+        "from": "*@prompt.fail"
+      },
+      "action": {
+        "addLabelIds": [
+          "domain-prompt.fail"
+        ],
+        "markAsRead": false,
+        "archive": false
+      }
+    },
+    {
+      "criteria": {
+        "to": "contact@4site.pro",
+        "from": "*@4site.pro"
+      },
+      "action": {
+        "addLabelIds": [
+          "domain-4site.pro"
+        ],
+        "markAsRead": false,
+        "archive": false
+      }
+    },
+    {
+      "criteria": {
+        "to": "info@aegntic.com",
+        "from": "*@aegntic.com"
+      },
+      "action": {
+        "addLabelIds": [
+          "domain-aegntic.com"
+        ],
+        "markAsRead": false,
+        "archive": false
+      }
+    }
+  ],
+  "send_as": [
+    {
+      "sendAsEmail": "claube@prompt.fail",
+      "displayName": "Claude Prompt",
+      "signature": "Best regards,<br>Claude Prompt<br>claube@prompt.fail",
+      "isDefault": false,
+      "replyToAddress": "claube@prompt.fail",
+      "smtpMsa": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "aegntic@gmail.com",
+        "password": "AEp@ssWrd11:11",
+        "securityMode": "starttls"
+      }
+    },
+    {
+      "sendAsEmail": "contact@4site.pro",
+      "displayName": "4Site Projects",
+      "signature": "Best regards,<br>4Site Projects<br>contact@4site.pro",
+      "isDefault": false,
+      "replyToAddress": "contact@4site.pro",
+      "smtpMsa": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "aegntic@gmail.com",
+        "password": "AEp@ssWrd11:11",
+        "securityMode": "starttls"
+      }
+    },
+    {
+      "sendAsEmail": "info@aegntic.com",
+      "displayName": "Aegntic Info",
+      "signature": "Best regards,<br>Aegntic Info<br>info@aegntic.com",
+      "isDefault": false,
+      "replyToAddress": "info@aegntic.com",
+      "smtpMsa": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "aegntic@gmail.com",
+        "password": "AEp@ssWrd11:11",
+        "securityMode": "starttls"
+      }
+    }
+  ],
+  "instructions": [
+    "1. Log into Gmail with credentials provided",
+    "2. Go to Settings > Filters and Blocked Addresses",
+    "3. Create filters for each domain to organize incoming mail",
+    "4. Go to Settings > Accounts and Import",
+    "5. Add each Send As address with SMTP authentication",
+    "6. Verify ownership of each email address",
+    "7. Set reply-to addresses to match sending domain"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "data": {
+    "timestamp": "2025-05-05T04:24:41.675Z",
+    "config": {
+      "taskFile": "tasks.json",
+      "memoryEnabled": true,
+      "memoryPath": "/home/tabs/E2E-AUTO-MICRO-APPS/.memory",
+      "defaultPriority": "medium",
+      "defaultSubtasks": 5,
+      "model": "anthropic/claude-3-haiku-20240307"
+    }
+  },
+  "metadata": {
+    "timestamp": "2025-05-05T04:24:41.675Z",
+    "category": "system",
+    "key": "taskmaster_config"
+  }
+}

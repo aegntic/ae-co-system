@@ -1,0 +1,160 @@
+{
+  "name": "DailyDoco Demo Video Generator",
+  "version": "1.0.0",
+  "description": "Automated demo video generation workflow using June 2025 SOTA tech",
+  "nodes": [
+    {
+      "id": "script_generator",
+      "type": "DeepSeekR1_TextGeneration",
+      "inputs": {
+        "prompt": "Create a compelling 90-second script for DailyDoco Pro that showcases: 1) The problem of manual documentation, 2) How our AI watches and documents automatically, 3) The amazing results teams achieve. Include specific features and benefits. Make it energetic and developer-focused.",
+        "model": "deepseek-r1-0528",
+        "temperature": 0.7,
+        "max_tokens": 1000
+      },
+      "outputs": ["script_text"]
+    },
+    {
+      "id": "scene_planner",
+      "type": "SceneBreakdown",
+      "inputs": {
+        "script": "{script_generator.script_text}",
+        "target_duration": 90,
+        "scenes_per_minute": 8
+      },
+      "outputs": ["scene_list", "timing_markers"]
+    },
+    {
+      "id": "visual_generator",
+      "type": "Flux1_ImageGeneration",
+      "inputs": {
+        "scenes": "{scene_planner.scene_list}",
+        "model": "flux-schnell",
+        "style": "modern tech product demo, clean UI, dark theme with gradients",
+        "resolution": "1920x1080",
+        "batch_mode": true
+      },
+      "outputs": ["scene_images"]
+    },
+    {
+      "id": "ui_screenshots",
+      "type": "DynamicScreenCapture",
+      "inputs": {
+        "urls": [
+          "http://localhost:5173",
+          "http://localhost:5173/dashboard"
+        ],
+        "interactions": [
+          {"action": "scroll", "target": "body", "amount": 500},
+          {"action": "click", "target": ".cta-button"},
+          {"action": "hover", "target": ".feature-card"}
+        ],
+        "capture_mode": "video",
+        "fps": 60
+      },
+      "outputs": ["ui_recordings"]
+    },
+    {
+      "id": "code_animation",
+      "type": "MotionCanvas_Animation",
+      "inputs": {
+        "script": "{script_generator.script_text}",
+        "code_snippets": [
+          "// Your code gets documented automatically\nfunction calculateRevenue(users) {\n  // AI understands your logic\n  return users * PRICE_PER_USER;\n}",
+          "// Git commit triggers documentation\ngit commit -m 'feat: add payment processing'\n// DailyDoco creates video tutorial instantly"
+        ],
+        "animation_style": "typewriter_with_highlights",
+        "syntax_theme": "monokai"
+      },
+      "outputs": ["code_animations"]
+    },
+    {
+      "id": "voice_synthesis",
+      "type": "ChatterboxTTS",
+      "inputs": {
+        "text": "{script_generator.script_text}",
+        "voice": "professional_male_energetic",
+        "emotion_control": {
+          "excitement": 0.7,
+          "confidence": 0.9,
+          "warmth": 0.6
+        },
+        "speed": 1.1,
+        "technical_pronunciation": true
+      },
+      "outputs": ["narration_audio"]
+    },
+    {
+      "id": "background_music",
+      "type": "AudioLibrary",
+      "inputs": {
+        "style": "upbeat_tech_corporate",
+        "duration": 90,
+        "fade_in": 2,
+        "fade_out": 3,
+        "volume": 0.3
+      },
+      "outputs": ["background_track"]
+    },
+    {
+      "id": "video_compositor",
+      "type": "ComfyUI_VideoComposition",
+      "inputs": {
+        "scenes": "{visual_generator.scene_images}",
+        "ui_footage": "{ui_screenshots.ui_recordings}",
+        "code_overlays": "{code_animation.code_animations}",
+        "timing": "{scene_planner.timing_markers}",
+        "transitions": "smooth_morph",
+        "effects": [
+          "ken_burns_zoom",
+          "particle_effects",
+          "gradient_overlays"
+        ]
+      },
+      "outputs": ["video_track"]
+    },
+    {
+      "id": "final_export",
+      "type": "FFmpeg_Export",
+      "inputs": {
+        "video": "{video_compositor.video_track}",
+        "audio": [
+          "{voice_synthesis.narration_audio}",
+          "{background_music.background_track}"
+        ],
+        "format": "mp4",
+        "codec": "h264",
+        "bitrate": "8M",
+        "resolution": "1920x1080",
+        "fps": 60,
+        "audio_codec": "aac",
+        "audio_bitrate": "192k"
+      },
+      "outputs": ["final_video"]
+    },
+    {
+      "id": "quality_check",
+      "type": "AI_VideoQualityAssurance",
+      "inputs": {
+        "video": "{final_export.final_video}",
+        "checks": [
+          "audio_sync",
+          "visual_artifacts",
+          "pacing_analysis",
+          "engagement_prediction"
+        ],
+        "target_audience": "developers"
+      },
+      "outputs": ["quality_report", "optimization_suggestions"]
+    }
+  ],
+  "workflow_settings": {
+    "parallel_processing": true,
+    "gpu_acceleration": true,
+    "cache_intermediates": true,
+    "auto_retry_on_failure": true,
+    "max_retries": 3,
+    "estimated_time": "90-120 seconds",
+    "cost_estimate": "$0.02"
+  }
+}

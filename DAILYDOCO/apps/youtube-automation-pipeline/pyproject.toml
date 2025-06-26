@@ -1,0 +1,118 @@
+[project]
+name = "youtube-automation-pipeline"
+version = "1.0.0"
+description = "DailyDoco Pro YouTube Automation Pipeline - Scale to 1000 videos/day"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+    {name = "DailyDoco Pro Team", email = "team@dailydoco.pro"}
+]
+dependencies = [
+    # Core Framework
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "celery[redis]>=5.3.0",
+    "redis>=5.0.0",
+    
+    # Database & Storage
+    "sqlalchemy>=2.0.0",
+    "alembic>=1.12.0",
+    "asyncpg>=0.29.0",
+    "neo4j>=5.15.0",
+    
+    # YouTube & Media Processing
+    "google-api-python-client>=2.100.0",
+    "google-auth-oauthlib>=1.0.0",
+    "yt-dlp>=2023.10.13",
+    "ffmpeg-python>=0.2.0",
+    "pillow>=10.0.0",
+    "opencv-python>=4.8.0",
+    
+    # AI & ML
+    "openai>=1.3.0",
+    "anthropic>=0.8.0",
+    "requests>=2.31.0",
+    "numpy>=1.25.0",
+    "torch>=2.1.0",
+    "transformers>=4.35.0",
+    "sentence-transformers>=2.2.0",
+    
+    # Authentication & Security  
+    "pydantic>=2.4.0",
+    "pydantic-settings>=2.0.0",
+    "cryptography>=41.0.0",
+    "python-multipart>=0.0.6",
+    "python-jose[cryptography]>=3.3.0",
+    
+    # Monitoring & Logging
+    "structlog>=23.2.0",
+    "prometheus-client>=0.19.0",
+    "sentry-sdk[fastapi]>=1.38.0",
+    
+    # Utils
+    "httpx>=0.25.0",
+    "aiofiles>=23.2.1",
+    "python-dotenv>=1.0.0",
+    "typer>=0.9.0",
+    "rich>=13.6.0",
+    "tqdm>=4.66.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.11.0",
+    "ruff>=0.1.0",
+    "mypy>=1.6.0",
+    "black>=23.9.0",
+    "pre-commit>=3.4.0"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+select = ["E", "F", "I", "N", "W", "UP"]
+fixable = ["ALL"]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.per-file-ignores]
+"tests/**/*.py" = ["S101"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers --strict-config"
+testpaths = ["tests"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m "not slow"')",
+    "integration: marks tests as integration tests",
+    "gpu: marks tests that require GPU"
+]
+
+[tool.coverage.run]
+source = ["youtube_automation_pipeline"]
+omit = ["tests/*", "scripts/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError"
+]
+
+[project.scripts]
+youtube-pipeline = "youtube_automation_pipeline.cli:main"
+youtube-worker = "youtube_automation_pipeline.workers.main:worker_main"
+youtube-scheduler = "youtube_automation_pipeline.services.scheduler:scheduler_main"

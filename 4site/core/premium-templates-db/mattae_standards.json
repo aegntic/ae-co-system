@@ -1,0 +1,47 @@
+{
+  "quality_criteria": {
+    "mandatory_features": [
+      "WebGL", "GSAP", "Three.js", "Custom Cursors", 
+      "Smooth Scroll", "WebSocket", "Lenis", "SplitType"
+    ],
+    "approved_design_styles": [
+      "Glassmorphism",
+      "Neo-Brutalism", 
+      "Minimalist Luxury",
+      "Tech Minimalism",
+      "Futuristic",
+      "Organic Design",
+      "Liquid Metal",
+      "Quantum Interface",
+      "Dimensional Layers"
+    ],
+    "minimum_requirements": {
+      "price": 50,
+      "performance_score": 90,
+      "components": 50,
+      "animations": true,
+      "responsive": true,
+      "accessibility": "WCAG AA"
+    },
+    "bonus_points": [
+      "Award winning",
+      "Limited edition",
+      "Exclusive license",
+      "Custom shader support",
+      "AI integration",
+      "Blockchain ready",
+      "Motion design system"
+    ]
+  },
+  "rejection_triggers": [
+    "Bootstrap",
+    "jQuery",
+    "Template Monster generic",
+    "Outdated design",
+    "Poor performance",
+    "No animations",
+    "Static only",
+    "WordPress themes"
+  ],
+  "curator_notes": "Only templates that push boundaries. If it doesn't make other designers jealous, it's not good enough. Open Tabs ∞ ensures only the best make the cut."
+}

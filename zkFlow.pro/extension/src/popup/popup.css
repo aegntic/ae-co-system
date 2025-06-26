@@ -1,0 +1,412 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 380px;
+  min-height: 500px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f8f9fa;
+  color: #1a1a1a;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 500px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+}
+
+h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.tab-buttons {
+  display: flex;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 12px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.tab-button:hover {
+  color: #333;
+}
+
+.tab-button.active {
+  color: #5b4cdb;
+}
+
+.tab-button.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #5b4cdb;
+}
+
+.tab-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.tab-panel {
+  display: none;
+  height: 100%;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+.search-box {
+  padding: 16px 20px;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+#search-flows {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+#search-flows:focus {
+  outline: none;
+  border-color: #5b4cdb;
+}
+
+.flows-list {
+  padding: 16px 20px;
+}
+
+.flow-item {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.flow-item:hover {
+  border-color: #5b4cdb;
+  box-shadow: 0 2px 8px rgba(91, 76, 219, 0.1);
+}
+
+.flow-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.flow-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.flow-shortcut {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+.flow-info {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  color: #666;
+}
+
+.flow-url {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flow-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.flow-button {
+  padding: 6px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.flow-button:hover {
+  background: #f8f9fa;
+}
+
+.flow-button.primary {
+  background: #5b4cdb;
+  color: #fff;
+  border-color: #5b4cdb;
+}
+
+.flow-button.primary:hover {
+  background: #4a3bc8;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-icon {
+  width: 64px;
+  height: 64px;
+  color: #ccc;
+  margin-bottom: 16px;
+}
+
+.empty-state p {
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.hint {
+  font-size: 13px;
+  color: #999;
+}
+
+.record-section {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.record-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.status-icon {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #4caf50;
+}
+
+.status-icon.recording {
+  background: #f44336;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.status-text {
+  font-size: 14px;
+  color: #666;
+}
+
+.record-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  background: #5b4cdb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.record-button:hover {
+  background: #4a3bc8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(91, 76, 219, 0.3);
+}
+
+.record-button.recording {
+  background: #f44336;
+}
+
+.record-button.recording:hover {
+  background: #d32f2f;
+}
+
+.record-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.recording-info {
+  margin-top: 32px;
+}
+
+.info-text {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.actions-count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.count {
+  font-size: 32px;
+  font-weight: 600;
+  color: #5b4cdb;
+}
+
+.label {
+  font-size: 13px;
+  color: #666;
+}
+
+.flow-name-input {
+  margin-top: 32px;
+}
+
+#flow-name {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+#flow-name:focus {
+  outline: none;
+  border-color: #5b4cdb;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.primary-button,
+.secondary-button {
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.primary-button {
+  background: #5b4cdb;
+  color: #fff;
+  border: none;
+}
+
+.primary-button:hover {
+  background: #4a3bc8;
+}
+
+.secondary-button {
+  background: #fff;
+  color: #666;
+  border: 1px solid #e0e0e0;
+}
+
+.secondary-button:hover {
+  background: #f8f9fa;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #fff;
+  border-top: 1px solid #e0e0e0;
+}
+
+.icon-button {
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.icon-button:hover {
+  background: #f0f0f0;
+}
+
+.icon-button svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.5;
+}
+
+.version {
+  font-size: 12px;
+  color: #999;
+}
+
+.hidden {
+  display: none !important;
+}

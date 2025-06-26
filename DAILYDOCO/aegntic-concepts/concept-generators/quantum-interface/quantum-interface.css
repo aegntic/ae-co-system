@@ -1,0 +1,1000 @@
+/*
+ * Quantum Interface - Particle Physics Inspired Morphing UI
+ * Credits: Mattae Cooper <human@mattaecooper.org>, '{ae}'aegntic.ai <contact@aegntic.ai>
+ */
+
+/* Quantum Realm Base */
+.quantum-realm {
+  background: radial-gradient(ellipse at center, #0a0a2e 0%, #16213e 50%, #020617 100%);
+  overflow-x: hidden;
+}
+
+/* Quantum Preloader */
+.quantum-preloader {
+  position: relative;
+  width: 500px;
+  height: 500px;
+}
+
+.particle-formation {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#preloaderCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter: drop-shadow(0 0 30px var(--quantum-superposition));
+}
+
+.loading-text {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-top: 80px;
+}
+
+.loading-text h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 30px var(--quantum-superposition);
+}
+
+.loading-text p {
+  color: var(--neural-100);
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.quantum-progress {
+  width: 350px;
+  height: 6px;
+  background: rgba(255, 107, 107, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 0 auto;
+  position: relative;
+}
+
+.probability-wave {
+  height: 100%;
+  background: var(--gradient-quantum);
+  width: 100%;
+  border-radius: 3px;
+  animation: quantum-wave 3s ease-in-out infinite;
+  transform: translateX(-100%);
+}
+
+@keyframes quantum-wave {
+  0% { 
+    transform: translateX(-100%) scaleX(0.1);
+    filter: blur(2px);
+  }
+  50% { 
+    transform: translateX(0%) scaleX(1);
+    filter: blur(0px);
+  }
+  100% { 
+    transform: translateX(100%) scaleX(0.1);
+    filter: blur(2px);
+  }
+}
+
+/* Particle Field Background */
+.particle-field {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.quantum-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--quantum-superposition);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--quantum-superposition);
+  animation: quantum-drift 15s linear infinite;
+}
+
+@keyframes quantum-drift {
+  0% {
+    transform: translate3d(-10px, 100vh, 0) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translate3d(0px, 90vh, 0) scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: translate3d(0px, 10vh, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(10px, -10vh, 0) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Entanglement Canvas */
+.entanglement-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.6;
+}
+
+/* Quantum Elements */
+.quantum-element {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  transform-style: preserve-3d;
+  transform-origin: center center;
+}
+
+.quantum-element[data-state="superposition"] {
+  animation: superposition-state 3s ease-in-out infinite;
+  filter: blur(0.5px);
+}
+
+.quantum-element[data-state="entangled"] {
+  animation: entanglement-oscillation 2s ease-in-out infinite;
+}
+
+.quantum-element[data-state="collapsed"] {
+  animation: wave-function-collapse 0.8s ease-out forwards;
+}
+
+@keyframes superposition-state {
+  0%, 100% {
+    transform: translateX(0px) translateY(0px) rotateY(0deg);
+    opacity: 0.8;
+    filter: blur(0.5px) hue-rotate(0deg);
+  }
+  25% {
+    transform: translateX(2px) translateY(-1px) rotateY(5deg);
+    opacity: 0.9;
+    filter: blur(0.3px) hue-rotate(90deg);
+  }
+  50% {
+    transform: translateX(0px) translateY(1px) rotateY(0deg);
+    opacity: 0.7;
+    filter: blur(0.8px) hue-rotate(180deg);
+  }
+  75% {
+    transform: translateX(-2px) translateY(-1px) rotateY(-5deg);
+    opacity: 0.9;
+    filter: blur(0.3px) hue-rotate(270deg);
+  }
+}
+
+@keyframes entanglement-oscillation {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 0 10px var(--quantum-entanglement);
+  }
+  50% {
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 0 20px var(--quantum-entanglement), 0 0 30px var(--quantum-collapse);
+  }
+}
+
+@keyframes wave-function-collapse {
+  0% {
+    transform: scale(1) blur(2px);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2) blur(0px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1) blur(0px);
+    opacity: 1;
+  }
+}
+
+.quantum-element:hover {
+  transform: translateZ(10px) rotateY(10deg);
+  filter: drop-shadow(0 10px 20px rgba(255, 107, 107, 0.3));
+}
+
+/* Quantum Interface Layout */
+.quantum-interface {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+}
+
+/* Quantum Header */
+.quantum-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(10, 10, 46, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--quantum-superposition);
+  box-shadow: 0 5px 30px rgba(255, 107, 107, 0.1);
+}
+
+.quantum-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.aegntic-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: var(--gradient-quantum);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.concept-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--neural-100);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: var(--neural-300);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  position: relative;
+  background: rgba(255, 107, 107, 0.05);
+  border: 1px solid transparent;
+}
+
+.nav-link:hover {
+  color: var(--neural-100);
+  background: rgba(255, 107, 107, 0.15);
+  border-color: var(--quantum-superposition);
+  transform: translateY(-2px);
+}
+
+/* Hero Section */
+.hero-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  padding: 10rem 2rem 6rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  align-items: center;
+}
+
+.hero-content {
+  z-index: 2;
+  position: relative;
+}
+
+.hero-title {
+  font-size: 4.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 2rem;
+}
+
+.hero-title .gradient-text {
+  display: block;
+  font-size: 5.5rem;
+  margin-bottom: 0.5rem;
+  background: var(--gradient-quantum);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--quantum-entanglement);
+  opacity: 0.9;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.hero-description {
+  font-size: 1.3rem;
+  line-height: 1.7;
+  color: var(--neural-200);
+  margin-bottom: 3rem;
+  max-width: 520px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.quantum-button {
+  padding: 1.2rem 2.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.quantum-button.primary {
+  background: var(--gradient-quantum);
+  color: white;
+  box-shadow: 0 6px 25px rgba(255, 107, 107, 0.4);
+}
+
+.quantum-button.secondary {
+  background: transparent;
+  color: var(--quantum-entanglement);
+  border: 2px solid var(--quantum-entanglement);
+}
+
+.quantum-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(255, 107, 107, 0.5);
+}
+
+.quantum-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: all 0.6s ease;
+}
+
+.quantum-button:hover::before {
+  left: 100%;
+}
+
+/* Hero Visualization */
+.hero-visualization {
+  position: relative;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantum-field {
+  position: relative;
+  padding: 2rem;
+  background: rgba(10, 10, 46, 0.4);
+  backdrop-filter: blur(15px);
+  border-radius: 1.5rem;
+  border: 1px solid var(--quantum-superposition);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 107, 107, 0.2);
+}
+
+#quantumCanvas {
+  border-radius: 1rem;
+  background: rgba(22, 33, 62, 0.6);
+  border: 1px solid var(--quantum-entanglement);
+}
+
+.quantum-controls {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.control {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(22, 33, 62, 0.7);
+  border-radius: 0.75rem;
+  border: 1px solid var(--quantum-collapse);
+  min-width: 140px;
+}
+
+.control-label {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--neural-100);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.quantum-slider input[type="range"] {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--quantum-collapse);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.quantum-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--gradient-quantum);
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5);
+  border: 2px solid white;
+}
+
+.quantum-slider input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--gradient-quantum);
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5);
+}
+
+.quantum-stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.stat {
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(10, 10, 46, 0.6);
+  border-radius: 1rem;
+  border: 1px solid var(--quantum-entanglement);
+  backdrop-filter: blur(10px);
+  min-width: 140px;
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--quantum-superposition);
+  margin-bottom: 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--neural-300);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Experiments Section */
+.experiments-section {
+  padding: 8rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: rgba(22, 33, 62, 0.1);
+}
+
+.experiments-content {
+  text-align: center;
+}
+
+.section-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  background: var(--gradient-quantum);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-description {
+  font-size: 1.3rem;
+  color: var(--neural-200);
+  margin-bottom: 5rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.experiments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 3rem;
+}
+
+.experiment-card {
+  background: rgba(10, 10, 46, 0.6);
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  border: 1px solid var(--quantum-collapse);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.experiment-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-quantum);
+}
+
+.experiment-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+  border-color: var(--quantum-superposition);
+}
+
+.experiment-card h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--neural-100);
+  margin-bottom: 2rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.experiment-viz {
+  height: 200px;
+  background: rgba(22, 33, 62, 0.8);
+  border-radius: 1rem;
+  border: 1px solid var(--quantum-entanglement);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.experiment-viz canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+}
+
+.experiment-card p {
+  color: var(--neural-300);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.experiment-btn {
+  width: 100%;
+  padding: 1rem;
+  background: var(--gradient-quantum);
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.experiment-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+}
+
+/* Quantum Lab Section */
+.quantum-lab-section {
+  padding: 8rem 2rem;
+  background: rgba(22, 33, 62, 0.2);
+  border-top: 1px solid var(--quantum-entanglement);
+}
+
+.lab-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.lab-interface {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-top: 4rem;
+}
+
+.quantum-circuit-designer,
+.quantum-state-visualizer,
+.quantum-algorithms {
+  background: rgba(10, 10, 46, 0.6);
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  border: 1px solid var(--quantum-collapse);
+  backdrop-filter: blur(15px);
+}
+
+.quantum-circuit-designer h3,
+.quantum-state-visualizer h3,
+.quantum-algorithms h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--neural-100);
+  margin-bottom: 2rem;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.circuit-canvas {
+  background: rgba(22, 33, 62, 0.8);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--quantum-entanglement);
+}
+
+.qubit-register {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.qubit {
+  width: 60px;
+  height: 60px;
+  background: var(--gradient-quantum);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: white;
+  font-family: 'JetBrains Mono', monospace;
+  border: 2px solid white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.qubit:hover {
+  transform: scale(1.1) rotateZ(10deg);
+  box-shadow: 0 8px 20px rgba(255, 107, 107, 0.5);
+}
+
+.gate-palette {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.gate {
+  width: 40px;
+  height: 40px;
+  background: rgba(76, 220, 196, 0.3);
+  border: 2px solid var(--quantum-entanglement);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: var(--quantum-entanglement);
+  font-family: 'JetBrains Mono', monospace;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.gate:hover {
+  background: var(--quantum-entanglement);
+  color: white;
+  transform: scale(1.1);
+}
+
+.circuit-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.bloch-sphere {
+  background: rgba(22, 33, 62, 0.8);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--quantum-entanglement);
+  display: flex;
+  justify-content: center;
+}
+
+.state-vector {
+  background: rgba(22, 33, 62, 0.8);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--quantum-entanglement);
+}
+
+.amplitude {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.coefficient {
+  color: var(--quantum-superposition);
+  font-weight: 600;
+}
+
+.basis-state {
+  color: var(--quantum-entanglement);
+  font-weight: 600;
+}
+
+.algorithm-selector {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.quantum-select {
+  flex: 1;
+  padding: 0.75rem;
+  background: rgba(22, 33, 62, 0.8);
+  border: 1px solid var(--quantum-entanglement);
+  border-radius: 0.5rem;
+  color: var(--neural-100);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.algorithm-visualization {
+  background: rgba(22, 33, 62, 0.8);
+  border-radius: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--quantum-entanglement);
+  display: flex;
+  justify-content: center;
+}
+
+/* Quantum Footer */
+.quantum-footer {
+  background: var(--neural-950);
+  border-top: 1px solid var(--quantum-entanglement);
+  padding: 5rem 2rem 2rem;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 3rem;
+}
+
+.footer-section h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--neural-100);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.footer-section p {
+  color: var(--neural-300);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section li {
+  color: var(--neural-300);
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+  position: relative;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.footer-section li::before {
+  content: '⚛';
+  position: absolute;
+  left: 0;
+  color: var(--quantum-superposition);
+  font-size: 1.2rem;
+}
+
+.footer-section a {
+  color: var(--quantum-entanglement);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: var(--quantum-superposition);
+}
+
+.quantum-measurements {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.measurement {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(10, 10, 46, 0.6);
+  border-radius: 0.75rem;
+  border: 1px solid var(--quantum-entanglement);
+}
+
+.measurement-label {
+  font-weight: 500;
+  color: var(--neural-300);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.measurement-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--quantum-superposition);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 4rem;
+  }
+  
+  .lab-interface {
+    grid-template-columns: 1fr;
+  }
+  
+  .quantum-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+  
+  .hero-title .gradient-text {
+    font-size: 3.5rem;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+  }
+  
+  .quantum-nav {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .nav-links {
+    gap: 1rem;
+  }
+  
+  .hero-section {
+    padding: 7rem 1rem 3rem;
+  }
+  
+  .quantum-stats {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .experiments-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Performance Optimizations */
+#quantumCanvas,
+#preloaderCanvas,
+#entanglementCanvas {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .quantum-element,
+  .quantum-button,
+  .experiment-card {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .probability-wave {
+    animation: none !important;
+  }
+}
+
+/* Quantum State Indicators */
+.quantum-state-indicator {
+  position: fixed;
+  top: 120px;
+  right: 20px;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid var(--quantum-superposition);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  font-size: 0.75rem;
+  color: var(--quantum-superposition);
+  z-index: 1001;
+  font-family: 'JetBrains Mono', monospace;
+  backdrop-filter: blur(10px);
+}
+
+/* Quantum Loading States */
+.quantum-loading {
+  opacity: 0.7;
+  pointer-events: none;
+  filter: blur(1px);
+  animation: quantum-uncertainty 1s ease-in-out infinite;
+}
+
+@keyframes quantum-uncertainty {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 0.4; }
+}

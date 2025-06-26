@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diagnostics</title>
+    <style>
+        body {
+            background: #0d1117;
+            color: #c9d1d9;
+            font-family: monospace;
+            padding: 20px;
+        }
+        pre {
+            background: #161b22;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Project4Site Diagnostics</h1>
+    <div id="output"></div>
+    
+    <script>
+        const output = document.getElementById('output');
+        
+        async function checkEndpoint(url, label) {
+            const div = document.createElement('div');
+            div.innerHTML = `<h3>${label}</h3>`;
+            output.appendChild(div);
+            
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                const pre = document.createElement('pre');
+                pre.textContent = `Status: ${response.status}\nContent-Type: ${response.headers.get('content-type')}\nBody preview: ${text.substring(0, 500)}...`;
+                output.appendChild(pre);
+                
+                // Check for common error patterns
+                if (text.includes('<!DOCTYPE html>') && text.includes('<div id="root"></div>')) {
+                    const info = document.createElement('p');
+                    info.style.color = '#22c55e';
+                    info.textContent = '✓ HTML loaded correctly';
+                    output.appendChild(info);
+                    
+                    // Check if scripts are loading
+                    if (text.includes('type="module"')) {
+                        const scriptInfo = document.createElement('p');
+                        scriptInfo.style.color = '#22c55e';
+                        scriptInfo.textContent = '✓ Module scripts detected';
+                        output.appendChild(scriptInfo);
+                    }
+                }
+                
+                // Check for errors in response
+                if (text.includes('error') || text.includes('Error')) {
+                    const error = document.createElement('p');
+                    error.style.color = '#ef4444';
+                    error.textContent = '✗ Error found in response';
+                    output.appendChild(error);
+                }
+                
+            } catch (err) {
+                const pre = document.createElement('pre');
+                pre.style.color = '#ef4444';
+                pre.textContent = `Error: ${err.message}`;
+                output.appendChild(pre);
+            }
+        }
+        
+        // Check main endpoint
+        checkEndpoint('http://localhost:5173/', 'Main Page');
+        
+        // Check if vite is serving assets
+        setTimeout(() => {
+            checkEndpoint('http://localhost:5173/index.tsx', 'Index.tsx');
+        }, 1000);
+        
+        // Try to load the app in an iframe
+        setTimeout(() => {
+            const iframe = document.createElement('iframe');
+            iframe.src = 'http://localhost:5173/';
+            iframe.style.width = '100%';
+            iframe.style.height = '400px';
+            iframe.style.border = '1px solid #FFD700';
+            iframe.style.marginTop = '20px';
+            
+            const h3 = document.createElement('h3');
+            h3.textContent = 'App Preview (iframe):';
+            output.appendChild(h3);
+            output.appendChild(iframe);
+            
+            iframe.onload = () => {
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    const rootEl = iframeDoc.getElementById('root');
+                    const info = document.createElement('p');
+                    if (rootEl && rootEl.innerHTML.trim()) {
+                        info.style.color = '#22c55e';
+                        info.textContent = '✓ React app is rendering';
+                    } else {
+                        info.style.color = '#ef4444';
+                        info.textContent = '✗ React app not rendering (root element is empty)';
+                    }
+                    output.appendChild(info);
+                } catch (e) {
+                    console.log('Cannot access iframe content:', e);
+                }
+            };
+        }, 2000);
+    </script>
+</body>
+</html>

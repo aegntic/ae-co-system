@@ -1,0 +1,132 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "bunx",
+      "args": ["@modelcontextprotocol/server-filesystem", "/home/tabs"]
+    },
+    "git": {
+      "command": "uvx",
+      "args": ["mcp-server-git"]
+    },
+    "docker": {
+      "command": "uvx",
+      "args": ["mcp-server-docker"]
+    },
+    "postgresql": {
+      "command": "bunx",
+      "args": ["@modelcontextprotocol/server-postgres"],
+      "env": {
+        "POSTGRES_CONNECTION_STRING": "postgresql://localhost/postgres"
+      }
+    },
+    "aegntic-knowledge-engine": {
+      "command": "uv",
+      "args": ["run", "--project", "/home/tabs/mcp-servers/aegntic-knowledge-engine", "python", "src/crawl4ai_mcp.py"],
+      "env": {
+        "DISPLAY": ":0",
+        "HOST": "0.0.0.0",
+        "PORT": "8052",
+        "TRANSPORT": "stdio",
+        "VECTOR_DB_DIR": "/home/tabs/Google Drive/aegntic_knowledge",
+        "OPENROUTER_API_KEY": "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"
+      }
+    },
+    "quick-data": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/home/tabs/mcp-servers/quick-data",
+        "run",
+        "python",
+        "main.py"
+      ],
+      "env": {
+        "LOG_LEVEL": "INFO"
+      }
+    },
+    "fetch": {
+      "command": "bunx",
+      "args": ["@modelcontextprotocol/server-fetch"]
+    },
+    "puppeteer": {
+      "command": "bunx",
+      "args": ["@automatalabs/mcp-server-playwright"],
+      "env": {
+        "DISPLAY": ":0"
+      }
+    },
+    "github": {
+      "command": "bunx",
+      "args": [
+        "@smithery/cli@latest",
+        "run",
+        "@smithery-ai/github",
+        "--key",
+        "deacc7db-6b36-48f1-88c7-2aca6e39177f"
+      ]
+    },
+    "exa": {
+      "command": "bunx",
+      "args": [
+        "@smithery/cli@latest",
+        "run",
+        "exa",
+        "--key",
+        "deacc7db-6b36-48f1-88c7-2aca6e39177f",
+        "--config",
+        "{\"exaApiKey\":\"3bec6ccf-859f-4462-ab6c-0709c91bf405\"}"
+      ]
+    },
+    "smithery": {
+      "command": "bunx",
+      "args": [
+        "@smithery/cli@latest", 
+        "run",
+        "@smithery/toolbox",
+        "--key",
+        "deacc7db-6b36-48f1-88c7-2aca6e39177f"
+      ]
+    },
+    "desktop-commander": {
+      "command": "bunx",
+      "args": [
+        "@smithery/cli@latest",
+        "run", 
+        "@wonderwhy-er/desktop-commander",
+        "--key",
+        "deacc7db-6b36-48f1-88c7-2aca6e39177f"
+      ]
+    },
+    "sequentialthinking": {
+      "command": "bunx",
+      "args": ["@modelcontextprotocol/server-sequential-thinking"]
+    },
+    "just-prompt": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/home/tabs/mcp-servers/just-prompt",
+        "run",
+        "just-prompt",
+        "--default-models",
+        "openai:o3:high,openai:o4-mini:high,anthropic:claude-3-7-sonnet-20250219:4k,gemini:gemini-2.5-pro-preview-03-25,gemini:gemini-2.5-flash-preview-04-17"
+      ],
+      "env": {}
+    },
+    "ppick": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/home/tabs/mcp-servers/pickd",
+        "run",
+        "mcp-server-pickd",
+        "--database",
+        "./database.db"
+      ]
+    },
+    "memory": {
+      "command": "bunx",
+      "args": ["@modelcontextprotocol/server-memory"]
+    }
+  }
+}

@@ -1,0 +1,304 @@
+version: '3.8'
+
+services:
+  # Database Services
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: youtube_automation
+      POSTGRES_USER: youtube_user
+      POSTGRES_PASSWORD: youtube_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U youtube_user -d youtube_automation"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  neo4j:
+    image: neo4j:5.15
+    environment:
+      NEO4J_AUTH: neo4j/youtube_neo4j
+      NEO4J_dbms_memory_heap_initial__size: 512m
+      NEO4J_dbms_memory_heap_max__size: 1024m
+      NEO4J_dbms_memory_pagecache_size: 512m
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    healthcheck:
+      test: ["CMD", "cypher-shell", "-u", "neo4j", "-p", "youtube_neo4j", "RETURN 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Main API Service
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    environment:
+      - POSTGRES_URL=postgresql://youtube_user:youtube_pass@postgres:5432/youtube_automation
+      - REDIS_URL=redis://redis:6379/1
+      - NEO4J_URL=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=youtube_neo4j
+      - DEBUG=false
+      - LOG_LEVEL=info
+    volumes:
+      - ./credentials:/app/credentials:ro
+      - ./storage:/app/storage
+      - ./logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # Celery Workers
+  worker-video-processing:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A youtube_automation_pipeline.workers.celery_app worker -Q video_processing,high_priority,normal_priority -c 2 --loglevel=info
+    environment:
+      - POSTGRES_URL=postgresql://youtube_user:youtube_pass@postgres:5432/youtube_automation
+      - REDIS_URL=redis://redis:6379/1
+      - NEO4J_URL=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=youtube_neo4j
+      - CUDA_VISIBLE_DEVICES=0  # Assign GPU 0
+    volumes:
+      - ./credentials:/app/credentials:ro
+      - ./storage:/app/storage
+      - ./temp:/app/temp
+      - /dev/dri:/dev/dri  # For hardware acceleration
+    depends_on:
+      - redis
+      - postgres
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+
+  worker-youtube-upload:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A youtube_automation_pipeline.workers.celery_app worker -Q youtube_upload,high_priority -c 4 --loglevel=info
+    environment:
+      - POSTGRES_URL=postgresql://youtube_user:youtube_pass@postgres:5432/youtube_automation
+      - REDIS_URL=redis://redis:6379/1
+      - NEO4J_URL=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=youtube_neo4j
+    volumes:
+      - ./credentials:/app/credentials:ro
+      - ./storage:/app/storage
+      - ./logs:/app/logs
+    depends_on:
+      - redis
+      - postgres
+    restart: unless-stopped
+
+  worker-content-generation:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A youtube_automation_pipeline.workers.celery_app worker -Q content_generation,normal_priority -c 2 --loglevel=info
+    environment:
+      - POSTGRES_URL=postgresql://youtube_user:youtube_pass@postgres:5432/youtube_automation
+      - REDIS_URL=redis://redis:6379/1
+      - NEO4J_URL=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=youtube_neo4j
+      - CUDA_VISIBLE_DEVICES=1  # Assign GPU 1
+    volumes:
+      - ./credentials:/app/credentials:ro
+      - ./storage:/app/storage
+      - ./temp:/app/temp
+    depends_on:
+      - redis
+      - postgres
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+
+  worker-analytics:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A youtube_automation_pipeline.workers.celery_app worker -Q low_priority,analytics -c 1 --loglevel=info
+    environment:
+      - POSTGRES_URL=postgresql://youtube_user:youtube_pass@postgres:5432/youtube_automation
+      - REDIS_URL=redis://redis:6379/1
+      - NEO4J_URL=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=youtube_neo4j
+    volumes:
+      - ./credentials:/app/credentials:ro
+      - ./storage:/app/storage
+      - ./logs:/app/logs
+    depends_on:
+      - redis
+      - postgres
+    restart: unless-stopped
+
+  # Celery Beat Scheduler
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A youtube_automation_pipeline.workers.celery_app beat --loglevel=info
+    environment:
+      - POSTGRES_URL=postgresql://youtube_user:youtube_pass@postgres:5432/youtube_automation
+      - REDIS_URL=redis://redis:6379/1
+      - NEO4J_URL=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=youtube_neo4j
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - redis
+      - postgres
+    restart: unless-stopped
+
+  # Celery Flower (Monitoring)
+  flower:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A youtube_automation_pipeline.workers.celery_app flower --port=5555
+    ports:
+      - "5555:5555"
+    environment:
+      - REDIS_URL=redis://redis:6379/1
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  # Monitoring Services
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+    restart: unless-stopped
+
+  # Load Balancer (for scaling)
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  # MinIO for object storage (alternative to AWS S3)
+  minio:
+    image: minio/minio:latest
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin123
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    restart: unless-stopped
+
+# Named volumes for data persistence
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  neo4j_data:
+    driver: local
+  neo4j_logs:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  minio_data:
+    driver: local
+
+# Networks
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

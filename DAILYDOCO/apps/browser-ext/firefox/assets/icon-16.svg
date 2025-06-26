@@ -1,0 +1,66 @@
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Ultra-simplified gradients for 16px -->
+    <linearGradient id="bodyGrad16" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="topFace16" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:0.7" />
+    </linearGradient>
+    
+    <linearGradient id="screenGrad16" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:0.9" />
+    </linearGradient>
+
+    <filter id="dropShadow16" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="0.5"/>
+      <feOffset dx="0.3" dy="0.5"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.2"/>
+      </feComponentTransfer>
+      <feMerge> 
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/> 
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Main isometric device (very simplified) -->
+  <polygon points="3,4.5 8,2 13,4.5 13,9.5 8,12 3,9.5" fill="url(#bodyGrad16)" filter="url(#dropShadow16)"/>
+  
+  <!-- Device sides (minimal) -->
+  <polygon points="3,4.5 3,9.5 5.5,11 5.5,6" fill="#94a3b8" opacity="0.6"/>
+  <polygon points="10.5,6 10.5,11 13,9.5 13,4.5" fill="#cbd5e1" opacity="0.8"/>
+  
+  <!-- Top face -->
+  <polygon points="3,4.5 8,2 10.5,3.5 5.5,6" fill="url(#topFace16)"/>
+  
+  <!-- Screen (simplified) -->
+  <polygon points="4,5.5 9,3 9,7.5 4,10" fill="url(#screenGrad16)"/>
+  
+  <!-- Screen content (single line) -->
+  <rect x="4.5" y="4.5" width="4" height="0.5" fill="#64748b" opacity="0.8" transform="skewY(-15)"/>
+  <rect x="4.5" y="5.5" width="3" height="0.4" fill="#94a3b8" opacity="0.7" transform="skewY(-15)"/>
+  
+  <!-- Recording indicator (minimal) -->
+  <circle cx="9" cy="3.5" r="0.6" fill="#ef4444"/>
+  <circle cx="9.2" cy="3.3" r="0.3" fill="#fca5a5" opacity="0.8"/>
+  
+  <!-- AI indicator (tiny) -->
+  <g transform="translate(6, 11)">
+    <polygon points="0,0 1.5,0.5 3,0 3,1.5 1.5,2 0,1.5" fill="#10b981"/>
+    <polygon points="0,0 1.5,-0.5 3,0 1.5,0.5" fill="#34d399"/>
+    <polygon points="3,0 3,1.5 1.5,2 1.5,0.5" fill="#059669"/>
+    <circle cx="1.5" cy="0.8" r="0.2" fill="#ffffff" opacity="0.9"/>
+  </g>
+  
+  <!-- Minimal highlight -->
+  <polygon points="3.5,5 7.5,2.5 10,4 6,6.5" fill="#ffffff" opacity="0.15"/>
+  
+  <!-- Tiny shadow -->
+  <ellipse cx="8" cy="12.5" rx="4" ry="1" fill="#000000" opacity="0.05"/>
+</svg>

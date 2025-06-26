@@ -1,0 +1,29 @@
+OVERVIEW AND 5-STEP PROCESS
+==========================
+
+Title: How to Build an AI Startup in 3 Hours with < $500
+Author: Mattae Cooper
+Source: My First Million [MFM] Podcast
+
+WHAT'S INSIDE:
+- Mattae's 5-step process of building an AI startup (follow along!)
+- Tools he uses and real workflows he's built
+- Mattae's AI tool stack
+
+THE 5-STEP PROCESS:
+1. Find the right idea/trend
+2. Sketch out the idea
+3. Scope out the MVP
+4. Vibe coding your prototype
+5. Vibe marketing the business
+
+KEY QUOTE:
+"Watch me as I replace a developer, salesperson, designer, marketer, researcher, product manager… with AI agents."
+- Mattae Cooper
+
+PHILOSOPHY:
+"If you have a proven track record of execution, or if going forward is not a problem for you, then ideas are actually incredibly important."
+- Sam Parr
+
+BOTTOM LINE:
+"Listen, I'm not saying it's as easy as 1-2-3-4-5-6. Building a startup is hard. It's a rollercoaster. But this is the framework for how to build it, and you can build it using tools like this. The unfair advantage and the returns you're gonna get by understanding these tools… it's just worth it."

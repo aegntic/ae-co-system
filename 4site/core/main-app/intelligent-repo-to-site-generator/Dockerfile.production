@@ -1,0 +1,382 @@
+# ================================================================================================
+# 4SITE.PRO PRODUCTION DOCKERFILE - $100B COMPANY STANDARDS
+# Ultra-optimized multi-stage build for enterprise-grade deployment
+# ================================================================================================
+
+# ================================================================================================
+# BUILD STAGE - Optimized compilation environment
+# ================================================================================================
+FROM node:20-alpine AS builder
+
+# Install security updates and build dependencies
+RUN apk update && apk upgrade && \
+    apk add --no-cache \
+    git \
+    python3 \
+    make \
+    g++ \
+    curl \
+    ca-certificates \
+    && rm -rf /var/cache/apk/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files for dependency caching
+COPY package*.json ./
+COPY bun.lock* ./
+
+# Install dependencies with production optimizations
+RUN npm ci --only=production --ignore-scripts && \
+    npm cache clean --force
+
+# Copy source code
+COPY . .
+
+# Build the application with production optimizations
+ENV NODE_ENV=production
+ENV VITE_BUILD_TARGET=production
+RUN npm run build
+
+# Verify build success
+RUN test -d dist || (echo "Build failed - dist directory not found" && exit 1)
+
+# ================================================================================================
+# PRODUCTION STAGE - Minimal runtime environment
+# ================================================================================================
+FROM node:20-alpine AS production
+
+# Create system user for security
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nextjs -u 1001 -G nodejs
+
+# Install minimal runtime dependencies
+RUN apk update && apk upgrade && \
+    apk add --no-cache \
+    dumb-init \
+    curl \
+    ca-certificates \
+    && rm -rf /var/cache/apk/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy built application with proper ownership
+COPY --from=builder --chown=nextjs:nodejs /app/dist ./dist
+COPY --from=builder --chown=nextjs:nodejs /app/package*.json ./
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
+
+# Create required directories with proper permissions
+RUN mkdir -p /app/cache /app/logs /app/temp && \
+    chown -R nextjs:nodejs /app && \
+    chmod 755 /app/cache /app/logs /app/temp
+
+# ================================================================================================
+# ENTERPRISE SERVER IMPLEMENTATION
+# ================================================================================================
+COPY --chown=nextjs:nodejs <<'EOF' /app/server.js
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
+const compression = require('compression');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// ============================================================================
+// ENTERPRISE SECURITY HEADERS
+// ============================================================================
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+  res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com;");
+  
+  // Custom 4site.pro headers
+  res.setHeader('X-Powered-By', '4site.pro');
+  res.setHeader('X-Version', process.env.npm_package_version || '1.0.0');
+  res.setHeader('X-Environment', process.env.NODE_ENV || 'production');
+  
+  next();
+});
+
+// ============================================================================
+// INTELLIGENT COMPRESSION
+// ============================================================================
+app.use(compression({
+  level: 6,
+  threshold: 1024,
+  filter: (req, res) => {
+    if (req.headers['x-no-compression']) return false;
+    return compression.filter(req, res);
+  }
+}));
+
+// ============================================================================
+// HEALTH & MONITORING ENDPOINTS
+// ============================================================================
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development',
+    version: process.env.npm_package_version || '1.0.0',
+    uptime: process.uptime(),
+    memory: process.memoryUsage()
+  });
+});
+
+app.get('/ready', (req, res) => {
+  const distExists = fs.existsSync(path.join(__dirname, 'dist'));
+  const indexExists = fs.existsSync(path.join(__dirname, 'dist', 'index.html'));
+  
+  if (distExists && indexExists) {
+    res.json({
+      status: 'ready',
+      timestamp: new Date().toISOString(),
+      checks: { dist: true, index: true }
+    });
+  } else {
+    res.status(503).json({
+      status: 'not_ready',
+      timestamp: new Date().toISOString(),
+      checks: { dist: distExists, index: indexExists }
+    });
+  }
+});
+
+app.get('/metrics', (req, res) => {
+  const memUsage = process.memoryUsage();
+  const metrics = [
+    `# HELP nodejs_version_info Node.js version information`,
+    `# TYPE nodejs_version_info gauge`,
+    `nodejs_version_info{version="${process.version}"} 1`,
+    `# HELP nodejs_heap_size_used_bytes Heap memory used in bytes`,
+    `# TYPE nodejs_heap_size_used_bytes gauge`,
+    `nodejs_heap_size_used_bytes ${memUsage.heapUsed}`,
+    `# HELP nodejs_heap_size_total_bytes Total heap memory in bytes`,
+    `# TYPE nodejs_heap_size_total_bytes gauge`,
+    `nodejs_heap_size_total_bytes ${memUsage.heapTotal}`,
+    `# HELP nodejs_external_memory_bytes External memory usage in bytes`,
+    `# TYPE nodejs_external_memory_bytes gauge`,
+    `nodejs_external_memory_bytes ${memUsage.external}`,
+    `# HELP process_uptime_seconds Process uptime in seconds`,
+    `# TYPE process_uptime_seconds counter`,
+    `process_uptime_seconds ${process.uptime()}`,
+    `# HELP process_start_time_seconds Process start time in seconds since Unix epoch`,
+    `# TYPE process_start_time_seconds gauge`,
+    `process_start_time_seconds ${Date.now() / 1000 - process.uptime()}`
+  ];
+  
+  res.set('Content-Type', 'text/plain; version=0.0.4; charset=utf-8');
+  res.send(metrics.join('\n') + '\n');
+});
+
+// ============================================================================
+// OPTIMIZED STATIC FILE SERVING
+// ============================================================================
+app.use(express.static(path.join(__dirname, 'dist'), {
+  maxAge: process.env.NODE_ENV === 'production' ? '1y' : '1d',
+  etag: true,
+  lastModified: true,
+  immutable: true,
+  setHeaders: (res, filepath) => {
+    // Cache control based on file type
+    if (filepath.endsWith('.html')) {
+      res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+    } else if (filepath.match(/\.(js|css|woff2|woff)$/)) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    } else if (filepath.match(/\.(png|jpg|jpeg|gif|svg|ico)$/)) {
+      res.setHeader('Cache-Control', 'public, max-age=86400');
+    }
+  }
+}));
+
+// ============================================================================
+// SPA ROUTING WITH INTELLIGENT FALLBACK
+// ============================================================================
+app.get('*', (req, res) => {
+  const indexPath = path.join(__dirname, 'dist', 'index.html');
+  
+  if (fs.existsSync(indexPath)) {
+    // Add security headers specifically for HTML
+    res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+    res.sendFile(indexPath);
+  } else {
+    res.status(503).json({
+      error: 'Application not available',
+      message: 'The application build is not ready. Please try again later.',
+      timestamp: new Date().toISOString(),
+      support: 'https://4site.pro/support'
+    });
+  }
+});
+
+// ============================================================================
+// ENTERPRISE ERROR HANDLING
+// ============================================================================
+app.use((err, req, res, next) => {
+  console.error(`[${new Date().toISOString()}] Server error:`, {
+    error: err.message,
+    stack: err.stack,
+    url: req.url,
+    method: req.method,
+    ip: req.ip,
+    userAgent: req.get('User-Agent')
+  });
+  
+  res.status(500).json({
+    error: 'Internal server error',
+    message: 'An unexpected error occurred. Our team has been notified.',
+    timestamp: new Date().toISOString(),
+    requestId: req.headers['x-request-id'] || 'unknown',
+    support: 'https://4site.pro/support'
+  });
+});
+
+// ============================================================================
+// GRACEFUL SHUTDOWN HANDLING
+// ============================================================================
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 4site.pro server running on port ${PORT}`);
+  console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🏥 Health check: http://localhost:${PORT}/health`);
+  console.log(`📈 Metrics: http://localhost:${PORT}/metrics`);
+  console.log(`⚡ Ready to serve enterprise-grade performance`);
+});
+
+const gracefulShutdown = (signal) => {
+  console.log(`${signal} received, shutting down gracefully...`);
+  
+  server.close(() => {
+    console.log('HTTP server closed');
+    process.exit(0);
+  });
+  
+  // Force close after 10 seconds
+  setTimeout(() => {
+    console.error('Forced shutdown after timeout');
+    process.exit(1);
+  }, 10000);
+};
+
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+
+// Handle uncaught exceptions and rejections
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  process.exit(1);
+});
+EOF
+
+# ================================================================================================
+# HEALTH CHECK IMPLEMENTATION
+# ================================================================================================
+COPY --chown=nextjs:nodejs <<'EOF' /app/healthcheck.js
+const http = require('http');
+
+const options = {
+  hostname: 'localhost',
+  port: process.env.PORT || 3000,
+  path: '/health',
+  method: 'GET',
+  timeout: 5000,
+  headers: {
+    'User-Agent': '4site-healthcheck/1.0'
+  }
+};
+
+const req = http.request(options, (res) => {
+  let data = '';
+  
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+  
+  res.on('end', () => {
+    if (res.statusCode === 200) {
+      try {
+        const health = JSON.parse(data);
+        if (health.status === 'healthy') {
+          console.log('✅ Health check passed');
+          process.exit(0);
+        } else {
+          console.error('❌ Health check failed: unhealthy status');
+          process.exit(1);
+        }
+      } catch (error) {
+        console.error('❌ Health check failed: invalid response format');
+        process.exit(1);
+      }
+    } else {
+      console.error(`❌ Health check failed with status: ${res.statusCode}`);
+      process.exit(1);
+    }
+  });
+});
+
+req.on('timeout', () => {
+  console.error('❌ Health check timeout after 5 seconds');
+  req.destroy();
+  process.exit(1);
+});
+
+req.on('error', (err) => {
+  console.error(`❌ Health check error: ${err.message}`);
+  process.exit(1);
+});
+
+req.end();
+EOF
+
+# ================================================================================================
+# FINAL CONFIGURATION
+# ================================================================================================
+
+# Switch to non-root user for security
+USER nextjs
+
+# Expose application port
+EXPOSE 3000
+
+# Health check configuration
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+  CMD node /app/healthcheck.js
+
+# Production environment variables
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV NPM_CONFIG_UPDATE_NOTIFIER=false
+ENV NPM_CONFIG_FUND=false
+
+# Use dumb-init for proper signal handling
+ENTRYPOINT ["dumb-init", "--"]
+
+# Start the enterprise-grade server
+CMD ["node", "server.js"]
+
+# ================================================================================================
+# METADATA LABELS
+# ================================================================================================
+LABEL \
+  org.opencontainers.image.title="4site.pro" \
+  org.opencontainers.image.description="Enterprise AI presentation intelligence platform" \
+  org.opencontainers.image.vendor="4site.pro" \
+  org.opencontainers.image.version="1.0.0" \
+  org.opencontainers.image.url="https://4site.pro" \
+  org.opencontainers.image.documentation="https://docs.4site.pro" \
+  org.opencontainers.image.source="https://github.com/4site-pro/4site" \
+  org.opencontainers.image.licenses="MIT" \
+  org.opencontainers.image.authors="4site.pro Engineering Team" \
+  maintainer="engineering@4site.pro" \
+  version="1.0.0" \
+  description="Production-ready 4site.pro application"

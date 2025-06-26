@@ -1,0 +1,13 @@
+{
+  "name": "4site-templates",
+  "version": "1.0.0",
+  "description": "Official 4site.pro templates showcase repository",
+  "keywords": ["4site", "github", "website", "generator", "ai", "documentation"],
+  "homepage": "https://4site.pro",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic/4site-templates.git"
+  },
+  "author": "aegntic.ai <contact@aegntic.ai>",
+  "license": "MIT"
+}

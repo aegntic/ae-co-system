@@ -1,0 +1,15 @@
+{
+  "data": {
+    "role": "user",
+    "content": "use desktop-commander to bootstrap and integrate it",
+    "turnId": 5,
+    "timestamp": "2025-05-05T06:18:04.906Z"
+  },
+  "metadata": {
+    "timestamp": "2025-05-05T06:18:04.906Z",
+    "category": "conversations",
+    "key": "session_1746425884881_turn_5",
+    "source": "claude-conversation",
+    "sessionKey": "session_1746425884881"
+  }
+}

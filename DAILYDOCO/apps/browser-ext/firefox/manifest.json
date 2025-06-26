@@ -1,0 +1,86 @@
+{
+  "manifest_version": 2,
+  "name": "DailyDoco Pro - AI Documentation Assistant",
+  "version": "1.0.0",
+  "description": "AI-powered documentation platform. Transform development workflow into professional video tutorials with 95%+ authenticity.",
+  
+  "icons": {
+    "16": "assets/icon-16.png",
+    "32": "assets/icon-32.png",
+    "48": "assets/icon-48.png",
+    "128": "assets/icon-128.png"
+  },
+
+  "browser_action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "DailyDoco Pro",
+    "default_icon": {
+      "16": "assets/icon-16.png",
+      "32": "assets/icon-32.png",
+      "48": "assets/icon-48.png",
+      "128": "assets/icon-128.png"
+    }
+  },
+
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "desktopCapture",
+    "notifications",
+    "webNavigation",
+    "<all_urls>"
+  ],
+
+  "background": {
+    "scripts": ["background/background.js"],
+    "persistent": true
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/content.js"],
+      "css": ["content/content.css"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "web_accessible_resources": [
+    "assets/*",
+    "popup/popup.html",
+    "content/overlay.html"
+  ],
+
+  "commands": {
+    "start_capture": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+R",
+        "mac": "Command+Shift+R"
+      },
+      "description": "Start/stop DailyDoco capture"
+    },
+    "quick_analysis": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+A",
+        "mac": "Command+Shift+A"
+      },
+      "description": "Quick project analysis"
+    }
+  },
+
+  "options_ui": {
+    "page": "popup/options.html",
+    "open_in_tab": true
+  },
+
+  "applications": {
+    "gecko": {
+      "id": "dailydoco-pro@dailydoco.pro",
+      "strict_min_version": "78.0"
+    }
+  },
+
+  "author": "DailyDoco Pro Team",
+  "homepage_url": "https://dailydoco.pro"
+}

@@ -1,0 +1,209 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+    --primary: 202 100% 50%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 259 100% 65%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 328 100% 64%;
+    --accent-foreground: 0 0% 100%;
+    --muted: 223 47% 20%;
+    --muted-foreground: 215 20% 65%;
+    --border: 223 47% 20%;
+    --ring: 202 100% 50%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  
+  body {
+    @apply bg-dark-900 text-gray-100;
+    font-feature-settings: "liga" 1, "kern" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Disable default dark mode since this theme is always dark */
+  html {
+    color-scheme: dark;
+  }
+}
+
+@layer utilities {
+  /* Glass morphism effects */
+  .glass {
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
+  }
+
+  .glass-heavy {
+    @apply bg-white/10 backdrop-blur-xl border border-white/20;
+  }
+
+  .glass-light {
+    @apply bg-white/[0.02] backdrop-blur-sm border border-white/[0.05];
+  }
+
+  /* Neon effects */
+  .neon-text {
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+
+  .neon-border {
+    box-shadow: inset 0 0 20px rgba(12, 154, 229, 0.2), 0 0 20px rgba(12, 154, 229, 0.2);
+  }
+
+  /* Holographic effects */
+  .holographic {
+    background: linear-gradient(135deg, #0c9ae5, #9945ff, #ff45a6, #0c9ae5);
+    background-size: 400% 400%;
+    animation: gradient-xy 15s ease infinite;
+  }
+
+  .holographic-text {
+    @apply bg-clip-text text-transparent;
+    background: linear-gradient(135deg, #0c9ae5, #9945ff, #ff45a6, #0c9ae5);
+    background-size: 400% 400%;
+    animation: gradient-xy 15s ease infinite;
+  }
+
+  /* Neural network patterns */
+  .neural-bg {
+    background-image: 
+      radial-gradient(circle at 20% 50%, rgba(12, 154, 229, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(153, 69, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 20%, rgba(255, 69, 166, 0.1) 0%, transparent 50%);
+  }
+
+  /* AI-themed buttons */
+  .ai-button {
+    @apply relative px-6 py-3 bg-gradient-to-r from-neural-blue via-neural-purple to-neural-pink rounded-lg font-medium overflow-hidden;
+    background-size: 200% 100%;
+    transition: background-position 0.5s;
+  }
+
+  .ai-button:hover {
+    background-position: 100% 0;
+  }
+
+  .ai-button::before {
+    content: '';
+    @apply absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full transition-transform duration-700;
+  }
+
+  .ai-button:hover::before {
+    @apply translate-x-full;
+  }
+
+  /* Data stream effects */
+  .data-stream {
+    background-image: linear-gradient(90deg, transparent, rgba(12, 154, 229, 0.5), transparent);
+    background-size: 200% 100%;
+    animation: neural-flow 3s linear infinite;
+  }
+
+  /* Matrix rain effect */
+  .matrix-bg {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .matrix-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      repeating-linear-gradient(
+        0deg,
+        rgba(0, 255, 136, 0.03) 0px,
+        transparent 1px,
+        transparent 2px,
+        rgba(0, 255, 136, 0.03) 3px
+      );
+    animation: matrix-rain 20s linear infinite;
+  }
+
+  @keyframes matrix-rain {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100%); }
+  }
+
+  /* Cyberpunk grid */
+  .cyber-grid {
+    background-image: 
+      linear-gradient(rgba(12, 154, 229, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(12, 154, 229, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  /* AI card styles */
+  .ai-card {
+    @apply glass rounded-xl p-6 relative overflow-hidden;
+    transition: all 0.3s ease;
+  }
+
+  .ai-card:hover {
+    @apply glass-heavy;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(12, 154, 229, 0.3);
+  }
+
+  .ai-card::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(12, 154, 229, 0.2), transparent 50%);
+  }
+
+  .ai-card:hover::before {
+    opacity: 1;
+  }
+}
+
+/* Custom scrollbar for futuristic theme */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-dark-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gradient-to-b from-neural-blue to-neural-purple rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply from-neural-purple to-neural-pink;
+}
+
+/* Selection colors */
+::selection {
+  @apply bg-neural-blue/30 text-neural-cyan;
+}
+
+/* Glow effects for interactive elements */
+.interactive-glow {
+  transition: all 0.3s ease;
+}
+
+.interactive-glow:hover {
+  filter: brightness(1.2);
+  text-shadow: 0 0 20px currentColor;
+}

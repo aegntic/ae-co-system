@@ -1,0 +1,246 @@
+{
+  "services": {
+    "google_gemini": {
+      "name": "Google Gemini AI",
+      "setup_url": "https://makersuite.google.com/app/apikey",
+      "environment_variables": {
+        "VITE_GEMINI_API_KEY": "Production API key for Gemini"
+      },
+      "configuration": {
+        "application_restrictions": {
+          "type": "HTTP referrers",
+          "allowed_referrers": ["https://4site.pro/*", "https://*.4site.pro/*"]
+        },
+        "api_restrictions": {
+          "enabled_apis": ["Generative Language API"]
+        },
+        "quota_limits": {
+          "requests_per_minute": 60,
+          "requests_per_day": 1000
+        }
+      },
+      "test_endpoint": "https://generativelanguage.googleapis.com/v1beta/models"
+    },
+    "github_oauth": {
+      "name": "GitHub OAuth Application",
+      "setup_url": "https://github.com/settings/developers",
+      "environment_variables": {
+        "VITE_GITHUB_CLIENT_ID": "OAuth application client ID",
+        "GITHUB_CLIENT_SECRET": "OAuth application client secret",
+        "GITHUB_WEBHOOK_SECRET": "Webhook signing secret"
+      },
+      "configuration": {
+        "application_name": "4site.pro",
+        "homepage_url": "https://4site.pro",
+        "authorization_callback_url": "https://4site.pro/auth/github/callback",
+        "webhook_url": "https://api.4site.pro/webhooks/github",
+        "permissions": [
+          "read:user",
+          "user:email", 
+          "public_repo",
+          "repo",
+          "admin:repo_hook"
+        ]
+      }
+    },
+    "supabase": {
+      "name": "Supabase Database",
+      "setup_url": "https://app.supabase.com",
+      "environment_variables": {
+        "VITE_SUPABASE_URL": "Project URL",
+        "VITE_SUPABASE_ANON_KEY": "Anonymous key for client",
+        "SUPABASE_SERVICE_KEY": "Service role key for server"
+      },
+      "configuration": {
+        "project_settings": {
+          "auto_schema_updates": false,
+          "enable_email_confirmations": true,
+          "jwt_expiry": 3600
+        },
+        "auth_providers": {
+          "github": {
+            "enabled": true,
+            "client_id": "Use VITE_GITHUB_CLIENT_ID",
+            "client_secret": "Use GITHUB_CLIENT_SECRET"
+          }
+        },
+        "rls_enabled": true
+      }
+    },
+    "sendgrid": {
+      "name": "SendGrid Email Service", 
+      "setup_url": "https://app.sendgrid.com",
+      "environment_variables": {
+        "EMAIL_API_KEY": "SendGrid API key",
+        "EMAIL_FROM": "hello@4site.pro"
+      },
+      "configuration": {
+        "api_key_permissions": ["Mail Send Full Access"],
+        "domain_authentication": {
+          "domain": "4site.pro",
+          "dns_records": [
+            "CNAME em1234.4site.pro sendgrid.net",
+            "CNAME s1._domainkey.4site.pro s1.domainkey.u1234.wl.sendgrid.net",
+            "CNAME s2._domainkey.4site.pro s2.domainkey.u1234.wl.sendgrid.net"
+          ]
+        },
+        "templates": [
+          {
+            "id": "welcome_email",
+            "name": "Welcome to 4site.pro",
+            "subject": "Welcome to 4site.pro - Transform your GitHub repos!"
+          },
+          {
+            "id": "lead_notification", 
+            "name": "New Lead Captured",
+            "subject": "New lead captured on {{site_title}}"
+          },
+          {
+            "id": "site_created",
+            "name": "Site Generation Complete",
+            "subject": "Your site is ready! 🚀"
+          }
+        ]
+      }
+    },
+    "google_analytics": {
+      "name": "Google Analytics 4",
+      "setup_url": "https://analytics.google.com", 
+      "environment_variables": {
+        "VITE_GOOGLE_ANALYTICS_ID": "GA4 measurement ID"
+      },
+      "configuration": {
+        "property_name": "4site.pro",
+        "enhanced_ecommerce": true,
+        "data_retention": "14 months",
+        "tracking_events": [
+          "site_generated",
+          "template_selected", 
+          "deployment_initiated",
+          "lead_captured"
+        ]
+      }
+    },
+    "sentry": {
+      "name": "Sentry Error Tracking",
+      "setup_url": "https://sentry.io",
+      "environment_variables": {
+        "VITE_SENTRY_DSN": "Public DSN for client-side",
+        "SENTRY_AUTH_TOKEN": "Auth token for source maps"
+      },
+      "configuration": {
+        "project_name": "4site-pro-frontend",
+        "organization": "4sitepro", 
+        "environment": "production",
+        "sample_rates": {
+          "traces": 0.1,
+          "replays_session": 0.1,
+          "replays_error": 1.0
+        },
+        "integrations": [
+          "BrowserTracing",
+          "Replay",
+          "React"
+        ]
+      }
+    },
+    "vercel_analytics": {
+      "name": "Vercel Analytics",
+      "setup_url": "https://vercel.com/analytics",
+      "environment_variables": {
+        "VERCEL_ANALYTICS_ID": "Vercel analytics ID"
+      },
+      "configuration": {
+        "data_collection": {
+          "track_web_vitals": true,
+          "track_conversions": true
+        }
+      }
+    },
+    "cloudflare": {
+      "name": "Cloudflare CDN & DNS",
+      "setup_url": "https://dash.cloudflare.com",
+      "environment_variables": {
+        "CLOUDFLARE_API_TOKEN": "API token with Zone.Zone and Zone.DNS permissions"
+      },
+      "configuration": {
+        "dns_records": [
+          {
+            "type": "A",
+            "name": "@", 
+            "content": "192.0.2.1",
+            "comment": "Main site IP"
+          },
+          {
+            "type": "CNAME",
+            "name": "www",
+            "content": "4site.pro"
+          },
+          {
+            "type": "CNAME", 
+            "name": "api",
+            "content": "api-backend.railway.app"
+          }
+        ],
+        "page_rules": [
+          {
+            "targets": "https://4site.pro/api/*",
+            "actions": {"cache_level": "bypass"}
+          },
+          {
+            "targets": "https://4site.pro/assets/*", 
+            "actions": {"cache_level": "cache_everything", "edge_cache_ttl": 2592000}
+          }
+        ],
+        "security_settings": {
+          "ssl": "full_strict",
+          "always_use_https": true,
+          "min_tls_version": "1.2",
+          "security_level": "medium"
+        }
+      }
+    }
+  },
+  "deployment_platforms": {
+    "vercel": {
+      "name": "Vercel (Frontend)",
+      "url": "https://vercel.com",
+      "configuration": {
+        "framework": "vite",
+        "build_command": "npm run build",
+        "output_directory": "dist",
+        "install_command": "npm install",
+        "environment_variables": "Import from production-env-secrets.env"
+      }
+    },
+    "railway": {
+      "name": "Railway (Backend API)",
+      "url": "https://railway.app", 
+      "configuration": {
+        "start_command": "npm run start",
+        "build_command": "npm run build",
+        "environment_variables": "Set in Railway dashboard"
+      }
+    }
+  },
+  "monitoring": {
+    "uptime_monitoring": {
+      "endpoints": [
+        "https://4site.pro",
+        "https://api.4site.pro/health",
+        "https://4site.pro/api/status"
+      ],
+      "check_interval": "5 minutes",
+      "alert_channels": ["email", "slack"]
+    },
+    "performance_monitoring": {
+      "core_web_vitals": true,
+      "error_tracking": true,
+      "custom_metrics": [
+        "site_generation_time",
+        "ai_response_time", 
+        "deployment_success_rate"
+      ]
+    }
+  }
+}

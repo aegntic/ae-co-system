@@ -1,0 +1,27 @@
+<svg width="1200" height="675" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="motion-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="675" fill="url(#motion-bg)"/>
+  
+  <!-- Animation cards -->
+  <rect x="150" y="150" width="200" height="150" rx="12" fill="rgba(255,255,255,0.2)"/>
+  <rect x="400" y="150" width="200" height="150" rx="12" fill="rgba(255,255,255,0.25)"/>
+  <rect x="650" y="150" width="200" height="150" rx="12" fill="rgba(255,255,255,0.3)"/>
+  <rect x="900" y="150" width="200" height="150" rx="12" fill="rgba(255,255,255,0.35)"/>
+  
+  <!-- Title -->
+  <text x="600" y="280" font-family="Arial, sans-serif" font-size="96" font-weight="bold" fill="white" text-anchor="middle">MOTION</text>
+  <text x="600" y="360" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle">DESIGN SYSTEM</text>
+  
+  <!-- Features -->
+  <text x="600" y="450" font-family="Arial, sans-serif" font-size="24" fill="rgba(255,255,255,0.9)" text-anchor="middle">200+ Production Animations • GSAP • Lottie</text>
+  
+  <!-- aeLTD branding -->
+  <text x="600" y="600" font-family="Arial, sans-serif" font-size="20" fill="rgba(255,255,255,0.6)" text-anchor="middle">aeLTD Premium Collection</text>
+  <text x="600" y="625" font-family="Arial, sans-serif" font-size="20" fill="rgba(255,255,255,0.6)" text-anchor="middle">Open Tabs ∞ Certified</text>
+</svg>

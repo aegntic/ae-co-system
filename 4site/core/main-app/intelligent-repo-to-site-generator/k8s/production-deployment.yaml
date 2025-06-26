@@ -1,0 +1,707 @@
+# 4site.pro Production Kubernetes Deployment Configuration
+# Comprehensive production-ready deployment with monitoring, scaling, and security
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production
+  labels:
+    name: production
+    env: production
+
+---
+# ConfigMap for application configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: 4site-pro-config
+  namespace: production
+data:
+  NODE_ENV: "production"
+  PORT: "3000"
+  ENABLE_VIRAL_SCORING: "true"
+  ENABLE_AUTO_FEATURING: "true"
+  ENABLE_COMMISSION_SYSTEM: "true"
+  ENABLE_PRO_SHOWCASE: "true"
+  ENABLE_SHARE_TRACKING: "true"
+  VIRAL_SCORE_CACHE_TTL: "3600"
+  COMMISSION_BATCH_SIZE: "100"
+  SHARE_TRACKING_BATCH_SIZE: "50"
+  RATE_LIMIT_GENERAL: "100"
+  RATE_LIMIT_AUTH: "10"
+  RATE_LIMIT_VIRAL_ACTIONS: "50"
+
+---
+# Secret for sensitive configuration
+apiVersion: v1
+kind: Secret
+metadata:
+  name: 4site-pro-secrets
+  namespace: production
+type: Opaque
+stringData:
+  # These will be populated during deployment
+  gemini-api-key: "PLACEHOLDER_GEMINI_API_KEY"
+  supabase-url: "PLACEHOLDER_SUPABASE_URL"
+  supabase-anon-key: "PLACEHOLDER_SUPABASE_ANON_KEY"
+  supabase-service-role-key: "PLACEHOLDER_SUPABASE_SERVICE_ROLE_KEY"
+  database-url: "PLACEHOLDER_DATABASE_URL"
+  jwt-secret: "PLACEHOLDER_JWT_SECRET"
+  api-secret: "PLACEHOLDER_API_SECRET"
+  slack-webhook-url: "PLACEHOLDER_SLACK_WEBHOOK_URL"
+  pagerduty-routing-key: "PLACEHOLDER_PAGERDUTY_ROUTING_KEY"
+
+---
+# Blue Environment Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4site-pro-blue
+  namespace: production
+  labels:
+    app: 4site-pro
+    environment: blue
+    version: v1
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: 4site-pro
+      environment: blue
+  template:
+    metadata:
+      labels:
+        app: 4site-pro
+        environment: blue
+        version: v1
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "3000"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: 4site-pro-sa
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: 4site-pro
+        image: 4site-pro:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+          name: http
+          protocol: TCP
+        env:
+        - name: ENVIRONMENT
+          value: "blue"
+        # Load configuration from ConfigMap
+        envFrom:
+        - configMapRef:
+            name: 4site-pro-config
+        - secretRef:
+            name: 4site-pro-secrets
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+            ephemeral-storage: "1Gi"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+            ephemeral-storage: "2Gi"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 2
+          successThreshold: 1
+        startupProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 30
+          successThreshold: 1
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+        - name: cache
+          mountPath: /app/cache
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+      volumes:
+      - name: tmp
+        emptyDir: {}
+      - name: cache
+        emptyDir:
+          sizeLimit: 1Gi
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - 4site-pro
+              topologyKey: kubernetes.io/hostname
+      tolerations:
+      - key: "node.kubernetes.io/not-ready"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 300
+      - key: "node.kubernetes.io/unreachable"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 300
+
+---
+# Green Environment Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4site-pro-green
+  namespace: production
+  labels:
+    app: 4site-pro
+    environment: green
+    version: v1
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: 4site-pro
+      environment: green
+  template:
+    metadata:
+      labels:
+        app: 4site-pro
+        environment: green
+        version: v1
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "3000"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: 4site-pro-sa
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: 4site-pro
+        image: 4site-pro:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+          name: http
+          protocol: TCP
+        env:
+        - name: ENVIRONMENT
+          value: "green"
+        # Load configuration from ConfigMap
+        envFrom:
+        - configMapRef:
+            name: 4site-pro-config
+        - secretRef:
+            name: 4site-pro-secrets
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+            ephemeral-storage: "1Gi"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+            ephemeral-storage: "2Gi"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 2
+          successThreshold: 1
+        startupProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 30
+          successThreshold: 1
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+        - name: cache
+          mountPath: /app/cache
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+      volumes:
+      - name: tmp
+        emptyDir: {}
+      - name: cache
+        emptyDir:
+          sizeLimit: 1Gi
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - 4site-pro
+              topologyKey: kubernetes.io/hostname
+      tolerations:
+      - key: "node.kubernetes.io/not-ready"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 300
+      - key: "node.kubernetes.io/unreachable"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 300
+
+---
+# Service Account
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: 4site-pro-sa
+  namespace: production
+  labels:
+    app: 4site-pro
+
+---
+# Blue Environment Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: 4site-pro-blue-service
+  namespace: production
+  labels:
+    app: 4site-pro
+    environment: blue
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    app: 4site-pro
+    environment: blue
+
+---
+# Green Environment Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: 4site-pro-green-service
+  namespace: production
+  labels:
+    app: 4site-pro
+    environment: green
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    app: 4site-pro
+    environment: green
+
+---
+# Main Service (points to active environment)
+apiVersion: v1
+kind: Service
+metadata:
+  name: 4site-pro-service
+  namespace: production
+  labels:
+    app: 4site-pro
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http
+  - port: 443
+    targetPort: http
+    protocol: TCP
+    name: https
+  selector:
+    app: 4site-pro
+    environment: blue  # Default to blue environment
+
+---
+# Horizontal Pod Autoscaler
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: 4site-pro-blue-hpa
+  namespace: production
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: 4site-pro-blue
+  minReplicas: 2
+  maxReplicas: 20
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 60
+      - type: Pods
+        value: 2
+        periodSeconds: 60
+
+---
+# Horizontal Pod Autoscaler for Green
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: 4site-pro-green-hpa
+  namespace: production
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: 4site-pro-green
+  minReplicas: 2
+  maxReplicas: 20
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 60
+      - type: Pods
+        value: 2
+        periodSeconds: 60
+
+---
+# Pod Disruption Budget for Blue
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: 4site-pro-blue-pdb
+  namespace: production
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: 4site-pro
+      environment: blue
+
+---
+# Pod Disruption Budget for Green
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: 4site-pro-green-pdb
+  namespace: production
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: 4site-pro
+      environment: green
+
+---
+# Network Policy for Security
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: 4site-pro-network-policy
+  namespace: production
+spec:
+  podSelector:
+    matchLabels:
+      app: 4site-pro
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    - namespaceSelector:
+        matchLabels:
+          name: monitoring
+    ports:
+    - protocol: TCP
+      port: 3000
+  egress:
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443  # HTTPS
+    - protocol: TCP
+      port: 80   # HTTP
+    - protocol: TCP
+      port: 5432 # PostgreSQL
+    - protocol: UDP
+      port: 53   # DNS
+
+---
+# Ingress Configuration
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: 4site-pro-ingress
+  namespace: production
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "30"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "30"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # Security headers
+    nginx.ingress.kubernetes.io/server-snippet: |
+      add_header X-Content-Type-Options nosniff;
+      add_header X-Frame-Options DENY;
+      add_header X-XSS-Protection "1; mode=block";
+      add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+      add_header Referrer-Policy "strict-origin-when-cross-origin";
+      add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; media-src 'self'; object-src 'none'; child-src 'none'; worker-src 'self'; frame-ancestors 'none'; form-action 'self'; base-uri 'self';";
+spec:
+  tls:
+  - hosts:
+    - 4site.pro
+    - www.4site.pro
+    - api.4site.pro
+    - app.4site.pro
+    secretName: 4site-pro-tls
+  rules:
+  - host: 4site.pro
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: 4site-pro-service
+            port:
+              number: 80
+  - host: www.4site.pro
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: 4site-pro-service
+            port:
+              number: 80
+  - host: api.4site.pro
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: 4site-pro-service
+            port:
+              number: 80
+  - host: app.4site.pro
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: 4site-pro-service
+            port:
+              number: 80
+
+---
+# ServiceMonitor for Prometheus
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: 4site-pro-metrics
+  namespace: production
+  labels:
+    app: 4site-pro
+spec:
+  selector:
+    matchLabels:
+      app: 4site-pro
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
+    scrapeTimeout: 10s
+
+---
+# PrometheusRule for Alerting
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: 4site-pro-alerts
+  namespace: production
+  labels:
+    app: 4site-pro
+spec:
+  groups:
+  - name: 4site-pro.rules
+    rules:
+    - alert: HighErrorRate
+      expr: rate(http_requests_total{job="4site-pro", status=~"5.."}[5m]) / rate(http_requests_total{job="4site-pro"}[5m]) > 0.01
+      for: 2m
+      labels:
+        severity: critical
+      annotations:
+        summary: "High error rate detected"
+        description: "Error rate is {{ $value | humanizePercentage }} for the last 5 minutes"
+    
+    - alert: HighResponseTime
+      expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="4site-pro"}[5m])) > 1.0
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High response time detected"
+        description: "95th percentile response time is {{ $value }}s"
+    
+    - alert: PodCrashLooping
+      expr: rate(kube_pod_container_status_restarts_total{namespace="production", container="4site-pro"}[15m]) > 0
+      for: 0m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Pod is crash looping"
+        description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is crash looping"
+    
+    - alert: DeploymentReplicasMismatch
+      expr: kube_deployment_status_replicas{namespace="production", deployment=~"4site-pro-.*"} != kube_deployment_spec_replicas{namespace="production", deployment=~"4site-pro-.*"}
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Deployment replicas mismatch"
+        description: "Deployment {{ $labels.deployment }} has {{ $value }} replicas available, but {{ $labels.spec_replicas }} expected"
+    
+    - alert: HighMemoryUsage
+      expr: container_memory_usage_bytes{namespace="production", pod=~"4site-pro-.*"} / container_spec_memory_limit_bytes > 0.9
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High memory usage"
+        description: "Pod {{ $labels.pod }} memory usage is above 90%"
+    
+    - alert: HighCPUUsage
+      expr: rate(container_cpu_usage_seconds_total{namespace="production", pod=~"4site-pro-.*"}[5m]) / container_spec_cpu_quota * container_spec_cpu_period > 0.9
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High CPU usage"
+        description: "Pod {{ $labels.pod }} CPU usage is above 90%"

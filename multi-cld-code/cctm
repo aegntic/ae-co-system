@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# {ae}CCTM - Claude Code Terminal Manager
+# Launch command for system-wide access
+
+# Get the directory where this script is located
+CCTM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Check for bun
+if ! command -v bun &> /dev/null; then
+    echo "❌ Error: 'bun' is not installed. Please install it first:"
+    echo "   curl -fsSL https://bun.sh/install | bash"
+    exit 1
+fi
+
+# Check if CCTM is built
+if [ ! -f "$CCTM_DIR/src-tauri/target/release/cctm" ]; then
+    echo "⚙️  Building CCTM for first launch..."
+    echo "📦 Installing frontend dependencies..."
+    cd "$CCTM_DIR" && bun install
+    echo "🔨 Building frontend..."
+    bun run build
+    echo "🦀 Building Rust backend..."
+    cd "$CCTM_DIR/src-tauri" && cargo build --release
+    echo "✅ Build complete!"
+fi
+
+# Launch CCTM
+cd "$CCTM_DIR" && ./src-tauri/target/release/cctm "$@"

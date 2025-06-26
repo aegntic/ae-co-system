@@ -1,0 +1,34 @@
+{
+  "name": "DailyDoco Demo Video",
+  "nodes": [
+    {
+      "id": "video_compose",
+      "type": "VideoComposite",
+      "inputs": {
+        "images": [],
+        "fps": 60,
+        "transition": "smooth_fade",
+        "duration_per_scene": null
+      }
+    },
+    {
+      "id": "audio_sync",
+      "type": "AudioVideoSync",
+      "inputs": {
+        "video": "video_compose.output",
+        "audio": "narration.wav",
+        "background_music_volume": 0.3
+      }
+    },
+    {
+      "id": "export",
+      "type": "VideoExport",
+      "inputs": {
+        "video": "audio_sync.output",
+        "format": "mp4",
+        "codec": "h264",
+        "bitrate": "8M"
+      }
+    }
+  ]
+}

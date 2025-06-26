@@ -1,0 +1,290 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Gradient Button Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Geist Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 13rem;
+        overflow: hidden;
+        height: 3rem;
+        background-size: 300% 300%;
+        cursor: pointer;
+        backdrop-filter: blur(1rem);
+        border-radius: 5rem;
+        transition: 0.5s;
+        animation: gradient_301 5s ease infinite;
+        border: double 1px transparent;
+        background-image: linear-gradient(#212121, #212121),
+          linear-gradient(
+            137.48deg,
+            #ffdb3b 10%,
+            #fe53bb 45%,
+            #8f51ea 67%,
+            #0044ff 87%
+          );
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+        position: relative;
+      }
+      #container-stars {
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        transition: 0.5s;
+        border-radius: 5rem;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+      }
+      #particles-js {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        pointer-events: none;
+        top: 0;
+        left: 0;
+      }
+      strong {
+        z-index: 3;
+        font-family: 'Geist', 'Avalors Personal Use', sans-serif;
+        font-size: 13px;
+        letter-spacing: 5px;
+        color: #ffffff;
+        text-shadow: 0 0 4px white;
+        font-weight: 600;
+      }
+      #glow {
+        position: absolute;
+        display: flex;
+        width: 12rem;
+        left: .5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        z-index: 2;
+      }
+      .circle {
+        width: 100%;
+        height: 30px;
+        filter: blur(2rem);
+        animation: pulse_3011 4s infinite;
+        z-index: -1;
+      }
+      .circle:nth-of-type(1) {
+        background: rgba(254, 83, 186, 0.636);
+      }
+      .circle:nth-of-type(2) {
+        background: rgba(142, 81, 234, 0.704);
+      }
+      .btn:hover #container-stars {
+        z-index: 2;
+        background-color: #212121;
+      }
+      .btn:hover {
+        transform: scale(1.06);
+      }
+      .btn:active {
+        border: double 1px #fe53bb;
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+        animation: none;
+      }
+      .btn:active .circle {
+        background: #fe53bb;
+      }
+      @keyframes gradient_301 {
+        0% {background-position: 0% 50%;}
+        50% {background-position: 100% 50%;}
+        100% {background-position: 0% 50%;}
+      }
+      @keyframes pulse_3011 {
+        0% {
+          transform: scale(0.75);
+          box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+        }
+        70% {
+          transform: scale(1);
+          box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+        }
+        100% {
+          transform: scale(0.75);
+          box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+        }
+      }
+      body, input, label {
+        font-family: 'Geist', 'Avalors Personal Use', sans-serif !important;
+      }
+      .glass {
+        background: rgba(35, 35, 41, 0.7);
+        box-shadow: 0 8px 40px 5px rgba(76,0,255,0.09), 0 2px 12px 2px #ffdb3b22;
+        backdrop-filter: blur(18px);
+        border: 1.5px solid rgba(255, 255, 255, 0.07);
+        border-radius: 1.25rem;
+        position: relative;
+      }
+      .glass::before {
+        content: '';
+        pointer-events: none;
+        z-index: 0;
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: linear-gradient(120deg, #ffdb3b33 0%, #fe53bb22 60%, #232329 100%);
+        opacity: 0.3;
+      }
+      .avatar-glow {
+        background: linear-gradient(120deg, #ffdb3b 0%, #fe53bb 60%, #8f51ea 100%);
+        padding: 2.5px;
+        border-radius: 9999px;
+        display: inline-block;
+        box-shadow: 0 0 18px 2px #ffdb3b77, 0 0 8px 2px #fe53bb33;
+      }
+      .divider {
+        background: linear-gradient(90deg, #fff0 0%, #ffdb3b55 12%, #fe53bb66 50%, #fff0 100%);
+        height: 1.5px;
+        border-radius: 1px;
+        margin: 1.25rem 0;
+      }
+      .social-btn {
+        background: #232329;
+        border: 1px solid #fff2;
+        transition: background 0.15s, border 0.15s, transform 0.15s, box-shadow 0.15s;
+        will-change: transform;
+      }
+      .social-btn:hover {
+        background: #1d1d22;
+        border: 1.5px solid #ffdb3b;
+        transform: scale(1.035);
+        box-shadow: 0 4px 24px 0 #ffdb3b22, 0 0px 0px #fe53bb33;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+  <body class="min-h-screen flex items-center justify-center bg-[#18181c] overflow-x-hidden">
+    <div class="w-full max-w-md flex flex-col gap-6 relative border-white/10 border rounded-3xl px-8 py-8">
+      <div class="flex flex-col items-center gap-2">
+        <h2 class="text-white text-2xl font-semibold tracking-tight text-center">Welcome Back</h2>
+        <p class="text-white/60 text-sm text-center -mt-1">Sign in to continue to your dashboard</p>
+      </div>
+      <div class="border-b border-white/10"></div>
+      <form class="flex flex-col gap-5 z-10">
+        <div>
+          <label for="email" class="block text-sm font-medium text-white tracking-wide mb-1">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email" class="w-full rounded-lg bg-[#232329bb] border border-white/10 px-3 py-2 text-white placeholder-white/40 focus:outline-none focus:border-[#fe53bb] transition" placeholder="you@example.com">
+        </div>
+        <div>
+          <label for="password" class="block text-sm font-medium text-white tracking-wide mb-1">Password</label>
+          <input id="password" name="password" type="password" required autocomplete="current-password" class="w-full rounded-lg bg-[#232329bb] border border-white/10 px-3 py-2 text-white placeholder-white/40 focus:outline-none focus:border-[#8f51ea] transition" placeholder="••••••••">
+        </div>
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-white/60">Remember me</span>
+          <a href="#" class="text-[#ffdb3b] hover:text-[#fe53bb] underline underline-offset-2 transition">Forgot Password?</a>
+        </div>
+        <button type="submit" class="btn mx-auto mt-2 relative">
+          <span id="container-stars">
+            <div id="particles-js"></div>
+          </span>
+          <span id="glow">
+            <span class="circle"></span>
+            <span class="circle"></span>
+          </span>
+          <strong class="">LOG IN</strong>
+        </button>
+      </form>
+      <div class="border-b border-white/10"></div>
+      <div class="flex flex-col gap-2">
+        <button class="social-btn flex items-center gap-2 justify-center py-2 rounded-md font-semibold text-white w-full transition">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" class="w-5 h-5 grayscale" alt=""> Sign in with Google
+        </button>
+        <button class="social-btn flex items-center gap-2 justify-center py-2 rounded-md font-semibold text-white w-full transition">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" class="w-5 h-5 invert" alt=""> Sign in with GitHub
+        </button>
+      </div>
+      <div class="text-center mt-4">
+        <span class="text-white/60 text-xs">Don't have an account?
+          <a href="#" class="text-[#ffdb3b] underline underline-offset-2 hover:text-[#fe53bb] transition">Sign up</a>
+        </span>
+      </div>
+      <p class="text-center text-white/20 text-xs mt-4 select-none">© 2024 Nebula UI Technologies</p>
+    </div>
+    <script>
+      particlesJS("particles-js", {
+        "particles": {
+          "number": {
+            "value": 80,
+            "density": {
+              "enable": true,
+              "value_area": 300
+            }
+          },
+          "color": {
+            "value": ["#ffdb3b", "#fe53bb", "#8f51ea", "#fff", "#ffdb3b99"]
+          },
+          "shape": {
+            "type": "circle",
+            "stroke": {
+              "width": 0,
+              "color": "#000"
+            }
+          },
+          "opacity": {
+            "value": 0.85,
+            "random": true,
+            "anim": {
+              "enable": true,
+              "speed": 0.41,
+              "opacity_min": 0.3,
+              "sync": false
+            }
+          },
+          "size": {
+            "value": 1,
+            "random": false,
+            "anim": {
+              "enable": false
+            }
+          },
+          "line_linked": {
+            "enable": false
+          },
+          "move": {
+            "enable": true,
+            "speed": 0.7,
+            "direction": "top",
+            "random": true,
+            "straight": false,
+            "out_mode": "out",
+            "bounce": false,
+            "attract": {
+              "enable": false
+            }
+          }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": {
+              "enable": false
+            },
+            "onclick": {
+              "enable": false
+            },
+            "resize": true
+          }
+        },
+        "retina_detect": true
+      });
+    </script>
+</body></html>

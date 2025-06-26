@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>zkFlow.pro Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="../../assets/icons/icon-48.png" alt="zkFlow.pro" class="logo">
+      <div>
+        <h1>zkFlow.pro Settings</h1>
+        <p class="subtitle">Zero Knowledge Form Flow Pro</p>
+      </div>
+    </header>
+
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-section="flows">Manage Flows</button>
+      <button class="nav-tab" data-section="shortcuts">Keyboard Shortcuts</button>
+      <button class="nav-tab" data-section="export">Import/Export</button>
+      <button class="nav-tab" data-section="about">About</button>
+    </nav>
+
+    <main>
+      <!-- Manage Flows Section -->
+      <section id="flows-section" class="section active">
+        <h2>Saved Flows</h2>
+        <div class="section-content">
+          <div class="toolbar">
+            <input type="text" id="search-flows" placeholder="Search flows..." class="search-input">
+            <button id="sort-flows" class="button secondary">
+              Sort by: <span id="sort-label">Recent</span>
+            </button>
+          </div>
+          
+          <div id="flows-list" class="flows-list">
+            <!-- Flows will be populated here -->
+          </div>
+          
+          <div class="stats">
+            <div class="stat">
+              <span class="stat-value" id="total-flows">0</span>
+              <span class="stat-label">Total Flows</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value" id="total-actions">0</span>
+              <span class="stat-label">Total Actions</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value" id="time-saved">0</span>
+              <span class="stat-label">Minutes Saved</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Keyboard Shortcuts Section -->
+      <section id="shortcuts-section" class="section">
+        <h2>Keyboard Shortcuts</h2>
+        <div class="section-content">
+          <p class="info">Assign keyboard shortcuts to your most used flows for instant access.</p>
+          
+          <div class="shortcuts-list">
+            <div class="shortcut-item">
+              <div class="shortcut-info">
+                <h3>Quick Flow #1</h3>
+                <p>Play your first saved flow</p>
+              </div>
+              <div class="shortcut-key">
+                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>1</kbd>
+              </div>
+            </div>
+            
+            <div class="shortcut-item">
+              <div class="shortcut-info">
+                <h3>Quick Flow #2</h3>
+                <p>Play your second saved flow</p>
+              </div>
+              <div class="shortcut-key">
+                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>2</kbd>
+              </div>
+            </div>
+            
+            <div class="shortcut-item">
+              <div class="shortcut-info">
+                <h3>Quick Flow #3</h3>
+                <p>Play your third saved flow</p>
+              </div>
+              <div class="shortcut-key">
+                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>3</kbd>
+              </div>
+            </div>
+            
+            <div class="shortcut-item">
+              <div class="shortcut-info">
+                <h3>Start/Stop Recording</h3>
+                <p>Toggle flow recording</p>
+              </div>
+              <div class="shortcut-key">
+                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd>
+              </div>
+            </div>
+          </div>
+          
+          <p class="hint">Note: On Mac, use ⌘ instead of Ctrl</p>
+        </div>
+      </section>
+
+      <!-- Import/Export Section -->
+      <section id="export-section" class="section">
+        <h2>Import/Export</h2>
+        <div class="section-content">
+          <div class="export-actions">
+            <div class="action-card">
+              <h3>Export Flows</h3>
+              <p>Download all your flows as a JSON file for backup or sharing.</p>
+              <button id="export-flows" class="button primary">Export All Flows</button>
+            </div>
+            
+            <div class="action-card">
+              <h3>Import Flows</h3>
+              <p>Import flows from a JSON file. Existing flows will not be overwritten.</p>
+              <input type="file" id="import-file" accept=".json" style="display: none;">
+              <button id="import-flows" class="button secondary">Import Flows</button>
+            </div>
+          </div>
+          
+          <div class="backup-info">
+            <h3>Automatic Backup</h3>
+            <p>Your flows are automatically saved locally. No data is sent to any servers.</p>
+            <label class="checkbox-label">
+              <input type="checkbox" id="auto-backup" checked>
+              <span>Enable automatic backup reminders</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about-section" class="section">
+        <h2>About zkFlow.pro</h2>
+        <div class="section-content">
+          <div class="about-content">
+            <p class="lead">
+              zkFlow.pro is a powerful form automation tool that saves you time by recording and replaying complex form filling sequences.
+            </p>
+            
+            <h3>Key Features</h3>
+            <ul>
+              <li>🎯 Smart form field detection</li>
+              <li>🔐 Secure local storage - no cloud sync</li>
+              <li>⚡ One-click replay of saved workflows</li>
+              <li>⌨️ Keyboard shortcuts for instant access</li>
+              <li>🔄 Support for multi-step forms</li>
+              <li>🎨 Clean, modern interface</li>
+            </ul>
+            
+            <h3>Privacy & Security</h3>
+            <p>
+              All your data is stored locally on your device. We never collect, transmit, or have access to your form data or workflows. 
+              The "Zero Knowledge" in our name means we know nothing about your data - and that's by design.
+            </p>
+            
+            <h3>Version</h3>
+            <p>v1.0.0</p>
+            
+            <h3>Support</h3>
+            <p>
+              Need help? Visit our <a href="https://zkflow.pro/docs" target="_blank">documentation</a> or 
+              <a href="https://zkflow.pro/support" target="_blank">contact support</a>.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 zkFlow.pro - Zero Knowledge Form Flow Pro</p>
+    </footer>
+  </div>
+  
+  <script src="options.js"></script>
+</body>
+</html>

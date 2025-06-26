@@ -1,0 +1,108 @@
+/* DailyDoco Pro - Content Script Styles */
+
+/* Activity Indicator Animation */
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+  20% { opacity: 1; transform: scale(1) translateY(0); }
+  80% { opacity: 1; transform: scale(1) translateY(0); }
+  100% { opacity: 0; transform: scale(0.9) translateY(-10px); }
+}
+
+/* Highlight Pulse Animation */
+@keyframes highlightPulse {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.95);
+    box-shadow: 0 0 0 rgba(79, 143, 255, 0.4);
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(79, 143, 255, 0.6);
+  }
+  100% { 
+    opacity: 0.7; 
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(79, 143, 255, 0.3);
+  }
+}
+
+/* Activity Indicator Styles */
+.dailydoco-activity-indicator {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  text-transform: capitalize !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Highlight Overlay Styles */
+.dailydoco-highlight {
+  backdrop-filter: blur(1px) !important;
+  box-shadow: 
+    0 0 0 2px #4f8fff,
+    0 0 20px rgba(79, 143, 255, 0.4),
+    inset 0 0 20px rgba(79, 143, 255, 0.1) !important;
+}
+
+/* Recording Indicator Specific Styles */
+#dailydoco-recording-indicator {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  user-select: none !important;
+  cursor: default !important;
+}
+
+#dailydoco-recording-indicator:hover {
+  background: rgba(239, 68, 68, 1) !important;
+  transform: scale(1.05) !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Ensure overlays don't interfere with page content */
+.dailydoco-activity-indicator,
+.dailydoco-highlight,
+#dailydoco-recording-indicator {
+  pointer-events: none !important;
+  user-select: none !important;
+  z-index: 2147483647 !important; /* Maximum z-index */
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .dailydoco-highlight {
+    border-color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+  }
+  
+  .dailydoco-activity-indicator {
+    background: rgba(0, 0, 0, 0.9) !important;
+    border: 2px solid #ffffff !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .dailydoco-activity-indicator,
+  .dailydoco-highlight,
+  #dailydoco-recording-indicator {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Dark mode adaptation */
+@media (prefers-color-scheme: dark) {
+  .dailydoco-activity-indicator {
+    background: rgba(79, 143, 255, 0.95) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+  }
+}
+
+/* Light mode adaptation */
+@media (prefers-color-scheme: light) {
+  .dailydoco-activity-indicator {
+    background: rgba(79, 143, 255, 0.9) !important;
+    color: white !important;
+    border-color: rgba(79, 143, 255, 0.5) !important;
+  }
+}

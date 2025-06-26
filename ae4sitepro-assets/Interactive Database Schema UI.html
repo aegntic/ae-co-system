@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Schema Hero</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'manrope': ['Manrope', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                        'satoshi': ['Satoshi', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'data-stream': 'dataStream 3s linear infinite',
+                        'schema-pulse': 'schemaPulse 4s ease-in-out infinite',
+                        'fade-in-up': 'fadeInUp 1s ease-out',
+                        'fade-in-delay': 'fadeInUp 1s ease-out 0.3s both',
+                        'fade-in-delay-2': 'fadeInUp 1s ease-out 0.6s both',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        dataStream: {
+                            '0%': { strokeDashoffset: 20 },
+                            '100%': { strokeDashoffset: 0 }
+                        },
+                        schemaPulse: {
+                            '0%, 100%': { transform: 'scale(1)', opacity: 0.8 },
+                            '50%': { transform: 'scale(1.02)', opacity: 1 }
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: 0, transform: 'translateY(30px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { margin: 0; overflow: hidden; background: #000; }
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .connector {
+            stroke-dasharray: 8;
+            animation: dataStream 2s linear infinite;
+        }
+        .table-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        .table-float:nth-child(2) { animation-delay: -1s; }
+        .table-float:nth-child(3) { animation-delay: -2s; }
+        .table-float:nth-child(4) { animation-delay: -3s; }
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+        }
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 2px;
+            background: linear-gradient(135deg, #4f46e5, #3b82f6, #8b5cf6, #f59e0b);
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: xor;
+            -webkit-mask-composite: xor;
+        }
+        .inner-glow {
+            box-shadow: inset 0 0 20px rgba(79, 70, 229, 0.3), inset 0 0 40px rgba(59, 130, 246, 0.2), 0 0 30px rgba(139, 92, 246, 0.4);
+        }
+        .hero-glow {
+            box-shadow: 0 0 100px rgba(79, 70, 229, 0.3), 0 0 200px rgba(59, 130, 246, 0.2);
+        }
+        .gradient-stroke {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .gradient-stroke::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 2px;
+            background: linear-gradient(135deg, #4f46e5, #3b82f6, #8b5cf6, #f59e0b);
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: xor;
+            -webkit-mask-composite: xor;
+        }
+        .eyebrow-stroke {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+            text-stroke: 1px rgba(255, 255, 255, 0.2);
+        }
+        .schema-gradient {
+            background: linear-gradient(135deg, #4f46e5, #3b82f6, #8b5cf6, #f59e0b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #aurora-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="bg-black m-0 p-0 overflow-hidden h-screen w-screen font-inter">
+    <!-- Aurora Comet Background -->
+    <canvas id="aurora-canvas"></canvas>
+    
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 z-20 p-6 lg:px-16 xl:px-24 2xl:px-32">
+        <div class="max-w-8xl mx-auto">
+            <div class="glass rounded-2xl border border-white/10 px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <!-- Brand Name Only -->
+                    <div class="flex items-center">
+                        <span class="text-white font-manrope font-bold text-xl tracking-wider">ZORA</span>
+                    </div>
+                    
+                    <!-- Navigation Links -->
+                    <div class="hidden md:flex items-center space-x-8">
+                        <a href="#" class="text-white/80 hover:text-white transition-colors text-sm font-inter">Features</a>
+                        <a href="#" class="text-white/80 hover:text-white transition-colors text-sm font-inter">Solutions</a>
+                        <a href="#" class="text-white/80 hover:text-white transition-colors text-sm font-inter">Pricing</a>
+                        <a href="#" class="text-white/80 hover:text-white transition-colors text-sm font-inter">Docs</a>
+                    </div>
+                    
+                    <!-- CTA Buttons -->
+                    <div class="flex items-center space-x-4">
+                        <a href="#" class="hidden sm:block text-white/80 hover:text-white transition-colors text-sm font-inter">Sign In</a>
+                        <a href="#" class="px-4 py-2 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white rounded-lg font-medium transition-all duration-300 transform hover:scale-105 text-sm font-inter">
+                            Get Started
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button class="md:hidden text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Content -->
+    <div class="relative z-10 min-h-screen flex items-center justify-center px-6 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 pt-24">
+        <div class="max-w-8xl mx-auto grid lg:grid-cols-2 gap-16 xl:gap-24 items-center">
+            
+            <!-- Left Content -->
+            <div class="text-center lg:text-left space-y-8 animate-fade-in-up">
+                <div class="space-y-6">
+                    <span class="inline-block px-4 py-2 glass text-white/70 eyebrow-stroke rounded-full text-base font-medium border border-indigo-400/30 animate-fade-in-delay font-inter">
+                        Database Management Platform
+                    </span>
+                    
+                    <h1 class="text-[48px] sm:text-[56px] lg:text-[64px] xl:text-[72px] 2xl:text-[80px] font-normal font-satoshi text-white leading-none tracking-tight">
+                        <span class="text-white">The Future of</span>
+                        <br />
+                        <span class="schema-gradient">
+                            Schema Management
+                        </span>
+                        <br />
+                        <span class="text-white">Is Here</span>
+                    </h1>
+                    
+                    <p class="text-base lg:text-lg xl:text-xl text-white/70 leading-relaxed max-w-xl xl:max-w-2xl animate-fade-in-delay font-inter">
+                        Visualize, evolve, and sync your entire database infrastructure powered by AI and designed for scale.
+                    </p>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-delay-2">
+                    <a href="#" class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-base font-inter">
+                        Get Started
+                    </a>
+                    <a href="#" class="px-8 py-4 gradient-stroke text-white rounded-xl font-semibold hover:bg-white/10 transition-all duration-300 transform hover:scale-105 text-base font-inter">
+                        View Demo
+                    </a>
+                </div>
+                
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-8 pt-8 animate-fade-in-delay-2">
+                    <div class="text-center">
+                        <div class="text-2xl lg:text-3xl font-light font-manrope text-white tracking-tight">99.9%</div>
+                        <div class="text-white/60 text-sm font-inter">Uptime</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl lg:text-3xl font-light font-manrope text-white tracking-tight">10M+</div>
+                        <div class="text-white/60 text-sm font-inter">Queries/sec</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl lg:text-3xl font-light font-manrope text-white tracking-tight">500+</div>
+                        <div class="text-white/60 text-sm font-inter">Enterprises</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Content - Enhanced Schema Visualization -->
+            <div class="flex justify-center lg:justify-end animate-fade-in-delay">
+                <div class="relative w-full max-w-lg xl:max-w-xl">
+                    <div class="hero-glow absolute inset-0 rounded-3xl"></div>
+                    <div class="relative glass overflow-hidden rounded-3xl border border-white/10 backdrop-blur-3xl">
+                        
+                        <!-- Schema Visualization -->
+                        <div class="p-8 xl:p-10">
+                            <div class="w-full h-80 xl:h-96 rounded-2xl gradient-border inner-glow overflow-hidden relative">
+                                
+                                <!-- Animated grid background -->
+                                <div class="absolute inset-0 opacity-10">
+                                    <div class="w-full h-full animate-pulse" style="background-image: linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px); background-size: 20px 20px;"></div>
+                                </div>
+                                
+                                <!-- Database connections -->
+                                <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 300">
+                                    <defs>
+                                        <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" style="stop-color:#4f46e5;stop-opacity:0.8" />
+                                            <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.8" />
+                                        </linearGradient>
+                                    </defs>
+                                    <g stroke="url(#connectionGradient)" stroke-width="2" fill="none">
+                                        <path class="connector" d="M100,80 L180,80 L180,120 L260,120" />
+                                        <path class="connector" d="M260,120 L300,120 L300,80 L340,80" />
+                                        <path class="connector" d="M180,120 L180,160 L260,160" />
+                                        <path class="connector" d="M260,160 L300,160 L300,200 L260,200" />
+                                        <circle cx="100" cy="80" r="4" fill="#4f46e5"/>
+                                        <circle cx="260" cy="120" r="4" fill="#3b82f6"/>
+                                        <circle cx="340" cy="80" r="4" fill="#8b5cf6"/>
+                                        <circle cx="260" cy="160" r="4" fill="#f59e0b"/>
+                                        <circle cx="260" cy="200" r="4" fill="#ef4444"/>
+                                    </g>
+                                </svg>
+                                
+                                <!-- Enhanced Table Cards -->
+                                <div class="absolute inset-0 w-full h-full">
+                                    <div class="absolute top-6 left-1/2 transform -translate-x-1/2 animate-schema-pulse">
+                                        <div class="w-12 h-12 glass rounded-2xl flex items-center justify-center border border-indigo-400/30 inner-glow">
+                                            <svg class="w-6 h-6 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Floating table cards with enhanced design -->
+                                    <div class="absolute left-6 top-16 table-float">
+                                        <div class="w-20 h-16 glass rounded-xl gradient-border shadow-2xl overflow-hidden">
+                                            <div class="bg-gradient-to-r from-indigo-500/30 to-blue-500/30 text-white text-xs px-2 py-1 font-semibold border-b border-white/20 font-inter">users</div>
+                                            <div class="px-2 py-1 space-y-1">
+                                                <div class="flex items-center space-x-1">
+                                                    <div class="w-1.5 h-1.5 bg-yellow-400 rounded-full"></div>
+                                                    <div class="h-1 w-8 bg-white/40 rounded"></div>
+                                                </div>
+                                                <div class="h-1 w-6 bg-white/30 rounded"></div>
+                                                <div class="h-1 w-10 bg-white/30 rounded"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="absolute right-6 top-16 table-float">
+                                        <div class="w-20 h-16 glass rounded-xl gradient-border shadow-2xl overflow-hidden">
+                                            <div class="bg-gradient-to-r from-blue-500/30 to-purple-500/30 text-white text-xs px-2 py-1 font-semibold border-b border-white/20 font-inter">orders</div>
+                                            <div class="px-2 py-1 space-y-1">
+                                                <div class="flex items-center space-x-1">
+                                                    <div class="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
+                                                    <div class="h-1 w-8 bg-white/40 rounded"></div>
+                                                </div>
+                                                <div class="h-1 w-5 bg-white/30 rounded"></div>
+                                                <div class="h-1 w-7 bg-white/30 rounded"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="absolute left-1/2 transform -translate-x-1/2 top-36 table-float">
+                                        <div class="w-20 h-16 glass rounded-xl gradient-border shadow-2xl overflow-hidden">
+                                            <div class="bg-gradient-to-r from-purple-500/30 to-pink-500/30 text-white text-xs px-2 py-1 font-semibold border-b border-white/20 font-inter">products</div>
+                                            <div class="px-2 py-1 space-y-1">
+                                                <div class="flex items-center space-x-1">
+                                                    <div class="w-1.5 h-1.5 bg-purple-400 rounded-full"></div>
+                                                    <div class="h-1 w-8 bg-white/40 rounded"></div>
+                                                </div>
+                                                <div class="h-1 w-8 bg-white/30 rounded"></div>
+                                                <div class="h-1 w-6 bg-white/30 rounded"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="absolute left-1/2 transform -translate-x-1/2 bottom-6 table-float">
+                                        <div class="w-20 h-16 glass rounded-xl gradient-border shadow-2xl overflow-hidden">
+                                            <div class="bg-gradient-to-r from-orange-500/30 to-red-500/30 text-white text-xs px-2 py-1 font-semibold border-b border-white/20 font-inter">analytics</div>
+                                            <div class="px-2 py-1 space-y-1">
+                                                <div class="flex items-center space-x-1">
+                                                    <div class="w-1.5 h-1.5 bg-orange-400 rounded-full"></div>
+                                                    <div class="h-1 w-8 bg-white/40 rounded"></div>
+                                                </div>
+                                                <div class="h-1 w-5 bg-white/30 rounded"></div>
+                                                <div class="h-1 w-7 bg-white/30 rounded"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Enhanced Status Bar -->
+                        <div class="px-8 xl:px-10 pb-8 xl:pb-10">
+                            <div class="flex items-center justify-between p-4 glass rounded-xl border border-white/10">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                                    <span class="text-white/90 font-medium text-sm font-inter">Schema Active</span>
+                                </div>
+                                <span class="text-white/60 text-sm font-inter">Real-time sync</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Aurora Comet Background Animation
+        const scene = new THREE.Scene();
+        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('aurora-canvas') });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Shader material for aurora comets
+        const material = new THREE.ShaderMaterial({
+            uniforms: {
+                iTime: { value: 0 },
+                iResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+            },
+            vertexShader: `
+                void main() {
+                    gl_Position = vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform float iTime;
+                uniform vec2 iResolution;
+
+                #define NUM_OCTAVES 3
+
+                float rand(vec2 n) { 
+                    return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
+                }
+
+                float noise(vec2 p){
+                    vec2 ip = floor(p);
+                    vec2 u = fract(p);
+                    u = u*u*(3.0-2.0*u);
+                    
+                    float res = mix(
+                        mix(rand(ip),rand(ip+vec2(1.0,0.0)),u.x),
+                        mix(rand(ip+vec2(0.0,1.0)),rand(ip+vec2(1.0,1.0)),u.x),u.y);
+                    return res*res;
+                }
+
+                float fbm(vec2 x) {
+                    float v = 0.0;
+                    float a = 0.3;
+                    vec2 shift = vec2(100);    
+                    mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.50));
+                    for (int i = 0; i < NUM_OCTAVES; ++i) {
+                        v += a * noise(x);
+                        x = rot * x * 2.0 + shift;
+                        a *= 0.4;
+                    }
+                    return v;
+                }
+
+                void main() {
+                    vec2 shake = vec2(sin(iTime * 1.2) * 0.005, cos(iTime * 2.1) * 0.005);
+                    
+                    vec2 p = ((gl_FragCoord.xy + shake * iResolution.xy) - iResolution.xy * 0.5) / iResolution.y * mat2(6.0, -4.0, 4.0, 6.0);
+                    vec2 v;
+                    vec4 o = vec4(0.0);
+                    
+                    float f = 2.0 + fbm(p + vec2(iTime * 5.0, 0.0)) * 0.5; 
+                    
+                    for(float i = 0.0; i++ < 35.0;)
+                    {
+                        v = p + cos(i * i + (iTime + p.x * 0.08) * 0.025 + i * vec2(13.0, 11.0)) * 3.5 + vec2(sin(iTime * 3.0 + i) * 0.003, cos(iTime * 3.5 - i) * 0.003);
+                        
+                        float tailNoise = fbm(v + vec2(iTime * 0.5, i)) * 0.3 * (1.0 - (i / 35.0)); 
+                        
+                        // Indigo/Blue/Cyan aurora colors
+                        vec4 auroraColors = vec4(
+                            0.1 + 0.3 * sin(i * 0.2 + iTime * 0.4),  // Red component (low for blue tones)
+                            0.3 + 0.5 * cos(i * 0.3 + iTime * 0.5),  // Green component
+                            0.7 + 0.3 * sin(i * 0.4 + iTime * 0.3),  // Blue component (dominant)
+                            1.0
+                        );
+                        
+                        vec4 currentContribution = auroraColors * exp(sin(i * i + iTime * 0.8)) / length(max(v, vec2(v.x * f * 0.015, v.y * 1.5)));
+                        
+                        // Much thinner comets
+                        float thinnessFactor = smoothstep(0.0, 1.0, i / 35.0) * 0.6; 
+                        o += currentContribution * (1.0 + tailNoise * 0.8) * thinnessFactor;
+                    }
+                    
+                    // 50% brighter - reduced divisor from 150.0 to 100.0
+                    o = tanh(pow(o / 100.0, vec4(1.6)));
+                    gl_FragColor = o * 1.5; // Additional brightness boost
+                }
+            `
+        });
+
+        // Create plane geometry
+        const geometry = new THREE.PlaneGeometry(2, 2);
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            material.uniforms.iTime.value += 0.016;
+            renderer.render(scene, camera);
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            material.uniforms.iResolution.value.set(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>

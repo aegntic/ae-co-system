@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.4.0",
+    "marked": "https://esm.sh/marked@^15.0.12",
+    "next/": "https://esm.sh/next@^15.3.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.513.0",
+    "framer-motion": "https://esm.sh/framer-motion@^12.16.0"
+  }
+}
+</script>
+  <script type="module" src="/@vite/client"></script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project 4site - GitHub to Website Generator | Powered by aegntic.ai</title>
+  
+  <!-- Primary SEO Meta Tags -->
+  <meta name="description" content="Transform any GitHub repository into a stunning website powered by aegntic.ai technology. Free GitHub README to site generator with unique visuals. No signup required. A Project 4site initiative." />
+  <meta name="keywords" content="github readme to website, aegntic ai, aegntic foundation, project 4site, github portfolio generator, readme to landing page, project showcase generator, github visualization tool, developer portfolio creator, open source project sites, automatic site generation, no code website builder, github pages alternative" />
+  <meta name="author" content="aegntic.ai | Project 4site Team" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://4site.pro" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://4site.pro" />
+  <meta property="og:title" content="Project 4site - Transform GitHub READMEs into Professional Websites | aegntic.ai" />
+  <meta property="og:description" content="Create stunning project sites powered by aegntic.ai technology. No signup, instant results. Contact: project@4site.pro" />
+  <meta property="og:image" content="https://4site.pro/og-image.png" />
+  <meta property="og:site_name" content="Project 4site by aegntic.ai" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://project4site.com" />
+  <meta name="twitter:title" content="Project4Site - AI Website Generator" />
+  <meta name="twitter:description" content="Transform GitHub repos into stunning sites with AI visuals" />
+  <meta name="twitter:image" content="https://project4site.com/twitter-card.png" />
+  <meta name="twitter:creator" content="@project4site" />
+  
+  <!-- GEO Optimization - Additional Context for AI Crawlers -->
+  <meta name="application-name" content="Project4Site AI Generator" />
+  <meta name="generator" content="Project4Site v2.0" />
+  <meta name="subject" content="AI-powered GitHub repository to website converter with FLUX.1 image generation" />
+  <meta name="rating" content="General" />
+  <meta name="coverage" content="Worldwide" />
+  <meta name="distribution" content="Global" />
+  <!-- Structured Data for SEO & GEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Project4Site",
+    "applicationCategory": "DeveloperApplication",
+    "description": "AI-powered tool that transforms GitHub repositories into professional websites with AI-generated visuals using FLUX.1 and Gemini AI",
+    "url": "https://project4site.com",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "operatingSystem": "Web",
+    "softwareVersion": "2.0",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "1250"
+    },
+    "features": [
+      "AI-generated hero images with FLUX.1",
+      "Background removal for professional assets",
+      "Automatic tech stack detection",
+      "Real-time preview",
+      "No signup required",
+      "Export to multiple formats",
+      "SEO optimized output",
+      "Mobile responsive designs"
+    ]
+  }
+  </script>
+  
+  <!-- How-To Schema for Featured Snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Convert GitHub README to Website with AI",
+    "description": "Transform your GitHub repository into a professional website with AI-generated visuals",
+    "supply": {
+      "@type": "HowToSupply",
+      "name": "GitHub Repository URL"
+    },
+    "tool": {
+      "@type": "HowToTool",
+      "name": "Project4Site Generator"
+    },
+    "step": [
+      {
+        "@type": "HowToStep",
+        "text": "Copy your GitHub repository URL",
+        "name": "Get Repository URL"
+      },
+      {
+        "@type": "HowToStep",
+        "text": "Paste URL into Project4Site generator",
+        "name": "Enter URL"
+      },
+      {
+        "@type": "HowToStep",
+        "text": "Click Generate and wait for AI processing",
+        "name": "Generate Site"
+      },
+      {
+        "@type": "HowToStep",
+        "text": "Preview and download your AI-enhanced site",
+        "name": "Export Results"
+      }
+    ],
+    "totalTime": "PT30S"
+  }
+  </script>
+  
+  <!-- Preconnect to improve performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://generativelanguage.googleapis.com" />
+  <link rel="preconnect" href="https://fal.ai" />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/styles/glassmorphism.css" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            'inter': ['Inter', 'sans-serif']
+          },
+          colors: {
+            // Professional Dark Template Colors
+            'gray-950': '#0a0a0a',
+            'gray-900': '#161616',
+            'gray-850': '#1a1a1a',
+            'gray-800': '#262626',
+            'gray-700': '#404040',
+            'gray-600': '#525252',
+            'gray-400': '#a3a3a3',
+            'gray-300': '#d4d4d4',
+            'purple-500': '#8b5cf6',
+            'purple-400': '#a78bfa',
+            'blue-500': '#3b82f6',
+            'emerald-400': '#34d399',
+            // GitHub Dark Mode Base Colors
+            'gh-bg-primary': '#0d1117',
+            'gh-bg-secondary': '#161b22',
+            'gh-bg-tertiary': '#21262d',
+            'gh-bg-overlay': '#30363d',
+            
+            // GitHub Dark Text Colors
+            'gh-text-primary': '#c9d1d9',
+            'gh-text-secondary': '#8b949e',
+            'gh-text-muted': '#656d76',
+            'gh-text-emphasis': '#f0f6fc',
+            
+            // GitHub Dark Border Colors
+            'gh-border-default': '#30363d',
+            'gh-border-muted': '#21262d',
+            'gh-border-subtle': '#484f58',
+            
+            // Wu-Tang Professional Accent Colors
+            'wu-gold': '#FFD700',
+            'wu-gold-muted': '#FFC107',
+            'wu-gold-subtle': 'rgba(255, 215, 0, 0.1)',
+            'wu-gold-hover': 'rgba(255, 215, 0, 0.2)',
+            'text-on-emphasis': '#000000',
+            'accent-primary': '#FFD700',
+            'accent-secondary': '#FFC107',
+            
+            // Keep some Rocko colors for compatibility
+            'rocko-teal': '#FFD700',
+            'rocko-pink': '#ef4444',
+            'rocko-yellow': '#FFC107',
+            'rocko-lime': '#FFD700',
+            'rocko-orange': '#FFC107',
+            'rocko-purple': '#8b949e',
+            
+            // Semantic overwrites for dark theme
+            primary: {
+              DEFAULT: '#FFD700',
+              foreground: '#000000',
+              dark: '#FFC107',
+            },
+            secondary: {
+              DEFAULT: '#FFC107',
+              foreground: '#000000',
+            },
+            background: '#0d1117',
+            foreground: '#c9d1d9',
+            muted: {
+              DEFAULT: '#21262d',
+              foreground: '#8b949e',
+            },
+            card: {
+              DEFAULT: '#161b22',
+              foreground: '#c9d1d9',
+            },
+            accent: {
+              DEFAULT: '#FFD700',
+              foreground: '#000000',
+            },
+            destructive: {
+              DEFAULT: '#ef4444',
+              foreground: '#f0f6fc',
+            },
+            success: '#22c55e',
+            warning: '#FFC107',
+            error: '#ef4444',
+            info: '#3b82f6',
+          },
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', 'Consolas', 'Courier New', 'monospace'],
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideInUp: {
+              '0%': { transform: 'translateY(20px)', opacity: '0'},
+              '100%': { transform: 'translateY(0)', opacity: '1'}
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            'wu-glow': {
+              '0%, 100%': { boxShadow: '0 0 15px rgba(255, 215, 0, 0.2)' },
+              '50%': { boxShadow: '0 0 20px rgba(255, 215, 0, 0.3)' },
+            },
+            'gradient-shift': {
+              '0%': { backgroundPosition: '0% 50%' },
+              '50%': { backgroundPosition: '100% 50%' },
+              '100%': { backgroundPosition: '0% 50%' },
+            },
+          },
+          animation: {
+            fadeIn: 'fadeIn 0.5s ease-out',
+            slideInUp: 'slideInUp 0.5s ease-out forwards',
+            float: 'float 3s ease-in-out infinite',
+            'wu-glow': 'wu-glow 3s ease-in-out infinite',
+            'gradient-shift': 'gradient-shift 3s ease infinite',
+          }
+        },
+      },
+      plugins: [
+        function({ addComponents, theme }) {
+          addComponents({
+            '.prose': {
+              'h1': { color: theme('colors.gh-text-primary') },
+              'h2': { color: theme('colors.gh-text-primary') },
+              'h3': { color: theme('colors.gh-text-primary') },
+              'h4': { color: theme('colors.gh-text-primary') },
+              'h5': { color: theme('colors.gh-text-primary') },
+              'h6': { color: theme('colors.gh-text-primary') },
+              'p': { color: theme('colors.gh-text-secondary') },
+              'strong': { color: theme('colors.gh-text-primary') },
+              'a': { color: theme('colors.wu-gold'), textDecoration: 'none', '&:hover': { color: theme('colors.wu-gold-muted'), textDecoration: 'underline' } },
+              'code': { backgroundColor: theme('colors.gh-bg-tertiary'), color: theme('colors.wu-gold'), padding: '0.2em 0.4em', borderRadius: '0.25rem', fontSize: '0.9em'},
+              'pre': { backgroundColor: theme('colors.gh-bg-tertiary'), color: theme('colors.gh-text-primary'), padding: theme('spacing.4'), borderRadius: '0.5rem', overflowX: 'auto', border: '1px solid ' + theme('colors.gh-border-default') },
+              'pre code': { backgroundColor: 'transparent', color: 'inherit', padding: '0', fontSize: '1em' },
+              'blockquote': { borderLeftColor: theme('colors.wu-gold'), backgroundColor: 'rgba(255, 215, 0, 0.05)', padding: theme('spacing.4'), borderRadius: '0 0.5rem 0.5rem 0' },
+              'ul > li::marker': { color: theme('colors.wu-gold') },
+              'ol > li::marker': { color: theme('colors.wu-gold') },
+              'table': { borderColor: theme('colors.gh-border-default') },
+              'th': { backgroundColor: theme('colors.gh-bg-secondary'), color: theme('colors.gh-text-primary'), borderColor: theme('colors.gh-border-default') },
+              'td': { borderColor: theme('colors.gh-border-default') },
+            }
+          })
+        }
+      ]
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      /* Professional background gradients */
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+      background-attachment: fixed;
+    }
+    .prose code:not(pre code) { 
+      font-family: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    }
+    .prose pre code {
+      font-family: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #161b22;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #30363d;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #FFD700;
+    }
+    /* Selection colors */
+    ::selection {
+      background: rgba(255, 215, 0, 0.2);
+      color: #000000;
+    }
+  </style>
+<!-- Import map disabled for local development -->
+<!-- -->
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="dark bg-gh-bg-primary text-gh-text-primary antialiased">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HORIZONTAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #000000;
+            --color-secondary: #111111;
+            --color-accent: #ffffff;
+            --color-text: #ffffff;
+            --color-text-muted: rgba(255, 255, 255, 0.7);
+            --font-mono: "Space Mono", monospace;
+            --menu-width: 200px;
+            --menu-collapsed-width: 60px;
+            --transition-slow: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-mono);
+            overflow: hidden;
+            cursor: grab;
+            background-color: var(--color-primary);
+            color: var(--color-text);
+        }
+
+        body:active { cursor: grabbing; }
+
+        .left-menu {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: var(--menu-collapsed-width);
+            background-color: var(--color-secondary);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: width var(--transition-slow);
+            overflow: hidden;
+            border-right: 1px solid #333;
+        }
+
+        .left-menu.expanded {
+            width: var(--menu-width);
+        }
+
+        body.menu-expanded .page-container {
+            left: var(--menu-width);
+        }
+
+        .page-container {
+            position: fixed;
+            top: 0;
+            left: var(--menu-collapsed-width);
+            right: 0;
+            bottom: 0;
+            transition: left var(--transition-slow);
+        }
+
+        .left-menu-top {
+            position: absolute;
+            top: 1.5rem;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .left-menu-middle {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            transform: translateY(-50%);
+        }
+
+        .logo {
+            font-weight: 700;
+            letter-spacing: 1px;
+            font-size: 0.7rem;
+            color: var(--color-text);
+            transform: rotate(-90deg);
+            transition: opacity 0.3s;
+        }
+
+        .left-menu.expanded .logo {
+            opacity: 0;
+        }
+
+        .menu-btn {
+            width: 20px;
+            height: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .menu-btn span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: var(--color-text);
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .left-menu.expanded .menu-btn span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .left-menu.expanded .menu-btn span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .left-menu.expanded .menu-btn span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .section-nav {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding-left: var(--menu-collapsed-width);
+            padding-right: 1rem;
+            background-color: var(--color-secondary);
+        }
+
+        .left-menu.expanded .section-nav {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .section-nav-item {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            margin: 1rem 0;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity var(--transition-slow), transform var(--transition-slow), color 0.2s;
+            cursor: pointer;
+            transform: translateX(-20px);
+            display: flex;
+            align-items: center;
+            font-weight: 400;
+        }
+
+        .section-nav-item.animate-in {
+            opacity: 0.7;
+            transform: translateX(0);
+        }
+
+        .section-nav-item:hover,
+        .section-nav-item.active {
+            opacity: 1;
+            color: var(--color-accent);
+        }
+
+        .section-nav-item-number {
+            font-weight: 700;
+            font-size: 0.7rem;
+            opacity: 0.6;
+            margin-right: 0.5rem;
+            min-width: 20px;
+        }
+
+        .horizontal-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .panels-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            display: flex;
+            will-change: transform;
+        }
+
+        .panel {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .panel-content {
+            width: 90%;
+            max-width: 900px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .panel.active .panel-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chapter {
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            color: var(--color-text-muted);
+            font-weight: 700;
+        }
+
+        .title {
+            font-size: clamp(3rem, 8vw, 8rem);
+            margin-bottom: 3rem;
+            line-height: 1;
+            font-weight: 700;
+            color: var(--color-text);
+            letter-spacing: -0.02em;
+        }
+
+        .mega-text {
+            font-size: clamp(6rem, 20vw, 20rem);
+            line-height: 0.8;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 2rem;
+            letter-spacing: -0.05em;
+        }
+
+        .text {
+            font-size: clamp(1rem, 1.5vw, 1.2rem);
+            line-height: 1.6;
+            color: var(--color-text-muted);
+            font-weight: 400;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-name {
+            font-size: clamp(4rem, 12vw, 10rem);
+            color: var(--color-text);
+            margin-bottom: 3rem;
+            line-height: 0.9;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -0.03em;
+        }
+
+        .email-wrapper {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background-color: var(--color-secondary);
+            padding: 1rem 2rem;
+            border-radius: 0;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .email-wrapper:hover {
+            background-color: #222;
+            border-color: #555;
+            transform: translateY(-2px);
+        }
+
+        .email {
+            font-size: 1.2rem;
+            color: var(--color-text);
+            text-decoration: none;
+            transition: color 0.2s;
+            font-weight: 400;
+        }
+
+        .copy-email {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--color-text);
+            opacity: 0.7;
+            padding: 0.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .copy-email:hover {
+            opacity: 1;
+        }
+
+        .copy-tooltip {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--color-accent);
+            color: var(--color-primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 0;
+            font-size: 0.7rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            font-weight: 700;
+        }
+
+        .copy-tooltip.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            z-index: 100;
+            color: white;
+        }
+
+        .nav-progress {
+            width: 100px;
+            height: 2px;
+            background-color: #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: white;
+            transform-origin: left;
+            transform: scaleX(0);
+            will-change: transform;
+        }
+
+        .nav-text {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .panel-1 {
+            background-color: #000000;
+        }
+
+        .panel-2 {
+            background-color: #111111;
+        }
+
+        .panel-3 {
+            background-color: #1a1a1a;
+        }
+
+        .panel-4 {
+            background-color: #000000;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: clamp(2rem, 8vw, 4rem);
+            }
+
+            .mega-text {
+                font-size: clamp(3rem, 15vw, 8rem);
+            }
+
+            .contact-name {
+                font-size: clamp(2.5rem, 12vw, 6rem);
+            }
+
+            .email {
+                font-size: 1rem;
+            }
+
+            .email-wrapper {
+                padding: 0.8rem 1.5rem;
+            }
+        }
+    </style>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <!-- Left Menu -->
+    <div class="left-menu">
+        <div class="left-menu-top">
+            <button class="menu-btn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="left-menu-middle">
+            <div class="logo">HORIZONTAL</div>
+        </div>
+        <div class="section-nav">
+            <a class="section-nav-item" data-index="0">
+                <span class="section-nav-item-number">01</span>
+                <span>Home</span>
+            </a>
+            <a class="section-nav-item" data-index="1">
+                <span class="section-nav-item-number">02</span>
+                <span>About</span>
+            </a>
+            <a class="section-nav-item" data-index="2">
+                <span class="section-nav-item-number">03</span>
+                <span>Projects</span>
+            </a>
+            <a class="section-nav-item" data-index="3">
+                <span class="section-nav-item-number">04</span>
+                <span>Contact</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="page-container">
+        <div class="horizontal-container">
+            <div class="panels-container">
+                <!-- Panel 1: Home -->
+                <section class="panel panel-1" data-index="0">
+                    <div class="panel-content">
+                        <div class="chapter">WELCOME TO</div>
+                        <h1 class="title">HORIZONTAL</h1>
+                        <div class="text">
+                            <p>A minimalist approach to digital experiences. Clean lines, monospace typography, and purposeful design that moves horizontally through ideas and concepts.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Panel 2: About -->
+                <section class="panel panel-2" data-index="1">
+                    <div class="panel-content">
+                        <div class="chapter">PHILOSOPHY</div>
+                        <div class="mega-text">MINIMAL</div>
+                        <div class="text">
+                            <p>We believe in the power of simplicity. Every element serves a purpose. Every line of code has meaning. Black and white isn't just a color scheme – it's a commitment to clarity.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Panel 3: Projects -->
+                <section class="panel panel-3" data-index="2">
+                    <div class="panel-content">
+                        <div class="chapter">OUR WORK</div>
+                        <div class="mega-text">CRAFT</div>
+                        <div class="text">
+                            <p>Each project is carefully considered. From concept to completion, we focus on creating experiences that are both functional and beautiful. Typography, spacing, and interaction design working in harmony.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Panel 4: Contact -->
+                <section class="panel panel-4" data-index="3">
+                    <div class="panel-content">
+                        <div class="contact-name">GET IN TOUCH</div>
+                        <div class="email-wrapper">
+                            <a href="mailto:hello@horizontal.com" class="email">hello@horizontal.com</a>
+                            <button class="copy-email" title="Copy email">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </button>
+                            <span class="copy-tooltip">Copied!</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <div class="nav-text">SCROLL</div>
+        <div class="nav-progress">
+            <div class="nav-progress-fill"></div>
+        </div>
+        <div class="nav-text">01 / 04</div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const panelsContainer = document.querySelector(".panels-container");
+            const panels = document.querySelectorAll(".panel");
+            const progressFill = document.querySelector(".nav-progress-fill");
+            const navText = document.querySelectorAll(".nav-text")[1];
+            const leftMenu = document.querySelector(".left-menu");
+            const menuBtn = document.querySelector(".menu-btn");
+            const sectionNavItems = document.querySelectorAll(".section-nav-item");
+            const copyEmailBtn = document.querySelector(".copy-email");
+            const copyTooltip = document.querySelector(".copy-tooltip");
+            const horizontalContainer = document.querySelector(".horizontal-container");
+
+            const SMOOTH_FACTOR = 0.065;
+            const PANEL_COUNT = 4;
+
+            let targetX = 0;
+            let currentX = 0;
+            let panelWidth = window.innerWidth;
+            let maxScroll = (PANEL_COUNT - 1) * panelWidth;
+            let isAnimating = false;
+            let currentPanel = 0;
+            let menuExpanded = false;
+            let isDragging = false;
+            let startX = 0;
+            let startScrollX = 0;
+
+            const lerp = (start, end, factor) => start + (end - start) * factor;
+            const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+
+            // Copy email functionality
+            copyEmailBtn.addEventListener("click", () => {
+                const email = document.querySelector(".email").textContent;
+                navigator.clipboard.writeText(email).then(() => {
+                    copyTooltip.classList.add("active");
+                    setTimeout(() => copyTooltip.classList.remove("active"), 2000);
+                });
+            });
+
+            // Menu functionality
+            menuBtn.addEventListener("click", () => {
+                menuExpanded = !menuExpanded;
+                leftMenu.classList.toggle("expanded");
+                document.body.classList.toggle("menu-expanded");
+
+                if (menuExpanded) {
+                    setTimeout(() => {
+                        sectionNavItems.forEach((item, index) => {
+                            setTimeout(() => item.classList.add("animate-in"), index * 30);
+                        });
+                    }, 150);
+                } else {
+                    sectionNavItems.forEach(item => item.classList.remove("animate-in"));
+                }
+
+                setTimeout(updateDimensions, 400);
+            });
+
+            const updateDimensions = () => {
+                panelWidth = window.innerWidth;
+                maxScroll = (PANEL_COUNT - 1) * panelWidth;
+                targetX = currentPanel * panelWidth;
+                currentX = targetX;
+
+                panels.forEach(panel => {
+                    panel.style.width = `${panelWidth}px`;
+                });
+
+                panelsContainer.style.transform = `translateX(-${currentX}px)`;
+            };
+
+            // Navigation
+            sectionNavItems.forEach((item) => {
+                item.addEventListener("click", () => {
+                    const index = parseInt(item.getAttribute("data-index"));
+                    targetX = index * panelWidth;
+
+                    sectionNavItems.forEach(navItem => navItem.classList.remove("active"));
+                    item.classList.add("active");
+
+                    startAnimation();
+
+                    if (menuExpanded) {
+                        menuExpanded = false;
+                        leftMenu.classList.remove("expanded");
+                        document.body.classList.remove("menu-expanded");
+                        sectionNavItems.forEach(item => item.classList.remove("animate-in"));
+                        setTimeout(updateDimensions, 400);
+                    }
+                });
+            });
+
+            const updateProgress = () => {
+                const progress = currentX / maxScroll;
+                progressFill.style.transform = `scaleX(${progress})`;
+            };
+
+            const updatePageCount = () => {
+                const currentPanelIndex = Math.round(currentX / panelWidth) + 1;
+                const formatted = currentPanelIndex.toString().padStart(2, '0');
+                navText.textContent = `${formatted} / 04`;
+
+                sectionNavItems.forEach((item, index) => {
+                    if (index === currentPanelIndex - 1) {
+                        item.classList.add("active");
+                    } else {
+                        item.classList.remove("active");
+                    }
+                });
+            };
+
+            const updateActivePanel = () => {
+                const newPanel = Math.round(currentX / panelWidth);
+                if (newPanel !== currentPanel) {
+                    panels[currentPanel]?.classList.remove("active");
+                    panels[newPanel]?.classList.add("active");
+                    currentPanel = newPanel;
+                }
+            };
+
+            const animate = () => {
+                currentX = lerp(currentX, targetX, SMOOTH_FACTOR);
+                panelsContainer.style.transform = `translateX(-${currentX}px)`;
+
+                updateProgress();
+                updatePageCount();
+                updateActivePanel();
+
+                if (Math.abs(targetX - currentX) > 0.1 || isAnimating) {
+                    requestAnimationFrame(animate);
+                } else {
+                    isAnimating = false;
+                }
+            };
+
+            const startAnimation = () => {
+                if (!isAnimating) {
+                    isAnimating = true;
+                    requestAnimationFrame(animate);
+                }
+            };
+
+            // Event handlers
+            horizontalContainer.addEventListener("wheel", (e) => {
+                e.preventDefault();
+                targetX = clamp(targetX + e.deltaY, 0, maxScroll);
+                startAnimation();
+            });
+
+            horizontalContainer.addEventListener("mousedown", (e) => {
+                if (e.target.closest(".left-menu") || e.target.closest(".copy-email")) return;
+                isDragging = true;
+                startX = e.clientX;
+                startScrollX = currentX;
+                document.body.style.cursor = "grabbing";
+                e.preventDefault();
+            });
+
+            window.addEventListener("mousemove", (e) => {
+                if (!isDragging) return;
+                const dx = e.clientX - startX;
+                targetX = clamp(startScrollX - dx, 0, maxScroll);
+                startAnimation();
+            });
+
+            window.addEventListener("mouseup", () => {
+                if (!isDragging) return;
+                isDragging = false;
+                document.body.style.cursor = "grab";
+                
+                const nearestPanel = Math.round(targetX / panelWidth);
+                targetX = nearestPanel * panelWidth;
+                startAnimation();
+            });
+
+            window.addEventListener("resize", updateDimensions);
+
+            // Initialize
+            updateDimensions();
+            panels[0].classList.add("active");
+            sectionNavItems[0].classList.add("active");
+            startAnimation();
+        });
+    </script>
+</body>
+</html>

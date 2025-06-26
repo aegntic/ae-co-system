@@ -1,0 +1,13 @@
+STEP 2: SKETCH OUT YOUR IDEA
+===========================
+
+TOOL: tldraw (or FigJam)
+- Whiteboard tool for creating flowcharts
+
+PROCESS:
+- Sketch out a flowchart of the overall experience of your business
+- You don't have to be a designer — anyone can make boxes!
+- Create a visual representation of your user flow
+
+HOT TIP:
+You'll get better results from an LLM if you give it a diagram or flowchart like this. Visual context helps AI understand your vision better.

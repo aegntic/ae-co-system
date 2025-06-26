@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NomadHub - Remote Work Reimagined</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'work': ['Work Sans', 'sans-serif'],
+                        'manrope': ['Manrope', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { overflow: hidden; margin: 0; padding: 0; background-color: #151912; }
+        canvas#neuro { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: .95; z-index: 1; }
+        .section { height: 100vh; width: 100vw; position: fixed; top: 0; left: 0; opacity: 0; transition: opacity 1s ease, transform 1s ease; overflow: hidden; transform: scale(0.95); z-index: 2; }
+        .section.active { opacity: 1; z-index: 10; transform: scale(1); }
+        .progress-bar { height: 1px; position: fixed; top: 50%; right: 30px; z-index: 100; }
+        .progress-dot { width: 12px; height: 12px; border: 2px solid #60a5fa; border-radius: 50%; margin: 30px 0; cursor: pointer; transition: all 0.4s ease; background: transparent; }
+        .progress-dot.active { transform: scale(1.3); background-color: #60a5fa; box-shadow: 0 0 20px rgba(96, 165, 250, 0.5); }
+        .progress-dot:hover { transform: scale(1.1); box-shadow: 0 0 15px rgba(96, 165, 250, 0.3); }
+        .reveal { opacity: 0; transform: translateY(50px); transition: opacity 1s ease, transform 1s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .text-gradient { background-clip: text; -webkit-background-clip: text; color: transparent; background-image: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #1d4ed8 100%); }
+        .heading-tight { letter-spacing: -0.02em; }
+        .interactive-card { transition: all 0.5s ease; cursor: pointer; }
+        .interactive-card:hover { transform: translateY(-10px) scale(1.02); background: rgba(96, 165, 250, 0.1); border-color: rgba(96, 165, 250, 0.4); }
+        .floating { animation: floating 3s ease-in-out infinite; }
+        @keyframes floating { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+        .pulse-btn { animation: pulse 2s infinite; position: relative; overflow: hidden; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(96, 165, 250, 0); } 100% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0); } }
+        .magnetic { transition: transform 0.3s ease; }
+        .content-overlay { position: relative; z-index: 2; }
+        .glitch { position: relative; }
+        .glitch:hover:before { content: attr(data-text); position: absolute; left: 2px; text-shadow: -2px 0 #60a5fa; top: 0; color: #fff; overflow: hidden; animation: noise-anim-2 0.3s infinite linear alternate-reverse; }
+        @keyframes noise-anim-2 { 0% { clip-path: inset(40% 0 61% 0); } 20% { clip-path: inset(92% 0 1% 0); } 40% { clip-path: inset(43% 0 1% 0); } 60% { clip-path: inset(25% 0 58% 0); } 80% { clip-path: inset(54% 0 7% 0); } 100% { clip-path: inset(58% 0 43% 0); } }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-manrope">
+    <!-- Neural Background -->
+    <canvas id="neuro"></canvas>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full p-8 flex justify-between items-center z-50">
+        <div class="text-4xl font-work font-light tracking-wide magnetic glitch" data-text="NomadHub">NomadHub</div>
+        <div class="space-x-12 hidden md:block font-manrope text-lg">
+            <a href="#" class="magnetic hover:text-blue-400 transition-all duration-300 hover:scale-110">Destinations</a>
+            <a href="#" class="magnetic hover:text-blue-400 transition-all duration-300 hover:scale-110">Community</a>
+            <a href="#" class="magnetic hover:text-blue-400 transition-all duration-300 hover:scale-110">Resources</a>
+        </div>
+        <div class="md:hidden">
+            <button class="text-3xl magnetic">☰</button>
+        </div>
+    </nav>
+
+    <!-- Progress Indicator -->
+    <div class="progress-bar">
+        <div class="progress-dot" data-index="0"></div>
+        <div class="progress-dot" data-index="1"></div>
+        <div class="progress-dot" data-index="2"></div>
+        <div class="progress-dot" data-index="3"></div>
+    </div>
+
+    <!-- Sections -->
+    <section class="section active" data-index="0">
+        <div class="content-overlay container mx-auto h-full flex flex-col justify-center px-8">
+            <h1 class="font-work font-light heading-tight mb-8 reveal active glitch" data-text="Work From Anywhere" style="font-size: clamp(96px, 12vw, 140px); line-height: 0.85;">
+                <span class="text-gradient">Work From</span><br>Anywhere
+            </h1>
+            <p class="font-manrope text-gray-300 max-w-3xl reveal active" style="font-size: 24px; line-height: 1.4; transition-delay: 0.2s;">
+                Connect with a global community of digital nomads, discover remote-friendly destinations, and build your location-independent career.
+            </p>
+            <div class="mt-16 reveal active" style="transition-delay: 0.4s">
+                <button class="border-2 border-blue-400 px-12 py-4 font-manrope hover:bg-blue-400 hover:text-black transition-all duration-500 pulse-btn magnetic text-lg tracking-wide">
+                    Start Your Journey
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" data-index="1">
+        <div class="container mx-auto h-full flex flex-col justify-center px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="font-work font-light heading-tight mb-8 reveal glitch" data-text="Global Community" style="font-size: clamp(64px, 8vw, 88px); line-height: 0.9;">Global Community</h2>
+                    <p class="font-manrope text-gray-300 mb-12 reveal" style="font-size: 20px; line-height: 1.5; transition-delay: 0.2s;">
+                        Join thousands of remote workers who've already transformed their careers. Share experiences, find co-working spaces, and build meaningful connections worldwide.
+                    </p>
+                    <div class="reveal" style="transition-delay: 0.4s">
+                        <a href="#" class="underline font-manrope text-blue-400 hover:text-blue-300 transition-all duration-300 hover:scale-105 inline-block text-lg magnetic">
+                            Join Community →
+                        </a>
+                    </div>
+                </div>
+                <div class="reveal floating" style="transition-delay: 0.3s">
+                    <div class="h-96 lg:h-[500px] bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 rounded-2xl interactive-card relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                        <div class="absolute inset-4 flex items-center justify-center text-6xl">🌍</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" data-index="2">
+        <div class="container mx-auto h-full flex flex-col justify-center px-8">
+            <h2 class="font-work font-light heading-tight mb-16 text-center reveal glitch" data-text="Remote Solutions" style="font-size: clamp(64px, 8vw, 88px); line-height: 0.9;">Remote Solutions</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="p-8 border-2 border-gray-600 rounded-2xl interactive-card reveal" style="transition-delay: 0.2s">
+                    <div class="text-6xl mb-6">🏠</div>
+                    <h3 class="font-work font-light heading-tight mb-6 text-3xl">Co-living Spaces</h3>
+                    <p class="font-manrope text-gray-300 text-lg leading-relaxed">Discover verified co-living and co-working spaces in top nomad destinations with high-speed internet and vibrant communities.</p>
+                </div>
+                <div class="p-8 border-2 border-gray-600 rounded-2xl interactive-card reveal" style="transition-delay: 0.3s">
+                    <div class="text-6xl mb-6">💼</div>
+                    <h3 class="font-work font-light heading-tight mb-6 text-3xl">Remote Jobs</h3>
+                    <p class="font-manrope text-gray-300 text-lg leading-relaxed">Access curated remote job opportunities from companies that truly embrace location independence and flexible work culture.</p>
+                </div>
+                <div class="p-8 border-2 border-gray-600 rounded-2xl interactive-card reveal" style="transition-delay: 0.4s">
+                    <div class="text-6xl mb-6">🛠️</div>
+                    <h3 class="font-work font-light heading-tight mb-6 text-3xl">Digital Tools</h3>
+                    <p class="font-manrope text-gray-300 text-lg leading-relaxed">Essential resources, visa guides, and productivity tools to help you work efficiently from anywhere in the world.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" data-index="3">
+        <div class="container mx-auto h-full flex flex-col justify-center items-center px-8 text-center">
+            <h2 class="font-work font-light heading-tight mb-8 reveal glitch floating" data-text="Ready to Go Remote?" style="font-size: clamp(64px, 8vw, 88px); line-height: 0.9;">Ready to Go Remote?</h2>
+            <p class="font-manrope text-gray-300 max-w-4xl mb-16 reveal" style="font-size: 22px; line-height: 1.5; transition-delay: 0.2s;">
+                Take the leap into location independence. Join our platform and get access to exclusive nomad resources, community support, and the tools you need to thrive anywhere.
+            </p>
+            <div class="reveal" style="transition-delay: 0.4s">
+                <button class="bg-blue-500 text-white px-16 py-5 font-manrope hover:bg-blue-400 transition-all duration-500 pulse-btn magnetic text-xl tracking-wide rounded-full">
+                    Get Started Today
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Neural Background Shaders -->
+    <script type="x-shader/x-fragment" id="vertShader">
+        precision mediump float;
+        varying vec2 vUv;
+        attribute vec2 a_position;
+        void main() {
+            vUv = .5 * (a_position + 1.);
+            gl_Position = vec4(a_position, 0.0, 1.0);
+        }
+    </script>
+    
+    <script type="x-shader/x-fragment" id="fragShader">
+        precision mediump float;
+        varying vec2 vUv;
+        uniform float u_time;
+        uniform float u_ratio;
+        uniform vec2 u_pointer_position;
+        uniform float u_scroll_progress;
+        
+        vec2 rotate(vec2 uv, float th) {
+            return mat2(cos(th), sin(th), -sin(th), cos(th)) * uv;
+        }
+        
+        float neuro_shape(vec2 uv, float t, float p) {
+            vec2 sine_acc = vec2(0.);
+            vec2 res = vec2(0.);
+            float scale = 8.;
+            for (int j = 0; j < 15; j++) {
+                uv = rotate(uv, 1.);
+                sine_acc = rotate(sine_acc, 1.);
+                vec2 layer = uv * scale + float(j) + sine_acc - t;
+                sine_acc += sin(layer) + 2.4 * p;
+                res += (.5 + .5 * cos(layer)) / scale;
+                scale *= (1.2);
+            }
+            return res.x + res.y;
+        }
+        
+        void main() {
+            vec2 uv = .5 * vUv;
+            uv.x *= u_ratio;
+            vec2 pointer = vUv - u_pointer_position;
+            pointer.x *= u_ratio;
+            float p = clamp(length(pointer), 0., 1.);
+            p = .5 * pow(1. - p, 2.);
+            float t = .001 * u_time;
+            vec3 color = vec3(0.);
+            float noise = neuro_shape(uv, t, p);
+            noise = 1.2 * pow(noise, 3.);
+            noise += pow(noise, 10.);
+            noise = max(.0, noise - .5);
+            noise *= (1. - length(vUv - .5));
+            color = vec3(0.1, 0.2, 0.8);
+            color += vec3(0.0, 0.1, 0.4) * sin(3.0 * u_scroll_progress + 1.5);
+            color = color * noise;
+            gl_FragColor = vec4(color, noise);
+        }
+    </script>
+
+    <script>
+        // Neural background initialization
+        const canvasEl = document.querySelector("canvas#neuro");
+        const devicePixelRatio = Math.min(window.devicePixelRatio, 2);
+        const pointer = { x: 0, y: 0, tX: 0, tY: 0 };
+        let uniforms;
+        const gl = initShader();
+        setupEvents();
+        resizeCanvas();
+        window.addEventListener("resize", resizeCanvas);
+        render();
+
+        function initShader() {
+            const vsSource = document.getElementById("vertShader").innerHTML;
+            const fsSource = document.getElementById("fragShader").innerHTML;
+            const gl = canvasEl.getContext("webgl") || canvasEl.getContext("experimental-webgl");
+            
+            function createShader(gl, sourceCode, type) {
+                const shader = gl.createShader(type);
+                gl.shaderSource(shader, sourceCode);
+                gl.compileShader(shader);
+                return shader;
+            }
+            
+            const vertexShader = createShader(gl, vsSource, gl.VERTEX_SHADER);
+            const fragmentShader = createShader(gl, fsSource, gl.FRAGMENT_SHADER);
+            
+            function createShaderProgram(gl, vertexShader, fragmentShader) {
+                const program = gl.createProgram();
+                gl.attachShader(program, vertexShader);
+                gl.attachShader(program, fragmentShader);
+                gl.linkProgram(program);
+                return program;
+            }
+            
+            const shaderProgram = createShaderProgram(gl, vertexShader, fragmentShader);
+            uniforms = getUniforms(shaderProgram);
+            
+            function getUniforms(program) {
+                let uniforms = [];
+                let uniformCount = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
+                for (let i = 0; i < uniformCount; i++) {
+                    let uniformName = gl.getActiveUniform(program, i).name;
+                    uniforms[uniformName] = gl.getUniformLocation(program, uniformName);
+                }
+                return uniforms;
+            }
+            
+            const vertices = new Float32Array([-1., -1., 1., -1., -1., 1., 1., 1.]);
+            const vertexBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+            gl.useProgram(shaderProgram);
+            const positionLocation = gl.getAttribLocation(shaderProgram, "a_position");
+            gl.enableVertexAttribArray(positionLocation);
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+            gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+            return gl;
+        }
+
+        function render() {
+            const currentTime = performance.now();
+            pointer.x += (pointer.tX - pointer.x) * .2;
+            pointer.y += (pointer.tY - pointer.y) * .2;
+            gl.uniform1f(uniforms.u_time, currentTime);
+            gl.uniform2f(uniforms.u_pointer_position, pointer.x / window.innerWidth, 1 - pointer.y / window.innerHeight);
+            gl.uniform1f(uniforms.u_scroll_progress, window.pageYOffset / (2 * window.innerHeight));
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            requestAnimationFrame(render);
+        }
+
+        function resizeCanvas() {
+            canvasEl.width = window.innerWidth * devicePixelRatio;
+            canvasEl.height = window.innerHeight * devicePixelRatio;
+            gl.uniform1f(uniforms.u_ratio, canvasEl.width / canvasEl.height);
+            gl.viewport(0, 0, canvasEl.width, canvasEl.height);
+        }
+
+        function setupEvents() {
+            window.addEventListener("pointermove", e => {
+                updateMousePosition(e.clientX, e.clientY);
+            });
+            window.addEventListener("touchmove", e => {
+                updateMousePosition(e.targetTouches[0].clientX, e.targetTouches[0].clientY);
+            });
+            function updateMousePosition(eX, eY) {
+                pointer.tX = eX;
+                pointer.tY = eY;
+            }
+        }
+
+        // Main interaction code
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.section');
+            const dots = document.querySelectorAll('.progress-dot');
+            const magneticElements = document.querySelectorAll('.magnetic');
+            let currentIndex = 0;
+            let isScrolling = false;
+            let touchStartY = 0;
+
+            updateActiveDot(currentIndex);
+
+            magneticElements.forEach(el => {
+                el.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    el.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+                });
+                el.addEventListener('mouseleave', () => {
+                    el.style.transform = 'translate(0px, 0px)';
+                });
+            });
+
+            window.addEventListener('wheel', (e) => {
+                if (isScrolling) return;
+                isScrolling = true;
+                if (e.deltaY > 0) {
+                    if (currentIndex < sections.length - 1) {
+                        currentIndex++;
+                        changeSection(currentIndex);
+                    }
+                } else {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        changeSection(currentIndex);
+                    }
+                }
+                setTimeout(() => { isScrolling = false; }, 1200);
+            });
+
+            document.addEventListener('touchstart', (e) => {
+                touchStartY = e.touches[0].clientY;
+            });
+
+            document.addEventListener('touchend', (e) => {
+                if (isScrolling) return;
+                const touchEndY = e.changedTouches[0].clientY;
+                const diff = touchStartY - touchEndY;
+                isScrolling = true;
+                if (diff > 50) {
+                    if (currentIndex < sections.length - 1) {
+                        currentIndex++;
+                        changeSection(currentIndex);
+                    }
+                } else if (diff < -50) {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        changeSection(currentIndex);
+                    }
+                }
+                setTimeout(() => { isScrolling = false; }, 1200);
+            });
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const index = parseInt(dot.getAttribute('data-index'));
+                    currentIndex = index;
+                    changeSection(currentIndex);
+                });
+            });
+
+            function changeSection(index) {
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                sections[index].classList.add('active');
+                updateActiveDot(index);
+                const reveals = sections[index].querySelectorAll('.reveal');
+                reveals.forEach((el, i) => {
+                    setTimeout(() => {
+                        el.classList.add('active');
+                    }, i * 150);
+                });
+                sections.forEach((section, i) => {
+                    if (i !== index) {
+                        const otherReveals = section.querySelectorAll('.reveal');
+                        otherReveals.forEach(el => {
+                            el.classList.remove('active');
+                        });
+                    }
+                });
+            }
+
+            function updateActiveDot(index) {
+                dots.forEach(dot => {
+                    dot.classList.remove('active');
+                });
+                dots[index].classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

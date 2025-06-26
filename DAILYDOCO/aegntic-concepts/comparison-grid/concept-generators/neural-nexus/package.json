@@ -1,0 +1,24 @@
+{
+  "name": "@aegntic/neural-nexus",
+  "version": "1.0.0",
+  "description": "Interactive 3D brain network visualization - Revolutionary AI Interface",
+  "main": "neural-nexus.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "metrics": "node metrics-server.js"
+  },
+  "keywords": ["neural-network", "3d-visualization", "ai-interface", "webgl", "three.js"],
+  "authors": [
+    "Mattae Cooper <human@mattaecooper.org>",
+    "'{ae}'aegntic.ai <contact@aegntic.ai>"
+  ],
+  "dependencies": {
+    "three": "^0.160.0",
+    "gsap": "^3.12.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

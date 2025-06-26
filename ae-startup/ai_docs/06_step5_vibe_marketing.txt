@@ -1,0 +1,34 @@
+STEP 5: VIBE MARKET YOUR BUSINESS
+=================================
+
+TOOL: Lindy
+- A no-code platform that lets you build AI assistants (agents)
+- Has many ready-to-use workflow templates
+
+MATTAE'S INSIGHT:
+"I don't know why more people don't do this, but there are thousands of $1M+ ideas just by using Lindy's and Gumloop's workflows, and selling them into the real world."
+
+EXAMPLE 1: PROSPECTING WORKFLOW (Late Checkout Agency)
+- Greg shares thought leadership posts on LinkedIn
+- If a VP+ level person likes or comments, AI agent pulls their social data to see if they're qualified
+- If qualified, agent gets their email and phone number (need paid Prospect account)
+- Dedicated Slack channel alerts the sales team
+- If salesperson posts ❤️ emoji in Slack, it sends personalized email or text to prospect
+
+EXAMPLE 2: AI NEGOTIATOR WORKFLOW
+- If someone contacts you for a discount, AI agent emails them and negotiates terms
+- Follows predefined prompts and rules
+- NOTE: Original document references "the prompt below" but specific negotiation prompt didn't convert properly from PDF
+
+EXAMPLE 3: AI VOICE AGENT FOR CUSTOMER FEEDBACK
+- Create a 1-800 number
+- People call, AI agent asks for feedback
+- Stores feedback in database (Airtable)
+- Summarizes the call and alerts the team
+
+RESULTS:
+- Using AI agents, Greg went from 120 employees to under 60, saving $5M per year
+- "We're doing things at a speed and scale that we wouldn't be able to do with human beings."
+
+KEY TIMING INSIGHT:
+"It's so important that you reach out to someone like 5,10,20 minutes after they engaged, or else they might forget about you." - Greg

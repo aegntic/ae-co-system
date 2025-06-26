@@ -1,0 +1,126 @@
+[package]
+name = "dailydoco-desktop"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "DailyDoco Pro Desktop Application with integrated aegnt-27"
+repository.workspace = true
+license.workspace = true
+keywords = ["documentation", "video", "automation", "ai", "authenticity"]
+categories = ["multimedia", "development-tools", "automation"]
+readme = "README.md"
+
+[dependencies]
+# Workspace dependencies
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+log.workspace = true
+env_logger.workspace = true
+futures.workspace = true
+async-trait.workspace = true
+parking_lot.workspace = true
+
+# Internal workspace crates  
+aegnt-27.workspace = true
+shared-types.workspace = true
+
+# Tauri for desktop application
+tauri = { version = "1.5", features = ["api-all"] }
+tauri-build = "1.5"
+
+# Screen capture and video processing
+screenshots = { version = "0.4", optional = true }
+image = "0.24"
+ffmpeg-next = { version = "6.0", optional = true }
+opencv = { version = "0.88", optional = true }
+
+# System integration
+winapi = { version = "0.3", features = ["winuser", "wingdi"], target_os = "windows" }
+x11 = { version = "2.21", target_os = "linux" }
+cocoa = { version = "0.24", target_os = "macos" }
+core-graphics = { version = "0.22", target_os = "macos" }
+
+# Input simulation
+enigo = "0.1"
+inputbot = "0.5"
+
+# Audio processing
+cpal = "0.15"
+hound = "3.5"
+rubato = "0.14"
+rustfft = "6.1"
+
+# Mathematical utilities
+rand = "0.8"
+rand_distr = "0.4"
+num-cpus.workspace = true
+
+# Cryptography and security
+sha2 = "0.10"
+aes-gcm = "0.10"
+ed25519-dalek = "2.0"
+hmac = "0.12"
+pbkdf2 = "0.12"
+
+# Configuration and serialization
+toml = "0.8"
+config = "0.13"
+
+# Machine learning and AI (optional)
+candle-core = { version = "0.3", optional = true }
+candle-nn = { version = "0.3", optional = true }
+tch = { version = "0.14", optional = true }
+
+# Network and HTTP (optional)
+reqwest = { version = "0.11", features = ["json"], optional = true }
+hyper = { version = "0.14", optional = true }
+
+[build-dependencies]
+tauri-build.workspace = true
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+proptest = "1.0"
+tempfile = "3.0"
+wiremock = "0.5"
+
+[features]
+default = ["basic-features", "desktop-app"]
+full = ["all-features", "ml-models", "video-processing", "network-features"]
+
+# Core feature sets
+basic-features = ["aegnt-27/basic-humanization"]
+all-features = ["aegnt-27/all-humanization", "desktop-capture", "ai-commentary"]
+desktop-app = ["tauri/api-all"]
+desktop-capture = ["screenshots", "screen-recording"]
+ai-commentary = ["voice-synthesis", "content-analysis"]
+ml-models = ["candle-core", "candle-nn", "tch"]
+video-processing = ["opencv", "ffmpeg-next"]
+network-features = ["reqwest", "hyper"]
+
+# Individual modules
+screen-recording = []
+voice-synthesis = []
+content-analysis = []
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.dev]
+opt-level = 0
+debug = true
+
+[[bin]]
+name = "dailydoco-desktop"
+path = "src/main.rs"
+
+# Examples will be added later

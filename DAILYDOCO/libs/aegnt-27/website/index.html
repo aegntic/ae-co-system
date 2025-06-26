@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aegnt-27: The Human Peak Protocol | Where AI Achieves Peak Human Authenticity</title>
+    <meta name="description" content="Advanced AI authenticity achievement through 27 distinct behavioral patterns. Open source framework with commercial-grade performance engines.">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="aegnt-27: The Human Peak Protocol">
+    <meta property="og:description" content="Where AI Achieves Peak Human Authenticity through 27 behavioral patterns">
+    <meta property="og:url" content="https://aegntic.ai">
+    <meta property="og:image" content="https://aegntic.ai/og-image.png">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="aegnt-27: The Human Peak Protocol">
+    <meta name="twitter:description" content="Where AI Achieves Peak Human Authenticity">
+    <meta name="twitter:image" content="https://aegntic.ai/og-image.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --bg: #ffffff;
+            --bg-light: #f9fafb;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .hero .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .stat {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .cta-section {
+            background: var(--bg-light);
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .cta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .cta-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+        
+        .cta-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .features {
+            padding: 4rem 0;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .pricing {
+            background: var(--bg-light);
+            padding: 4rem 0;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .pricing-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            position: relative;
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .pricing-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .price-period {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+        
+        .community-signup {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .signup-form {
+            max-width: 500px;
+            margin: 2rem auto;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .form-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        .footer {
+            background: var(--text);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-light);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .tagline {
+                font-size: 1.25rem;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+            
+            .signup-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>aegnt-27: The Human Peak Protocol</h1>
+            <p class="tagline">Where AI Achieves Peak Human Authenticity</p>
+            <p>Advanced AI authenticity achievement through <strong>27 distinct behavioral patterns</strong></p>
+            
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">98%+</span>
+                    <span class="stat-label">AI Detection Resistance</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">96%</span>
+                    <span class="stat-label">Mouse Authenticity</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">95%</span>
+                    <span class="stat-label">Typing Authenticity</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">27</span>
+                    <span class="stat-label">Behavioral Patterns</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Started with aegnt-27</h2>
+            <p>Choose your path: Free open source framework or commercial-grade performance</p>
+            
+            <div class="cta-grid">
+                <div class="cta-card">
+                    <h3>🆓 Open Source (MIT)</h3>
+                    <p>Perfect for learning, prototyping, and open source projects</p>
+                    <ul style="text-align: left; margin: 1rem 0; padding-left: 1rem;">
+                        <li>Complete framework & interfaces</li>
+                        <li>Basic implementations (60-75% authenticity)</li>
+                        <li>Full documentation & examples</li>
+                        <li>Community support</li>
+                    </ul>
+                    <a href="https://github.com/aegntic/aegnt27" class="btn btn-secondary">View on GitHub</a>
+                </div>
+                
+                <div class="cta-card">
+                    <h3>💼 Commercial License</h3>
+                    <p>Production-ready with peak performance (93-98% authenticity)</p>
+                    <ul style="text-align: left; margin: 1rem 0; padding-left: 1rem;">
+                        <li>Advanced neural algorithms</li>
+                        <li>27-point behavioral patterns</li>
+                        <li>Multi-model AI evasion</li>
+                        <li>Priority support & SLA</li>
+                    </ul>
+                    <a href="#pricing" class="btn btn-primary">View Pricing</a>
+                </div>
+                
+                <div class="cta-card">
+                    <h3>🔌 MCP Server</h3>
+                    <p>Use with Claude through Model Context Protocol</p>
+                    <ul style="text-align: left; margin: 1rem 0; padding-left: 1rem;">
+                        <li>Direct Claude integration</li>
+                        <li>Real-time authenticity tools</li>
+                        <li>Easy <span class="code">bun</span> or <span class="code">npx</span> setup</li>
+                        <li>Community features included</li>
+                    </ul>
+                    <a href="https://github.com/aegntic/aegnt27/tree/main/mcp-server" class="btn btn-secondary">MCP Setup</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 1rem;">Core Capabilities</h2>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 2rem;">
+                Each module implements multiple behavioral patterns for peak authenticity
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">🖱️</div>
+                    <h3>Mouse Authenticity</h3>
+                    <p>Natural micro-movements, drift patterns, and Bezier curves with neural-based acceleration modeling</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">⌨️</div>
+                    <h3>Typing Patterns</h3>
+                    <p>Keystroke dynamics, cognitive load simulation, and individual typing signature modeling</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>AI Detection Resistance</h3>
+                    <p>Multi-model evasion for GPTZero, Originality.ai, YouTube, and Turnitin with real-time adaptation</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🎙️</div>
+                    <h3>Audio Processing</h3>
+                    <p>Voice tract modeling, breathing patterns, and spectral humanization for natural speech</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">👁️</div>
+                    <h3>Visual Authenticity</h3>
+                    <p>Attention modeling, gaze physics, and natural visual imperfection injection</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy-First</h3>
+                    <p>Local processing, AES-256 encryption, and secure memory management by default</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 1rem;">Commercial Licensing</h2>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 2rem;">
+                Premium pricing reflects 20% performance advantage over market alternatives
+            </p>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Developer</h3>
+                    <div class="price">$297<span class="price-period">/month</span></div>
+                    <p style="margin: 1rem 0;">Single commercial application</p>
+                    <ul style="text-align: left; margin: 1rem 0; padding-left: 1rem;">
+                        <li>Up to 3 developers</li>
+                        <li>Email support</li>
+                        <li>Commercial use rights</li>
+                        <li>Basic integrations</li>
+                    </ul>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">
+                        Annual: $3,564 (save $1,000)
+                    </p>
+                    <a href="mailto:licensing@aegntic.com?subject=Developer License Inquiry" class="btn btn-secondary" style="width: 100%; margin-top: 1rem;">Get Started</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h3>Professional</h3>
+                    <div class="price">$697<span class="price-period">/month</span></div>
+                    <p style="margin: 1rem 0;">Multiple commercial applications</p>
+                    <ul style="text-align: left; margin: 1rem 0; padding-left: 1rem;">
+                        <li>Up to 15 developers</li>
+                        <li>Priority phone support</li>
+                        <li>Redistribution rights</li>
+                        <li>Advanced patterns access</li>
+                    </ul>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">
+                        Annual: $8,364 (save $2,000)
+                    </p>
+                    <a href="mailto:licensing@aegntic.com?subject=Professional License Inquiry" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Most Popular</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">$1,497<span class="price-period">/month</span></div>
+                    <p style="margin: 1rem 0;">Unlimited applications & developers</p>
+                    <ul style="text-align: left; margin: 1rem 0; padding-left: 1rem;">
+                        <li>Dedicated support manager</li>
+                        <li>Full source code access</li>
+                        <li>Custom pattern development</li>
+                        <li>White-label licensing</li>
+                    </ul>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">
+                        Annual: $17,964 (save $4,000)
+                    </p>
+                    <a href="mailto:licensing@aegntic.com?subject=Enterprise License Inquiry" class="btn btn-secondary" style="width: 100%; margin-top: 1rem;">Contact Sales</a>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <p style="color: var(--text-light);">
+                    <strong>30-day free trial available</strong> • Revenue sharing option: 5% gross revenue (min $797/month)
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Signup -->
+    <section class="community-signup">
+        <div class="container">
+            <h2>Join the aegnt-27 Community</h2>
+            <p>Get free access to open source components, tutorials, and community support</p>
+            
+            <form class="signup-form" id="communityForm">
+                <input type="email" class="form-input" placeholder="Enter your email (optional)" id="emailInput">
+                <button type="submit" class="btn btn-secondary">Join Community</button>
+            </form>
+            
+            <div class="social-links">
+                <a href="https://github.com/aegntic/aegnt27" class="social-link">
+                    <span>⭐</span> GitHub
+                </a>
+                <a href="https://x.com/aegntic" class="social-link">
+                    <span>🐦</span> X (Twitter)
+                </a>
+                <a href="https://discord.gg/aegntic" class="social-link">
+                    <span>💬</span> Discord
+                </a>
+                <a href="https://t.me/aegntic" class="social-link">
+                    <span>📱</span> Telegram
+                </a>
+                <a href="https://youtube.com/@aegntic" class="social-link">
+                    <span>📺</span> YouTube
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Anthropic PBC. aegnt-27: The Human Peak Protocol.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
+                Open source components: MIT License • Commercial components: Licensing required
+            </p>
+            <p style="margin-top: 1rem;">
+                <a href="mailto:licensing@aegntic.com" style="color: white;">licensing@aegntic.com</a> • 
+                <a href="https://github.com/aegntic/aegnt27" style="color: white;">GitHub</a> • 
+                <a href="https://github.com/aegntic/aegnt27/tree/main/mcp-server" style="color: white;">MCP Server</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Community form handling
+        document.getElementById('communityForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('emailInput').value;
+            
+            // Store signup (you'd implement actual backend here)
+            console.log('Community signup:', { email, timestamp: new Date().toISOString() });
+            
+            // Show success message
+            alert('Welcome to the aegnt-27 community! Please follow us on your preferred platforms and star our GitHub repo.');
+            
+            // Clear form
+            document.getElementById('emailInput').value = '';
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

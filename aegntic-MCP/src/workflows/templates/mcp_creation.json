@@ -1,0 +1,199 @@
+{
+  "name": "MCP Server Creation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "create-mcp",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Extract input data from webhook\nconst data = $input.item.json;\n\n// Validate required fields\nif (!data.name) {\n  throw new Error('Server name is required');\n}\n\n// Set default values\nconst serverConfig = {\n  name: data.name,\n  type: data.type || 'standard',\n  features: {\n    aiAgents: data.features?.aiAgents || false,\n    voiceSynthesis: data.features?.voiceSynthesis || false,\n    mediaProcessing: data.features?.mediaProcessing || false\n  },\n  environment: data.environment || 'development'\n};\n\n// Return prepared configuration\nreturn {\n  json: {\n    serverConfig,\n    timestamp: new Date().toISOString(),\n    requestId: Date.now().toString()\n  }\n};"
+      },
+      "name": "Prepare Config",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://mcp-server:9100/api/mcp/create",
+        "method": "POST",
+        "authentication": "none",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $node[\"Prepare Config\"].json.serverConfig.name }}"
+            },
+            {
+              "name": "config",
+              "value": "={{ $node[\"Prepare Config\"].json.serverConfig }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Create MCP Server",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node[\"Create MCP Server\"].json.hasOwnProperty(\"error\") }}",
+              "value2": "true"
+            }
+          ]
+        }
+      },
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        850,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Return the error information\nreturn {\n  json: {\n    success: false,\n    error: $node[\"Create MCP Server\"].json.error,\n    message: \"Failed to create MCP server\",\n    timestamp: new Date().toISOString()\n  }\n};"
+      },
+      "name": "Handle Error",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1050,
+        450
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Return the success information\nreturn {\n  json: {\n    success: true,\n    serverId: $node[\"Create MCP Server\"].json.id,\n    name: $node[\"Create MCP Server\"].json.name,\n    status: $node[\"Create MCP Server\"].json.status,\n    message: \"MCP server created successfully\",\n    timestamp: new Date().toISOString()\n  }\n};"
+      },
+      "name": "Handle Success",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1050,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1250,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Prepare Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Config": {
+      "main": [
+        [
+          {
+            "node": "Create MCP Server",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create MCP Server": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Handle Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Handle Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Handle Error": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Handle Success": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    "automation"
+  ],
+  "id": "workflow_mcp_creation"
+}

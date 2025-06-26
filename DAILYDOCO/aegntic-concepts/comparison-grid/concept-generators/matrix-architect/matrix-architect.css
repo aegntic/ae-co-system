@@ -1,0 +1,525 @@
+/* Matrix Architect - Professional Code Reality Builder Interface */
+
+.matrix-realm {
+  background: linear-gradient(135deg, #000000 0%, #001100 50%, #002200 100%);
+  overflow: hidden;
+}
+
+/* Matrix Code Rain Preloader */
+.matrix-preloader {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  position: relative;
+  min-height: 400px;
+}
+
+.code-rain-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.matrix-text {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0;
+}
+
+.matrix-line {
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: matrixReveal 1s ease-out forwards;
+}
+
+.matrix-line[data-delay="0"] { animation-delay: 0s; }
+.matrix-line[data-delay="200"] { animation-delay: 0.2s; }
+.matrix-line[data-delay="400"] { animation-delay: 0.4s; }
+.matrix-line[data-delay="600"] { animation-delay: 0.6s; }
+
+.code-char {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #00ff00;
+  text-shadow: 0 0 20px #00ff00;
+  animation: matrixGlow 1.5s ease-in-out infinite;
+}
+
+.matrix-final {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #00ff00;
+  text-shadow: 0 0 30px #00ff00, 0 0 60px #00ff00;
+  animation: matrixPulse 2s ease-in-out infinite;
+}
+
+.code-rain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.rain-column {
+  position: absolute;
+  top: -100%;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: #00ff00;
+  white-space: pre;
+  animation: matrixFall linear infinite;
+}
+
+.reality-loading {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #00ff00;
+  text-align: center;
+}
+
+.loading-progress {
+  width: 300px;
+  height: 4px;
+  background: rgba(0, 255, 0, 0.2);
+  border-radius: 2px;
+  margin-top: 1rem;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff00, #00aa00);
+  width: 0%;
+  animation: matrixLoad 3s ease-out forwards;
+}
+
+@keyframes matrixReveal {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes matrixGlow {
+  0%, 100% { text-shadow: 0 0 20px #00ff00; }
+  50% { text-shadow: 0 0 40px #00ff00, 0 0 60px #00ff00; }
+}
+
+@keyframes matrixPulse {
+  0%, 100% { text-shadow: 0 0 30px #00ff00, 0 0 60px #00ff00; }
+  50% { text-shadow: 0 0 50px #00ff00, 0 0 100px #00ff00, 0 0 150px #00ff00; }
+}
+
+@keyframes matrixFall {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes matrixLoad {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+/* Main Interface */
+.matrix-interface {
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.concept-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.concept-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00ff00 0%, #00aa00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 50px rgba(0, 255, 0, 0.5);
+}
+
+.concept-subtitle {
+  font-size: 1.3rem;
+  color: #00ff00;
+  font-weight: 300;
+}
+
+/* Matrix Lab */
+.matrix-lab {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  grid-template-rows: auto auto auto;
+  gap: 2rem;
+  grid-template-areas:
+    "canvas controls"
+    "canvas metrics"
+    "output output";
+}
+
+.code-matrix-container {
+  grid-area: canvas;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #00ff00;
+  backdrop-filter: blur(10px);
+  position: relative;
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+}
+
+#matrixCanvas {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  background: rgba(0, 0, 0, 0.9);
+  cursor: crosshair;
+}
+
+.matrix-overlay {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 10;
+}
+
+.node-palette {
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid #00ff00;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  min-width: 150px;
+}
+
+.node-palette h3 {
+  color: #00ff00;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.code-block {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid rgba(0, 255, 0, 0.3);
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  cursor: grab;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.code-block:hover {
+  background: rgba(0, 255, 0, 0.2);
+  border-color: #00ff00;
+  transform: scale(1.05);
+}
+
+.code-block:active {
+  cursor: grabbing;
+}
+
+.block-icon {
+  font-size: 1.2rem;
+  color: #00ff00;
+  font-weight: 700;
+}
+
+.block-label {
+  font-size: 0.8rem;
+  color: #00ff00;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Controls */
+.reality-controls {
+  grid-area: controls;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.reality-panel {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #00ff00;
+  backdrop-filter: blur(10px);
+}
+
+.reality-panel h3 {
+  color: #00ff00;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.control-group {
+  margin-bottom: 1.5rem;
+}
+
+.control-group label {
+  display: block;
+  color: #00ff00;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.control-group input[type="range"] {
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  margin-bottom: 0.5rem;
+  border: 1px solid rgba(0, 255, 0, 0.3);
+}
+
+.control-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #00ff00;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+.control-group span {
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.8);
+  color: #00ff00;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  border: 1px solid rgba(0, 255, 0, 0.3);
+}
+
+/* Metrics */
+.matrix-metrics {
+  grid-area: metrics;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.metric-card {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  border: 1px solid #00ff00;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 255, 0, 0.2);
+}
+
+.metric-card h4 {
+  color: rgba(0, 255, 0, 0.7);
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.metric-card span {
+  color: #00ff00;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Actions */
+.matrix-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.matrix-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(0, 0, 0, 0.8);
+  color: #00ff00;
+  border: 1px solid #00ff00;
+}
+
+.matrix-button.primary {
+  background: linear-gradient(135deg, #00ff00 0%, #00aa00 100%);
+  color: black;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+}
+
+.matrix-button.secondary {
+  background: transparent;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+}
+
+.matrix-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 255, 0, 0.4);
+}
+
+/* Code Output */
+.code-output {
+  grid-area: output;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #00ff00;
+  backdrop-filter: blur(10px);
+}
+
+.code-output h3 {
+  color: #00ff00;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.code-display {
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(0, 255, 0, 0.3);
+  margin-bottom: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.code-display pre {
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.code-display code {
+  color: #00ff00;
+}
+
+.output-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Matrix Nodes */
+.matrix-node {
+  position: absolute;
+  background: rgba(0, 255, 0, 0.2);
+  border: 2px solid #00ff00;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: #00ff00;
+  cursor: move;
+  user-select: none;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.matrix-node:hover {
+  background: rgba(0, 255, 0, 0.3);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+}
+
+.matrix-node.selected {
+  border-color: #ffffff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* Connection Lines */
+.connection-line {
+  stroke: #00ff00;
+  stroke-width: 2;
+  fill: none;
+  opacity: 0.7;
+  filter: drop-shadow(0 0 5px #00ff00);
+}
+
+.connection-line.active {
+  opacity: 1;
+  stroke-width: 3;
+  animation: matrixPulse 1s ease-in-out infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .matrix-lab {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "canvas"
+      "controls"
+      "metrics"
+      "output";
+  }
+  
+  .matrix-metrics {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .matrix-actions {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 768px) {
+  .concept-title {
+    font-size: 2.5rem;
+  }
+  
+  .matrix-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .node-palette {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  .code-char, .matrix-final {
+    font-size: 2rem;
+  }
+}

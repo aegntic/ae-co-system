@@ -1,0 +1,15 @@
+{
+  "data": {
+    "role": "user",
+    "content": "use desktop-commander to init memory-bank to the project",
+    "turnId": 1,
+    "timestamp": "2025-05-05T06:18:04.904Z"
+  },
+  "metadata": {
+    "timestamp": "2025-05-05T06:18:04.904Z",
+    "category": "conversations",
+    "key": "session_1746425884881_turn_1",
+    "source": "claude-conversation",
+    "sessionKey": "session_1746425884881"
+  }
+}

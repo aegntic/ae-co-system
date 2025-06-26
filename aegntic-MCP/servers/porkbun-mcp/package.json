@@ -1,0 +1,65 @@
+{
+  "name": "@aegntic/porkbun-mcp",
+  "version": "1.1.0",
+  "description": "Independent third-party MCP server for Porkbun API integration. NOT OFFICIALLY AFFILIATED WITH PORKBUN LLC. Research project by AEGNTIC Foundation.",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "porkbun-mcp": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "node --test src/test.js",
+    "validate": "node src/validate.js"
+  },
+  "keywords": [
+    "mcp",
+    "porkbun",
+    "domain",
+    "dns",
+    "api",
+    "claude",
+    "aegntic"
+  ],
+  "author": {
+    "name": "Mattae Cooper",
+    "email": "human@mattaecooper.org",
+    "url": "https://aegntic.ai"
+  },
+  "contributors": [
+    {
+      "name": "AEGNTIC Foundation",
+      "url": "https://aegntic.ai"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic/porkbun-mcp.git"
+  },
+  "homepage": "https://aegntic.ai",
+  "bugs": {
+    "url": "https://github.com/aegntic/porkbun-mcp/issues"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "node-fetch": "^3.3.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/aegntic"
+    },
+    {
+      "type": "opencollective", 
+      "url": "https://opencollective.com/aegntic"
+    }
+  ]
+}

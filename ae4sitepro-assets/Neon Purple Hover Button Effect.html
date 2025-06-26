@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DesignCode Neon Purple Button</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .text-stroke {
+      -webkit-text-stroke: 1px rgba(255,255,255,0.6);
+      text-stroke: 1px rgba(255,255,255,0.6);
+    }
+    .text-stroke-anim {
+      -webkit-text-stroke: 1px #C43EFF;
+      text-stroke: 1px #C43EFF;
+    }
+    .font-bricolage {
+      font-family: 'Bricolage Grotesque', Arial, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen">
+
+  <button
+    class="relative px-0 py-0 bg-transparent border-none outline-none cursor-pointer font-bricolage uppercase tracking-[0.15em]"
+    style="font-size:60px; letter-spacing:3px;"
+    data-text="Awesome"
+  >
+    <span class="actual-text text-transparent text-stroke select-none">
+      &nbsp;DesignCode&nbsp;
+    </span>
+    <span
+      aria-hidden="true"
+      class="hover-text pointer-events-none absolute inset-0 w-0 overflow-hidden border-r-[6px]"
+      style="
+        color: #C43EFF;
+        border-color: #C43EFF;
+        transition: width 0.5s;
+      "
+    >
+      <span class="text-stroke-anim text-transparent select-none">&nbsp;DesignCode&nbsp;</span>
+    </span>
+    <script>
+      const btn = document.querySelector('button');
+      const hoverText = btn.querySelector('.hover-text');
+      btn.addEventListener('mouseenter', () => {
+        hoverText.style.width = '100%';
+        hoverText.style.filter = 'drop-shadow(0 0 23px #C43EFF)';
+      });
+      btn.addEventListener('mouseleave', () => {
+        hoverText.style.width = '0%';
+        hoverText.style.filter = 'none';
+      });
+    </script>
+  </button>
+
+</body>
+</html>

@@ -1,0 +1,263 @@
+/* Enhanced Watermark Styles for CCTM */
+/* This file contains additional CSS rules for the persistent watermark system */
+
+/* Core watermark container with anti-tampering protection */
+#cctm-watermark {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    pointer-events: none !important;
+    z-index: 999999 !important;
+    overflow: hidden !important;
+    user-select: none !important;
+    opacity: 0.08 !important;
+    color: #666666 !important;
+    font-family: 'Segoe UI', 'Roboto', 'Ubuntu', monospace !important;
+    font-size: 16px !important;
+    font-weight: 300 !important;
+    line-height: 1.5 !important;
+    white-space: nowrap !important;
+    transform: rotate(-15deg) !important;
+    background: none !important;
+    mix-blend-mode: multiply !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    will-change: transform !important;
+}
+
+/* Watermark rows with staggered animation */
+.watermark-row {
+    position: absolute !important;
+    width: 200vw !important;
+    animation: watermark-drift 300s linear infinite !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+/* Individual watermark text elements */
+.watermark-text {
+    margin-right: 120px !important;
+    opacity: inherit !important;
+    display: inline-block !important;
+    text-shadow: 0 0 1px rgba(102, 102, 102, 0.1) !important;
+}
+
+/* Drift animation for subtle movement */
+@keyframes watermark-drift {
+    0% { transform: translateX(-100vw); }
+    100% { transform: translateX(0vw); }
+}
+
+/* Alternative animation for even rows */
+@keyframes watermark-drift-reverse {
+    0% { transform: translateX(0vw); }
+    100% { transform: translateX(-100vw); }
+}
+
+/* Apply reverse animation to even rows */
+.watermark-row:nth-child(even) {
+    animation: watermark-drift-reverse 300s linear infinite !important;
+}
+
+/* Ensure watermark persists through all possible state changes */
+body #cctm-watermark,
+html #cctm-watermark,
+* #cctm-watermark,
+div#cctm-watermark,
+#cctm-watermark.watermark,
+[id="cctm-watermark"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 0.08 !important;
+    transform: rotate(-15deg) !important;
+}
+
+/* Anti-hiding protection */
+#cctm-watermark[style*="display: none"],
+#cctm-watermark[style*="visibility: hidden"],
+#cctm-watermark[style*="opacity: 0"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 0.08 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #cctm-watermark {
+        font-size: 14px !important;
+    }
+    
+    .watermark-text {
+        margin-right: 100px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    #cctm-watermark {
+        font-size: 12px !important;
+    }
+    
+    .watermark-text {
+        margin-right: 80px !important;
+    }
+}
+
+/* High DPI display adjustments */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    #cctm-watermark {
+        font-weight: 200 !important;
+        text-rendering: optimizeLegibility !important;
+    }
+}
+
+/* Dark mode compatibility */
+@media (prefers-color-scheme: dark) {
+    #cctm-watermark {
+        color: #999999 !important;
+        mix-blend-mode: screen !important;
+    }
+}
+
+/* Print media - ensure watermark shows in screenshots/PDFs */
+@media print {
+    #cctm-watermark {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 0.05 !important;
+        color: #888888 !important;
+    }
+}
+
+/* Screen capture compatibility */
+@media screen and (color) {
+    #cctm-watermark {
+        display: block !important;
+        visibility: visible !important;
+    }
+}
+
+/* Hover effects disabled to prevent interaction */
+#cctm-watermark:hover,
+#cctm-watermark:focus,
+#cctm-watermark:active {
+    pointer-events: none !important;
+    user-select: none !important;
+}
+
+/* Additional anti-tampering rules */
+#cctm-watermark::before,
+#cctm-watermark::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    pointer-events: none !important;
+}
+
+/* CSS variables for dynamic updates */
+#cctm-watermark {
+    --watermark-opacity: 0.08;
+    --watermark-color: #666666;
+    --watermark-size: 16px;
+    --watermark-spacing: 120px;
+    --watermark-rotation: -15deg;
+    
+    opacity: var(--watermark-opacity) !important;
+    color: var(--watermark-color) !important;
+    font-size: var(--watermark-size) !important;
+    transform: rotate(var(--watermark-rotation)) !important;
+}
+
+.watermark-text {
+    margin-right: var(--watermark-spacing) !important;
+}
+
+/* Accessibility - ensure watermark doesn't interfere with screen readers */
+#cctm-watermark {
+    aria-hidden: true !important;
+    role: presentation !important;
+}
+
+#cctm-watermark .watermark-text {
+    aria-hidden: true !important;
+}
+
+/* Performance optimizations */
+#cctm-watermark {
+    contain: layout style paint !important;
+    will-change: transform !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+}
+
+.watermark-row {
+    contain: layout !important;
+    will-change: transform !important;
+    transform3d: 0, 0, 0 !important;
+}
+
+/* Vendor prefix support for maximum compatibility */
+#cctm-watermark {
+    -webkit-transform: rotate(-15deg) !important;
+    -moz-transform: rotate(-15deg) !important;
+    -ms-transform: rotate(-15deg) !important;
+    -o-transform: rotate(-15deg) !important;
+    
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    
+    -webkit-pointer-events: none !important;
+    -moz-pointer-events: none !important;
+}
+
+.watermark-row {
+    -webkit-animation: watermark-drift 300s linear infinite !important;
+    -moz-animation: watermark-drift 300s linear infinite !important;
+    -ms-animation: watermark-drift 300s linear infinite !important;
+    -o-animation: watermark-drift 300s linear infinite !important;
+}
+
+/* CSS Grid fallback for older browsers */
+@supports not (display: flex) {
+    .watermark-row {
+        display: block !important;
+    }
+    
+    .watermark-text {
+        display: inline-block !important;
+        width: auto !important;
+    }
+}
+
+/* Force composition layer for smooth rendering */
+#cctm-watermark {
+    transform: translateZ(0) rotate(-15deg) !important;
+    -webkit-transform: translateZ(0) rotate(-15deg) !important;
+}
+
+/* Emergency override rules */
+#cctm-watermark[data-hidden="true"],
+#cctm-watermark[hidden],
+#cctm-watermark.hidden {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 0.08 !important;
+}
+
+/* Final failsafe - multiple selectors */
+div[id*="cctm"][id*="watermark"],
+[class*="watermark"][id*="cctm"],
+#cctm-watermark {
+    position: fixed !important;
+    z-index: 999999 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 0.08 !important;
+}

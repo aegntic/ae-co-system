@@ -1,0 +1,398 @@
+/* Consciousness Stream - Professional Flowing AI Thought Interface */
+
+.consciousness-realm {
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #2d3748 100%);
+  overflow: hidden;
+}
+
+/* Consciousness ASCII Preloader */
+.consciousness-preloader {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.thought-cascade {
+  position: relative;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.thought-layer {
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: thoughtEmerge 2s ease-out forwards;
+}
+
+.thought-layer.layer-1 {
+  animation-delay: 0s;
+}
+
+.thought-layer.layer-2 {
+  animation-delay: 0.5s;
+}
+
+.thought-layer.layer-3 {
+  animation-delay: 1s;
+}
+
+.thought-layer.layer-4 {
+  animation-delay: 1.5s;
+}
+
+.thought-layer .letter {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #a8e6cf;
+  text-shadow: 0 0 20px rgba(168, 230, 207, 0.6);
+  animation: thoughtPulse 1.5s ease-in-out infinite;
+}
+
+.thought-complete {
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #a8e6cf 0%, #98d8c8 50%, #88c8a8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(168, 230, 207, 0.8);
+}
+
+@keyframes thoughtEmerge {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes thoughtPulse {
+  0%, 100% {
+    text-shadow: 0 0 20px rgba(168, 230, 207, 0.6);
+  }
+  50% {
+    text-shadow: 0 0 40px rgba(168, 230, 207, 1);
+  }
+}
+
+/* Main Interface */
+.consciousness-interface {
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.concept-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.concept-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #a8e6cf 0%, #98d8c8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.concept-subtitle {
+  font-size: 1.3rem;
+  color: var(--neural-300);
+  font-weight: 300;
+}
+
+/* Consciousness Lab */
+.consciousness-lab {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  grid-template-rows: auto auto;
+  gap: 2rem;
+  grid-template-areas:
+    "canvas controls"
+    "canvas metrics";
+}
+
+.thought-canvas-container {
+  grid-area: canvas;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--neural-700);
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+#consciousnessCanvas {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  background: rgba(30, 41, 59, 0.8);
+  cursor: crosshair;
+}
+
+.stream-overlay {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.thought-injector {
+  display: flex;
+  gap: 0.75rem;
+  pointer-events: auto;
+}
+
+#thoughtInput {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: rgba(30, 41, 59, 0.9);
+  border: 1px solid var(--neural-700);
+  border-radius: 0.5rem;
+  color: var(--neural-100);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  backdrop-filter: blur(10px);
+}
+
+#thoughtInput::placeholder {
+  color: var(--neural-500);
+}
+
+.stream-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stream-button.primary {
+  background: linear-gradient(135deg, #a8e6cf 0%, #98d8c8 100%);
+  color: white;
+}
+
+.stream-button.secondary {
+  background: transparent;
+  color: #a8e6cf;
+  border: 1px solid #a8e6cf;
+}
+
+.stream-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(168, 230, 207, 0.3);
+}
+
+/* Controls */
+.consciousness-controls {
+  grid-area: controls;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.stream-parameters {
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--neural-700);
+  backdrop-filter: blur(10px);
+}
+
+.stream-parameters h3 {
+  color: var(--neural-100);
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.param-group {
+  margin-bottom: 1.5rem;
+}
+
+.param-group label {
+  display: block;
+  color: var(--neural-200);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.param-group input[type="range"] {
+  width: 100%;
+  height: 6px;
+  background: var(--neural-800);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  margin-bottom: 0.5rem;
+}
+
+.param-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #a8e6cf;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(168, 230, 207, 0.4);
+}
+
+.param-group span {
+  display: inline-block;
+  background: var(--neural-800);
+  color: #a8e6cf;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Metrics */
+.consciousness-metrics {
+  grid-area: metrics;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.metric-card {
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid var(--neural-700);
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.metric-card h4 {
+  color: var(--neural-300);
+  font-size: 0.8rem;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.metric-card span {
+  color: #a8e6cf;
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  display: block;
+}
+
+/* Actions */
+.stream-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* Stream Flow Effects */
+@keyframes thoughtFlow {
+  0% {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+}
+
+.thought-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #a8e6cf;
+  border-radius: 50%;
+  animation: thoughtFlow 3s linear infinite;
+  box-shadow: 0 0 10px rgba(168, 230, 207, 0.6);
+}
+
+/* Consciousness States */
+.consciousness-state-indicator {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 0.5rem 1rem;
+  background: rgba(168, 230, 207, 0.1);
+  border: 1px solid #a8e6cf;
+  border-radius: 2rem;
+  color: #a8e6cf;
+  font-size: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .consciousness-lab {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "canvas"
+      "controls"
+      "metrics";
+  }
+  
+  .consciousness-metrics {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .concept-title {
+    font-size: 2.5rem;
+  }
+  
+  .consciousness-metrics {
+    grid-template-columns: 1fr;
+  }
+  
+  .stream-actions {
+    flex-direction: row;
+  }
+  
+  .thought-layer .letter {
+    font-size: 2rem;
+  }
+  
+  .thought-complete {
+    font-size: 2.5rem;
+  }
+}

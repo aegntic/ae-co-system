@@ -1,0 +1,116 @@
+{
+  "projectInfo": {
+    "name": "ProjectAssets",
+    "domain": "4site.pro/assetsgal",
+    "totalAssets": 58,
+    "categories": 8
+  },
+  "categories": {
+    "authentication": {
+      "name": "Authentication & Login",
+      "description": "Login interfaces, registration forms, and authentication components",
+      "assets": [
+        "Glassmorphism Sign-In Interface.html",
+        "Enterprise Login Interface.html", 
+        "Login Interface with Animated Background.html",
+        "Login Interface with Animated Button.html",
+        "Secure Two-Column Login Form.html",
+        "User Sign-In Interface.html",
+        "User Account Registration Interface.html",
+        "Signup Card with Animated Visuals.html"
+      ]
+    },
+    "hero": {
+      "name": "Hero Sections & Landing Pages", 
+      "description": "Landing page heroes, portfolio sections, and main page layouts",
+      "assets": [
+        "AI Logistics Hero Section.html",
+        "AI Platform Landing Page UI.html",
+        "Developer Portfolio Landing Page.html",
+        "Interactive Hero Section with Stats.html",
+        "Minimalist Dark Mode Landing Page.html",
+        "Music Visualizer Hero Section.html",
+        "Scroll-Driven Landing Interface.html"
+      ]
+    },
+    "cards": {
+      "name": "Cards & Components",
+      "description": "Card layouts, testimonials, stats, and interactive components", 
+      "assets": [
+        "Chat Metrics Summary Card.html",
+        "Floating Glassmorphic Testimonial Cards.html",
+        "Glass-Effect Stats Card UI.html", 
+        "Interactive Animated Note Card UI.html",
+        "Interactive Database Schema Card.html",
+        "Interactive Draggable Cards UI.html",
+        "Task Status Card Stack UI.html",
+        "Team Member Profile Cards UI.html",
+        "Scrolling Stacked Card Interface.html",
+        "Interactive Camping Experience Selector.html",
+        "Trading Intelligence Accordion UI.html",
+        "Platform Features Showcase.html"
+      ]
+    },
+    "backgrounds": {
+      "name": "Backgrounds & Effects",
+      "description": "Animated backgrounds, shader effects, and visual elements",
+      "assets": [
+        "Animated Aurora Light Effect UI.html",
+        "Animated Grid Background UI.html", 
+        "blue-neural-background.html",
+        "Interactive Shader Background UI.html",
+        "Interactive Tunnel Shader Effect.html",
+        "Shader-Based Aurora Background.html",
+        "WebGL Animated Aurora Background.html",
+        "WebGL Caustic Shader Background.html"
+      ]
+    },
+    "dashboards": {
+      "name": "Dashboards & Admin",
+      "description": "Admin panels, management interfaces, and dashboard components",
+      "assets": [
+        "3D Interactive Design Studio UI.html",
+        "Enterprise Infrastructure Overview.html",
+        "Full Stack Developer Portfolio UI.html", 
+        "Interactive Database Schema UI.html",
+        "Minimalist Digital Studio UI.html",
+        "Quantum Design Agency UI.html",
+        "Unified Project Management Interface.html",
+        "User Account Settings Panel.html"
+      ]
+    },
+    "navigation": {
+      "name": "Navigation & Layout",
+      "description": "Navigation components, layout systems, and structural elements",
+      "assets": [
+        "3D Perspective Grid with Flip Cards.html",
+        "Horizontal Scroll Panel Interface.html",
+        "Sidebar Navigation with Animated Grid.html",
+        "Interactive Digital Portal UI.html", 
+        "Full-Screen Black & White Image Carousel.html",
+        "Mobile Night Sky Explorer UI.html"
+      ]
+    },
+    "forms": {
+      "name": "Forms & Onboarding", 
+      "description": "Form interfaces, onboarding flows, and user journey components",
+      "assets": [
+        "Community Network Sign Up Interface.html",
+        "Multi-Step Onboarding Interface.html",
+        "Retreat Features Showcase.html",
+        "Remote Work Multi-Section UI.html",
+        "Technical Blog Post Layout.html"
+      ]
+    },
+    "pricing": {
+      "name": "Pricing & Business",
+      "description": "Pricing tables, business components, and commercial interfaces", 
+      "assets": [
+        "Pricing Plans for Creative Services.html",
+        "Pricing Plans with Animated Background.html",
+        "Release History Timeline and Features.html",
+        "Neon Purple Hover Button Effect.html"
+      ]
+    }
+  }
+}

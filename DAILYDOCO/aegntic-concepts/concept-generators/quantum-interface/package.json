@@ -1,0 +1,25 @@
+{
+  "name": "@aegntic/quantum-interface",
+  "version": "1.0.0",
+  "description": "Particle physics inspired morphing UI - Revolutionary Quantum Computing Interface",
+  "main": "quantum-interface.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "metrics": "node metrics-server.js"
+  },
+  "keywords": ["quantum-computing", "particle-physics", "superposition", "entanglement", "webgl", "three.js"],
+  "authors": [
+    "Mattae Cooper <human@mattaecooper.org>",
+    "'{ae}'aegntic.ai <contact@aegntic.ai>"
+  ],
+  "dependencies": {
+    "three": "^0.160.0",
+    "gsap": "^3.12.0",
+    "mathjs": "^11.11.1"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

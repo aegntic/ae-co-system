@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora Shader Background</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: black;
+        }
+        #container {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="container"></div>
+
+    <script>
+        let scene, camera, renderer, material;
+        let startTime = Date.now();
+
+        const vertexShader = `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `;
+
+        const fragmentShader = `
+            uniform float iTime;
+            uniform vec2 iResolution;
+            varying vec2 vUv;
+
+            #define S smoothstep
+
+            vec4 Line(vec2 uv, float speed, float height, vec3 col) {
+                uv.y += S(1., 0., abs(uv.x)) * sin(iTime * speed + uv.x * height) * 0.2;
+                return vec4(S(0.06 * S(0.2, 0.9, abs(uv.x)), 0., abs(uv.y) - 0.004) * col, 1.0) * S(1., 0.3, abs(uv.x));
+            }
+
+            void main() {
+                vec2 uv = (vUv - 0.5) * vec2(iResolution.x / iResolution.y, 1.0);
+                vec4 O = vec4(0.);
+                
+                for (float i = 0.; i <= 5.; i += 1.) {
+                    float t = i / 5.;
+                    float timeOffset = iTime * 0.3 + t * 2.0;
+                    
+                    // Aurora color palette
+                    vec3 auroraColor = vec3(
+                        0.1 + 0.6 * sin(timeOffset + t * 3.14159),
+                        0.3 + 0.7 * sin(timeOffset * 1.3 + t * 2.0),
+                        0.4 + 0.6 * cos(timeOffset * 0.8 + t * 1.5)
+                    );
+                    
+                    // Add some green-cyan aurora tones
+                    auroraColor = mix(auroraColor, vec3(0.0, 0.8, 0.6), sin(timeOffset + t) * 0.5 + 0.5);
+                    // Add purple-pink highlights
+                    auroraColor = mix(auroraColor, vec3(0.7, 0.2, 0.9), cos(timeOffset * 0.7 + t * 1.2) * 0.3 + 0.3);
+                    
+                    O += Line(uv, 1. + t * 0.8, 4. + t, auroraColor);
+                }
+                
+                gl_FragColor = O;
+            }
+        `;
+
+        function init() {
+            // Scene setup
+            scene = new THREE.Scene();
+            camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio * 2, 3));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById('container').appendChild(renderer.domElement);
+
+            // Shader material
+            material = new THREE.ShaderMaterial({
+                vertexShader: vertexShader,
+                fragmentShader: fragmentShader,
+                uniforms: {
+                    iTime: { value: 0 },
+                    iResolution: { value: new THREE.Vector2(window.innerWidth * 2, window.innerHeight * 2) }
+                }
+            });
+
+            // Plane geometry
+            const geometry = new THREE.PlaneGeometry(2, 2);
+            const plane = new THREE.Mesh(geometry, material);
+            scene.add(plane);
+
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            material.uniforms.iTime.value = (Date.now() - startTime) * 0.001;
+            
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            material.uniforms.iResolution.value.set(window.innerWidth * 2, window.innerHeight * 2);
+        }
+
+        window.addEventListener('resize', onWindowResize);
+        
+        init();
+    </script>
+</body>
+</html>

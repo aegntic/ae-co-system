@@ -1,0 +1,261 @@
+{
+  "gmail_account": "aegntic@gmail.com",
+  "domains": [
+    {
+      "domain": "prompt.fail",
+      "email": "claube@prompt.fail",
+      "name": "Claude Prompt",
+      "purpose": "AI prompt engineering"
+    },
+    {
+      "domain": "4site.pro",
+      "email": "projects@4site.pro",
+      "name": "4Site Projects",
+      "purpose": "Professional web development"
+    },
+    {
+      "domain": "aegntic.com",
+      "email": "info@aegntic.com",
+      "name": "Aegntic Info",
+      "purpose": "Main Aegntic platform"
+    },
+    {
+      "domain": "aegntic.ai",
+      "email": "human@aegntic.ai",
+      "name": "Aegntic AI",
+      "purpose": "AI platform communications"
+    },
+    {
+      "domain": "ae.ltd",
+      "email": "human@ae.ltd",
+      "name": "AE Limited",
+      "purpose": "Corporate communications"
+    },
+    {
+      "domain": "ultraplan.pro",
+      "email": "vibe@ultraplan.pro",
+      "name": "UltraPlan Pro",
+      "purpose": "Strategic planning tools"
+    },
+    {
+      "domain": "aegnt27.xyz",
+      "email": "auth@aegnt27.xyz",
+      "name": "Aegnt27 Auth",
+      "purpose": "Human authenticity protocols"
+    },
+    {
+      "domain": "dailydoco.com",
+      "email": "docs@dailydoco.com",
+      "name": "DailyDoco",
+      "purpose": "Documentation platform"
+    },
+    {
+      "domain": "credability.pro",
+      "email": "verify@credability.pro",
+      "name": "Credability Pro",
+      "purpose": "Credibility verification"
+    },
+    {
+      "domain": "mattaecooper.org",
+      "email": "human@mattaecooper.org",
+      "name": "Mattae Cooper",
+      "purpose": "Personal brand"
+    },
+    {
+      "domain": "skool.food",
+      "email": "chef@skool.food",
+      "name": "Skool Food",
+      "purpose": "Food education platform"
+    },
+    {
+      "domain": "1minskool.com",
+      "email": "learn@1minskool.com",
+      "name": "1 Min Skool",
+      "purpose": "Quick learning platform"
+    }
+  ],
+  "send_as": [
+    {
+      "sendAsEmail": "claube@prompt.fail",
+      "displayName": "Claude Prompt",
+      "signature": "Best regards,<br>Claude Prompt<br>claube@prompt.fail",
+      "isDefault": false,
+      "replyToAddress": "claube@prompt.fail",
+      "smtpMsa": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "aegntic@gmail.com",
+        "password": "AEp@ssWrd11:11",
+        "securityMode": "starttls"
+      }
+    },
+    {
+      "sendAsEmail": "projects@4site.pro",
+      "displayName": "4Site Projects",
+      "signature": "Best regards,<br>4Site Projects<br>projects@4site.pro",
+      "isDefault": false,
+      "replyToAddress": "projects@4site.pro",
+      "smtpMsa": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "aegntic@gmail.com",
+        "password": "AEp@ssWrd11:11",
+        "securityMode": "starttls"
+      }
+    },
+    {
+      "sendAsEmail": "info@aegntic.com",
+      "displayName": "Aegntic Info",
+      "signature": "Best regards,<br>Aegntic Team<br>info@aegntic.com",
+      "isDefault": false,
+      "replyToAddress": "info@aegntic.com",
+      "smtpMsa": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "aegntic@gmail.com",
+        "password": "AEp@ssWrd11:11",
+        "securityMode": "starttls"
+      }
+    },
+    {
+      "sendAsEmail": "human@aegntic.ai",
+      "displayName": "Aegntic AI",
+      "signature": "Best regards,<br>Aegntic AI Team<br>human@aegntic.ai",
+      "isDefault": false,
+      "replyToAddress": "human@aegntic.ai",
+      "smtpMsa": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "aegntic@gmail.com",
+        "password": "AEp@ssWrd11:11",
+        "securityMode": "starttls"
+      }
+    },
+    {
+      "sendAsEmail": "human@ae.ltd",
+      "displayName": "AE Limited",
+      "signature": "Best regards,<br>AE Limited<br>human@ae.ltd",
+      "isDefault": false,
+      "replyToAddress": "human@ae.ltd",
+      "smtpMsa": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "aegntic@gmail.com",
+        "password": "AEp@ssWrd11:11",
+        "securityMode": "starttls"
+      }
+    },
+    {
+      "sendAsEmail": "vibe@ultraplan.pro",
+      "displayName": "UltraPlan Pro",
+      "signature": "Best regards,<br>UltraPlan Pro Team<br>vibe@ultraplan.pro",
+      "isDefault": false,
+      "replyToAddress": "vibe@ultraplan.pro",
+      "smtpMsa": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "aegntic@gmail.com",
+        "password": "AEp@ssWrd11:11",
+        "securityMode": "starttls"
+      }
+    },
+    {
+      "sendAsEmail": "auth@aegnt27.xyz",
+      "displayName": "Aegnt27 Auth",
+      "signature": "Best regards,<br>Aegnt27 Team<br>auth@aegnt27.xyz",
+      "isDefault": false,
+      "replyToAddress": "auth@aegnt27.xyz",
+      "smtpMsa": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "aegntic@gmail.com",
+        "password": "AEp@ssWrd11:11",
+        "securityMode": "starttls"
+      }
+    },
+    {
+      "sendAsEmail": "docs@dailydoco.com",
+      "displayName": "DailyDoco",
+      "signature": "Best regards,<br>DailyDoco Team<br>docs@dailydoco.com",
+      "isDefault": false,
+      "replyToAddress": "docs@dailydoco.com",
+      "smtpMsa": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "aegntic@gmail.com",
+        "password": "AEp@ssWrd11:11",
+        "securityMode": "starttls"
+      }
+    },
+    {
+      "sendAsEmail": "verify@credability.pro",
+      "displayName": "Credability Pro",
+      "signature": "Best regards,<br>Credability Pro<br>verify@credability.pro",
+      "isDefault": false,
+      "replyToAddress": "verify@credability.pro",
+      "smtpMsa": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "aegntic@gmail.com",
+        "password": "AEp@ssWrd11:11",
+        "securityMode": "starttls"
+      }
+    },
+    {
+      "sendAsEmail": "human@mattaecooper.org",
+      "displayName": "Mattae Cooper",
+      "signature": "Best regards,<br>Mattae Cooper<br>human@mattaecooper.org",
+      "isDefault": false,
+      "replyToAddress": "human@mattaecooper.org",
+      "smtpMsa": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "aegntic@gmail.com",
+        "password": "AEp@ssWrd11:11",
+        "securityMode": "starttls"
+      }
+    },
+    {
+      "sendAsEmail": "chef@skool.food",
+      "displayName": "Skool Food",
+      "signature": "Best regards,<br>Chef Team<br>chef@skool.food",
+      "isDefault": false,
+      "replyToAddress": "chef@skool.food",
+      "smtpMsa": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "aegntic@gmail.com",
+        "password": "AEp@ssWrd11:11",
+        "securityMode": "starttls"
+      }
+    },
+    {
+      "sendAsEmail": "learn@1minskool.com",
+      "displayName": "1 Min Skool",
+      "signature": "Best regards,<br>1 Min Skool<br>learn@1minskool.com",
+      "isDefault": false,
+      "replyToAddress": "learn@1minskool.com",
+      "smtpMsa": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "aegntic@gmail.com",
+        "password": "AEp@ssWrd11:11",
+        "securityMode": "starttls"
+      }
+    }
+  ],
+  "verification_checklist": {
+    "email_forwarding_setup": [
+      "Set up email forwarding from each domain to aegntic@gmail.com",
+      "Verify forwarding works by sending test emails"
+    ],
+    "gmail_send_as_setup": [
+      "Add each email as Send As address in Gmail Settings > Accounts",
+      "Verify each address by clicking verification links"
+    ],
+    "filter_creation": [
+      "Create Gmail filters for each domain email",
+      "Assign appropriate labels for organization"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+/* UltraPlan Extension Styles */
+.ultraplan-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  margin-left: 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ultraplan-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.ultraplan-btn:active {
+  transform: translateY(0);
+}
+
+.ultraplan-btn[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.ultraplan-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Platform-specific styles */
+/* GitHub */
+.pagehead-actions .ultraplan-btn {
+  height: 32px;
+}
+
+/* GitLab */
+.project-buttons .ultraplan-btn {
+  height: 34px;
+}
+
+/* Bitbucket */
+.aui-buttons .ultraplan-btn {
+  height: 32px;
+}

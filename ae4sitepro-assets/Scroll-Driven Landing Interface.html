@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll-Driven Landing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        .scroll-trigger {
+            height: 500vh;
+            position: absolute;
+            width: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .viewport {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .section.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+        
+        .section.prev {
+            opacity: 0;
+            transform: translateY(-60px);
+        }
+        
+        .static-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #2d2d2d 50%, #1a1a1a 75%, #0a0a0a 100%);
+            z-index: -2;
+        }
+        
+        .static-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(64, 64, 64, 0.3) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(96, 96, 96, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(32, 32, 32, 0.4) 0%, transparent 60%);
+            animation: subtlePulse 8s ease-in-out infinite alternate;
+        }
+        
+        @keyframes subtlePulse {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+        
+        .dot-nav {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-dot:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(1.2);
+        }
+        
+        .nav-dot.active {
+            background: #ffffff;
+            transform: scale(1.3);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        }
+        
+        .content-container {
+            max-width: 1200px;
+            padding: 0 2rem;
+            text-align: center;
+        }
+        
+        .section-content > * {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        
+        .section.active .section-content > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+        .section.active .section-content > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
+        .section.active .section-content > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.6s; }
+        .section.active .section-content > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.8s; }
+        
+        .scroll-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #a1a1aa;
+            opacity: 0.7;
+            font-size: 0.875rem;
+            z-index: 100;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+        
+        .text-accent {
+            background: linear-gradient(135deg, #ffffff 0%, #d1d5db 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body>
+    <!-- Static Background -->
+    <div class="static-bg"></div>
+    
+    <!-- Invisible Scroll Trigger -->
+    <div class="scroll-trigger" id="scrollTrigger"></div>
+    
+    <!-- Fixed Viewport -->
+    <div class="viewport">
+        <!-- Section 1: Hero -->
+        <section class="section active" data-section="0">
+            <div class="content-container">
+                <div class="section-content text-white">
+                    <h1 class="text-6xl md:text-8xl font-light mb-6 text-accent">
+                        Welcome
+                    </h1>
+                    <p class="text-xl md:text-2xl mb-8 text-gray-300 max-w-2xl mx-auto">
+                        Experience smooth scroll-driven transitions in elegant darkness
+                    </p>
+                    <button class="bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-200 transition-all shadow-lg">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 2: Features -->
+        <section class="section" data-section="1">
+            <div class="content-container">
+                <div class="section-content text-white">
+                    <h2 class="text-5xl md:text-6xl font-light mb-8 text-accent">
+                        Features
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                        <div class="glass-card p-6">
+                            <h3 class="text-2xl font-medium mb-4 text-white">Smooth Transitions</h3>
+                            <p class="text-gray-400">Fluid animations between sections</p>
+                        </div>
+                        <div class="glass-card p-6">
+                            <h3 class="text-2xl font-medium mb-4 text-white">Dark Aesthetic</h3>
+                            <p class="text-gray-400">Rich blacks and sophisticated grays</p>
+                        </div>
+                        <div class="glass-card p-6">
+                            <h3 class="text-2xl font-medium mb-4 text-white">Scroll Control</h3>
+                            <p class="text-gray-400">Navigate with mouse wheel or touch</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 3: About -->
+        <section class="section" data-section="2">
+            <div class="content-container">
+                <div class="section-content text-white">
+                    <h2 class="text-5xl md:text-6xl font-light mb-8 text-accent">
+                        About
+                    </h2>
+                    <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-16">
+                        This landing page demonstrates scroll-driven animations with a sophisticated dark theme. 
+                        Deep blacks and elegant grays create a premium, modern experience.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <h3 class="text-4xl font-light mb-2 text-white">100%</h3>
+                            <p class="text-gray-500">Dark</p>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-4xl font-light mb-2 text-white">5</h3>
+                            <p class="text-gray-500">Sections</p>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-4xl font-light mb-2 text-white">∞</h3>
+                            <p class="text-gray-500">Possibilities</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 4: Portfolio -->
+        <section class="section" data-section="3">
+            <div class="content-container">
+                <div class="section-content text-white">
+                    <h2 class="text-5xl md:text-6xl font-light mb-8 text-accent">
+                        Portfolio
+                    </h2>
+                    <p class="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
+                        Showcasing projects with elegant dark aesthetics
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="glass-card p-8">
+                            <h3 class="text-2xl font-medium mb-4 text-white">Project Obsidian</h3>
+                            <p class="text-gray-400 mb-6">Dark-themed web experience with sophisticated animations</p>
+                            <button class="text-white border border-gray-600 px-6 py-2 rounded-full hover:bg-gray-800/50 transition-all">
+                                View Project
+                            </button>
+                        </div>
+                        <div class="glass-card p-8">
+                            <h3 class="text-2xl font-medium mb-4 text-white">Project Midnight</h3>
+                            <p class="text-gray-400 mb-6">Premium landing page with deep black gradients</p>
+                            <button class="text-white border border-gray-600 px-6 py-2 rounded-full hover:bg-gray-800/50 transition-all">
+                                View Project
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 5: Contact -->
+        <section class="section" data-section="4">
+            <div class="content-container">
+                <div class="section-content text-white">
+                    <h2 class="text-5xl md:text-6xl font-light mb-8 text-accent">
+                        Contact
+                    </h2>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-12 max-w-2xl mx-auto">
+                        Ready to create something beautifully dark together?
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button class="bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-200 transition-all shadow-lg">
+                            Get in Touch
+                        </button>
+                        <button class="border border-gray-600 px-8 py-3 rounded-full font-medium hover:bg-gray-800/50 transition-all text-white">
+                            View Resume
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Dot Navigation -->
+    <div class="dot-nav">
+        <div class="nav-dot active" data-target="0"></div>
+        <div class="nav-dot" data-target="1"></div>
+        <div class="nav-dot" data-target="2"></div>
+        <div class="nav-dot" data-target="3"></div>
+        <div class="nav-dot" data-target="4"></div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        Scroll to navigate
+    </div>
+    
+    <script>
+        let currentSection = 0;
+        const totalSections = 5;
+        let isScrolling = false;
+        
+        const sections = document.querySelectorAll('.section');
+        const dots = document.querySelectorAll('.nav-dot');
+        
+        function updateSection(index) {
+            if (index < 0 || index >= totalSections) return;
+            
+            // Remove active states
+            sections.forEach((section, i) => {
+                section.classList.remove('active', 'prev');
+                if (i < index) {
+                    section.classList.add('prev');
+                }
+            });
+            
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            // Add active states
+            sections[index].classList.add('active');
+            dots[index].classList.add('active');
+            
+            currentSection = index;
+        }
+        
+        function handleScroll(event) {
+            if (isScrolling) return;
+            
+            isScrolling = true;
+            
+            if (event.deltaY > 0) {
+                // Scroll down
+                if (currentSection < totalSections - 1) {
+                    updateSection(currentSection + 1);
+                }
+            } else {
+                // Scroll up
+                if (currentSection > 0) {
+                    updateSection(currentSection - 1);
+                }
+            }
+            
+            setTimeout(() => {
+                isScrolling = false;
+            }, 800);
+        }
+        
+        // Mouse wheel event
+        window.addEventListener('wheel', handleScroll, { passive: false });
+        
+        // Touch events for mobile
+        let touchStartY = 0;
+        let touchEndY = 0;
+        
+        window.addEventListener('touchstart', (e) => {
+            touchStartY = e.changedTouches[0].screenY;
+        });
+        
+        window.addEventListener('touchend', (e) => {
+            if (isScrolling) return;
+            
+            touchEndY = e.changedTouches[0].screenY;
+            const diff = touchStartY - touchEndY;
+            
+            if (Math.abs(diff) > 50) {
+                isScrolling = true;
+                
+                if (diff > 0 && currentSection < totalSections - 1) {
+                    updateSection(currentSection + 1);
+                } else if (diff < 0 && currentSection > 0) {
+                    updateSection(currentSection - 1);
+                }
+                
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 800);
+            }
+        });
+        
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                if (!isScrolling) {
+                    updateSection(index);
+                }
+            });
+        });
+        
+        // Keyboard navigation
+        window.addEventListener('keydown', (e) => {
+            if (isScrolling) return;
+            
+            if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+                e.preventDefault();
+                if (currentSection < totalSections - 1) {
+                    updateSection(currentSection + 1);
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                e.preventDefault();
+                if (currentSection > 0) {
+                    updateSection(currentSection - 1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{
+  "name": "aegntic-desktop",
+  "version": "1.0.0",
+  "main": "electron/main.js",
+  "scripts": {
+    "react-start": "cd client && npm start",
+    "react-build": "cd client && npm run build",
+    "electron-start": "electron .",
+    "start": "concurrently \"npm run react-start\" \"wait-on http://localhost:3000 && npm run electron-start\"",
+    "build": "npm run react-build && electron-builder",
+    "release": "npm run react-build && electron-builder --publish=always",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "An Electron application that integrates multiple AI chat services into a single desktop interface, with Obsidian mindmap generation.",
+  "dependencies": {
+    "electron": "^35.1.2",
+    "electron-is-dev": "^3.0.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.14",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "electron-builder": "^26.0.12",
+    "typescript": "^5.8.2",
+    "wait-on": "^8.0.3"
+  },
+  "build": {
+    "appId": "com.aegntic.desktop",
+    "files": [
+      "electron/**/*",
+      "client/build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
+  }
+}

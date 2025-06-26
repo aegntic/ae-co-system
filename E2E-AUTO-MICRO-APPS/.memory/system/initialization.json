@@ -1,0 +1,47 @@
+{
+  "data": {
+    "timestamp": "2025-05-05T04:24:41.672Z",
+    "version": "1.0.0",
+    "config": {
+      "memory": {
+        "storageDir": "/home/tabs/E2E-AUTO-MICRO-APPS/.memory",
+        "enableVector": false,
+        "categories": [
+          "ideas",
+          "projects",
+          "trends",
+          "models",
+          "system"
+        ]
+      },
+      "integrations": {
+        "openRouter": {
+          "enabled": true,
+          "configPath": "/home/tabs/E2E-AUTO-MICRO-APPS/config/openrouter.json"
+        },
+        "taskMaster": {
+          "enabled": true,
+          "configPath": "/home/tabs/E2E-AUTO-MICRO-APPS/.taskmasterconfig"
+        },
+        "context7": {
+          "enabled": true,
+          "configPath": "/home/tabs/E2E-AUTO-MICRO-APPS/.cursor/mcp.json"
+        },
+        "n8n": {
+          "enabled": false,
+          "workflowDir": "/home/tabs/E2E-AUTO-MICRO-APPS/workflows"
+        }
+      },
+      "environment": [
+        "MEMORY_STORAGE_DIR",
+        "MEMORY_ENABLE_VECTOR",
+        "MEMORY_MAX_AGE_DAYS"
+      ]
+    }
+  },
+  "metadata": {
+    "timestamp": "2025-05-05T04:24:41.672Z",
+    "category": "system",
+    "key": "initialization"
+  }
+}

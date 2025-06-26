@@ -1,0 +1,17 @@
+{
+  "name": "e2e-auto-micro-apps",
+  "version": "1.0.0",
+  "description": "End-to-End Automated Micro-App Ideation & Bootstrapping System",
+  "main": "index.js",
+  "scripts": {
+    "bootstrap": "node bootstrap-memory.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "memory-bank": "file:./modules/memory-bank"
+  },
+  "devDependencies": {
+    "task-master-ai": "^1.0.0"
+  }
+}

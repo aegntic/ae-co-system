@@ -1,0 +1,111 @@
+# Administrative Task Prompts and Patterns
+
+date_correction:
+  description: "Correct dates across multiple files to maintain consistency"
+  patterns:
+    - name: "ISO Date"
+      regex: '\d{4}-\d{2}-\d{2}'
+      example: "2025-01-19"
+    - name: "US Date"
+      regex: '\d{1,2}/\d{1,2}/\d{4}'
+      example: "1/19/2025"
+    - name: "Markdown Date Header"
+      regex: '## Date:\s*\d{4}-\d{2}-\d{2}'
+      example: "## Date: 2025-01-19"
+  tasks:
+    - "Update all journal entries to current date"
+    - "Fix date inconsistencies in documentation"
+    - "Synchronize dates across related files"
+
+file_organization:
+  description: "Organize files into logical directory structures"
+  rules:
+    by_type:
+      - documents: [.md, .txt, .doc, .pdf]
+      - code: [.ts, .js, .py, .rs, .go]
+      - data: [.json, .yaml, .yml, .csv]
+      - images: [.png, .jpg, .jpeg, .gif, .svg]
+    by_date:
+      format: "YYYY-MM"
+      structure: "{year}/{month}/{filename}"
+    by_project:
+      pattern: "project-*"
+      structure: "projects/{project_name}/{type}/{filename}"
+
+journal_management:
+  description: "Manage journal entries and documentation"
+  entry_format:
+    header: |
+      # {title}
+      
+      ## Entry ID: {entry_id}
+      ## Date: {date}
+    sections:
+      - overview
+      - tasks_completed
+      - challenges
+      - next_steps
+  indexing:
+    sort: "date_desc"
+    format: "- [{date}] [{title}](./{entry_id}.md)"
+
+config_updates:
+  description: "Update configuration files safely"
+  supported_formats:
+    - yaml
+    - json
+    - toml
+  validation_rules:
+    - check_required_fields
+    - validate_types
+    - check_references
+  backup_strategy:
+    enabled: true
+    location: ".backups/{timestamp}/{filename}"
+
+automation_triggers:
+  daily_tasks:
+    - task: "create_journal_entry"
+      time: "09:00"
+      template: "daily_standup"
+    - task: "organize_downloads"
+      time: "18:00"
+      rules: "by_type"
+  
+  weekly_tasks:
+    - task: "create_index"
+      day: "monday"
+      directories: ["journal", "specs", "ai_docs"]
+    - task: "cleanup_backups"
+      day: "sunday"
+      keep_days: 30
+
+common_fixes:
+  trailing_whitespace:
+    pattern: '\s+$'
+    replacement: ''
+    
+  inconsistent_line_endings:
+    detect: 'mixed'
+    normalize_to: 'lf'
+    
+  markdown_formatting:
+    - fix_heading_spacing
+    - normalize_list_markers
+    - fix_code_fence_language
+
+administrative_priorities:
+  high:
+    - security_updates
+    - broken_references
+    - missing_dependencies
+  
+  medium:
+    - date_consistency
+    - file_organization
+    - documentation_updates
+  
+  low:
+    - formatting_issues
+    - optimization_suggestions
+    - style_consistency

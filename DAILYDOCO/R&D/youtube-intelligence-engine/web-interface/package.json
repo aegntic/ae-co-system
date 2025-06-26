@@ -1,0 +1,75 @@
+{
+  "name": "@aegntic/youtube-intelligence-gui",
+  "version": "1.1.0",
+  "description": "Interactive GUI for YouTube Intelligence Engine - Aegntic.ai Ecosystem",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run vite",
+    "build": "bun run vite build",
+    "preview": "bun run vite preview",
+    "lint": "bun run eslint . --ext js,jsx,ts,tsx",
+    "type-check": "bun run tsc --noEmit",
+    "install-deps": "bun install",
+    "start": "bun run dev"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.1.2",
+    "@heroicons/react": "^2.1.5",
+    "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-progress": "^1.1.0",
+    "@radix-ui/react-tabs": "^1.1.0",
+    "@tanstack/react-query": "^5.51.23",
+    "axios": "^1.7.2",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.3.19",
+    "lucide-react": "^0.408.0",
+    "puppeteer": "^24.10.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.52.1",
+    "react-hot-toast": "^2.4.1",
+    "react-router-dom": "^6.25.1",
+    "react-syntax-highlighter": "^15.5.0",
+    "recharts": "^2.12.7",
+    "sonner": "^1.5.0",
+    "tailwind-merge": "^2.4.0",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/react-syntax-highlighter": "^15.5.13",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.6",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.4"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "keywords": [
+    "aegntic.ai",
+    "youtube",
+    "intelligence",
+    "ai",
+    "analysis",
+    "knowledge-graph",
+    "react",
+    "typescript",
+    "bun"
+  ],
+  "author": "Aegntic.ai",
+  "license": "MIT",
+  "homepage": "https://aegntic.ai",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic-ai/youtube-intelligence-engine"
+  }
+}

@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  mcp-server:
+    build:
+      context: ../../
+      dockerfile: Dockerfile
+    ports:
+      - "9100:9100"
+    volumes:
+      - ../../src:/app/src
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped
+    container_name: mcp-server
+
+  n8n:
+    image: n8nio/n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=password
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ../../config/n8n:/home/node/custom
+    restart: unless-stopped
+    container_name: n8n
+
+volumes:
+  n8n_data:

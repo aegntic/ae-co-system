@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "projects": {
+    "desktop": "apps/desktop",
+    "browser-ext": "apps/browser-ext",
+    "mcp-server": "apps/mcp-server",
+    "web-dashboard": "apps/web-dashboard",
+    "capture-engine": "libs/capture-engine",
+    "ai-models": "libs/ai-models",
+    "video-proc": "libs/video-proc",
+    "test-audience": "libs/test-audience",
+    "shared-types": "libs/shared-types",
+    "performance-monitor": "libs/performance-monitor"
+  }
+}

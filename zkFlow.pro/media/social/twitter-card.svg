@@ -1,0 +1,32 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="twitterGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1DA1F2;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:0.1" />
+    </linearGradient>
+    <linearGradient id="zkflowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="white"/>
+  <rect width="1200" height="630" fill="url(#twitterGradient)"/>
+  
+  <!-- Main content -->
+  <text x="600" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="700" text-anchor="middle" fill="url(#zkflowGradient)">zkFlow.pro</text>
+  <text x="600" y="250" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="400" text-anchor="middle" fill="#1F2937">Smart Form Automation</text>
+  
+  <!-- Key benefit -->
+  <rect x="300" y="300" width="600" height="100" rx="20" fill="white" stroke="#E5E7EB" stroke-width="2"/>
+  <text x="600" y="335" font-family="system-ui" font-size="20" font-weight="600" text-anchor="middle" fill="#3B82F6">Save 5+ Hours Every Week</text>
+  <text x="600" y="365" font-family="system-ui" font-size="16" text-anchor="middle" fill="#6B7280">Record once, replay anywhere</text>
+  <text x="600" y="385" font-family="system-ui" font-size="16" text-anchor="middle" fill="#6B7280">🔒 Privacy-first • ⚡ Lightning-fast • 🆓 Free</text>
+  
+  <!-- CTA -->
+  <text x="600" y="480" font-family="system-ui" font-size="18" font-weight="500" text-anchor="middle" fill="#3B82F6">Chrome Web Store → zkflow.pro</text>
+  
+  <!-- Branding -->
+  <text x="600" y="580" font-family="system-ui" font-size="14" text-anchor="middle" fill="#9CA3AF">Built by aegntic - AI-Powered Development Solutions</text>
+</svg>

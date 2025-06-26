@@ -1,0 +1,19 @@
+{
+  "title": "DailyDoco Pro - Zero Cost Demo",
+  "duration": 90,
+  "scenes": 5,
+  "created_at": "2025-06-17T19:41:58.240Z",
+  "cost": {
+    "script": "$0.00 (free models)",
+    "images": "$0.00 (Pollinations.ai)",
+    "voice": "$0.00 (Edge-TTS)",
+    "video": "$0.00 (FFmpeg)",
+    "total": "$0.00"
+  },
+  "services": {
+    "script": "OpenRouter Free Models",
+    "images": "Pollinations.ai (no API key!)",
+    "voice": "Microsoft Edge-TTS",
+    "video": "FFmpeg"
+  }
+}

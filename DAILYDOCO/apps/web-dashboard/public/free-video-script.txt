@@ -1,0 +1,20 @@
+
+[SCENE 1: Problem (0-15s)]
+Visual: Developer drowning in documentation tasks
+Narration: Every sprint, documentation dies. Your brilliant code goes undocumented.
+
+[SCENE 2: Solution (15-30s)]
+Visual: DailyDoco Pro dashboard with AI actively documenting
+Narration: DailyDoco Pro watches your workflow and creates documentation automatically.
+
+[SCENE 3: Features (30-60s)]
+Visual: Split screen showing AI predicting, capturing, narrating
+Narration: AI predicts important moments, captures perfectly, and narrates like a human.
+
+[SCENE 4: Results (60-75s)]
+Visual: Dashboard showing 12,000+ teams, 127 hours saved
+Narration: Join thousands of teams saving over 100 hours monthly.
+
+[SCENE 5: CTA (75-90s)]
+Visual: Logo with website URL
+Narration: DailyDoco Pro. Documentation that writes itself. Start free at dailydoco.pro.

@@ -1,0 +1,15 @@
+{
+  "data": {
+    "role": "user",
+    "content": "Is the memory-bank working now?",
+    "turnId": 1,
+    "timestamp": "2025-05-05T06:21:00.759Z"
+  },
+  "metadata": {
+    "timestamp": "2025-05-05T06:21:00.758Z",
+    "category": "conversations",
+    "key": "session_1746426060742_turn_1",
+    "source": "claude-conversation",
+    "sessionKey": "session_1746426060742"
+  }
+}

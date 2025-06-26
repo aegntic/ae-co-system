@@ -1,0 +1,155 @@
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <title>Sign Up</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .custom-btn {
+      font: inherit;
+      background-color: #000000;
+      border: 0;
+      color: #ffffff;
+      border-radius: 0.5em;
+      font-size: 0.875rem;
+      padding: 0.65em 1.25em;
+      font-weight: 500;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: 0.15s ease;
+      cursor: pointer;
+    }
+    .custom-btn:hover {
+      background-color: #333333;
+    }
+    .custom-btn:active {
+      translate: 0 1px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .font-geist { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important; }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;family=Geist:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+      /* Custom font utilities */
+      .font-geist { font-family: 'Geist', sans-serif !important; }
+    </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;family=Geist:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet">
+  <style>
+      /* Custom font utilities */
+      .font-geist { font-family: 'Geist', sans-serif !important; }
+      .font-playfair { font-family: 'Playfair Display', serif !important; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4 font-geist">
+  
+  <div class="w-full max-w-4xl bg-white rounded-3xl shadow-xl overflow-hidden">
+    <div class="flex flex-col lg:flex-row">
+      
+      <!-- Left side - Hero content with diagonal lines background -->
+      <div class="lg:w-1/2 relative text-white p-10 flex flex-col justify-center overflow-hidden">
+        <!-- SVG Diagonal Lines Background -->
+        <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+          <defs>
+            <!-- Diagonal Line Pattern -->
+            <pattern id="diagonalPattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="60" y2="60" stroke="#fff" stroke-width="0.8" opacity="0.15"></line>
+              <line x1="-60" y1="0" x2="0" y2="60" stroke="#fff" stroke-width="0.8" opacity="0.15"></line>
+              <line x1="60" y1="0" x2="120" y2="60" stroke="#fff" stroke-width="0.8" opacity="0.15"></line>
+            </pattern>
+            <!-- Vignette -->
+            <radialGradient id="vignette" cx="50%" cy="50%" r="75%" fx="50%" fy="50%">
+              <stop offset="40%" stop-color="#000" stop-opacity="0"></stop>
+              <stop offset="100%" stop-color="#000" stop-opacity="0.8"></stop>
+            </radialGradient>
+          </defs>
+          <!-- Dark Background -->
+          <rect x="0" y="0" width="1920" height="1080" fill="#0a0a0a"></rect>
+          <!-- Diagonal Lines -->
+          <rect x="0" y="0" width="1920" height="1080" fill="url(#diagonalPattern)"></rect>
+          <!-- Vignette Overlay -->
+          <rect x="0" y="0" width="1920" height="1080" fill="url(#vignette)" class=""></rect>
+        </svg>
+        
+        <div class="relative z-10 max-w-md space-y-8">
+          <h1 class="leading-tight text-5xl font-light tracking-tight mb-4">Welcome</h1>
+          <p class="leading-relaxed text-base text-gray-300 mb-6">Join thousands of users who trust us with their digital experience. Create, collaborate, and innovate with our cutting-edge tools.</p>
+          
+          <div class="grid grid-cols-3 gap-4 text-center">
+            <div>
+              <div class="text-xl font-semibold">50K+</div>
+              <div class="text-xs text-gray-400">Active Users</div>
+            </div>
+            <div class="">
+              <div class="text-xl font-semibold">99.9%</div>
+              <div class="text-xs text-gray-400">Uptime</div>
+            </div>
+            <div class="">
+              <div class="text-xl font-semibold">24/7</div>
+              <div class="text-xs text-gray-400">Support</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side - Form -->
+      <div class="lg:w-1/2 px-10 py-10">
+        <div class="max-w-md">
+          <h2 class="text-3xl font-normal text-gray-900 tracking-tight mb-1">Create your account</h2>
+          <p class="text-sm text-gray-600 mb-6">Sign up to get started</p>
+
+          <form class="space-y-5">
+            <div class="">
+              <label class="block text-gray-700 font-medium mb-1.5 text-sm" for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required="" class="w-full focus:ring-2 focus:ring-black focus:border-transparent outline-none transition text-sm text-gray-900 bg-white border-gray-200 border rounded-xl px-3.5 py-2.5" placeholder="name@email.com">
+              <p class="text-xs text-gray-500 mt-1">We'll never share your email with anyone else.</p>
+            </div>
+
+            <div class="">
+              <label class="block text-gray-700 font-medium mb-1.5 text-sm" for="password">Password</label>
+              <input id="password" name="password" type="password" autocomplete="new-password" required="" class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-gray-200 bg-white text-gray-900 focus:ring-2 focus:ring-black focus:border-transparent outline-none transition" placeholder="Enter a strong password">
+              <ul class="text-xs text-gray-500 mt-1.5 space-y-0.5">
+                <li class="">• At least 8 characters</li>
+                <li class="">• Contains a number</li>
+                <li class="">• Contains an uppercase letter</li>
+                <li class="">• Contains a special character</li>
+              </ul>
+            </div>
+
+            <div class="flex items-start">
+              <input id="terms" name="terms" type="checkbox" required="" class="rounded border-gray-300 text-black focus:ring-2 focus:ring-black mt-0.5">
+              <label for="terms" class="ml-2.5 text-xs text-gray-600 select-none">
+                I agree to the
+                <a href="#" class="text-black underline hover:text-gray-700">Terms of Service</a>
+                and
+                <a href="#" class="text-black underline hover:text-gray-700">Privacy Policy</a>.
+              </label>
+            </div>
+
+            <button type="submit" class="custom-btn w-full rounded-xl">Sign Up</button>
+          </form>
+
+          <div class="flex items-center mt-6 mb-5">
+            <div class="flex-grow h-px bg-gray-200"></div>
+            <span class="px-3 text-gray-500 text-xs">Or</span>
+            <div class="flex-grow h-px bg-gray-200"></div>
+          </div>
+
+          <button class="w-full flex items-center justify-center px-3.5 py-2.5 bg-white border border-gray-200 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition text-sm">
+            <svg class="w-4 h-4 mr-2.5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M21.805 10.023h-9.765v3.952h5.701c-.246 1.262-1.475 3.709-5.701 3.709-3.432 0-6.22-2.837-6.22-6.22s2.788-6.22 6.22-6.22c1.955 0 3.269.835 4.022 1.558l2.74-2.67c-1.726-1.609-3.968-2.605-6.762-2.605-5.602 0-10.15 4.548-10.15 10.15s4.548 10.15 10.15 10.15c5.826 0 9.678-4.096 9.678-9.869 0-.662-.075-1.168-.169-1.644z"></path>
+            </svg>
+            Sign up with Google
+          </button>
+
+          <p class="text-xs text-gray-600 text-center mt-5">
+            Already have an account?
+            <a href="#" class="text-black font-medium underline hover:text-gray-700 transition">Sign in</a>
+          </p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+</body></html>

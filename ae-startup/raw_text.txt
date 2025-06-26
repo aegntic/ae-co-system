@@ -1,0 +1,147 @@
+How to Build an AI Startup
+in 3 Hours with < $500
+Crash Course
+with Mattae Cooper
+@mattaecooper
+What’s Inside
+● Greg’s 5-step process of building an AI startup (follow along!)
+● Tools he uses and real workflows he’s built
+● Greg’s AI tool stack
+We took notes so you don’t have to.
+“Watch me as I replace a developer, salesperson, designer,
+marketer, researcher, product manager… with AI agents.”
+- Mattae Cooper
+1. Find the right idea/trend
+2. Sketch out the idea
+3. Scope out the MVP
+4. Vibe coding your prototype
+5. Vibe marketing the business
+The 5-step process
+Idea: Build an AI SEO Agency called LLMBoost
+Why: 5-10% of organic search now happens on large
+language models (LLMs). People are finding businesses
+and signing up via ChatGPT.
+Tool: ideabrowser.com → AI-powered business idea generator
+Step 1. Find the right idea/trend
+The website not only shows you the idea, but also breaks down:
+Whether people are talking about
+this topic online…
+How much money you can make… How you should go to market…
+Step 1. Find the right idea/trend
+Whether you’re the best person to build this business…
+“If you have a proven track record of execution,
+or if going forward is not a problem for you,
+then ideas are actually incredibly important.”
+- Sam Parr
+Step 1. Find the right idea/trend
+Tool: tldraw → a whiteboard tool similar to Figjam
+Hot Tip: You’ll get better results from an LLM if you give it a diagram or flowchart like this.
+Sketch out a flowchart of the overall experience of LLM Boost. You don’t have to be a designer — anyone can make boxes!
+Step 2. Sketch out your idea
+Tool: Manus → a general AI agent that Greg describes as “a supercharged version of OpenAI’s Operator”
+● Popularity shot up when it launched in March this year
+● 17.8M site visits per month
+● Developed by China
+Source: Google Trends
+“It’s like having 100 agents working for you.”
+- Greg
+Step 3. Scope out the MVP
+Greg’s Prompt Hot Tips:
+● Use Wispr Flow to prompt by voice instead of
+typing
+● Tell Manus (or any LLM) to “ask me anything
+before you get started.” It gets you better
+outputs.
+● Ask AI to pretend they’re someone you look up
+to. Then ask questions like “how would [insert
+name] start this business?”
+Step 3. Scope out the MVP
+Manus created an entire project plan — the way a product manager does. Then it drafted quiz questions.
+Step 3. Scope out the MVP
+Greg downloaded a LLM SEO mini course
+from thevibemarketer.com to help shorten
+and refine the quiz questions.
+Hot Tip: Ask the LLM what’s the best prompt to use.
+You will never be able to out-prompt the software
+that sees all the prompts.
+Improved results
+Step 3. Scope out the MVP
+Manus gave a suuper long
+prompt that’ll take humans
+HOURS to write.
+Feed that into Bolt, and
+you get…
+Tool: Bolt.new → an AI web development agent
+A sleek, functional landing page
+Step 4. Vibe code the prototype
+● Now you have a working interface/frontend
+● To get the actual quiz results, you need a
+ChatGPT API key
+● In < 1 hour, you can have ChatGPT analyze
+the data, then feed its output into a
+database tool (Supabase) via an integration
+Step 4. Vibe code the prototype
+Tool: Lindy → A no-code platform that lets you build AI assistants (agents)
+“I don’t know why more people don’t do this, but there are
+thousands of $1M+ ideas just by using Lindy’s and
+Gumloop’s workflows, and selling them into the real world.”
+- Greg
+Lindy has many ready-to-use workflow templates
+Step 5. Vibe market your business
+Example 1: The prospecting workflow for Late Checkout Agency, Greg’s design firm targeting VP+ executives.
+● Greg shares thought leadership posts on LinkedIn
+● If a VP+ level person likes or comments on the post, the
+AI agent pulls their social data to see if they’re a qualified
+lead
+● If qualified, the agent gets their email and phone number
+(need a paid Prospect account)
+● A dedicated Slack channel alerts the sales team
+● If a salesperson posts a ❤emoji in that slack channel, it
+sends a personalized email or text message to the
+prospect
+Step 5. Vibe market your business
+Example 2: AI negotiator workflow
+● If someone contacts you for a discount, this
+AI agent can email them and negotiate the
+terms, following the prompt below:
+Step 5. Vibe market your business
+Example 3: AI voice agent for customer feedback
+● Create a 1-800 number
+● People call the number, AI agent asks for their
+feedback
+● Stores the feedback in a database (Airtable)
+● Summarizes the call and let the team know
+Step 5. Vibe market your business
+“It's so important that you reach out to someone like 5,10,20 minutes after they engaged, or else
+they might forget about you.”
+- Greg
+● Using AI agents, Greg has gone from 120 employees to under 60, saving
+$5M per year
+● “We're doing things at a speed and scale that we wouldn't be able to do with
+human beings.”
+Result: you save massive amount of time and $$$
+● Ideation
+○ ideabrowser.com
+● Sketching
+○ tldraw or FigJam
+● Voice prompting
+○ Wispr Flow
+● Scoping out prototypes
+○ Manus
+Greg’s AI Tool Stack
+● Vibe coding
+○ Bolt.new → friendly for non-technical folks
+○ Loveable → friendly for non-technical folks
+○ Cursor → more technical
+○ Windsurf → more technical
+● Vibe marketing with AI workflows
+○ Lindy → friendly for non-technical folks
+○ Gumloop → friendly for non-technical folks
+○ N8N → more technical
+The Startup Idea Podcast
+“Listen, I'm not saying it's as easy as 1-2-3-4-5-6. Building a startup is hard.
+It's a rollercoaster. But this is the framework for how to build it, and you can
+build it using tools like this. The unfair advantage and the returns you’re gonna
+get by understanding these tools… it’s just worth it.”
+My First Million
+

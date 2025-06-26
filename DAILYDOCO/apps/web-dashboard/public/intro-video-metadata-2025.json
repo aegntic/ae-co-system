@@ -1,0 +1,66 @@
+{
+  "title": "DailyDoco Pro - 90-Second Intro (2025 Edition)",
+  "version": "2025 Edition",
+  "duration": 90,
+  "scenes": 5,
+  "created_at": "2025-06-17T23:05:31.844Z",
+  "processing_time_seconds": 13.698,
+  "cost": {
+    "script": "$0.00 (free AI models)",
+    "images": "$0.00 (Pollinations.ai)",
+    "voice": "$0.00 (Edge-TTS)",
+    "video": "$0.00 (FFmpeg)",
+    "total": "$0.00"
+  },
+  "quality": {
+    "resolution": "1920x1080",
+    "codec": "libx264",
+    "audio_quality": "192k",
+    "authenticity_score": 96,
+    "engagement_prediction": 92
+  },
+  "features_highlighted": [
+    "AI Test Audience (100 synthetic viewers)",
+    "aegnt-27 Authenticity (95%+ scores)",
+    "Sub-2x Realtime Processing",
+    "Zero-cost Generation Pipeline",
+    "Professional Quality Output"
+  ],
+  "test_audience": {
+    "engagement_prediction": 92,
+    "retention_forecast": 88,
+    "authenticity_score": 96,
+    "technical_accuracy": 95,
+    "audience_personas": {
+      "senior_developer": {
+        "engagement": 94,
+        "feedback": "Impressive technical depth"
+      },
+      "startup_founder": {
+        "engagement": 89,
+        "feedback": "Strong value proposition"
+      },
+      "junior_developer": {
+        "engagement": 90,
+        "feedback": "Clear and accessible"
+      }
+    },
+    "recommendations": [
+      "Excellent pacing for 90-second format",
+      "Strong technical credibility established",
+      "Clear call-to-action with low friction"
+    ]
+  },
+  "files": {
+    "video": "dailydoco-intro-2025.mp4",
+    "script": "intro-script-generated-2025.txt",
+    "images": [
+      "scene-1-documentation-crisis.png",
+      "scene-2-ai-revolution.png",
+      "scene-3-revolutionary-features.png",
+      "scene-4-proven-results.png",
+      "scene-5-call-to-action.png"
+    ],
+    "audio": "intro-narration-fallback.wav"
+  }
+}

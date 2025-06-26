@@ -1,0 +1,84 @@
+{
+  "target_email": "aegntic@gmail.com",
+  "domains": [
+    {
+      "domain": "prompt.fail",
+      "email": "claube@prompt.fail"
+    },
+    {
+      "domain": "4site.pro",
+      "email": "projects@4site.pro"
+    },
+    {
+      "domain": "aegntic.ai",
+      "email": "human@aegntic.ai"
+    },
+    {
+      "domain": "ae.ltd",
+      "email": "human@ae.ltd"
+    },
+    {
+      "domain": "ultraplan.pro",
+      "email": "vibe@ultraplan.pro"
+    },
+    {
+      "domain": "aegnt27.xyz",
+      "email": "auth@aegnt27.xyz"
+    },
+    {
+      "domain": "dailydoco.com",
+      "email": "docs@dailydoco.com"
+    },
+    {
+      "domain": "credability.pro",
+      "email": "verify@credability.pro"
+    },
+    {
+      "domain": "mattaecooper.org",
+      "email": "human@mattaecooper.org"
+    },
+    {
+      "domain": "skool.food",
+      "email": "chef@skool.food"
+    },
+    {
+      "domain": "1minskool.com",
+      "email": "learn@1minskool.com"
+    }
+  ],
+  "commands": [
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"prompt.fail\", type=\"MX\", name=\"\", content=\"mx1.forwardemail.net\", prio=\"10\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"prompt.fail\", type=\"MX\", name=\"\", content=\"mx2.forwardemail.net\", prio=\"20\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"prompt.fail\", type=\"TXT\", name=\"\", content=\"forward-email=claube:aegntic@gmail.com\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"4site.pro\", type=\"MX\", name=\"\", content=\"mx1.forwardemail.net\", prio=\"10\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"4site.pro\", type=\"MX\", name=\"\", content=\"mx2.forwardemail.net\", prio=\"20\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"4site.pro\", type=\"TXT\", name=\"\", content=\"forward-email=projects:aegntic@gmail.com\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"aegntic.ai\", type=\"MX\", name=\"\", content=\"mx1.forwardemail.net\", prio=\"10\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"aegntic.ai\", type=\"MX\", name=\"\", content=\"mx2.forwardemail.net\", prio=\"20\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"aegntic.ai\", type=\"TXT\", name=\"\", content=\"forward-email=human:aegntic@gmail.com\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"ae.ltd\", type=\"MX\", name=\"\", content=\"mx1.forwardemail.net\", prio=\"10\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"ae.ltd\", type=\"MX\", name=\"\", content=\"mx2.forwardemail.net\", prio=\"20\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"ae.ltd\", type=\"TXT\", name=\"\", content=\"forward-email=human:aegntic@gmail.com\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"ultraplan.pro\", type=\"MX\", name=\"\", content=\"mx1.forwardemail.net\", prio=\"10\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"ultraplan.pro\", type=\"MX\", name=\"\", content=\"mx2.forwardemail.net\", prio=\"20\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"ultraplan.pro\", type=\"TXT\", name=\"\", content=\"forward-email=vibe:aegntic@gmail.com\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"aegnt27.xyz\", type=\"MX\", name=\"\", content=\"mx1.forwardemail.net\", prio=\"10\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"aegnt27.xyz\", type=\"MX\", name=\"\", content=\"mx2.forwardemail.net\", prio=\"20\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"aegnt27.xyz\", type=\"TXT\", name=\"\", content=\"forward-email=auth:aegntic@gmail.com\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"dailydoco.com\", type=\"MX\", name=\"\", content=\"mx1.forwardemail.net\", prio=\"10\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"dailydoco.com\", type=\"MX\", name=\"\", content=\"mx2.forwardemail.net\", prio=\"20\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"dailydoco.com\", type=\"TXT\", name=\"\", content=\"forward-email=docs:aegntic@gmail.com\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"credability.pro\", type=\"MX\", name=\"\", content=\"mx1.forwardemail.net\", prio=\"10\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"credability.pro\", type=\"MX\", name=\"\", content=\"mx2.forwardemail.net\", prio=\"20\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"credability.pro\", type=\"TXT\", name=\"\", content=\"forward-email=verify:aegntic@gmail.com\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"mattaecooper.org\", type=\"MX\", name=\"\", content=\"mx1.forwardemail.net\", prio=\"10\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"mattaecooper.org\", type=\"MX\", name=\"\", content=\"mx2.forwardemail.net\", prio=\"20\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"mattaecooper.org\", type=\"TXT\", name=\"\", content=\"forward-email=human:aegntic@gmail.com\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"skool.food\", type=\"MX\", name=\"\", content=\"mx1.forwardemail.net\", prio=\"10\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"skool.food\", type=\"MX\", name=\"\", content=\"mx2.forwardemail.net\", prio=\"20\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"skool.food\", type=\"TXT\", name=\"\", content=\"forward-email=chef:aegntic@gmail.com\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"1minskool.com\", type=\"MX\", name=\"\", content=\"mx1.forwardemail.net\", prio=\"10\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"1minskool.com\", type=\"MX\", name=\"\", content=\"mx2.forwardemail.net\", prio=\"20\")",
+    "mcp__porkbun__porkbun_create_dns_record(domain=\"1minskool.com\", type=\"TXT\", name=\"\", content=\"forward-email=learn:aegntic@gmail.com\")"
+  ]
+}

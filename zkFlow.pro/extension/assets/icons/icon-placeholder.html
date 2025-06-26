@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>zkFlow Icon Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f0f0f0;
+    }
+    .icon-container {
+      display: inline-block;
+      margin: 20px;
+      text-align: center;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      display: block;
+      margin: 10px 0;
+      background: white;
+    }
+    h1 {
+      color: #333;
+    }
+    .instructions {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>zkFlow.pro Icon Generator</h1>
+  
+  <div id="icons"></div>
+  
+  <div class="instructions">
+    <h2>Instructions:</h2>
+    <ol>
+      <li>Right-click on each icon and select "Save image as..."</li>
+      <li>Save with the filename shown below each icon</li>
+      <li>Place the saved files in the <code>assets/icons/</code> directory</li>
+    </ol>
+  </div>
+
+  <script>
+    const sizes = [16, 32, 48, 128];
+    const container = document.getElementById('icons');
+    
+    sizes.forEach(size => {
+      const div = document.createElement('div');
+      div.className = 'icon-container';
+      
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      
+      const ctx = canvas.getContext('2d');
+      
+      // Background circle
+      ctx.fillStyle = '#5b4cdb';
+      ctx.beginPath();
+      ctx.arc(size/2, size/2, size/2 - 2, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Key icon (simplified for small sizes)
+      ctx.fillStyle = 'white';
+      ctx.globalAlpha = 0.9;
+      
+      if (size >= 32) {
+        // Key handle
+        ctx.beginPath();
+        ctx.arc(size * 0.3, size/2, size * 0.15, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.fillStyle = '#5b4cdb';
+        ctx.beginPath();
+        ctx.arc(size * 0.3, size/2, size * 0.08, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Key shaft
+        ctx.fillStyle = 'white';
+        ctx.fillRect(size * 0.4, size/2 - size * 0.06, size * 0.45, size * 0.12);
+        
+        // Key teeth
+        ctx.fillRect(size * 0.8, size/2 - size * 0.06, size * 0.05, size * 0.18);
+        ctx.fillRect(size * 0.75, size/2 - size * 0.06, size * 0.04, size * 0.14);
+      } else {
+        // Simplified icon for 16x16
+        ctx.beginPath();
+        ctx.arc(size * 0.35, size/2, size * 0.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillRect(size * 0.45, size/2 - 2, size * 0.4, 4);
+      }
+      
+      const label = document.createElement('div');
+      label.textContent = `icon-${size}.png`;
+      
+      div.appendChild(canvas);
+      div.appendChild(label);
+      container.appendChild(div);
+    });
+  </script>
+</body>
+</html>

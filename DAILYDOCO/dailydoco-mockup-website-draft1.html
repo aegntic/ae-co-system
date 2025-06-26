@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyDoco Pro - Elite Automated Documentation Platform</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        :root {
+            /* Monochrome Ice Palette */
+            --white: #FFFFFF;
+            --ice-light: #CDDDF7;
+            --ice-mid: #6E8AB6;
+            --ice-dark: #1E293B;
+            
+            /* Dark mode (default) */
+            --bg-primary: #0E0E10;
+            --bg-secondary: #1A1A1E;
+            --text-primary: #F1F1F1;
+            --text-secondary: #CDDDF7;
+            --accent: #6E8AB6;
+            --accent-hover: #8FA5CC;
+            --border: rgba(205, 221, 247, 0.1);
+            
+            /* Typography */
+            --font-heading: 'Syne', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 3rem;
+            --space-xl: 4rem;
+            --space-2xl: 6rem;
+            
+            /* Effects */
+            --blur-glass: blur(10px);
+            --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 30px rgba(110, 138, 182, 0.3);
+            
+            /* Transitions */
+            --transition-fast: 150ms ease;
+            --transition-base: 300ms ease;
+            --transition-slow: 600ms ease;
+        }
+        
+        /* Light mode */
+        body.light-mode {
+            --bg-primary: #F9FBFF;
+            --bg-secondary: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #6E8AB6;
+            --accent: #CDDDF7;
+            --accent-hover: #B5CBE8;
+            --border: rgba(30, 41, 59, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background var(--transition-base), color var(--transition-base);
+        }
+        
+        /* VHS Grain Overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.03) 2px,
+                    rgba(255, 255, 255, 0.03) 4px
+                );
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.03;
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+        
+        h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); }
+        h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: var(--space-md);
+            backdrop-filter: var(--blur-glass);
+            background: rgba(14, 14, 16, 0.8);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            transition: all var(--transition-base);
+        }
+        
+        body.light-mode header {
+            background: rgba(249, 251, 255, 0.8);
+        }
+        
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .logo-emblem {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--ice-light), var(--ice-mid));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-heading);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--bg-primary);
+            box-shadow: 0 4px 20px rgba(110, 138, 182, 0.3);
+            transform-style: preserve-3d;
+            transition: transform var(--transition-base);
+        }
+        
+        .logo:hover .logo-emblem {
+            transform: rotateY(180deg);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: var(--space-lg);
+            align-items: center;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-fast);
+        }
+        
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+        
+        .theme-toggle {
+            width: 48px;
+            height: 24px;
+            background: var(--ice-dark);
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: background var(--transition-base);
+        }
+        
+        .theme-toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: var(--white);
+            border-radius: 50%;
+            transition: transform var(--transition-base);
+        }
+        
+        body.light-mode .theme-toggle {
+            background: var(--ice-light);
+        }
+        
+        body.light-mode .theme-toggle::after {
+            transform: translateX(24px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 800px;
+            padding: var(--space-md);
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+        
+        .hero h1 {
+            margin-bottom: var(--space-md);
+            background: linear-gradient(135deg, var(--white), var(--ice-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+            font-weight: 400;
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm) var(--space-lg);
+            background: var(--accent);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all var(--transition-base);
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .cta-button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(110, 138, 182, 0.4);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: var(--space-2xl) var(--space-md);
+            background: var(--bg-secondary);
+            position: relative;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+        
+        .feature-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: var(--space-lg);
+            position: relative;
+            overflow: hidden;
+            transition: all var(--transition-base);
+            backdrop-filter: var(--blur-glass);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--ice-light), var(--ice-mid));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform var(--transition-base);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-glow);
+            border-color: var(--ice-mid);
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--ice-light), var(--ice-mid));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: var(--space-md);
+        }
+        
+        .feature-card h3 {
+            margin-bottom: var(--space-sm);
+            color: var(--text-primary);
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        /* Video Demo Section */
+        .video-demo {
+            padding: var(--space-2xl) var(--space-md);
+            background: var(--bg-primary);
+        }
+        
+        .video-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            aspect-ratio: 16/9;
+        }
+        
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--ice-dark), var(--bg-primary));
+            font-size: 3rem;
+            color: var(--ice-light);
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+        
+        .video-placeholder:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Stats Section */
+        .stats {
+            padding: var(--space-xl) var(--space-md);
+            background: var(--bg-secondary);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-lg);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: var(--space-md);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-family: var(--font-heading);
+            background: linear-gradient(135deg, var(--ice-light), var(--ice-mid));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-xs);
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+        
+        /* Footer */
+        footer {
+            padding: var(--space-xl) var(--space-md);
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <div class="logo-emblem">DŒ</div>
+                <span style="font-family: var(--font-heading); font-size: 1.5rem;">DailyDoco Pro</span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#docs">Docs</a></li>
+                <li>
+                    <div class="theme-toggle" onclick="toggleTheme()"></div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-content">
+            <h1>Documentation That Writes Itself</h1>
+            <p class="hero-subtitle">
+                Transform your development workflow into stunning video tutorials with AI-powered narration, 
+                test audience validation, and human-like authenticity.
+            </p>
+            <a href="#" class="cta-button">
+                Start My Daily Doco
+                <span>→</span>
+            </a>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Elite-Tier Features</h2>
+                <p style="color: var(--text-secondary); font-size: 1.25rem; margin-top: 1rem;">
+                    The world's most intelligent automated documentation platform
+                </p>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Predictive Intelligence</h3>
+                    <p>Captures important moments 30 seconds before they happen using ML-based event prediction and importance scoring.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎭</div>
+                    <h3>AI Test Audience</h3>
+                    <p>50-100 synthetic viewers evaluate your content before publication, ensuring maximum engagement and quality.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy-First</h3>
+                    <p>Complete local processing with AES-256 encryption. Real-time sensitive content detection and anonymization.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Elite Performance</h3>
+                    <p>Sub-2x real-time processing even for 4K content. Tauri-based desktop app with <150MB memory footprint.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Human Fingerprint</h3>
+                    <p>95%+ authenticity score with natural speech patterns, micro-movements, and intelligent error injection.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Modular AI</h3>
+                    <p>Hot-swappable models (DeepSeek R1 + Gemma 3) with automatic optimization and A/B testing capabilities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Video Demo Section -->
+    <section class="video-demo" id="demo">
+        <div class="container">
+            <div class="section-header">
+                <h2>See DailyDoco in Action</h2>
+                <p style="color: var(--text-secondary); font-size: 1.25rem; margin-top: 1rem;">
+                    Watch how we transform a coding session into a professional tutorial
+                </p>
+            </div>
+            
+            <div class="video-container">
+                <div class="video-placeholder">
+                    <span style="font-size: 5rem;">▶</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">1.7x</div>
+                <div class="stat-label">Processing Speed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">97%</div>
+                <div class="stat-label">Authenticity Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><3s</div>
+                <div class="stat-label">Startup Time</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">95%</div>
+                <div class="stat-label">First-Time Approval</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 DailyDoco Pro. Built with ❤️ by developers, for developers.</p>
+    </footer>
+    
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+        }
+        
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-mode');
+        }
+        
+        // Three.js Hero Scene
+        let scene, camera, renderer, panels = [];
+        let animationTime = 0;
+        const PANEL_COUNT = 8;
+        
+        function initThreeJS() {
+            scene = new THREE.Scene();
+            
+            // Camera
+            camera = new THREE.PerspectiveCamera(
+                75,
+                window.innerWidth / window.innerHeight,
+                0.1,
+                1000
+            );
+            camera.position.z = 5;
+            
+            // Renderer
+            renderer = new THREE.WebGLRenderer({
+                canvas: document.getElementById('hero-canvas'),
+                alpha: true,
+                antialias: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+            
+            // Create floating panels
+            const geometry = new THREE.BoxGeometry(1.5, 1, 0.1);
+            
+            for (let i = 0; i < PANEL_COUNT; i++) {
+                // Glass material with gradient effect
+                const material = new THREE.MeshPhysicalMaterial({
+                    color: i % 2 === 0 ? 0x6E8AB6 : 0xCDDDF7,
+                    transparent: true,
+                    opacity: 0.3,
+                    roughness: 0.1,
+                    metalness: 0.2,
+                    clearcoat: 1,
+                    clearcoatRoughness: 0.1,
+                    side: THREE.DoubleSide
+                });
+                
+                const panel = new THREE.Mesh(geometry, material);
+                
+                // Initial scattered position
+                panel.position.x = (Math.random() - 0.5) * 10;
+                panel.position.y = (Math.random() - 0.5) * 10;
+                panel.position.z = (Math.random() - 0.5) * 5;
+                
+                panel.rotation.x = Math.random() * Math.PI;
+                panel.rotation.y = Math.random() * Math.PI;
+                
+                // Store target position for assembly animation
+                const angle = (i / PANEL_COUNT) * Math.PI * 2;
+                panel.userData.targetX = Math.cos(angle) * 2;
+                panel.userData.targetY = Math.sin(angle) * 2;
+                panel.userData.targetZ = 0;
+                panel.userData.assembled = false;
+                
+                panels.push(panel);
+                scene.add(panel);
+            }
+            
+            // Mouse interaction
+            let mouseX = 0, mouseY = 0;
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            });
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                animationTime += 0.01;
+                
+                // Assembly animation (first 60 seconds)
+                if (animationTime < 3) {
+                    const progress = animationTime / 3;
+                    
+                    panels.forEach((panel, i) => {
+                        const delay = i * 0.1;
+                        const panelProgress = Math.max(0, Math.min(1, (progress - delay) * 2));
+                        
+                        // Ease-out cubic
+                        const easeProgress = 1 - Math.pow(1 - panelProgress, 3);
+                        
+                        panel.position.x = panel.position.x + (panel.userData.targetX - panel.position.x) * easeProgress * 0.05;
+                        panel.position.y = panel.position.y + (panel.userData.targetY - panel.position.y) * easeProgress * 0.05;
+                        panel.position.z = panel.position.z + (panel.userData.targetZ - panel.position.z) * easeProgress * 0.05;
+                        
+                        // Rotate to face forward
+                        panel.rotation.x += (0 - panel.rotation.x) * easeProgress * 0.05;
+                        panel.rotation.y += (0 - panel.rotation.y) * easeProgress * 0.05;
+                        
+                        if (panelProgress > 0.9 && !panel.userData.assembled) {
+                            panel.userData.assembled = true;
+                            // Add glow effect when assembled
+                            panel.material.emissive = new THREE.Color(0x6E8AB6);
+                            panel.material.emissiveIntensity = 0.2;
+                        }
+                    });
+                } else {
+                    // Idle floating animation
+                    panels.forEach((panel, i) => {
+                        const offset = i * 0.5;
+                        panel.position.y = panel.userData.targetY + Math.sin(animationTime + offset) * 0.1;
+                        panel.rotation.z = Math.sin(animationTime * 0.5 + offset) * 0.05;
+                    });
+                }
+                
+                // Mouse parallax
+                scene.rotation.y = mouseX * 0.1;
+                scene.rotation.x = mouseY * 0.1;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+        }
+        
+        // Handle resize
+        window.addEventListener('resize', () => {
+            if (camera && renderer) {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+        });
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check for reduced motion preference
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                initThreeJS();
+                
+                // Initialize GSAP animations
+                gsap.registerPlugin(ScrollTrigger);
+                
+                // Animate feature cards on scroll
+                gsap.utils.toArray('.feature-card').forEach((card, i) => {
+                    gsap.from(card, {
+                        scrollTrigger: {
+                            trigger: card,
+                            start: 'top 80%',
+                            toggleActions: 'play none none reverse'
+                        },
+                        y: 50,
+                        opacity: 0,
+                        duration: 0.8,
+                        delay: i * 0.1
+                    });
+                });
+                
+                // Animate stats
+                gsap.utils.toArray('.stat-number').forEach((stat) => {
+                    const value = stat.textContent;
+                    const isNumeric = /^\d/.test(value);
+                    
+                    if (isNumeric) {
+                        const num = parseFloat(value);
+                        stat.textContent = '0';
+                        
+                        gsap.to(stat, {
+                            scrollTrigger: {
+                                trigger: stat,
+                                start: 'top 80%',
+                                toggleActions: 'play none none reverse'
+                            },
+                            textContent: num,
+                            duration: 2,
+                            snap: { textContent: 0.1 },
+                            onUpdate: function() {
+                                stat.textContent = this.targets()[0].textContent;
+                                if (value.includes('.')) {
+                                    stat.textContent = parseFloat(stat.textContent).toFixed(1);
+                                }
+                                if (value.includes('x')) {
+                                    stat.textContent += 'x';
+                                }
+                                if (value.includes('%')) {
+                                    stat.textContent += '%';
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

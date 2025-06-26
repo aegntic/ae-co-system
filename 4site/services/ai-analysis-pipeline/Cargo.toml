@@ -1,0 +1,67 @@
+[package]
+name = "ai-analysis-pipeline"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Async runtime
+tokio = { version = "1.40", features = ["full"] }
+tokio-util = "0.7"
+
+# Database
+sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "postgres", "uuid", "chrono", "json"] }
+uuid = { version = "1.10", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+# Redis for queue management
+redis = { version = "0.27", features = ["tokio-comp", "json"] }
+
+# HTTP client for API calls
+reqwest = { version = "0.12", features = ["json", "rustls-tls"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Configuration
+config = "0.14"
+dotenvy = "0.15"
+
+# AI/ML
+candle-core = "0.7"
+candle-nn = "0.7"
+candle-transformers = "0.7"
+tokenizers = "0.20"
+
+# Text processing
+regex = "1.10"
+markdown = "1.0"
+pulldown-cmark = { version = "0.12", features = ["html"] }
+
+# Template engine
+tera = "1.20"
+
+# Rate limiting
+governor = "0.6"
+
+# Partner recommendations
+fuzzy-matcher = "0.3"
+
+[dev-dependencies]
+tokio-test = "0.4"
+
+[[bin]]
+name = "worker"
+path = "src/main.rs"
+
+[[bin]]
+name = "analysis-worker"
+path = "src/bin/analysis_worker.rs"

@@ -1,0 +1,99 @@
+{
+  "aegnt27_commercial_engines": {
+    "version": "2.7.0",
+    "build_date": "2025-01-06",
+    "build_type": "commercial",
+    "license_requirement": "COMM-*",
+    
+    "engines": {
+      "authenticity": {
+        "binary": "libaegnt27_authenticity_commercial.so",
+        "api_function": "aegnt27_commercial_authenticity_validate",
+        "capabilities": [
+          "95%+ human authenticity scoring",
+          "27 behavioral pattern detection", 
+          "Commercial algorithm enhancement",
+          "Real-time processing"
+        ],
+        "performance": {
+          "target_score": "95%+",
+          "processing_speed": "<2x realtime",
+          "memory_usage": "<50MB"
+        }
+      },
+      
+      "mouse_humanizer": {
+        "binary": "libaegnt27_mouse_commercial.so", 
+        "api_function": "aegnt27_commercial_mouse_humanize",
+        "capabilities": [
+          "96%+ mouse movement authenticity",
+          "Micro-movement pattern injection",
+          "Drift compensation algorithms",
+          "Fatigue effect simulation"
+        ],
+        "performance": {
+          "target_score": "96%+",
+          "latency": "<10ms per point",
+          "cpu_usage": "<1%"
+        }
+      },
+      
+      "typing_humanizer": {
+        "binary": "libaegnt27_typing_commercial.so",
+        "api_function": "aegnt27_commercial_typing_humanize", 
+        "capabilities": [
+          "95%+ typing authenticity",
+          "Muscle memory simulation",
+          "Cognitive load modeling",
+          "Error pattern injection"
+        ],
+        "performance": {
+          "target_score": "95%+",
+          "latency": "<5ms per keystroke",
+          "cpu_usage": "<0.5%"
+        }
+      },
+      
+      "detection_evader": {
+        "binary": "libaegnt27_detection_commercial.so",
+        "api_function": "aegnt27_commercial_evade_detection",
+        "capabilities": [
+          "98%+ AI detection evasion",
+          "Pattern disruption algorithms", 
+          "Semantic preservation",
+          "Multi-detector resistance"
+        ],
+        "performance": {
+          "evasion_rate": "98%+",
+          "processing_speed": "<1.5x realtime",
+          "accuracy_preservation": "99%+"
+        }
+      }
+    },
+    
+    "license_validation": {
+      "required": true,
+      "environment_variable": "AEGNT27_COMMERCIAL_LICENSE",
+      "format": "COMM-{CUSTOMER}-{DATE}-{FEATURES}",
+      "validation_method": "runtime_check"
+    },
+    
+    "integration": {
+      "api_version": "2.7",
+      "abi_compatibility": "C",
+      "supported_platforms": ["Linux x86_64", "Windows x86_64", "macOS x86_64"],
+      "minimum_requirements": {
+        "memory": "100MB",
+        "cpu": "x86_64",
+        "os": "Linux 4.4+, Windows 10+, macOS 10.14+"
+      }
+    },
+    
+    "commercial_features": {
+      "authenticity_boost": "+15% vs open source",
+      "pattern_diversity": "27 vs 15 patterns",
+      "processing_speed": "2x faster than open source",
+      "detection_resistance": "98% vs 70% open source"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+# Claude Code
+.claude/context/
+.mcp.json.backup.*
+
+# Project-specific ignores
+node_modules/
+dist/
+.next/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

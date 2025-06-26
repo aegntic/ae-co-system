@@ -1,0 +1,913 @@
+openapi: 3.0.0
+info:
+  title: ULTRAPLAN API
+  version: 1.0.0
+  description: First Principles Project Resolution Platform API
+  contact:
+    name: ULTRAPLAN Support
+    email: support@ultraplan.ai
+    url: https://ultraplan.ai/support
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api.ultraplan.ai/v1
+    description: Production server
+  - url: https://staging-api.ultraplan.ai/v1
+    description: Staging server
+  - url: http://localhost:3000/v1
+    description: Development server
+
+security:
+  - bearerAuth: []
+  - apiKey: []
+
+paths:
+  /auth/register:
+    post:
+      tags: [Authentication]
+      summary: Register a new user
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password, name]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 8
+                name:
+                  type: string
+                  minLength: 2
+      responses:
+        201:
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        409:
+          description: Email already exists
+
+  /auth/login:
+    post:
+      tags: [Authentication]
+      summary: Login user
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        200:
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/refresh:
+    post:
+      tags: [Authentication]
+      summary: Refresh access token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refreshToken]
+              properties:
+                refreshToken:
+                  type: string
+      responses:
+        200:
+          description: Token refreshed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/me:
+    get:
+      tags: [Authentication]
+      summary: Get current user
+      responses:
+        200:
+          description: Current user details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+
+  /projects:
+    get:
+      tags: [Projects]
+      summary: List user projects
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, analyzing, completed, failed]
+      responses:
+        200:
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+    
+    post:
+      tags: [Projects]
+      summary: Create new project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                repository_url:
+                  type: string
+                  format: uri
+      responses:
+        201:
+          description: Project created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        402:
+          $ref: '#/components/responses/PaymentRequired'
+
+  /projects/{projectId}:
+    get:
+      tags: [Projects]
+      summary: Get project details
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+      responses:
+        200:
+          description: Project details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDetail'
+        404:
+          $ref: '#/components/responses/NotFound'
+    
+    put:
+      tags: [Projects]
+      summary: Update project
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        200:
+          description: Project updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        404:
+          $ref: '#/components/responses/NotFound'
+    
+    delete:
+      tags: [Projects]
+      summary: Delete project
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+      responses:
+        204:
+          description: Project deleted
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /projects/{projectId}/analyze:
+    post:
+      tags: [Projects]
+      summary: Start project analysis
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                deep_scan:
+                  type: boolean
+                  default: false
+                include_dependencies:
+                  type: boolean
+                  default: true
+      responses:
+        202:
+          description: Analysis started
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jobId:
+                    type: string
+                  status:
+                    type: string
+                  estimatedTime:
+                    type: integer
+                    description: Estimated completion time in seconds
+        404:
+          $ref: '#/components/responses/NotFound'
+        402:
+          $ref: '#/components/responses/PaymentRequired'
+
+  /plans:
+    get:
+      tags: [Plans]
+      summary: List plans
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: projectId
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: public
+          in: query
+          schema:
+            type: boolean
+      responses:
+        200:
+          description: List of plans
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Plan'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+    
+    post:
+      tags: [Plans]
+      summary: Create new plan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [projectId, title]
+              properties:
+                projectId:
+                  type: string
+                  format: uuid
+                title:
+                  type: string
+                description:
+                  type: string
+                parameters:
+                  type: object
+                  properties:
+                    model:
+                      type: string
+                      enum: [gpt-4, claude-3, custom]
+                    temperature:
+                      type: number
+                      minimum: 0
+                      maximum: 2
+                    constraints:
+                      type: object
+      responses:
+        201:
+          description: Plan created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        402:
+          $ref: '#/components/responses/PaymentRequired'
+
+  /plans/{planId}/generate:
+    post:
+      tags: [Plans]
+      summary: Generate plan implementation
+      parameters:
+        - $ref: '#/components/parameters/PlanId'
+      responses:
+        202:
+          description: Generation started
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jobId:
+                    type: string
+                  status:
+                    type: string
+        404:
+          $ref: '#/components/responses/NotFound'
+        402:
+          $ref: '#/components/responses/PaymentRequired'
+
+  /marketplace/items:
+    get:
+      tags: [Marketplace]
+      summary: List marketplace items
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: minPrice
+          in: query
+          schema:
+            type: number
+        - name: maxPrice
+          in: query
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum: [price, downloads, rating, created]
+      responses:
+        200:
+          description: List of marketplace items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MarketplaceItem'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+
+  /marketplace/items/{itemId}:
+    get:
+      tags: [Marketplace]
+      summary: Get marketplace item details
+      parameters:
+        - $ref: '#/components/parameters/ItemId'
+      responses:
+        200:
+          description: Marketplace item details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketplaceItemDetail'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /marketplace/items/{itemId}/purchase:
+    post:
+      tags: [Marketplace]
+      summary: Purchase marketplace item
+      parameters:
+        - $ref: '#/components/parameters/ItemId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [paymentMethodId]
+              properties:
+                paymentMethodId:
+                  type: string
+      responses:
+        200:
+          description: Purchase successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Purchase'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        402:
+          $ref: '#/components/responses/PaymentRequired'
+
+  /billing/subscription:
+    get:
+      tags: [Billing]
+      summary: Get current subscription
+      responses:
+        200:
+          description: Subscription details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+    
+    post:
+      tags: [Billing]
+      summary: Create subscription
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [tier, paymentMethodId]
+              properties:
+                tier:
+                  type: string
+                  enum: [starter, pro, enterprise]
+                paymentMethodId:
+                  type: string
+      responses:
+        200:
+          description: Subscription created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        400:
+          $ref: '#/components/responses/BadRequest'
+
+  /extension/analyze:
+    post:
+      tags: [Extension]
+      summary: Analyze project from extension
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [projectData]
+              properties:
+                projectData:
+                  type: object
+                  properties:
+                    url:
+                      type: string
+                    structure:
+                      type: object
+                    metadata:
+                      type: object
+      responses:
+        202:
+          description: Analysis queued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jobId:
+                    type: string
+                  projectId:
+                    type: string
+        400:
+          $ref: '#/components/responses/BadRequest'
+        402:
+          $ref: '#/components/responses/PaymentRequired'
+
+  /webhooks/stripe:
+    post:
+      tags: [Webhooks]
+      summary: Stripe webhook endpoint
+      security: []
+      parameters:
+        - name: stripe-signature
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        200:
+          description: Webhook processed
+        400:
+          $ref: '#/components/responses/BadRequest'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+  parameters:
+    ProjectId:
+      name: projectId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    
+    PlanId:
+      name: planId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    
+    ItemId:
+      name: itemId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    
+    PageParam:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    
+    LimitParam:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    Error:
+      type: object
+      required: [error, message]
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+
+    AuthResponse:
+      type: object
+      required: [user, accessToken, refreshToken]
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        expiresIn:
+          type: integer
+
+    User:
+      type: object
+      required: [id, email, name, subscriptionTier]
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        avatarUrl:
+          type: string
+        subscriptionTier:
+          type: string
+          enum: [free, starter, pro, enterprise]
+        subscriptionStatus:
+          type: string
+          enum: [active, canceled, past_due, trialing]
+        createdAt:
+          type: string
+          format: date-time
+
+    Project:
+      type: object
+      required: [id, name, status, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        repositoryUrl:
+          type: string
+        status:
+          type: string
+          enum: [pending, analyzing, completed, failed]
+        analyzedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    ProjectDetail:
+      allOf:
+        - $ref: '#/components/schemas/Project'
+        - type: object
+          properties:
+            analysisData:
+              type: object
+            problems:
+              type: array
+              items:
+                $ref: '#/components/schemas/Problem'
+            metrics:
+              type: object
+
+    Problem:
+      type: object
+      required: [id, category, severity, title]
+      properties:
+        id:
+          type: string
+          format: uuid
+        category:
+          type: string
+          enum: [security, performance, architecture, dependency, code_quality]
+        severity:
+          type: string
+          enum: [low, medium, high, critical]
+        title:
+          type: string
+        description:
+          type: string
+        filePath:
+          type: string
+        lineStart:
+          type: integer
+        lineEnd:
+          type: integer
+        suggestedFix:
+          type: string
+
+    Plan:
+      type: object
+      required: [id, projectId, title, status, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum: [draft, generating, completed, published]
+        estimatedHours:
+          type: integer
+        complexityScore:
+          type: number
+        aiConfidence:
+          type: number
+        isPublic:
+          type: boolean
+        marketplacePrice:
+          type: number
+        tags:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    MarketplaceItem:
+      type: object
+      required: [id, title, price, sellerId, downloads, rating]
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        price:
+          type: number
+        sellerId:
+          type: string
+          format: uuid
+        downloads:
+          type: integer
+        rating:
+          type: number
+        tags:
+          type: array
+          items:
+            type: string
+
+    MarketplaceItemDetail:
+      allOf:
+        - $ref: '#/components/schemas/MarketplaceItem'
+        - type: object
+          properties:
+            longDescription:
+              type: string
+            screenshots:
+              type: array
+              items:
+                type: string
+            previewData:
+              type: object
+            reviews:
+              type: array
+              items:
+                $ref: '#/components/schemas/Review'
+
+    Review:
+      type: object
+      required: [id, rating, reviewerId, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        title:
+          type: string
+        comment:
+          type: string
+        reviewerId:
+          type: string
+          format: uuid
+        verifiedPurchase:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    Purchase:
+      type: object
+      required: [id, itemId, amount, status, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        itemId:
+          type: string
+          format: uuid
+        planId:
+          type: string
+          format: uuid
+        amount:
+          type: number
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    Subscription:
+      type: object
+      required: [id, tier, status, currentPeriodEnd]
+      properties:
+        id:
+          type: string
+          format: uuid
+        tier:
+          type: string
+          enum: [free, starter, pro, enterprise]
+        status:
+          type: string
+          enum: [active, canceled, past_due, trialing]
+        currentPeriodStart:
+          type: string
+          format: date-time
+        currentPeriodEnd:
+          type: string
+          format: date-time
+        cancelAtPeriodEnd:
+          type: boolean
+
+    Pagination:
+      type: object
+      required: [page, limit, total, totalPages]
+      properties:
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+        totalPages:
+          type: integer

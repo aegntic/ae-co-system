@@ -1,0 +1,343 @@
+# Prometheus Alert Rules for 4site.pro
+# Comprehensive alerting for system health and business metrics
+
+groups:
+  # System Health Alerts
+  - name: system.rules
+    rules:
+      # High CPU usage
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+          component: system
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage is above 80% for more than 5 minutes on {{ $labels.instance }}"
+
+      # High memory usage
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+          component: system
+        annotations:
+          summary: "High memory usage detected"
+          description: "Memory usage is above 85% on {{ $labels.instance }}"
+
+      # Disk space low
+      - alert: DiskSpaceLow
+        expr: (1 - (node_filesystem_avail_bytes / node_filesystem_size_bytes)) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+          component: system
+        annotations:
+          summary: "Disk space running low"
+          description: "Disk usage is above 85% on {{ $labels.instance }} for {{ $labels.mountpoint }}"
+
+      # System load high
+      - alert: HighSystemLoad
+        expr: node_load15 > 2
+        for: 10m
+        labels:
+          severity: warning
+          component: system
+        annotations:
+          summary: "High system load"
+          description: "15-minute load average is {{ $value }} on {{ $labels.instance }}"
+
+  # Application Health Alerts
+  - name: application.rules
+    rules:
+      # Service down
+      - alert: ServiceDown
+        expr: up{job=~"4site-pro-app|monitoring-dashboard"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          component: application
+        annotations:
+          summary: "Service is down"
+          description: "{{ $labels.job }} on {{ $labels.instance }} has been down for more than 2 minutes"
+
+      # High response time
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le)) > 2
+        for: 5m
+        labels:
+          severity: warning
+          component: application
+        annotations:
+          summary: "High response time"
+          description: "95th percentile response time is {{ $value }}s"
+
+      # High error rate
+      - alert: HighErrorRate
+        expr: sum(rate(http_requests_total{status=~"5.."}[5m])) / sum(rate(http_requests_total[5m])) * 100 > 5
+        for: 5m
+        labels:
+          severity: critical
+          component: application
+        annotations:
+          summary: "High error rate"
+          description: "Error rate is {{ $value }}% over the last 5 minutes"
+
+      # Too many requests
+      - alert: HighRequestVolume
+        expr: sum(rate(http_requests_total[5m])) > 1000
+        for: 5m
+        labels:
+          severity: warning
+          component: application
+        annotations:
+          summary: "High request volume"
+          description: "Request rate is {{ $value }} requests/second"
+
+  # Database Alerts
+  - name: database.rules
+    rules:
+      # Database down
+      - alert: DatabaseDown
+        expr: pg_up == 0
+        for: 2m
+        labels:
+          severity: critical
+          component: database
+        annotations:
+          summary: "Database is down"
+          description: "PostgreSQL database on {{ $labels.instance }} is down"
+
+      # High database connections
+      - alert: HighDatabaseConnections
+        expr: (pg_stat_activity_count / pg_settings_max_connections) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "High database connection usage"
+          description: "Database connection usage is {{ $value }}%"
+
+      # Slow queries
+      - alert: SlowQueries
+        expr: avg(pg_stat_statements_mean_time_ms) > 1000
+        for: 5m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "Slow database queries detected"
+          description: "Average query time is {{ $value }}ms"
+
+      # Low cache hit ratio
+      - alert: LowCacheHitRatio
+        expr: (pg_stat_database_blks_hit / (pg_stat_database_blks_hit + pg_stat_database_blks_read)) * 100 < 90
+        for: 10m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "Low database cache hit ratio"
+          description: "Cache hit ratio is {{ $value }}%"
+
+      # Database size growth
+      - alert: DatabaseSizeGrowth
+        expr: increase(pg_database_size_bytes[24h]) > 1073741824  # 1GB
+        for: 1h
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "Rapid database growth"
+          description: "Database has grown by {{ $value | humanizeBytes }} in the last 24 hours"
+
+  # Business Metrics Alerts
+  - name: business.rules
+    rules:
+      # Low viral coefficient
+      - alert: LowViralCoefficient
+        expr: viral_coefficient < 0.5
+        for: 30m
+        labels:
+          severity: warning
+          component: business
+        annotations:
+          summary: "Viral coefficient is low"
+          description: "Viral coefficient has dropped to {{ $value }}"
+
+      # Critical viral coefficient
+      - alert: CriticalViralCoefficient
+        expr: viral_coefficient < 0.2
+        for: 15m
+        labels:
+          severity: critical
+          component: business
+        annotations:
+          summary: "Viral coefficient critically low"
+          description: "Viral coefficient is critically low at {{ $value }}"
+
+      # Low conversion rate
+      - alert: LowConversionRate
+        expr: lead_capture_rate < 2
+        for: 1h
+        labels:
+          severity: warning
+          component: business
+        annotations:
+          summary: "Lead conversion rate is low"
+          description: "Lead conversion rate has dropped to {{ $value }}%"
+
+      # Site generation failures
+      - alert: SiteGenerationFailures
+        expr: increase(site_generation_failures_total[1h]) > 10
+        for: 5m
+        labels:
+          severity: warning
+          component: business
+        annotations:
+          summary: "High site generation failure rate"
+          description: "{{ $value }} site generation failures in the last hour"
+
+      # AI service errors
+      - alert: AIServiceErrors
+        expr: increase(ai_service_errors_total[15m]) > 5
+        for: 5m
+        labels:
+          severity: critical
+          component: business
+        annotations:
+          summary: "High AI service error rate"
+          description: "{{ $value }} AI service errors in the last 15 minutes"
+
+      # Commission tracking issues
+      - alert: CommissionTrackingDown
+        expr: increase(commission_events_total[1h]) == 0 and increase(site_generation_total[1h]) > 0
+        for: 30m
+        labels:
+          severity: warning
+          component: business
+        annotations:
+          summary: "Commission tracking may be down"
+          description: "No commission events recorded despite site generation activity"
+
+  # Performance Alerts
+  - name: performance.rules
+    rules:
+      # Slow site generation
+      - alert: SlowSiteGeneration
+        expr: histogram_quantile(0.95, sum(rate(site_generation_duration_seconds_bucket[5m])) by (le)) > 30
+        for: 10m
+        labels:
+          severity: warning
+          component: performance
+        annotations:
+          summary: "Site generation is slow"
+          description: "95th percentile site generation time is {{ $value }}s"
+
+      # Poor Core Web Vitals
+      - alert: PoorCoreWebVitals
+        expr: web_vitals_lcp_p75 > 2.5
+        for: 15m
+        labels:
+          severity: warning
+          component: performance
+        annotations:
+          summary: "Poor Core Web Vitals detected"
+          description: "LCP 75th percentile is {{ $value }}s (target: <2.5s)"
+
+      # High bounce rate
+      - alert: HighBounceRate
+        expr: analytics_bounce_rate > 70
+        for: 30m
+        labels:
+          severity: warning
+          component: performance
+        annotations:
+          summary: "High bounce rate detected"
+          description: "Bounce rate is {{ $value }}%"
+
+  # Security Alerts
+  - name: security.rules
+    rules:
+      # High failed authentication attempts
+      - alert: HighFailedAuthAttempts
+        expr: increase(failed_auth_attempts_total[1h]) > 100
+        for: 5m
+        labels:
+          severity: warning
+          component: security
+        annotations:
+          summary: "High failed authentication attempts"
+          description: "{{ $value }} failed authentication attempts in the last hour"
+
+      # Rate limiting triggered
+      - alert: RateLimitingTriggered
+        expr: increase(rate_limit_exceeded_total[15m]) > 50
+        for: 5m
+        labels:
+          severity: warning
+          component: security
+        annotations:
+          summary: "High rate limiting activity"
+          description: "{{ $value }} rate limit violations in the last 15 minutes"
+
+      # SSL certificate expiry warning
+      - alert: SSLCertificateExpiringSoon
+        expr: ssl_cert_not_after - time() < 30 * 24 * 3600  # 30 days
+        for: 1h
+        labels:
+          severity: warning
+          component: security
+        annotations:
+          summary: "SSL certificate expiring soon"
+          description: "SSL certificate for {{ $labels.instance }} expires in {{ $value | humanizeDuration }}"
+
+      # SSL certificate expiry critical
+      - alert: SSLCertificateExpiringSoonCritical
+        expr: ssl_cert_not_after - time() < 7 * 24 * 3600  # 7 days
+        for: 1h
+        labels:
+          severity: critical
+          component: security
+        annotations:
+          summary: "SSL certificate expiring very soon"
+          description: "SSL certificate for {{ $labels.instance }} expires in {{ $value | humanizeDuration }}"
+
+  # Infrastructure Alerts
+  - name: infrastructure.rules
+    rules:
+      # Container restart loop
+      - alert: ContainerRestartLoop
+        expr: increase(container_last_seen[1h]) > 5
+        for: 15m
+        labels:
+          severity: warning
+          component: infrastructure
+        annotations:
+          summary: "Container restarting frequently"
+          description: "Container {{ $labels.name }} has restarted {{ $value }} times in the last hour"
+
+      # High container memory usage
+      - alert: HighContainerMemoryUsage
+        expr: (container_memory_usage_bytes / container_spec_memory_limit_bytes) * 100 > 90
+        for: 5m
+        labels:
+          severity: warning
+          component: infrastructure
+        annotations:
+          summary: "High container memory usage"
+          description: "Container {{ $labels.name }} memory usage is {{ $value }}%"
+
+      # Network issues
+      - alert: HighNetworkErrors
+        expr: increase(node_network_receive_errs_total[5m]) > 10
+        for: 5m
+        labels:
+          severity: warning
+          component: infrastructure
+        annotations:
+          summary: "High network errors"
+          description: "{{ $value }} network errors on {{ $labels.device }}"

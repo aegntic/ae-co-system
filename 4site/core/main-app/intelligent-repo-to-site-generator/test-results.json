@@ -1,0 +1,67 @@
+{
+  "timestamp": "2025-06-25T08:14:27.729Z",
+  "testsPassed": 2,
+  "testsFailed": 7,
+  "results": [
+    {
+      "name": "Page Load & Initial Render",
+      "status": "FAILED",
+      "error": "Waiting for selector `.glass-container` failed: Waiting failed: 10000ms exceeded",
+      "timestamp": "2025-06-25T08:14:50.526Z"
+    },
+    {
+      "name": "Branding Update (project4site → 4site.pro)",
+      "status": "FAILED",
+      "error": "Old \"project4site\" branding still present",
+      "timestamp": "2025-06-25T08:14:50.533Z"
+    },
+    {
+      "name": "Living Websites Messaging",
+      "status": "PASSED",
+      "duration": 9,
+      "timestamp": "2025-06-25T08:14:50.542Z"
+    },
+    {
+      "name": "Pricing Tiers Structure",
+      "status": "FAILED",
+      "error": "Only found 0 of expected pricing tiers",
+      "timestamp": "2025-06-25T08:14:50.546Z"
+    },
+    {
+      "name": "Repository Input Functionality",
+      "status": "FAILED",
+      "error": "this.page.waitForTimeout is not a function",
+      "timestamp": "2025-06-25T08:14:50.669Z"
+    },
+    {
+      "name": "Site Generation Form",
+      "status": "FAILED",
+      "error": "SyntaxError: Failed to execute 'querySelector' on 'Document': 'button[type=\"submit\"], button:contains(\"Generate\"), button:contains(\"Transform\")' is not a valid selector.",
+      "timestamp": "2025-06-25T08:14:50.671Z"
+    },
+    {
+      "name": "Responsive Design",
+      "status": "FAILED",
+      "error": "this.page.waitForTimeout is not a function",
+      "timestamp": "2025-06-25T08:14:50.700Z"
+    },
+    {
+      "name": "Performance Metrics",
+      "status": "PASSED",
+      "duration": 7,
+      "timestamp": "2025-06-25T08:14:50.707Z"
+    },
+    {
+      "name": "Glass Morphism UI",
+      "status": "FAILED",
+      "error": "Glass morphism UI elements not found",
+      "timestamp": "2025-06-25T08:14:50.715Z"
+    }
+  ],
+  "summary": {
+    "total": 9,
+    "passed": 2,
+    "failed": 7,
+    "successRate": "22%"
+  }
+}

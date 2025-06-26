@@ -1,0 +1,28 @@
+{
+  "name": "memory-bank",
+  "version": "0.1.0",
+  "description": "Persistent context management system for E2E-AUTO-MICRO-APPS",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test-memory-bank.js"
+  },
+  "keywords": [
+    "memory",
+    "context",
+    "persistence",
+    "ai",
+    "vector-storage"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^11.1.1",
+    "dotenv": "^16.3.1"
+  },
+  "optionalDependencies": {
+    "@supabase/supabase-js": "^2.38.1"
+  },
+  "peerDependencies": {
+    "openai": "^4.0.0"
+  }
+}

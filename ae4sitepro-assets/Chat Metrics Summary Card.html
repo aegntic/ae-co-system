@@ -1,0 +1,130 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Chat Card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'geist': ['Geist', 'system-ui', 'sans-serif'],
+                        'sans': ['system-ui', '-apple-system', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-border {
+            background: radial-gradient(circle 230px at 0% 0%, #ffffff, #0c0d0d);
+        }
+        
+        .gradient-card {
+            background: radial-gradient(circle 280px at 0% 0%, #444444, #0c0d0d);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #000000 4%, #fff, #000);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        
+        .ray-effect {
+            background-color: #c7c7c7;
+            opacity: 0.4;
+            box-shadow: 0 0 50px #fff;
+            filter: blur(10px);
+            transform-origin: 10%;
+            transform: rotate(40deg);
+        }
+        
+        .font-geist { font-family: 'Geist', sans-serif !important; }
+        
+        .beautiful-shadow {
+            box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+                        0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+                        0 12.5px 10px rgba(0, 0, 0, 0.06),
+                        0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+                        0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+                        0 100px 80px rgba(0, 0, 0, 0.12);
+        }
+        
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .status-dot {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+  <style>
+      /* Custom font utilities */
+      .font-geist { font-family: 'Geist', sans-serif !important; }
+    </style>
+<link id="dynamic-font-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist&amp;display=swap">
+<style id="dynamic-font-style-font-geist">
+.font-geist { font-family: 'Geist', sans-serif !important; }
+</style>
+</head>
+<body class="bg-neutral-200 flex items-center justify-center min-h-screen">
+    <div class="w-96 h-80 gradient-border relative beautiful-shadow rounded-3xl" style="padding: 1px;">
+        <!-- Main card -->
+        <div class="z-10 w-full h-full rounded-lg gradient-card grid-pattern flex flex-col relative text-white overflow-hidden">
+            <!-- Light ray effect -->
+            <div class="w-56 h-11 rounded-full absolute ray-effect top-0 left-0"></div>
+            
+            <!-- Header -->
+            
+            
+            <!-- Main metric -->
+            <div class="flex-1 flex flex-col items-center justify-center relative z-20 font-geist">
+                <div class="gradient-text text-5xl font-normal tracking-tighter font-geist bg-gradient-to-br from-[#fff] to-[#999] mb-2">12.5k</div>
+                <div class="text-base text-gray-300 mb-4">Total Messages</div>
+                
+                <!-- Stats row -->
+                <div class="flex gap-6 text-center">
+                    <div class="">
+                        <div class="text-3xl text-white font-geist">847</div>
+                        <div class="text-sm text-neutral-400">Today</div>
+                    </div>
+                    <div class="w-px h-10 bg-gray-600"></div>
+                    <div class="">
+                        <div class="text-3xl text-white font-geist">2.3k</div>
+                        <div class="text-sm text-neutral-400">This Week</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="relative z-20 font-geist border-gray-700/50 border-t px-6 py-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="flex -space-x-2">
+                            <div class="w-6 h-6 bg-neutral-100 border-gray-800 border-2 rounded-full"></div>
+                            <div class="w-6 h-6 bg-neutral-100 border-gray-800 border-2 rounded-full"></div>
+                            <div class="w-6 h-6 bg-neutral-100 border-gray-800 border-2 rounded-full"></div>
+                        </div>
+                        <span class="text-sm text-neutral-400 ml-2">+35 active users</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <div class="w-1 h-1 bg-neutral-500 rounded-full"></div>
+                        <div class="w-1 h-1 bg-neutral-400 rounded-full"></div>
+                        <div class="w-1 h-1 bg-neutral-600 rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body></html>

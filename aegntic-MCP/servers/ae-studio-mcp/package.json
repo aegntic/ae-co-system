@@ -1,0 +1,130 @@
+{
+  "name": "@aegntic/ae-studio-mcp",
+  "version": "0.1.0",
+  "description": "Invisible Animation Intelligence for Frontend Developers - AI-powered GSAP and Three.js tools that feel like superpowers. Research project by AEGNTIC.ecosystems.",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "ae-studio-mcp": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "node --test tests/**/*.test.js",
+    "test:unit": "node --test tests/unit/**/*.test.js",
+    "test:integration": "node --test tests/integration/**/*.test.js",
+    "test:performance": "node tests/performance/benchmark.js",
+    "lint": "eslint src/ tests/",
+    "lint:fix": "eslint src/ tests/ --fix",
+    "format": "prettier --write src/ tests/ docs/",
+    "validate": "node src/tools/validate.js",
+    "benchmark": "node tests/performance/benchmark.js"
+  },
+  "keywords": [
+    "mcp",
+    "animation", 
+    "gsap",
+    "threejs",
+    "ai",
+    "frontend",
+    "claude",
+    "aegntic",
+    "invisible-intelligence",
+    "performance",
+    "webgl",
+    "developer-tools"
+  ],
+  "author": {
+    "name": "Mattae Cooper",
+    "email": "human@ae.ltd",
+    "url": "https://ae.ltd"
+  },
+  "contributors": [
+    {
+      "name": "AEGNTIC.ecosystems",
+      "email": "contact@aegntic.ai", 
+      "url": "https://aegntic.ai"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic/ae-studio-mcp.git"
+  },
+  "homepage": "https://aegntic.studio",
+  "bugs": {
+    "url": "https://github.com/aegntic/ae-studio-mcp/issues"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "gsap": "^3.12.2",
+    "three": "^0.160.1",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.55.0",
+    "prettier": "^3.1.1",
+    "@types/node": "^20.10.5",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/aegntic"
+    },
+    {
+      "type": "opencollective",
+      "url": "https://opencollective.com/aegntic"
+    },
+    {
+      "type": "custom",
+      "url": "https://aegntic.studio/sponsor"
+    }
+  ],
+  "aegntic": {
+    "creator": "Mattae Cooper",
+    "email": "human@ae.ltd",
+    "organization": "AEGNTIC.ecosystems", 
+    "contact": "contact@aegntic.ai",
+    "website": "ae.ltd",
+    "platform": "aegntic.studio",
+    "mission": "Invisible Animation Intelligence for Frontend Developers",
+    "thanks": "Special thanks to claude4@anthropic for enabling incredible AI-human collaboration! 🚀"
+  },
+  "performance": {
+    "targets": {
+      "responseTime": "<100ms",
+      "memoryUsage": "<50MB",
+      "cpuUsage": "<15%"
+    },
+    "monitoring": {
+      "enabled": true,
+      "reportInterval": "5m",
+      "alertThresholds": {
+        "responseTime": "200ms",
+        "memoryUsage": "75MB",
+        "errorRate": "1%"
+      }
+    }
+  },
+  "ai": {
+    "provider": "claude-via-claude-code",
+    "features": {
+      "codeGeneration": true,
+      "performanceOptimization": true,
+      "patternLearning": true,
+      "contextAwareness": true
+    },
+    "privacy": {
+      "dataStorage": "local-only",
+      "externalTransmission": "anonymized-patterns-only",
+      "userConsent": "required"
+    }
+  }
+}

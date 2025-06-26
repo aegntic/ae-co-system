@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --primary: 217 100% 54%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 9% 46%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 269 79% 69%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 91%;
+    --ring: 217 100% 54%;
+    --radius: 0.375rem;
+  }
+
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+    --primary: 217 100% 54%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 222 47% 20%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 223 47% 20%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 269 79% 69%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 223 47% 20%;
+    --ring: 217 100% 54%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    @apply bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50;
+    font-feature-settings: "liga" 1, "kern" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .enterprise-gradient {
+    @apply bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900;
+  }
+
+  .data-card {
+    @apply bg-white dark:bg-slate-900 rounded-lg shadow-enterprise dark:shadow-enterprise-dark border border-slate-200 dark:border-slate-800;
+  }
+
+  .metric-card {
+    @apply p-6 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 hover:shadow-lg transition-shadow;
+  }
+
+  .stat-highlight {
+    @apply text-4xl font-bold bg-gradient-to-r from-primary-600 to-accent-purple bg-clip-text text-transparent;
+  }
+
+  .enterprise-button {
+    @apply px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors font-medium shadow-sm;
+  }
+
+  .enterprise-input {
+    @apply px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors;
+  }
+
+  .data-table {
+    @apply w-full text-sm text-left text-slate-600 dark:text-slate-400;
+  }
+
+  .data-table-header {
+    @apply text-xs text-slate-700 dark:text-slate-300 uppercase bg-slate-50 dark:bg-slate-900/50 font-medium;
+  }
+
+  .sidebar-enterprise {
+    @apply bg-slate-900 text-slate-100 w-64 min-h-screen;
+  }
+}
+
+/* Enterprise-specific scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100 dark:bg-slate-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-400 dark:bg-slate-700 rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-500 dark:bg-slate-600;
+}
+
+/* Data visualization colors */
+.chart-primary { color: #1492ff; }
+.chart-secondary { color: #8b5cf6; }
+.chart-tertiary { color: #14b8a6; }
+.chart-quaternary { color: #f97316; }
+
+/* Enterprise animations */
+@keyframes dataRefresh {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.data-refreshing {
+  animation: dataRefresh 1.5s ease-in-out infinite;
+}

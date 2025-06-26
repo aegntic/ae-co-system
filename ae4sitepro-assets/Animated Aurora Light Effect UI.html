@@ -1,0 +1,83 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Aurora Effect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes aurora-wave {
+            0% { transform: translateX(-100%) translateY(-5px) rotate(-1deg); }
+            50% { transform: translateX(0%) translateY(5px) rotate(1deg); }
+            100% { transform: translateX(100%) translateY(-3px) rotate(-0.5deg); }
+        }
+        
+        @keyframes aurora-pulse {
+            0%, 100% { opacity: 0.6; filter: blur(15px); }
+            50% { opacity: 0.9; filter: blur(10px); }
+        }
+        
+        @keyframes aurora-flow {
+            0% { transform: scaleX(0.8) translateY(-10px); }
+            33% { transform: scaleX(1.2) translateY(5px); }
+            66% { transform: scaleX(0.9) translateY(-8px); }
+            100% { transform: scaleX(0.8) translateY(-10px); }
+        }
+        
+        .aurora-layer {
+            background: linear-gradient(225deg, #3A29FF 0%, #FF94B4 50%, #FF3232 100%);
+            animation: aurora-wave 8s ease-in-out infinite;
+        }
+        
+        .aurora-layer:nth-child(1) {
+            animation-delay: 0s;
+            animation-duration: 12s;
+            background: linear-gradient(240deg, rgba(58, 41, 255, 0.7) 0%, rgba(255, 148, 180, 0.5) 50%, rgba(255, 50, 50, 0.3) 100%);
+        }
+        
+        .aurora-layer:nth-child(2) {
+            animation-delay: -2s;
+            animation-duration: 10s;
+            background: linear-gradient(135deg, rgba(255, 148, 180, 0.6) 0%, rgba(255, 50, 50, 0.4) 30%, rgba(58, 41, 255, 0.5) 100%);
+        }
+        
+        .aurora-layer:nth-child(3) {
+            animation-delay: -4s;
+            animation-duration: 14s;
+            background: linear-gradient(210deg, rgba(255, 50, 50, 0.4) 0%, rgba(58, 41, 255, 0.6) 60%, rgba(255, 148, 180, 0.5) 100%);
+        }
+        
+        .aurora-container {
+            background: linear-gradient(180deg, rgba(58, 41, 255, 0.1) 0%, rgba(0, 0, 0, 0.8) 70%, transparent 100%);
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-black">
+    <div class="fixed top-0 left-0 w-full aurora-container" style="height: 200px;">
+        <!-- Aurora layers -->
+        <div class="absolute top-0 left-0 aurora-layer w-full opacity-70" style="height: 80px; filter: blur(20px);"></div>
+        <div class="absolute left-0 aurora-layer w-full opacity-80" style="top: 30px; height: 60px; filter: blur(15px);"></div>
+        <div class="absolute left-0 aurora-layer w-full opacity-60" style="top: 60px; height: 50px; filter: blur(25px);"></div>
+        
+        <!-- Additional flowing elements -->
+        <div class="absolute left-0 w-full opacity-50" style="top: 90px; height: 40px; background: linear-gradient(90deg, transparent 0%, rgba(255, 148, 180, 0.8) 50%, transparent 100%); filter: blur(12px); animation: aurora-flow 6s ease-in-out infinite;"></div>
+        
+        <div class="absolute left-0 w-full opacity-40" style="top: 120px; height: 35px; background: linear-gradient(-90deg, transparent 0%, rgba(58, 41, 255, 0.9) 50%, transparent 100%); filter: blur(15px); animation: aurora-flow 8s ease-in-out infinite reverse;"></div>
+        
+        <!-- Pulsing aurora effects -->
+        
+        
+        <!-- Additional layers for more depth -->
+        <div class="absolute top-0 left-0 w-full opacity-40" style="height: 70px; background: linear-gradient(300deg, transparent 0%, rgba(58, 41, 255, 0.5) 30%, rgba(255, 148, 180, 0.4) 70%, transparent 100%); filter: blur(30px); animation: aurora-wave 16s ease-in-out infinite;"></div>
+        
+        
+    </div>
+
+</body></html>

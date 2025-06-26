@@ -1,0 +1,988 @@
+# DailyDoco Pro $100 BILLION Infrastructure
+# Designed for 10M+ concurrent users, enterprise scale, and viral growth
+version: '3.9'
+
+x-common-env: &common-env
+  NODE_ENV: production
+  LOG_LEVEL: info
+  SENTRY_DSN: ${SENTRY_DSN}
+  STATSD_HOST: statsd
+  ELASTICSEARCH_URL: http://elasticsearch:9200
+  REDIS_HOST_1: redis-1
+  REDIS_HOST_2: redis-2
+  REDIS_HOST_3: redis-3
+  KAFKA_BROKERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
+  KAFKA_USERNAME: ${KAFKA_USERNAME}
+  KAFKA_PASSWORD: ${KAFKA_PASSWORD}
+  DB_HOST: postgres-master
+  DB_PORT: 5432
+  DB_NAME: dailydoco
+  DB_USER: dailydoco_app
+  DB_PASSWORD: ${DB_PASSWORD}
+
+services:
+  # =====================================================
+  # DATABASE LAYER (DISTRIBUTED POSTGRESQL)
+  # =====================================================
+  
+  # Master database (read/write)
+  postgres-master:
+    image: timescale/timescaledb-ha:pg15-latest
+    environment:
+      POSTGRES_DB: dailydoco
+      POSTGRES_USER: dailydoco
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      TIMESCALEDB_TELEMETRY: off
+      TS_TUNE_MEMORY: 32GB
+      TS_TUNE_NUM_CPUS: 16
+    volumes:
+      - postgres_master_data:/var/lib/postgresql/data
+      - ./scripts/100b-schema-upgrade.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./scripts/performance-tuning.sql:/docker-entrypoint-initdb.d/02-tuning.sql
+    ports:
+      - "5432:5432"
+    command: >
+      postgres
+      -c max_connections=10000
+      -c shared_buffers=16GB
+      -c effective_cache_size=48GB
+      -c work_mem=256MB
+      -c maintenance_work_mem=2GB
+      -c checkpoint_completion_target=0.9
+      -c wal_buffers=64MB
+      -c default_statistics_target=100
+      -c random_page_cost=1.1
+      -c effective_io_concurrency=200
+      -c max_parallel_workers_per_gather=8
+      -c max_parallel_workers=32
+      -c max_parallel_maintenance_workers=8
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dailydoco"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 64G
+          cpus: '16'
+        reservations:
+          memory: 32G
+          cpus: '8'
+
+  # Read replica 1
+  postgres-replica-1:
+    image: timescale/timescaledb-ha:pg15-latest
+    environment:
+      POSTGRES_DB: dailydoco
+      POSTGRES_USER: dailydoco
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_MASTER_SERVICE: postgres-master
+      POSTGRES_REPLICA_USER: replica
+      POSTGRES_REPLICA_PASSWORD: ${REPLICA_PASSWORD}
+    volumes:
+      - postgres_replica_1_data:/var/lib/postgresql/data
+    depends_on:
+      - postgres-master
+    deploy:
+      resources:
+        limits:
+          memory: 32G
+          cpus: '8'
+        reservations:
+          memory: 16G
+          cpus: '4'
+
+  # Read replica 2
+  postgres-replica-2:
+    image: timescale/timescaledb-ha:pg15-latest
+    environment:
+      POSTGRES_DB: dailydoco
+      POSTGRES_USER: dailydoco
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_MASTER_SERVICE: postgres-master
+      POSTGRES_REPLICA_USER: replica
+      POSTGRES_REPLICA_PASSWORD: ${REPLICA_PASSWORD}
+    volumes:
+      - postgres_replica_2_data:/var/lib/postgresql/data
+    depends_on:
+      - postgres-master
+    deploy:
+      resources:
+        limits:
+          memory: 32G
+          cpus: '8'
+        reservations:
+          memory: 16G
+          cpus: '4'
+
+  # =====================================================
+  # REDIS CLUSTER (DISTRIBUTED CACHING)
+  # =====================================================
+  
+  redis-1:
+    image: redis/redis-stack-server:7.2.0-v6
+    command: >
+      redis-server
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --appendonly yes
+      --appendfsync everysec
+      --maxmemory 8gb
+      --maxmemory-policy allkeys-lru
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+    volumes:
+      - redis_1_data:/data
+    ports:
+      - "6379:6379"
+      - "16379:16379"
+    deploy:
+      resources:
+        limits:
+          memory: 10G
+          cpus: '4'
+
+  redis-2:
+    image: redis/redis-stack-server:7.2.0-v6
+    command: >
+      redis-server
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --appendonly yes
+      --appendfsync everysec
+      --maxmemory 8gb
+      --maxmemory-policy allkeys-lru
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+    volumes:
+      - redis_2_data:/data
+    ports:
+      - "6380:6379"
+      - "16380:16379"
+    deploy:
+      resources:
+        limits:
+          memory: 10G
+          cpus: '4'
+
+  redis-3:
+    image: redis/redis-stack-server:7.2.0-v6
+    command: >
+      redis-server
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --appendonly yes
+      --appendfsync everysec
+      --maxmemory 8gb
+      --maxmemory-policy allkeys-lru
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+    volumes:
+      - redis_3_data:/data
+    ports:
+      - "6381:6379"
+      - "16381:16379"
+    deploy:
+      resources:
+        limits:
+          memory: 10G
+          cpus: '4'
+
+  # =====================================================
+  # KAFKA CLUSTER (EVENT STREAMING)
+  # =====================================================
+  
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+    volumes:
+      - zookeeper_data:/var/lib/zookeeper/data
+      - zookeeper_logs:/var/lib/zookeeper/log
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2'
+
+  kafka-1:
+    image: confluentinc/cp-kafka:7.5.0
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+      KAFKA_NUM_PARTITIONS: 100
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_LOG_RETENTION_HOURS: 168
+      KAFKA_LOG_SEGMENT_BYTES: 1073741824
+      KAFKA_COMPRESSION_TYPE: snappy
+    volumes:
+      - kafka_1_data:/var/lib/kafka/data
+    ports:
+      - "9092:9092"
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+          cpus: '4'
+
+  kafka-2:
+    image: confluentinc/cp-kafka:7.5.0
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:29092,PLAINTEXT_HOST://localhost:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+      KAFKA_NUM_PARTITIONS: 100
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_LOG_RETENTION_HOURS: 168
+      KAFKA_LOG_SEGMENT_BYTES: 1073741824
+      KAFKA_COMPRESSION_TYPE: snappy
+    volumes:
+      - kafka_2_data:/var/lib/kafka/data
+    ports:
+      - "9093:9092"
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+          cpus: '4'
+
+  kafka-3:
+    image: confluentinc/cp-kafka:7.5.0
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:29092,PLAINTEXT_HOST://localhost:9094
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+      KAFKA_NUM_PARTITIONS: 100
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_LOG_RETENTION_HOURS: 168
+      KAFKA_LOG_SEGMENT_BYTES: 1073741824
+      KAFKA_COMPRESSION_TYPE: snappy
+    volumes:
+      - kafka_3_data:/var/lib/kafka/data
+    ports:
+      - "9094:9092"
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+          cpus: '4'
+
+  # =====================================================
+  # SEARCH & ANALYTICS STACK
+  # =====================================================
+  
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms16g -Xmx16g"
+      - xpack.security.enabled=false
+      - indices.query.bool.max_clause_count=10000
+      - cluster.routing.allocation.disk.threshold_enabled=false
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 32G
+          cpus: '8'
+        reservations:
+          memory: 16G
+          cpus: '4'
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.0
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2'
+
+  # =====================================================
+  # API GATEWAY & LOAD BALANCER
+  # =====================================================
+  
+  nginx-lb:
+    image: nginx:alpine
+    volumes:
+      - ./config/nginx-100b.conf:/etc/nginx/nginx.conf
+      - ./config/ssl:/etc/ssl/certs
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api-gateway
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          memory: 1G
+          cpus: '2'
+
+  api-gateway:
+    image: kong/kong-gateway:3.5
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: postgres-master
+      KONG_PG_USER: kong
+      KONG_PG_PASSWORD: ${KONG_PASSWORD}
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+      KONG_ADMIN_GUI_URL: http://localhost:8002
+      KONG_RATE_LIMITING_REDIS_HOST: redis-1
+      KONG_RATE_LIMITING_REDIS_PORT: 6379
+    ports:
+      - "8000:8000"  # Proxy
+      - "8001:8001"  # Admin API
+      - "8002:8002"  # Manager
+    healthcheck:
+      test: ["CMD", "kong", "health"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    deploy:
+      replicas: 5
+      resources:
+        limits:
+          memory: 2G
+          cpus: '2'
+
+  # =====================================================
+  # CORE MICROSERVICES
+  # =====================================================
+  
+  # Viral Engine Service (Commission & Growth)
+  viral-engine:
+    build:
+      context: ./services/viral-engine
+      dockerfile: Dockerfile
+    environment:
+      <<: *common-env
+      SERVICE_NAME: viral-engine
+      PORT: 3001
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres-master
+      - redis-1
+      - kafka-1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    deploy:
+      replicas: 20
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2'
+        reservations:
+          memory: 2G
+          cpus: '1'
+
+  # User Service (Authentication & Profiles)
+  user-service:
+    build:
+      context: ./services/user-service
+      dockerfile: Dockerfile
+      target: production
+    environment:
+      <<: *common-env
+      SERVICE_NAME: user-service
+      PORT: 3002
+      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+    ports:
+      - "3002:3002"
+    depends_on:
+      - postgres-master
+      - redis-1
+    deploy:
+      replicas: 50
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+
+  # Video Processing Service (AI + Optimization)
+  video-service:
+    build:
+      context: ./services/video-service
+      dockerfile: Dockerfile
+    environment:
+      <<: *common-env
+      SERVICE_NAME: video-service
+      PORT: 3003
+      FFMPEG_THREADS: 16
+      GPU_ACCELERATION: "true"
+    volumes:
+      - video_storage:/app/storage
+      - gpu_cache:/app/cache
+    ports:
+      - "3003:3003"
+    runtime: nvidia
+    deploy:
+      replicas: 10
+      resources:
+        limits:
+          memory: 16G
+          cpus: '8'
+        reservations:
+          memory: 8G
+          cpus: '4'
+          devices:
+            - driver: nvidia
+              count: 2
+              capabilities: [gpu]
+
+  # Analytics Service (Real-time Metrics)
+  analytics-service:
+    build:
+      context: ./services/analytics-service
+      dockerfile: Dockerfile
+    environment:
+      <<: *common-env
+      SERVICE_NAME: analytics-service
+      PORT: 3004
+      CLICKHOUSE_HOST: clickhouse
+      CLICKHOUSE_DATABASE: analytics
+    ports:
+      - "3004:3004"
+    depends_on:
+      - clickhouse
+      - kafka-1
+    deploy:
+      replicas: 15
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2'
+
+  # Notification Service (Email, Push, SMS)
+  notification-service:
+    build:
+      context: ./services/notification-service
+      dockerfile: Dockerfile
+    environment:
+      <<: *common-env
+      SERVICE_NAME: notification-service
+      PORT: 3005
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
+      TWILIO_SID: ${TWILIO_SID}
+      TWILIO_TOKEN: ${TWILIO_TOKEN}
+      FCM_SERVER_KEY: ${FCM_SERVER_KEY}
+    ports:
+      - "3005:3005"
+    deploy:
+      replicas: 10
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1'
+
+  # Payment Service (Stripe, Crypto, Commissions)
+  payment-service:
+    build:
+      context: ./services/payment-service
+      dockerfile: Dockerfile
+    environment:
+      <<: *common-env
+      SERVICE_NAME: payment-service
+      PORT: 3006
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      COINBASE_API_KEY: ${COINBASE_API_KEY}
+      BLOCKCHAIN_RPC_URL: ${BLOCKCHAIN_RPC_URL}
+    ports:
+      - "3006:3006"
+    deploy:
+      replicas: 8
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1'
+
+  # AI/ML Service (Personalization & Optimization)
+  ai-service:
+    build:
+      context: ./services/ai-service
+      dockerfile: Dockerfile
+    environment:
+      <<: *common-env
+      SERVICE_NAME: ai-service
+      PORT: 3007
+      MODEL_CACHE_SIZE: 50GB
+      BATCH_SIZE: 1000
+      CUDA_VISIBLE_DEVICES: "0,1,2,3"
+    volumes:
+      - model_cache:/app/models
+      - ai_data:/app/data
+    ports:
+      - "3007:3007"
+    runtime: nvidia
+    deploy:
+      replicas: 5
+      resources:
+        limits:
+          memory: 32G
+          cpus: '16'
+        reservations:
+          memory: 16G
+          cpus: '8'
+          devices:
+            - driver: nvidia
+              count: 4
+              capabilities: [gpu]
+
+  # =====================================================
+  # SPECIALIZED DATABASES
+  # =====================================================
+  
+  # ClickHouse for analytics
+  clickhouse:
+    image: clickhouse/clickhouse-server:23.11
+    environment:
+      CLICKHOUSE_DB: analytics
+      CLICKHOUSE_USER: analytics
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      - ./config/clickhouse:/etc/clickhouse-server/config.d
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+          cpus: '8'
+        reservations:
+          memory: 8G
+          cpus: '4'
+
+  # Neo4j for graph analytics
+  neo4j:
+    image: neo4j:5.15-enterprise
+    environment:
+      NEO4J_AUTH: neo4j/${NEO4J_PASSWORD}
+      NEO4J_PLUGINS: '["graph-data-science", "apoc"]'
+      NEO4J_dbms_memory_heap_initial__size: 8G
+      NEO4J_dbms_memory_heap_max__size: 16G
+      NEO4J_dbms_memory_pagecache_size: 8G
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    deploy:
+      resources:
+        limits:
+          memory: 32G
+          cpus: '8'
+        reservations:
+          memory: 16G
+          cpus: '4'
+
+  # =====================================================
+  # MONITORING & OBSERVABILITY
+  # =====================================================
+  
+  # Prometheus for metrics
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=90d'
+      - '--storage.tsdb.retention.size=500GB'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+      - '--web.enable-admin-api'
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+          cpus: '4'
+
+  # Grafana for dashboards
+  grafana:
+    image: grafana/grafana:10.2.2
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD}
+      GF_INSTALL_PLUGINS: grafana-clickhouse-datasource
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./config/grafana:/etc/grafana/provisioning
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '2'
+
+  # Jaeger for distributed tracing
+  jaeger:
+    image: jaegertracing/all-in-one:1.51
+    environment:
+      COLLECTOR_OTLP_ENABLED: true
+      SPAN_STORAGE_TYPE: elasticsearch
+      ES_SERVER_URLS: http://elasticsearch:9200
+    ports:
+      - "16686:16686"
+      - "14268:14268"
+      - "14250:14250"
+    depends_on:
+      - elasticsearch
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '2'
+
+  # StatsD for metrics collection
+  statsd:
+    image: graphiteapp/graphite-statsd:1.1.10-5
+    ports:
+      - "8125:8125/udp"
+      - "8080:80"
+    volumes:
+      - statsd_data:/opt/graphite/storage
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '2'
+
+  # =====================================================
+  # SECURITY & COMPLIANCE
+  # =====================================================
+  
+  # Vault for secrets management
+  vault:
+    image: hashicorp/vault:1.15
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: ${VAULT_ROOT_TOKEN}
+      VAULT_DEV_LISTEN_ADDRESS: 0.0.0.0:8200
+    ports:
+      - "8200:8200"
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - vault_data:/vault/data
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1'
+
+  # =====================================================
+  # WORKER SERVICES
+  # =====================================================
+  
+  # Background job processors
+  worker-queue:
+    build:
+      context: ./services/worker-queue
+      dockerfile: Dockerfile
+    environment:
+      <<: *common-env
+      WORKER_TYPE: general
+      CONCURRENCY: 50
+    depends_on:
+      - redis-1
+      - kafka-1
+    deploy:
+      replicas: 20
+      resources:
+        limits:
+          memory: 2G
+          cpus: '2'
+
+  # Video processing workers
+  worker-video:
+    build:
+      context: ./services/worker-video
+      dockerfile: Dockerfile
+    environment:
+      <<: *common-env
+      WORKER_TYPE: video
+      CONCURRENCY: 10
+      FFMPEG_THREADS: 8
+    volumes:
+      - video_storage:/app/storage
+    runtime: nvidia
+    depends_on:
+      - kafka-1
+    deploy:
+      replicas: 50
+      resources:
+        limits:
+          memory: 8G
+          cpus: '8'
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  # Commission calculation workers
+  worker-commission:
+    build:
+      context: ./services/worker-commission
+      dockerfile: Dockerfile
+    environment:
+      <<: *common-env
+      WORKER_TYPE: commission
+      CONCURRENCY: 100
+    depends_on:
+      - postgres-master
+      - kafka-1
+    deploy:
+      replicas: 30
+      resources:
+        limits:
+          memory: 2G
+          cpus: '2'
+
+  # =====================================================
+  # ADMIN & MANAGEMENT TOOLS
+  # =====================================================
+  
+  # Redis Commander
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    environment:
+      REDIS_HOSTS: "redis-1:redis-1:6379,redis-2:redis-2:6379,redis-3:redis-3:6379"
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis-1
+
+  # PgAdmin
+  pgadmin:
+    image: dpage/pgadmin4:7.8
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@dailydoco.pro
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres-master
+
+  # Kafka UI
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    environment:
+      KAFKA_CLUSTERS_0_NAME: dailydoco-cluster
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:29092,kafka-2:29092,kafka-3:29092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    ports:
+      - "8082:8080"
+    depends_on:
+      - kafka-1
+
+# =====================================================
+# VOLUMES
+# =====================================================
+
+volumes:
+  # Database volumes
+  postgres_master_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /opt/dailydoco/data/postgres-master
+  postgres_replica_1_data:
+    driver: local
+  postgres_replica_2_data:
+    driver: local
+  
+  # Redis volumes
+  redis_1_data:
+    driver: local
+  redis_2_data:
+    driver: local
+  redis_3_data:
+    driver: local
+  
+  # Kafka volumes
+  zookeeper_data:
+    driver: local
+  zookeeper_logs:
+    driver: local
+  kafka_1_data:
+    driver: local
+  kafka_2_data:
+    driver: local
+  kafka_3_data:
+    driver: local
+  
+  # Analytics volumes
+  elasticsearch_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /opt/dailydoco/data/elasticsearch
+  clickhouse_data:
+    driver: local
+  neo4j_data:
+    driver: local
+  neo4j_logs:
+    driver: local
+  
+  # Application volumes
+  video_storage:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /opt/dailydoco/storage/videos
+  model_cache:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /opt/dailydoco/cache/models
+  ai_data:
+    driver: local
+  gpu_cache:
+    driver: local
+  
+  # Monitoring volumes
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  statsd_data:
+    driver: local
+  
+  # Security volumes
+  vault_data:
+    driver: local
+  
+  # Admin volumes
+  pgadmin_data:
+    driver: local
+
+# =====================================================
+# NETWORKS
+# =====================================================
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+  
+  # Separate network for database cluster
+  database:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
+  
+  # DMZ network for external services
+  dmz:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.22.0.0/16
+
+# =====================================================
+# CONFIGURATION NOTES
+# =====================================================
+
+# Environment Variables Required:
+# - DB_PASSWORD: Strong password for PostgreSQL
+# - REPLICA_PASSWORD: Password for replication user
+# - KONG_PASSWORD: Password for Kong database user
+# - JWT_SECRET: Secret for JWT token signing
+# - ENCRYPTION_KEY: Key for data encryption
+# - SENTRY_DSN: Sentry monitoring URL
+# - KAFKA_USERNAME/KAFKA_PASSWORD: Kafka authentication
+# - SENDGRID_API_KEY: Email service
+# - TWILIO_SID/TWILIO_TOKEN: SMS service
+# - FCM_SERVER_KEY: Push notifications
+# - STRIPE_SECRET_KEY: Payment processing
+# - COINBASE_API_KEY: Crypto payments
+# - BLOCKCHAIN_RPC_URL: Blockchain node
+# - CLICKHOUSE_PASSWORD: Analytics database
+# - NEO4J_PASSWORD: Graph database
+# - GRAFANA_PASSWORD: Dashboard access
+# - VAULT_ROOT_TOKEN: Secret management
+# - PGADMIN_PASSWORD: Database administration
+
+# Hardware Requirements:
+# - CPU: 200+ cores total
+# - RAM: 500GB+ total
+# - Storage: 10TB+ SSD
+# - GPU: 50+ NVIDIA cards for AI processing
+# - Network: 10Gbps+ bandwidth
+
+# Scaling Notes:
+# - Each service can be scaled independently
+# - Database supports read replicas and sharding
+# - Redis cluster handles 1M+ ops/sec
+# - Kafka handles 1M+ messages/sec
+# - GPU workers scale based on video processing load
+# - Commission workers auto-scale with transaction volume

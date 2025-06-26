@@ -1,0 +1,56 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="linkedinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0077B5;stop-opacity:0.05" />
+      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:0.05" />
+    </linearGradient>
+    <linearGradient id="zkflowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="900" fill="white"/>
+  <rect width="1200" height="900" fill="url(#linkedinGradient)"/>
+  
+  <!-- Header -->
+  <text x="600" y="150" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="700" text-anchor="middle" fill="url(#zkflowGradient)">zkFlow.pro</text>
+  <text x="600" y="190" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="400" text-anchor="middle" fill="#1F2937">Professional Form Automation Suite</text>
+  
+  <!-- Problem/Solution -->
+  <rect x="100" y="250" width="1000" height="120" rx="16" fill="white" stroke="#E5E7EB" stroke-width="2"/>
+  <text x="600" y="285" font-family="system-ui" font-size="20" font-weight="600" text-anchor="middle" fill="#DC2626">Problem: Professionals waste 5+ hours/week on repetitive forms</text>
+  <text x="600" y="320" font-family="system-ui" font-size="20" font-weight="600" text-anchor="middle" fill="#059669">Solution: Record once, replay anywhere with complete privacy</text>
+  
+  <!-- Features grid -->
+  <g transform="translate(200,420)">
+    <rect x="0" y="0" width="180" height="120" rx="12" fill="white" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="90" y="30" font-size="32" text-anchor="middle">🔒</text>
+    <text x="90" y="55" font-family="system-ui" font-size="14" font-weight="600" text-anchor="middle" fill="#1F2937">Privacy First</text>
+    <text x="90" y="75" font-family="system-ui" font-size="12" text-anchor="middle" fill="#6B7280">Local storage only</text>
+    
+    <rect x="200" y="0" width="180" height="120" rx="12" fill="white" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="290" y="30" font-size="32" text-anchor="middle">⚡</text>
+    <text x="290" y="55" font-family="system-ui" font-size="14" font-weight="600" text-anchor="middle" fill="#1F2937">Time Saving</text>
+    <text x="290" y="75" font-family="system-ui" font-size="12" text-anchor="middle" fill="#6B7280">5+ hours/week</text>
+    
+    <rect x="400" y="0" width="180" height="120" rx="12" fill="white" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="490" y="30" font-size="32" text-anchor="middle">🎯</text>
+    <text x="490" y="55" font-family="system-ui" font-size="14" font-weight="600" text-anchor="middle" fill="#1F2937">Smart Detection</text>
+    <text x="490" y="75" font-family="system-ui" font-size="12" text-anchor="middle" fill="#6B7280">Auto field mapping</text>
+    
+    <rect x="600" y="0" width="180" height="120" rx="12" fill="white" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="690" y="30" font-size="32" text-anchor="middle">💼</text>
+    <text x="690" y="55" font-family="system-ui" font-size="14" font-weight="600" text-anchor="middle" fill="#1F2937">Professional</text>
+    <text x="690" y="75" font-family="system-ui" font-size="12" text-anchor="middle" fill="#6B7280">Enterprise ready</text>
+  </g>
+  
+  <!-- CTA -->
+  <rect x="400" y="650" width="400" height="80" rx="40" fill="url(#zkflowGradient)"/>
+  <text x="600" y="705" font-family="system-ui" font-size="24" font-weight="600" text-anchor="middle" fill="white">Try zkFlow.pro Free</text>
+  
+  <!-- Footer -->
+  <text x="600" y="800" font-family="system-ui" font-size="16" text-anchor="middle" fill="#6B7280">Chrome Web Store • https://zkflow.pro</text>
+  <text x="600" y="830" font-family="system-ui" font-size="14" text-anchor="middle" fill="#9CA3AF">Built by aegntic - AI-Powered Development Solutions</text>
+</svg>

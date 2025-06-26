@@ -1,0 +1,22 @@
+{
+  "data": {
+    "timestamp": "2025-05-05T04:24:41.674Z",
+    "config": {
+      "defaultModels": {
+        "embedding": "openai/text-embedding-ada-002",
+        "completion": "anthropic/claude-3-haiku-20240307",
+        "premium": "anthropic/claude-3-opus-20240229"
+      },
+      "memory": {
+        "enabled": true,
+        "storeCalls": true,
+        "storeResults": true
+      }
+    }
+  },
+  "metadata": {
+    "timestamp": "2025-05-05T04:24:41.674Z",
+    "category": "system",
+    "key": "openrouter_config"
+  }
+}

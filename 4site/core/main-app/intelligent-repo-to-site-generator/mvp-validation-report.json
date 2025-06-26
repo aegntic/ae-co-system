@@ -1,0 +1,54 @@
+{
+  "timestamp": "2025-06-25T07:59:15.644Z",
+  "testResults": {
+    "pageLoad": {
+      "status": "PASS",
+      "loadTime": "971ms",
+      "target": "<3000ms"
+    },
+    "heroSection": {
+      "status": "FAIL",
+      "error": "Waiting for selector `nav` failed: Waiting failed: 5000ms exceeded"
+    },
+    "urlInput": {
+      "status": "FAIL"
+    },
+    "submitButton": {
+      "status": "FAIL",
+      "error": "Waiting for selector `button` failed: Waiting failed: 5000ms exceeded"
+    },
+    "branding": {
+      "status": "FAIL",
+      "error": "Waiting for selector `[data-testid=\"branding\"], .glass-text-title` failed: Waiting failed: 5000ms exceeded"
+    },
+    "glassMorphism": {
+      "status": "WARN"
+    },
+    "demoMode": {
+      "status": "FAIL",
+      "error": "SyntaxError: Failed to execute 'querySelectorAll' on 'Document': 'button[type=\"submit\"], button:contains(\"Generate\"), button:contains(\"Transform\")' is not a valid selector."
+    },
+    "performance": {
+      "status": "PASS",
+      "JSHeapUsedSize": "12MB",
+      "JSHeapTotalSize": "18MB",
+      "LayoutCount": 2,
+      "RecalcStyleCount": 1
+    },
+    "mobileResponsive": {
+      "status": "FAIL",
+      "error": "page.waitForTimeout is not a function"
+    }
+  },
+  "errors": [
+    "Console Error: Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+  ],
+  "warnings": [],
+  "recommendations": [
+    "Critical: Multiple core features failing - immediate attention required",
+    "Fix console errors for better user experience",
+    "Test with various GitHub repositories to validate AI generation",
+    "Implement comprehensive error boundary for production readiness",
+    "Add loading states and progress indicators for better UX"
+  ]
+}

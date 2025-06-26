@@ -1,0 +1,292 @@
+/* Digital Evolution - Professional Evolutionary Algorithm Interface */
+
+.evolution-realm {
+  background: linear-gradient(135deg, #0f1419 0%, #1a2332 50%, #243447 100%);
+}
+
+/* Evolution ASCII Preloader */
+.evolution-preloader {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.ascii-evolution {
+  position: relative;
+}
+
+.evolving-text {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.evolving-text > div {
+  position: absolute;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.evolving-text .active {
+  opacity: 1;
+  transform: scale(1);
+  background: linear-gradient(135deg, #96ceb4 0%, #22c55e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.evolution-stats {
+  color: #96ceb4;
+  font-size: 1.1rem;
+}
+
+/* Main Interface */
+.evolution-interface {
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.concept-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.concept-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #96ceb4 0%, #22c55e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.concept-subtitle {
+  font-size: 1.3rem;
+  color: var(--neural-300);
+  font-weight: 300;
+}
+
+/* Evolution Lab */
+.evolution-lab {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  grid-template-rows: auto auto auto;
+  gap: 2rem;
+  grid-template-areas:
+    "population controls"
+    "population stats"
+    "landscape landscape";
+}
+
+.population-grid {
+  grid-area: population;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--neural-700);
+  backdrop-filter: blur(10px);
+}
+
+#evolutionCanvas {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  background: rgba(30, 41, 59, 0.8);
+}
+
+.evolution-controls {
+  grid-area: controls;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.control-panel {
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--neural-700);
+  backdrop-filter: blur(10px);
+}
+
+.control-panel h3 {
+  color: var(--neural-100);
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.control-group {
+  margin-bottom: 1.5rem;
+}
+
+.control-group label {
+  display: block;
+  color: var(--neural-200);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.control-group input[type="range"] {
+  width: 100%;
+  height: 6px;
+  background: var(--neural-800);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  margin-bottom: 0.5rem;
+}
+
+.control-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #96ceb4;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(150, 206, 180, 0.4);
+}
+
+.control-group span {
+  display: inline-block;
+  background: var(--neural-800);
+  color: #96ceb4;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.evolution-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.evo-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.evo-button.primary {
+  background: linear-gradient(135deg, #96ceb4 0%, #22c55e 100%);
+  color: white;
+}
+
+.evo-button.secondary {
+  background: transparent;
+  color: #96ceb4;
+  border: 1px solid #96ceb4;
+}
+
+.evo-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(150, 206, 180, 0.3);
+}
+
+.evolution-stats {
+  grid-area: stats;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.stat-card {
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--neural-700);
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.stat-card h4 {
+  color: var(--neural-300);
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-card span {
+  color: #96ceb4;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.fitness-landscape {
+  grid-area: landscape;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--neural-700);
+  backdrop-filter: blur(10px);
+}
+
+.fitness-landscape h3 {
+  color: var(--neural-100);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+#landscapeCanvas {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  background: rgba(30, 41, 59, 0.8);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .evolution-lab {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "population"
+      "controls"
+      "stats"
+      "landscape";
+  }
+  
+  .evolution-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .concept-title {
+    font-size: 2.5rem;
+  }
+  
+  .evolution-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .evolution-actions {
+    flex-direction: row;
+  }
+}

@@ -1,0 +1,132 @@
+RECONSTRUCTED PROMPTS (Based on Context & Methodology)
+======================================================
+
+## MATTAE'S MANUS PROMPT (Step 3: Scope MVP)
+Based on the context and outcomes described, Mattae's prompt likely contained:
+
+```
+I want to create an AI SEO Agency called LLMBoost that helps businesses optimize for LLM search (ChatGPT, Claude, etc.) where 5-10% of organic search now happens.
+
+Please act as an experienced product manager and create a comprehensive project plan for this business including:
+
+1. BUSINESS OVERVIEW:
+   - Target market analysis
+   - Unique value proposition
+   - Revenue model ($10k+/month potential)
+
+2. MVP SCOPE:
+   - Core features for launch
+   - Technical requirements
+   - Resource needs
+
+3. QUIZ DEVELOPMENT:
+   - Create 10-15 quiz questions to assess a business's LLM SEO readiness
+   - Questions should identify: current SEO status, content strategy, technical setup, competitive positioning
+   - Include scoring system and recommendations
+
+4. GO-TO-MARKET STRATEGY:
+   - Initial customer acquisition channels
+   - Pricing structure
+   - Service packages (audit, optimization, ongoing management)
+
+5. IMPLEMENTATION ROADMAP:
+   - Week 1-2: MVP development
+   - Week 3-4: Beta testing
+   - Month 2: Launch and first customers
+
+Ask me anything before you get started to ensure you understand the requirements completely.
+```
+
+## AI NEGOTIATOR PROMPT (Step 5: Lindy Workflow)
+Based on the Lindy interface screenshot and negotiation context:
+
+```
+You are a professional sales negotiator for [COMPANY NAME]. When someone requests a discount, follow this process:
+
+NEGOTIATION FRAMEWORK:
+1. ACKNOWLEDGMENT: Thank them for their interest and acknowledge their request
+2. VALUE REINFORCEMENT: Remind them of the key benefits and ROI they'll receive
+3. ALTERNATIVE OPTIONS: Offer alternatives before price reduction:
+   - Extended payment terms
+   - Additional services/bonuses at same price
+   - Referral incentives
+   - Volume discounts for larger commitments
+
+4. CONDITIONAL DISCOUNTING: If discount is necessary:
+   - Maximum 15% reduction
+   - Require commitment (longer contract, case study participation, testimonial)
+   - Create urgency (limited time offer)
+
+5. CLOSING: Always end with clear next steps and timeline
+
+TONE: Professional, consultative, solution-focused
+GOAL: Maintain relationship while protecting margins
+FALLBACK: If they refuse all options, offer to "check with management" and follow up in 24 hours
+
+Example Response:
+"Thanks for your interest in [SERVICE]! I understand budget is always a consideration. Given the [specific ROI/benefit], most clients see this as an investment that pays for itself within [timeframe]. 
+
+Instead of reducing the price, let me offer you [alternative value]. This actually gives you more value at the same investment level.
+
+If budget is the main concern, I could potentially offer a [small discount]% discount in exchange for [commitment/requirement]. This offer would need to be finalized by [date].
+
+What works best for your situation?"
+```
+
+## TLDRAW FLOWCHART RECREATION
+Based on the LLMBoost concept, the flowchart likely showed:
+
+```
+LLMBOOST USER JOURNEY FLOWCHART:
+
+[Business Owner] → [Discovers LLM SEO Gap] → [Takes Quiz]
+                                               ↓
+[Quiz Results] → [Shows LLM SEO Score] → [Reveals Opportunities]
+                                               ↓
+[Custom Report] → [Specific Recommendations] → [Service Options]
+                                               ↓
+[Choose Package] → [Onboarding] → [Implementation] → [Results]
+                                               ↓
+[Ongoing Optimization] ← [Monthly Reporting] ← [Performance Tracking]
+
+SUPPORTING ELEMENTS:
+- Lead Magnets: Free LLM SEO Audit, "LLM Search Readiness" Checklist
+- Content: Blog posts about LLM SEO best practices
+- Social Proof: Case studies showing ChatGPT search ranking improvements
+- Automation: Slack alerts for new quiz completions, automated follow-up sequences
+```
+
+## VOICE AGENT SCRIPT (Customer Feedback)
+Based on the 1-800 number workflow described:
+
+```
+"Hello! Thank you for calling our feedback line. I'm an AI assistant here to gather your thoughts about your recent experience with [COMPANY].
+
+This call should take about 2-3 minutes. Your feedback helps us improve our service for everyone.
+
+First, on a scale of 1-10, how would you rate your overall experience?
+
+[Wait for response]
+
+What was the best part of working with us?
+
+[Wait for response]
+
+What's one thing we could improve?
+
+[Wait for response]
+
+Any other comments or suggestions?
+
+[Wait for response]
+
+Thank you so much for your time! Your feedback will be shared with our team within the next hour. Have a great day!"
+
+[System automatically stores responses in Airtable and sends summary to team Slack]
+```
+
+NOTES:
+- These prompts are reconstructed based on the outcomes and context described in the PDF
+- The actual prompts may have had different wording but would achieve similar results
+- Mattae's methodology emphasizes asking AI to "ask questions first" and using voice prompting tools
+- All prompts follow his principle of replacing human roles (PM, negotiator, researcher) with AI agents

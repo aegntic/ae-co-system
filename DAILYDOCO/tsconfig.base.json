@@ -1,0 +1,27 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2020",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "strict": true,
+    "paths": {
+      "@dailydoco/shared-types": ["libs/shared-types/src/index.ts"],
+      "@dailydoco/ai-models": ["libs/ai-models/src/index.ts"],
+      "@dailydoco/video-proc": ["libs/video-proc/src/index.ts"],
+      "@dailydoco/test-audience": ["libs/test-audience/src/index.ts"],
+      "@dailydoco/performance-monitor": ["libs/performance-monitor/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

@@ -1,0 +1,142 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/server-filesystem",
+        "/home/tabs"
+      ]
+    },
+    "git": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-git"
+      ]
+    },
+    "memory": {
+      "command": "/usr/local/bin/mcp-server-memory",
+      "args": []
+    },
+    "sequentialthinking": {
+      "command": "/usr/local/bin/mcp-server-sequential-thinking",
+      "args": []
+    },
+    "puppeteer": {
+      "command": "/usr/local/bin/mcp-server-puppeteer",
+      "args": []
+    },
+    "fetch": {
+      "command": "/usr/local/bin/mcp-fetch",
+      "args": []
+    },
+    "time": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-time"
+      ]
+    },
+    "docker": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-docker"
+      ]
+    },
+    "crawl4ai": {
+      "command": "uvx",
+      "args": [
+        "crawl4ai-mcp-server"
+      ]
+    },
+    "sandbox": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-shell @ git+https://github.com/emsi/mcp-server-shell"
+      ]
+    },
+    "context7": {
+      "command": "npx",
+      "args": [
+        "@upstash/context7-mcp@latest"
+      ]
+    },
+    "github": {
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/server-github"
+      ]
+    },
+    "notion": {
+      "command": "npx",
+      "args": [
+        "@notionhq/notion-mcp-server"
+      ]
+    },
+    "n8n": {
+      "command": "npx",
+      "args": [
+        "@nazcamedia/n8n-mcp-server"
+      ]
+    },
+    "postman": {
+      "command": "uvx",
+      "args": [
+        "postman-mcp-server"
+      ]
+    },
+    "mcp-framework": {
+      "command": "npx",
+      "args": [
+        "mcp-framework"
+      ]
+    },
+    "youtube": {
+      "command": "npx",
+      "args": [
+        "youtube-data-mcp-server"
+      ]
+    },
+    "desktop-commander": {
+      "command": "npx",
+      "args": [
+        "@smithery/cli",
+        "run",
+        "@wonderwhy-er/desktop-commander"
+      ]
+    },
+    "postgresql": {
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/server-postgres"
+      ]
+    },
+    "exa": {
+      "command": "npx",
+      "args": [
+        "exa-mcp-server"
+      ],
+      "env": {
+        "EXA_API_KEY": "3bec6ccf-859f-4462-ab6c-0709c91bf405"
+      }
+    },
+    "prompts": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-prompts"
+      ]
+    },
+    "taskmaster": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-taskmaster"
+      ]
+    },
+    "smithery": {
+      "command": "npx",
+      "args": [
+        "@smithery/cli",
+        "run",
+        "@smithery/toolbox"
+      ]
+    }
+  }
+}

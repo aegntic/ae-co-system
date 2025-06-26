@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimalist Design</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+  <style>
+    body { 
+      font-family: 'Inter', sans-serif; 
+    }
+    .hero-text {
+      background: linear-gradient(to right, #fff, #ccc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1px;
+      bottom: -2px;
+      left: 0;
+      background: linear-gradient(90deg, #3B82F6 0%, #EC4899 100%);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .section-gradient {
+      background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.8) 100%);
+    }
+    .bottom-gradient {
+      background: linear-gradient(to bottom, transparent 0%, #000 100%);
+    }
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(255,255,255,0.1);
+    }
+    .fade-waves {
+      mask: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+      -webkit-mask: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+    }
+  </style>
+</head>
+<body class="bg-black text-white min-h-screen">
+  <!-- Navigation -->
+  <header class="fixed w-full z-50 bg-black/80 backdrop-blur-sm">
+    <div class="container mx-auto px-6">
+      <nav class="py-4 flex justify-between items-center">
+        <a href="#" class="text-xl font-bold tracking-wider">DESIGN<span class="text-blue-500">.</span></a>
+        
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-button" class="md:hidden text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex space-x-8">
+          <a href="#" class="nav-link relative text-sm tracking-wider hover:text-gray-300 transition">Work</a>
+          <a href="#" class="nav-link relative text-sm tracking-wider hover:text-gray-300 transition">Services</a>
+          <a href="#" class="nav-link relative text-sm tracking-wider hover:text-gray-300 transition">About</a>
+          <a href="#" class="nav-link relative text-sm tracking-wider hover:text-gray-300 transition">Contact</a>
+        </div>
+      </nav>
+    </div>
+    
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="hidden md:hidden bg-black/95 backdrop-blur-md">
+      <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+        <a href="#" class="text-sm tracking-wider py-2 border-b border-gray-800">Work</a>
+        <a href="#" class="text-sm tracking-wider py-2 border-b border-gray-800">Services</a>
+        <a href="#" class="text-sm tracking-wider py-2 border-b border-gray-800">About</a>
+        <a href="#" class="text-sm tracking-wider py-2">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero" class="relative h-screen flex items-center">
+    <div id="vanta-bg" class="absolute inset-0 z-0 fade-waves"></div>
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="max-w-5xl mx-auto text-center">
+        <h1 class="hero-text text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight mb-6 leading-[0.9] px-4">MINIMALIST</h1>
+        <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mt-8 px-4">
+          We create clean, sophisticated designs that communicate clearly and stand the test of time.
+        </p>
+        <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4 px-4">
+          <a href="#" class="px-8 py-3 border border-white hover:bg-white hover:text-black transition duration-300 text-sm tracking-wider">
+            View Our Work
+          </a>
+          <a href="#" class="px-8 py-3 bg-white text-black hover:bg-transparent hover:text-white border border-white transition duration-300 text-sm tracking-wider">
+            Get In Touch
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="relative py-24 bg-black">
+    <div class="section-gradient absolute inset-0 z-0"></div>
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-8 text-white">Philosophy</h2>
+        <p class="text-xl text-gray-300 leading-relaxed mb-12">
+          True elegance lies in simplicity. We strip away the unnecessary to reveal what matters most, 
+          creating designs that communicate with clarity and purpose.
+        </p>
+        <div class="grid md:grid-cols-3 gap-8 mt-16">
+          <div class="card-hover p-8 border border-gray-800 bg-black/50">
+            <h3 class="text-xl font-semibold mb-4 text-white">Clarity</h3>
+            <p class="text-gray-400">Every element serves a purpose. No decoration without meaning.</p>
+          </div>
+          <div class="card-hover p-8 border border-gray-800 bg-black/50">
+            <h3 class="text-xl font-semibold mb-4 text-white">Precision</h3>
+            <p class="text-gray-400">Meticulous attention to detail in every pixel and interaction.</p>
+          </div>
+          <div class="card-hover p-8 border border-gray-800 bg-black/50">
+            <h3 class="text-xl font-semibold mb-4 text-white">Impact</h3>
+            <p class="text-gray-400">Powerful communication through thoughtful restraint.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach Section -->
+  <section class="relative py-24 bg-black">
+    <div class="section-gradient absolute inset-0 z-0"></div>
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold mb-8 text-white">Approach</h2>
+          <p class="text-xl text-gray-300">Our systematic process ensures exceptional results</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <div class="space-y-8">
+              <div class="border-l-2 border-white pl-6">
+                <h3 class="text-xl font-semibold mb-2 text-white">01. Research</h3>
+                <p class="text-gray-400">Deep understanding of your goals, audience, and constraints.</p>
+              </div>
+              <div class="border-l-2 border-gray-600 pl-6">
+                <h3 class="text-xl font-semibold mb-2 text-white">02. Concept</h3>
+                <p class="text-gray-400">Strategic thinking translated into clear visual direction.</p>
+              </div>
+              <div class="border-l-2 border-gray-600 pl-6">
+                <h3 class="text-xl font-semibold mb-2 text-white">03. Refine</h3>
+                <p class="text-gray-400">Iterative improvement until every detail is perfect.</p>
+              </div>
+              <div class="border-l-2 border-gray-600 pl-6">
+                <h3 class="text-xl font-semibold mb-2 text-white">04. Deliver</h3>
+                <p class="text-gray-400">Seamless implementation with ongoing support.</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-hover p-12 border border-gray-800 bg-black/30">
+            <div class="text-center">
+              <div class="text-6xl font-black mb-4 text-white">98%</div>
+              <p class="text-xl text-gray-300 mb-2">Client Satisfaction</p>
+              <p class="text-gray-500">Based on 127 completed projects</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section class="relative py-24 bg-black">
+    <div class="section-gradient absolute inset-0 z-0"></div>
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold mb-8 text-white">Selected Work</h2>
+          <p class="text-xl text-gray-300">Projects that exemplify our design philosophy</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="card-hover group">
+            <div class="border border-gray-800 bg-black/50 overflow-hidden">
+              <div class="h-64 bg-gradient-to-br from-gray-900 to-black flex items-center justify-center">
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-white mb-2">Brand Identity</div>
+                  <div class="text-gray-400">Technology Startup</div>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-semibold mb-2 text-white">Digital Transformation</h3>
+                <p class="text-gray-400">Complete visual identity and digital platform redesign.</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-hover group">
+            <div class="border border-gray-800 bg-black/50 overflow-hidden">
+              <div class="h-64 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-white mb-2">Web Platform</div>
+                  <div class="text-gray-400">Enterprise Solution</div>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-semibold mb-2 text-white">System Architecture</h3>
+                <p class="text-gray-400">Scalable platform design with focus on user experience.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="relative py-24 bg-black">
+    <div class="bottom-gradient absolute inset-0 z-0"></div>
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-8 text-white">Start a Project</h2>
+        <p class="text-xl text-gray-300 leading-relaxed mb-12">
+          Ready to create something exceptional? Let's discuss how we can bring clarity and impact to your vision.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
+          <a href="#" class="px-12 py-4 border border-white hover:bg-white hover:text-black transition duration-300 text-lg tracking-wider">
+            Schedule Consultation
+          </a>
+          <a href="#" class="px-12 py-4 bg-white text-black hover:bg-transparent hover:text-white border border-white transition duration-300 text-lg tracking-wider">
+            View Process
+          </a>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8 text-center">
+          <div>
+            <div class="text-gray-500 text-sm tracking-wider mb-2">EMAIL</div>
+            <div class="text-white">hello@design.studio</div>
+          </div>
+          <div>
+            <div class="text-gray-500 text-sm tracking-wider mb-2">PHONE</div>
+            <div class="text-white">+1 (555) 123-4567</div>
+          </div>
+          <div>
+            <div class="text-gray-500 text-sm tracking-wider mb-2">LOCATION</div>
+            <div class="text-white">New York, NY</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Final gradient to prevent abrupt cutoff -->
+    <div class="h-32 bg-gradient-to-b from-transparent to-black"></div>
+  </section>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-button').addEventListener('click', function() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    // Initialize wave background
+    document.addEventListener('DOMContentLoaded', function() {
+      VANTA.WAVES({
+        el: "#vanta-bg",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        color: 0x050505,
+        shininess: 30.00,
+        waveHeight: 15.00,
+        waveSpeed: 0.75,
+        zoom: 0.65
+      });
+    });
+  </script>
+</body>
+</html>

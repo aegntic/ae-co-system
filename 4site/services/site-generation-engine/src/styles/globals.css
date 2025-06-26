@@ -1,0 +1,22 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base styles if needed */
+body {
+  font-family: 'Inter', sans-serif; /* Ensure Inter is loaded, e.g. via _document.tsx or CSS import */
+  @apply bg-background text-foreground antialiased;
+}
+
+/* Prose customizations if not handled by Tailwind plugin directly in HTML structure */
+.prose {
+  /* Default prose styles from index.html's tailwind.config could be centralized here or in tailwind.config.js */
+}
+.prose code:not(pre code) { 
+  font-family: 'Roboto Mono', monospace;
+}
+.prose pre code {
+  font-family: 'Roboto Mono', monospace;
+}
+    

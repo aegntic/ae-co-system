@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyDoco Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        .main {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .status-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .status-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .status-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ade80;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            opacity: 0.8;
+        }
+
+        .metric-value {
+            font-weight: 600;
+        }
+
+        .actions {
+            display: flex;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎬 DailyDoco Pro</h1>
+        <p>Elite-tier automated documentation platform - Ultra-minimal MVP</p>
+    </div>
+
+    <div class="main">
+        <div class="status-grid">
+            <div class="status-card">
+                <h3>
+                    <span class="status-indicator"></span>
+                    Application Status
+                </h3>
+                <div class="metric">
+                    <span class="metric-label">Version:</span>
+                    <span class="metric-value" id="app-version">Loading...</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Platform:</span>
+                    <span class="metric-value" id="app-platform">Loading...</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Status:</span>
+                    <span class="metric-value" id="app-status">Loading...</span>
+                </div>
+            </div>
+
+            <div class="status-card">
+                <h3>
+                    <span class="status-indicator"></span>
+                    Performance Metrics
+                </h3>
+                <div class="metric">
+                    <span class="metric-label">CPU Usage:</span>
+                    <span class="metric-value" id="cpu-usage">Loading...</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Memory:</span>
+                    <span class="metric-value" id="memory-usage">Loading...</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Uptime:</span>
+                    <span class="metric-value" id="uptime">Loading...</span>
+                </div>
+            </div>
+
+            <div class="status-card">
+                <h3>
+                    <span class="status-indicator"></span>
+                    AI Configuration
+                </h3>
+                <div class="metric">
+                    <span class="metric-label">Preferred Model:</span>
+                    <span class="metric-value" id="ai-model">Loading...</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Narration:</span>
+                    <span class="metric-value" id="narration-enabled">Loading...</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Test Audience:</span>
+                    <span class="metric-value" id="test-audience-enabled">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-primary" onclick="refreshData()">
+                <span id="refresh-text">Refresh Data</span>
+                <span id="refresh-loading" class="loading" style="display: none;"></span>
+            </button>
+            <button class="btn" onclick="testFunction()">Test AI Connection</button>
+            <button class="btn" onclick="openLogs()">View Logs</button>
+        </div>
+
+        <div id="error-container"></div>
+    </div>
+
+    <script>
+        // Ultra-minimal frontend for testing DailyDoco Pro desktop app
+
+        const { invoke } = window.__TAURI__.tauri;
+
+        let refreshing = false;
+
+        async function loadAppInfo() {
+            try {
+                const info = await invoke('get_app_info');
+                document.getElementById('app-version').textContent = info.version;
+                document.getElementById('app-platform').textContent = info.platform;
+                document.getElementById('app-status').textContent = info.status;
+            } catch (error) {
+                console.error('Failed to load app info:', error);
+                showError('Failed to load application information: ' + error);
+            }
+        }
+
+        async function loadPerformanceMetrics() {
+            try {
+                const metrics = await invoke('get_performance_metrics');
+                document.getElementById('cpu-usage').textContent = metrics.cpu_usage.toFixed(1) + '%';
+                document.getElementById('memory-usage').textContent = formatBytes(metrics.memory_usage);
+                document.getElementById('uptime').textContent = formatUptime(metrics.uptime);
+            } catch (error) {
+                console.error('Failed to load performance metrics:', error);
+                showError('Failed to load performance metrics: ' + error);
+            }
+        }
+
+        async function loadSettings() {
+            try {
+                const settings = await invoke('get_settings');
+                document.getElementById('ai-model').textContent = settings.ai.preferred_model;
+                document.getElementById('narration-enabled').textContent = settings.ai.narration_enabled ? 'Enabled' : 'Disabled';
+                document.getElementById('test-audience-enabled').textContent = settings.ai.test_audience_enabled ? 'Enabled' : 'Disabled';
+            } catch (error) {
+                console.error('Failed to load settings:', error);
+                showError('Failed to load settings: ' + error);
+            }
+        }
+
+        async function refreshData() {
+            if (refreshing) return;
+            
+            refreshing = true;
+            document.getElementById('refresh-text').style.display = 'none';
+            document.getElementById('refresh-loading').style.display = 'inline-block';
+            
+            clearErrors();
+            
+            try {
+                await Promise.all([
+                    loadAppInfo(),
+                    loadPerformanceMetrics(),
+                    loadSettings()
+                ]);
+            } catch (error) {
+                console.error('Refresh failed:', error);
+            } finally {
+                refreshing = false;
+                document.getElementById('refresh-text').style.display = 'inline';
+                document.getElementById('refresh-loading').style.display = 'none';
+            }
+        }
+
+        function testFunction() {
+            showError('Test function called - backend communication working!', 'info');
+        }
+
+        function openLogs() {
+            console.log('Opening logs...');
+            showError('Log viewer not implemented yet', 'warning');
+        }
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
+
+        function formatUptime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            return `${hours}h ${minutes}m`;
+        }
+
+        function showError(message, type = 'error') {
+            const container = document.getElementById('error-container');
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.style.color = type === 'info' ? '#22c55e' : type === 'warning' ? '#f59e0b' : '#ef4444';
+            errorDiv.style.background = type === 'info' ? 'rgba(34, 197, 94, 0.1)' : type === 'warning' ? 'rgba(245, 158, 11, 0.1)' : 'rgba(239, 68, 68, 0.1)';
+            errorDiv.style.borderColor = type === 'info' ? 'rgba(34, 197, 94, 0.2)' : type === 'warning' ? 'rgba(245, 158, 11, 0.2)' : 'rgba(239, 68, 68, 0.2)';
+            errorDiv.textContent = message;
+            container.appendChild(errorDiv);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (errorDiv.parentNode) {
+                    errorDiv.parentNode.removeChild(errorDiv);
+                }
+            }, 5000);
+        }
+
+        function clearErrors() {
+            document.getElementById('error-container').innerHTML = '';
+        }
+
+        // Load initial data when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 DailyDoco Pro frontend loaded');
+            refreshData();
+            
+            // Auto-refresh every 5 seconds
+            setInterval(() => {
+                if (!refreshing) {
+                    loadPerformanceMetrics();
+                }
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

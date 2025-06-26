@@ -1,0 +1,76 @@
+{
+  "timestamp": "2025-06-26T00:12:06.182Z",
+  "tests": [
+    {
+      "name": "Backend Health Check",
+      "status": "PASS",
+      "details": {
+        "status": "healthy",
+        "timestamp": "2025-06-26T00:12:06.917Z",
+        "supabase": true
+      },
+      "timestamp": "2025-06-26T00:12:06.927Z"
+    },
+    {
+      "name": "Frontend Loading",
+      "status": "PASS",
+      "details": {
+        "loadTime": "2497ms",
+        "hasErrors": false,
+        "contentPreview": "Transform GitHub Repositories\nInto Professional Websites\n\nAI-powered intelligent repository analysis that transforms entire codebases into stunning, professional websites with advanced viral growth mechanics.\n\nGenerate Professional Website\nEnterprise-Grade Repository Intelligence\n\nProfessional website generation with advanced AI analysis, strategic growth mechanics, and institutional-quality design systems.\n\nIntelligent Analysis\n\nDeep codebase analysis with dependency mapping, architecture under"
+      },
+      "timestamp": "2025-06-26T00:12:09.442Z"
+    },
+    {
+      "name": "Bundle Performance Analysis",
+      "status": "FAIL",
+      "details": {
+        "domContentLoaded": null,
+        "loadComplete": null,
+        "firstPaint": 1348,
+        "resourceCount": 25,
+        "totalTransferSize": 4214735,
+        "jsResources": 8,
+        "cssResources": 4
+      },
+      "timestamp": "2025-06-26T00:12:09.443Z"
+    },
+    {
+      "name": "API Integration - Lead Capture",
+      "status": "FAIL",
+      "details": {
+        "statusCode": 400,
+        "response": {
+          "success": false,
+          "error": "Email and siteId are required"
+        }
+      },
+      "timestamp": "2025-06-26T00:12:09.679Z"
+    }
+  ],
+  "performance": {
+    "pageLoadTime": 2497,
+    "domContentLoaded": null,
+    "loadComplete": null,
+    "firstPaint": 1348,
+    "resourceCount": 25,
+    "totalTransferSize": 4214735,
+    "jsResources": 8,
+    "cssResources": 4
+  },
+  "errors": [
+    {
+      "type": "user_workflow",
+      "message": "SyntaxError: Failed to execute 'querySelector' on 'Document': 'button[type=\"submit\"], button:contains(\"Generate\"), button:contains(\"Create\"), button:contains(\"Submit\")' is not a valid selector.",
+      "timestamp": "2025-06-26T00:12:09.659Z"
+    }
+  ],
+  "success": false,
+  "summary": {
+    "totalTests": 4,
+    "passedTests": 2,
+    "failedTests": 2,
+    "successRate": "50.0%",
+    "errorCount": 1
+  }
+}

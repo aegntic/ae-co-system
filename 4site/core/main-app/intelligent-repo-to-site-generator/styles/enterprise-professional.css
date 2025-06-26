@@ -1,0 +1,499 @@
+/**
+ * Enterprise Professional Design System
+ * Serious developer tool aesthetic with sophisticated animations
+ */
+
+:root {
+  /* === Professional Color Palette === */
+  --bg-primary: #0a0a0b;           /* Very dark grey background */
+  --bg-secondary: #111114;         /* Slightly lighter for cards */
+  --bg-tertiary: #1a1a1e;          /* Elevated surfaces */
+  
+  /* === Grid System === */
+  --grid-color: #000000;           /* Black grid lines */
+  --grid-opacity: 0.4;             /* Subtle grid visibility */
+  --grid-glow: rgba(59, 130, 246, 0.1); /* Blue glow on grid intersections */
+  
+  /* === Typography Hierarchy === */
+  --text-heading: #ffffff;         /* Pure white headings */
+  --text-heading-shadow: 0 2px 4px rgba(156, 163, 175, 0.3); /* Light grey shadow */
+  --text-subheading: #e5e7eb;      /* Very light grey subheadings */
+  --text-subheading-shadow: 0 1px 3px rgba(107, 114, 128, 0.4); /* Grey shadow */
+  --text-body: #ffffff;            /* White regular text */
+  --text-muted: #9ca3af;           /* Muted secondary text */
+  
+  /* === Blue Spectrum Palette === */
+  --blue-50: #eff6ff;
+  --blue-100: #dbeafe;
+  --blue-200: #bfdbfe;
+  --blue-300: #93c5fd;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;            /* Primary blue */
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+  --blue-800: #1e40af;
+  --blue-900: #1e3a8a;
+  --blue-950: #172554;
+  
+  /* === Accent Colors === */
+  --wu-yellow: #ffd700;            /* Wu-Tang yellow */
+  --burnt-orange: #cc5500;         /* Burnt orange */
+  --accent-glow-yellow: rgba(255, 215, 0, 0.2);
+  --accent-glow-orange: rgba(204, 85, 0, 0.2);
+  
+  /* === Interactive States === */
+  --primary-action: var(--blue-500);
+  --primary-action-hover: var(--blue-400);
+  --primary-action-active: var(--blue-600);
+  --secondary-action: transparent;
+  --secondary-action-hover: rgba(59, 130, 246, 0.1);
+  
+  /* === Professional Shadows === */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.8);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.4);
+  --shadow-premium: 0 25px 50px rgba(0, 0, 0, 0.6);
+  
+  /* === Grid Animation Timing === */
+  --grid-animation-duration: 20s;
+  --grid-pulse-duration: 4s;
+}
+
+/* ============================================================================
+   3D ANIMATED GRID BACKGROUND
+   ============================================================================ */
+
+.enterprise-grid-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+.grid-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.grid-layer {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, var(--grid-opacity)) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, var(--grid-opacity)) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridFloat var(--grid-animation-duration) ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.grid-layer:nth-child(1) {
+  transform: rotateX(0deg) translateZ(0px);
+  animation-delay: 0s;
+}
+
+.grid-layer:nth-child(2) {
+  transform: rotateX(15deg) translateZ(-100px);
+  animation-delay: -5s;
+  opacity: 0.6;
+}
+
+.grid-layer:nth-child(3) {
+  transform: rotateX(30deg) translateZ(-200px);
+  animation-delay: -10s;
+  opacity: 0.3;
+}
+
+@keyframes gridFloat {
+  0%, 100% {
+    transform: rotateX(var(--rotate-start, 0deg)) translateZ(var(--translate-z, 0px)) translateY(0px);
+  }
+  25% {
+    transform: rotateX(var(--rotate-start, 0deg)) translateZ(var(--translate-z, 0px)) translateY(-20px);
+  }
+  50% {
+    transform: rotateX(var(--rotate-start, 0deg)) translateZ(var(--translate-z, 0px)) translateY(0px);
+  }
+  75% {
+    transform: rotateX(var(--rotate-start, 0deg)) translateZ(var(--translate-z, 0px)) translateY(10px);
+  }
+}
+
+/* Grid intersection glow effect */
+.grid-layer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle at 25px 25px, var(--grid-glow) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridPulse var(--grid-pulse-duration) ease-in-out infinite;
+}
+
+@keyframes gridPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+/* ============================================================================
+   PROFESSIONAL LOGO IMPLEMENTATION
+   ============================================================================ */
+
+.enterprise-logo-hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.logo-container {
+  position: relative;
+  z-index: 10;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.enterprise-logo {
+  width: 400px;
+  height: auto;
+  max-width: 80vw;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.8));
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scroll-based fade effect */
+.logo-fade-on-scroll {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.logo-fade-on-scroll.scrolled {
+  opacity: 0.1;
+  transform: scale(0.8) translateY(-50px);
+  pointer-events: none;
+}
+
+/* ============================================================================
+   PROFESSIONAL TYPOGRAPHY SYSTEM
+   ============================================================================ */
+
+.enterprise-heading {
+  color: var(--text-heading);
+  text-shadow: var(--text-heading-shadow);
+  font-weight: 700;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.enterprise-subheading {
+  color: var(--text-subheading);
+  text-shadow: var(--text-subheading-shadow);
+  font-weight: 600;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+.enterprise-body {
+  color: var(--text-body);
+  font-weight: 400;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+}
+
+.enterprise-muted {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* Heading size scale */
+.enterprise-heading.size-massive {
+  font-size: clamp(3rem, 8vw, 6rem);
+}
+
+.enterprise-heading.size-large {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.enterprise-heading.size-medium {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.enterprise-subheading.size-large {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+}
+
+.enterprise-subheading.size-medium {
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+}
+
+/* ============================================================================
+   PROFESSIONAL CARD SYSTEM
+   ============================================================================ */
+
+.enterprise-card {
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 30, 0.9) 0%,
+    rgba(17, 17, 20, 0.95) 100%
+  );
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.enterprise-card:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: var(--shadow-premium);
+  transform: translateY(-4px);
+}
+
+.enterprise-card.featured {
+  border-color: var(--wu-yellow);
+  box-shadow: 
+    var(--shadow-lg),
+    0 0 30px var(--accent-glow-yellow);
+}
+
+.enterprise-card.premium {
+  border-color: var(--burnt-orange);
+  box-shadow: 
+    var(--shadow-lg),
+    0 0 30px var(--accent-glow-orange);
+}
+
+/* ============================================================================
+   PROFESSIONAL BUTTON SYSTEM
+   ============================================================================ */
+
+.enterprise-button {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  border-radius: 12px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.enterprise-button.primary {
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
+  color: white;
+  padding: 16px 32px;
+  font-size: 16px;
+  box-shadow: var(--shadow-md);
+}
+
+.enterprise-button.primary:hover {
+  background: linear-gradient(135deg, var(--blue-400), var(--blue-500));
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.enterprise-button.secondary {
+  background: transparent;
+  color: var(--text-heading);
+  border: 2px solid rgba(59, 130, 246, 0.3);
+  padding: 14px 30px;
+  font-size: 16px;
+}
+
+.enterprise-button.secondary:hover {
+  border-color: var(--blue-400);
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.enterprise-button.accent-yellow {
+  background: linear-gradient(135deg, var(--wu-yellow), #ffed4e);
+  color: var(--bg-primary);
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: var(--shadow-md);
+}
+
+.enterprise-button.accent-yellow:hover {
+  background: linear-gradient(135deg, #ffed4e, var(--wu-yellow));
+  box-shadow: 
+    var(--shadow-lg),
+    0 0 25px var(--accent-glow-yellow);
+  transform: translateY(-2px);
+}
+
+.enterprise-button.accent-orange {
+  background: linear-gradient(135deg, var(--burnt-orange), #ff6600);
+  color: white;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: var(--shadow-md);
+}
+
+.enterprise-button.accent-orange:hover {
+  background: linear-gradient(135deg, #ff6600, var(--burnt-orange));
+  box-shadow: 
+    var(--shadow-lg),
+    0 0 25px var(--accent-glow-orange);
+  transform: translateY(-2px);
+}
+
+/* ============================================================================
+   PROFESSIONAL LAYOUT UTILITIES
+   ============================================================================ */
+
+.enterprise-section {
+  position: relative;
+  z-index: 1;
+  padding: 120px 0;
+}
+
+.enterprise-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.enterprise-grid {
+  display: grid;
+  gap: 32px;
+}
+
+.enterprise-grid.cols-2 {
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+}
+
+.enterprise-grid.cols-3 {
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+.enterprise-grid.cols-4 {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* ============================================================================
+   ACCENT HIGHLIGHTS & EFFECTS
+   ============================================================================ */
+
+.blue-accent {
+  color: var(--blue-400);
+}
+
+.blue-glow {
+  color: var(--blue-300);
+  text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+
+.yellow-accent {
+  color: var(--wu-yellow);
+}
+
+.yellow-glow {
+  color: var(--wu-yellow);
+  text-shadow: 0 0 20px var(--accent-glow-yellow);
+}
+
+.orange-accent {
+  color: var(--burnt-orange);
+}
+
+.orange-glow {
+  color: var(--burnt-orange);
+  text-shadow: 0 0 20px var(--accent-glow-orange);
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .enterprise-logo {
+    width: 300px;
+  }
+  
+  .enterprise-section {
+    padding: 80px 0;
+  }
+  
+  .enterprise-container {
+    padding: 0 16px;
+  }
+  
+  .enterprise-grid.cols-2,
+  .enterprise-grid.cols-3,
+  .enterprise-grid.cols-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .enterprise-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .enterprise-logo {
+    width: 250px;
+  }
+  
+  .enterprise-heading.size-massive {
+    font-size: 2.5rem;
+  }
+  
+  .enterprise-section {
+    padding: 60px 0;
+  }
+}
+
+/* ============================================================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================================================ */
+
+.enterprise-grid-background {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.grid-layer {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.enterprise-logo {
+  will-change: transform, opacity;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .grid-layer {
+    animation: none;
+  }
+  
+  .enterprise-button,
+  .enterprise-card,
+  .enterprise-logo {
+    transition: none;
+  }
+}

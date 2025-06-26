@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Management Cards</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #000000;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .animate-in {
+      animation: fadeIn 0.7s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    /* Ensure all corners are rounded */
+    .task-card {
+      border-radius: 0.75rem;
+      overflow: hidden;
+    }
+    
+    .task-card::before {
+      border-radius: 0.75rem;
+    }
+    
+    .task-card::after {
+      border-radius: 0 0.75rem 0.75rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid [grid-template-areas:'stack'] place-items-center opacity-100 animate-in">
+    <!-- Completed Task Card -->
+    <div class="task-card relative flex h-36 w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 border-white/10 bg-[#1e293b]/70 backdrop-blur-sm px-4 py-3 transition-all duration-700 after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[20rem] after:bg-gradient-to-l after:from-[#0f172a] after:to-transparent after:content-[''] hover:border-white/20 hover:bg-[#1e293b] [&>*]:flex [&>*]:items-center [&>*]:gap-2 [grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:rounded-xl before:border before:border-white/10 before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-[#0f172a]/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration:700 hover:grayscale-0 before:left-0 before:top-0">
+      <div>
+        <span class="relative inline-block rounded-full bg-green-800 p-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-green-300">
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </span>
+        <p class="text-lg font-medium text-green-500">Completed</p>
+      </div>
+      <p class="whitespace-nowrap text-lg">Website redesign project</p>
+      <p class="text-gray-400">Yesterday, 5:30 PM</p>
+    </div>
+    
+    <!-- In Progress Task Card -->
+    <div class="task-card relative flex h-36 w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 border-white/10 bg-[#1e293b]/70 backdrop-blur-sm px-4 py-3 transition-all duration-700 after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[20rem] after:bg-gradient-to-l after:from-[#0f172a] after:to-transparent after:content-[''] hover:border-white/20 hover:bg-[#1e293b] [&>*]:flex [&>*]:items-center [&>*]:gap-2 [grid-area:stack] translate-x-16 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:rounded-xl before:border before:border-white/10 before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-[#0f172a]/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration:700 hover:grayscale-0 before:left-0 before:top-0">
+      <div>
+        <span class="relative inline-block rounded-full bg-yellow-800 p-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-yellow-300">
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+            <path d="M12 8v4"/>
+            <path d="M12 16h.01"/>
+          </svg>
+        </span>
+        <p class="text-lg font-medium text-yellow-500">In Progress</p>
+      </div>
+      <p class="whitespace-nowrap text-lg">Client presentation prep</p>
+      <p class="text-gray-400">Due today, 3:00 PM</p>
+    </div>
+    
+    <!-- Upcoming Task Card -->
+    <div class="task-card relative flex h-36 w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 border-white/10 bg-[#1e293b]/70 backdrop-blur-sm px-4 py-3 transition-all duration-700 after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[20rem] after:bg-gradient-to-l after:from-[#0f172a] after:to-transparent after:content-[''] hover:border-white/20 hover:bg-[#1e293b] [&>*]:flex [&>*]:items-center [&>*]:gap-2 [grid-area:stack] translate-x-32 translate-y-20 hover:translate-y-10">
+      <div>
+        <span class="relative inline-block rounded-full bg-blue-800 p-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-blue-300">
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+            <path d="M12 16v-4"/>
+            <path d="M12 8h.01"/>
+          </svg>
+        </span>
+        <p class="text-lg font-medium text-blue-500">Upcoming</p>
+      </div>
+      <p class="whitespace-nowrap text-lg">Team meeting</p>
+      <p class="text-gray-400">Tomorrow, 9:00 AM</p>
+    </div>
+  </div>
+</body>
+</html>

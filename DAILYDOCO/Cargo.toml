@@ -1,0 +1,64 @@
+[workspace]
+resolver = "2"
+members = [
+    "apps/desktop",
+    "libs/aegnt-27",
+    "libs/shared-types"
+]
+
+[workspace.package]
+version = "2.7.0"
+edition = "2021"
+authors = ["Aegntic Team <team@aegntic.com>"]
+license = "MIT"
+repository = "https://github.com/aegntic/dailydoco-pro"
+keywords = ["ai", "documentation", "automation", "video", "authenticity"]
+categories = ["multimedia", "development-tools", "automation"]
+
+[workspace.dependencies]
+# Core dependencies
+tokio = { version = "1.0", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+uuid = { version = "1.0", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+anyhow = "1.0"
+thiserror = "1.0"
+log = "0.4"
+env_logger = "0.10"
+
+# Async and concurrency
+futures = "0.3"
+async-trait = "0.1"
+parking_lot = "0.12"
+num-cpus = "1.0"
+
+# Build dependencies
+tauri-build = "1.5"
+
+# Internal workspace crates
+aegnt-27 = { path = "libs/aegnt-27" }
+shared-types = { path = "libs/shared-types" }
+ai-models = { path = "libs/ai-models" }
+capture-engine = { path = "libs/capture-engine" }
+performance-monitor = { path = "libs/performance-monitor" }
+test-audience = { path = "libs/test-audience" }
+video-proc = { path = "libs/video-proc" }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.dev]
+opt-level = 0
+debug = true
+incremental = true
+
+[profile.bench]
+opt-level = 3
+debug = false
+lto = true
+codegen-units = 1

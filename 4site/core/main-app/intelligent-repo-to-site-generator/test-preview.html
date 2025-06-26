@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4site.pro - Repository to Website Generator</title>
+    <style>
+        /* Enterprise Professional Design System */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111114;
+            --bg-tertiary: #1a1a1e;
+            --grid-color: #000000;
+            --grid-opacity: 0.4;
+            --text-heading: #ffffff;
+            --text-subheading: #e5e7eb;
+            --text-body: #ffffff;
+            --text-muted: #9ca3af;
+            --blue-500: #3b82f6;
+            --wu-yellow: #ffd700;
+            --burnt-orange: #cc5500;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* 3D Grid Background */
+        .enterprise-grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            perspective: 1000px;
+        }
+        
+        .grid-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+        
+        .grid-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: var(--grid-opacity);
+            animation: gridFloat 20s infinite linear;
+            transform: rotateX(60deg) rotateY(0deg) translateZ(0px);
+        }
+        
+        @keyframes gridFloat {
+            0% { transform: rotateX(60deg) rotateY(0deg) translateZ(0px); }
+            33% { transform: rotateX(60deg) rotateY(120deg) translateZ(-50px); }
+            66% { transform: rotateX(60deg) rotateY(240deg) translateZ(-100px); }
+            100% { transform: rotateX(60deg) rotateY(360deg) translateZ(0px); }
+        }
+        
+        /* Logo Section */
+        .enterprise-logo-hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .logo-container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .enterprise-logo {
+            width: 300px;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+            transition: all 0.3s ease;
+        }
+        
+        /* Main Content */
+        .enterprise-section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .enterprise-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .enterprise-heading {
+            font-size: 4rem;
+            font-weight: 700;
+            text-shadow: var(--text-heading-shadow);
+            color: var(--text-heading);
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+        
+        .enterprise-subheading {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--text-subheading);
+            text-shadow: 0 1px 3px rgba(107, 114, 128, 0.4);
+            margin-bottom: 1rem;
+        }
+        
+        .blue-glow {
+            color: var(--blue-500);
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        
+        .yellow-glow {
+            color: var(--wu-yellow);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        .orange-accent {
+            color: var(--burnt-orange);
+        }
+        
+        /* Cards */
+        .enterprise-card {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.05) 0%, 
+                rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            margin: 1rem 0;
+        }
+        
+        .enterprise-card.featured {
+            border-color: var(--wu-yellow);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+        }
+        
+        /* Buttons */
+        .enterprise-button {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        
+        .enterprise-button.primary {
+            background: var(--blue-500);
+            color: white;
+        }
+        
+        .enterprise-button.primary:hover {
+            background: var(--blue-400);
+            transform: translateY(-2px);
+        }
+        
+        .enterprise-button.secondary {
+            background: transparent;
+            border: 1px solid var(--blue-500);
+            color: var(--blue-500);
+        }
+        
+        .enterprise-button.accent-yellow {
+            background: var(--wu-yellow);
+            color: black;
+            font-weight: 700;
+        }
+        
+        /* Input */
+        .repo-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .repo-input:focus {
+            border-color: var(--blue-500);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        /* Grid */
+        .enterprise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        /* Features */
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .enterprise-heading {
+                font-size: 2.5rem;
+            }
+            
+            .enterprise-logo {
+                width: 200px;
+            }
+            
+            .enterprise-section {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D Animated Grid Background -->
+    <div class="enterprise-grid-background">
+        <div class="grid-canvas">
+            <div class="grid-layer"></div>
+            <div class="grid-layer" style="transform: rotateX(60deg) rotateY(15deg) translateZ(-100px);"></div>
+            <div class="grid-layer" style="transform: rotateX(60deg) rotateY(30deg) translateZ(-200px);"></div>
+        </div>
+    </div>
+
+    <!-- Logo Hero Section -->
+    <section class="enterprise-logo-hero">
+        <div class="logo-container">
+            <img 
+                src="public/4sitepro-logo.png" 
+                alt="4site.pro" 
+                class="enterprise-logo"
+            />
+        </div>
+    </section>
+
+    <!-- Main Content Section -->
+    <section class="enterprise-section">
+        <div class="enterprise-container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h1 class="enterprise-heading">
+                    Transform Any <span class="blue-glow">Repository</span><br>
+                    Into a <span class="yellow-glow">Professional Website</span>
+                </h1>
+                
+                <p class="enterprise-subheading" style="max-width: 800px; margin: 0 auto;">
+                    Complete <span class="orange-accent">repository analysis</span> and transformation. 
+                    Not just README files—we analyze your entire codebase, documentation, 
+                    structure, and dependencies to create comprehensive professional websites.
+                </p>
+
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div style="width: 20px; height: 20px; background: var(--blue-500); border-radius: 50%;"></div>
+                        <span>Full Codebase Analysis</span>
+                    </div>
+                    <div class="feature-item">
+                        <div style="width: 20px; height: 20px; background: var(--blue-500); border-radius: 50%;"></div>
+                        <span>Dependency Mapping</span>
+                    </div>
+                    <div class="feature-item">
+                        <div style="width: 20px; height: 20px; background: var(--blue-500); border-radius: 50%;"></div>
+                        <span>Professional Deployment</span>
+                    </div>
+                    <div class="feature-item">
+                        <div style="width: 20px; height: 20px; background: var(--blue-500); border-radius: 50%;"></div>
+                        <span>Enterprise Ready</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Repository Input -->
+            <div style="max-width: 600px; margin: 0 auto;">
+                <div class="enterprise-card">
+                    <form style="display: flex; gap: 1rem; align-items: center;">
+                        <input 
+                            type="text" 
+                            class="repo-input"
+                            placeholder="https://github.com/facebook/react or facebook/react"
+                        >
+                        <button type="submit" class="enterprise-button primary">
+                            Generate Site →
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Quick Demo Examples -->
+                <div style="text-align: center; margin-top: 2rem;">
+                    <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                        Try our demo with popular repositories:
+                    </p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-center;">
+                        <button class="enterprise-button secondary">Demo React</button>
+                        <button class="enterprise-button secondary">Demo VS Code</button>
+                        <button class="enterprise-button secondary">Demo Next.js</button>
+                        <button class="enterprise-button secondary">Demo Tailwind</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Value Proposition Grid -->
+            <div class="enterprise-grid" style="margin-top: 5rem;">
+                <div class="enterprise-card">
+                    <div class="feature-icon" style="background: rgba(59, 130, 246, 0.2);">
+                        <div style="width: 24px; height: 24px; background: var(--blue-500); border-radius: 4px;"></div>
+                    </div>
+                    <h3 class="enterprise-subheading">Complete Analysis</h3>
+                    <p style="color: var(--text-muted); line-height: 1.6;">
+                        We analyze your entire repository structure, not just the README. 
+                        Source code, documentation, dependencies, architecture patterns, and more.
+                    </p>
+                </div>
+
+                <div class="enterprise-card featured">
+                    <div class="feature-icon" style="background: rgba(255, 215, 0, 0.2);">
+                        <div style="width: 24px; height: 24px; background: var(--wu-yellow); border-radius: 4px;"></div>
+                    </div>
+                    <h3 class="enterprise-subheading">Professional Output</h3>
+                    <p style="color: var(--text-muted); line-height: 1.6;">
+                        Enterprise-grade websites with proper documentation, API references, 
+                        deployment guides, and professional presentation.
+                    </p>
+                </div>
+
+                <div class="enterprise-card">
+                    <div class="feature-icon" style="background: rgba(204, 85, 0, 0.2);">
+                        <div style="width: 24px; height: 24px; background: var(--burnt-orange); border-radius: 4px;"></div>
+                    </div>
+                    <h3 class="enterprise-subheading">Deploy Anywhere</h3>
+                    <p style="color: var(--text-muted); line-height: 1.6;">
+                        One-click deployment to GitHub Pages, Vercel, Netlify, or any static hosting. 
+                        Custom domains and CDN optimization included.
+                    </p>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div style="text-align: center; margin-top: 4rem;">
+                <div class="enterprise-card" style="max-width: 600px; margin: 0 auto;">
+                    <h2 class="enterprise-subheading">Ready to Transform Your Repository?</h2>
+                    <p style="color: var(--text-muted); margin: 1rem 0 2rem 0;">
+                        Join thousands of developers who trust 4site.pro for professional 
+                        repository presentation and documentation.
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <button class="enterprise-button accent-yellow">Start Free Trial</button>
+                        <button class="enterprise-button secondary">View Examples</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Logo scroll fade effect
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const logo = document.querySelector('.logo-container');
+            if (logo) {
+                const opacity = Math.max(0.1, 1 - scrollY / 400);
+                const scale = Math.max(0.8, 1 - scrollY / 1000);
+                const translateY = scrollY * 0.3;
+                logo.style.opacity = opacity;
+                logo.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+            }
+        });
+
+        // Simple form submission
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = document.querySelector('.repo-input');
+            if (input.value.trim()) {
+                alert(`Would analyze repository: ${input.value}`);
+            }
+        });
+
+        // Demo buttons
+        document.querySelectorAll('.enterprise-button.secondary').forEach(button => {
+            button.addEventListener('click', () => {
+                const repo = button.textContent.replace('Demo ', '');
+                alert(`Demo analysis of ${repo}`);
+            });
+        });
+    </script>
+</body>
+</html>

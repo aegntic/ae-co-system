@@ -1,0 +1,406 @@
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Design Tool Changelog - Release History</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: #0f172a; 
+      color: #e2e8f0;
+    }
+    .window {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 1.25rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      overflow: hidden;
+    }
+    .annotation {
+      font-size: 10px;
+      letter-spacing: .04em;
+      color: #64748b;
+      position: absolute;
+      white-space: nowrap;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+    }
+    .annotation-line {
+      position: absolute;
+      height: 1px;
+      background: #475569;
+      z-index: 1;
+    }
+    .annotation-left {
+      right: calc(100% + 20px);
+      text-align: right;
+    }
+    .annotation-right {
+      left: calc(100% + 20px);
+      text-align: left;
+    }
+    .change-item {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #2d3748;
+    }
+    .change-item:last-child {
+      border-bottom: none;
+    }
+    .version-badge {
+      background: #667eea;
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .timeline-line {
+      position: absolute;
+      left: 1rem;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: #475569;
+    }
+    .update-image {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 0.75rem;
+      border: 1px solid #475569;
+      filter: brightness(0.8) contrast(1.1);
+    }
+    .side-image {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      border: 1px solid #475569;
+      filter: brightness(0.7) contrast(1.1);
+    }
+    .change-tag {
+      width: 60px;
+      padding: 0.125rem 0.375rem;
+      border-radius: 0.375rem;
+      font-size: 0.625rem;
+      font-weight: 500;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #e2e8f0;
+    }
+    .version-dot {
+      width: 8px;
+      height: 8px;
+      background: #667eea;
+      border-radius: 0;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+    .images-container {
+      display: flex;
+      gap: 1rem;
+    }
+    .main-image {
+      flex: 2;
+    }
+    .side-images {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    @media(max-width:1200px){
+      .annotation,.annotation-line{display:none}
+    }
+    @media(max-width:768px){
+      .timeline-line{left:0.5rem}
+      .update-image{height:180px}
+      .images-container {
+        flex-direction: column;
+      }
+      .main-image {
+        flex: none;
+      }
+      .side-images {
+        flex: none;
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 0.75rem;
+      }
+      .side-image {
+        flex-shrink: 0;
+        width: 200px;
+      }
+    }
+    @media(max-width:640px){
+      .timeline-line{display:none}
+      .update-image{height:150px}
+      .side-image {
+        width: 160px;
+        height: 100px;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;family=Inter&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;family=Inter&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;family=Inter&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;family=Inter&amp;display=swap" rel="stylesheet">
+</head>
+<body class="font-sans">
+
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 relative">
+
+  <!-- Heading -->
+  <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-6 lg:gap-8 sm:mb-12 lg:mb-16 mb-8">
+    <h1 class="sm:text-3xl lg:text-4xl xl:text-5xl leading-tight max-w-full lg:max-w-lg text-2xl font-semibold text-slate-100 tracking-tight">Design tool evolution timeline and feature releases</h1>
+    <p class="max-w-full lg:max-w-sm sm:text-base leading-relaxed text-sm text-slate-400">
+      Track our continuous improvement journey with detailed release notes, feature additions, bug fixes, and performance enhancements. 
+      Stay updated with the latest developments and upcoming features.
+    </p>
+  </div>
+
+  <!-- Changelog Window with annotations -->
+  <div class="relative mx-auto w-full max-w-4xl xl:max-w-6xl">
+    <!-- Left annotations with lines -->
+    <div class="hidden xl:block">
+      <div class="annotation annotation-left" style="top:60px">VERSION<br>TRACKING</div>
+      <div class="annotation-line" style="top:75px;right:calc(100% - 20px);width:40px"></div>
+      <div class="annotation annotation-left" style="top:250px">VISUAL<br>UPDATES</div>
+      <div class="annotation-line" style="top:265px;right:calc(100% - 20px);width:40px"></div>
+      <div class="annotation annotation-left" style="top:450px">CATEGORIZED<br>CHANGES</div>
+      <div class="annotation-line" style="top:465px;right:calc(100% - 20px);width:40px"></div>
+    </div>
+    <div class="hidden xl:block">
+      <div class="annotation annotation-right" style="top:20px">RELEASE<br>METADATA</div>
+      <div class="annotation-line" style="top:35px;left:calc(100% - 20px);width:40px"></div>
+      <div class="annotation annotation-right" style="top:180px">FEATURE<br>SHOWCASE</div>
+      <div class="annotation-line" style="top:195px;left:calc(100% - 20px);width:40px"></div>
+      <div class="annotation annotation-right" style="top:600px">DEVELOPER<br>ATTRIBUTION</div>
+      <div class="annotation-line" style="top:615px;left:calc(100% - 20px);width:40px"></div>
+    </div>
+
+    <!-- Main changelog window -->
+    <div class="window sm:p-6 lg:p-8 relative z-10 pt-4 pr-4 pb-4 pl-4">
+
+      <!-- Changelog Header -->
+      <div class="border-b border-slate-700/50 pb-4 sm:pb-6 mb-6 sm:mb-8">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
+          <h2 class="sm:text-xl flex items-center gap-2 text-lg font-normal text-slate-200">Aura Release History</h2>
+          <div class="flex items-center gap-2">
+            <span class="bg-emerald-900 text-emerald-300 px-2 py-1 rounded text-xs flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg>
+              v3.2.1
+            </span>
+          </div>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-400 mt-2">Complete release history with detailed change tracking</p>
+      </div>
+
+      <!-- Timeline Container -->
+      <div class="relative pl-0 sm:pl-6 md:pl-8">
+        <div class="timeline-line hidden sm:block"></div>
+
+        <!-- Version 3.2.1 -->
+        <div class="relative mb-8 sm:mb-16">
+          <div class="sm:mb-6 mb-4">
+            <div class="flex items-center gap-2 relative -left-[19.5px] mb-3">
+              <div class="version-dot rounded-full"></div>
+              <span class="text-sm font-medium text-slate-200">v3.2.1</span>
+              <span class="text-sm text-slate-400">June 4, 2025</span>
+            </div>
+            <h3 class="sm:text-xl text-lg font-medium text-slate-100 mb-2">Unsplash images in the design tool</h3>
+            <p class="sm:text-base text-sm text-slate-300 mb-4">You can now replace any background with an image with Unsplash search, based on tag, colors and relevance.</p>
+            
+            <!-- Images Container -->
+            <div class="images-container mb-6">
+              <div class="main-image">
+                <img src="https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=2160&amp;q=80" alt="Layer management interface" class="update-image h-full max-h-[560px] object-cover">
+              </div>
+              <div class="side-images">
+                <img src="https://images.unsplash.com/photo-1633886038251-66242d6cf688?w=1080&amp;q=80" alt="Smart grouping feature" class="side-image md:h-44 object-cover">
+                <img src="https://images.unsplash.com/photo-1627637819794-fba32f82be16?w=1080&amp;q=80" alt="Nested layers view" class="side-image md:h-44">
+                <img src="https://images.unsplash.com/photo-1611262588019-db6cc2032da3?w=1080&amp;q=80" alt="Performance metrics" class="side-image md:h-44 object-cover">
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-3 sm:space-y-4">
+            <div class="change-item">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3">
+                <span class="change-tag">NEW</span>
+                <div class="flex-1">
+                  <p class="sm:text-base text-sm text-slate-200">Smart layer auto-grouping feature</p>
+                  <p class="text-xs sm:text-sm text-slate-400 mt-1">Automatically organizes layers based on content similarity</p>
+                </div>
+              </div>
+            </div>
+            <div class="change-item">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3">
+                <span class="change-tag">FEATURE</span>
+                <div class="flex-1">
+                  <p class="text-sm sm:text-base text-slate-200">Real-time collaboration improvements</p>
+                  <p class="text-xs sm:text-sm text-slate-400 mt-1">Enhanced cursor tracking and live selection indicators</p>
+                </div>
+              </div>
+            </div>
+            <div class="change-item">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3">
+                <span class="change-tag">FIXES</span>
+                <div class="flex-1">
+                  <p class="text-sm sm:text-base text-slate-200">Canvas rendering performance issues</p>
+                  <p class="text-xs sm:text-sm text-slate-400 mt-1">Resolved lag when working with large artboards</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Version 3.2.0 -->
+        <div class="relative mb-8 sm:mb-16">
+          <div class="mb-4 sm:mb-6">
+            <div class="flex items-center gap-2 relative -left-[19.5px] mb-3">
+              <div class="version-dot bg-blue-500 rounded-full"></div>
+              <span class="text-sm font-medium text-slate-200">v3.2.0</span>
+              <span class="text-sm text-slate-400">November 22, 2024</span>
+            </div>
+            <h3 class="text-lg sm:text-xl font-medium text-slate-100 mb-2">AI-Powered Design Assistant</h3>
+            <p class="text-sm sm:text-base text-slate-300 mb-4">Introducing intelligent design suggestions and automated layout optimization.</p>
+            
+            <!-- Images Container -->
+            <div class="images-container mb-6">
+              <div class="main-image">
+                <img src="https://images.unsplash.com/photo-1650611250959-1e823abf6841?w=2160&amp;q=80" alt="AI design assistant interface" class="update-image h-full max-h-[560px]">
+              </div>
+              <div class="side-images">
+                <img src="https://images.unsplash.com/photo-1635268144933-4d6f7a55e0b9?w=1080&amp;q=80" alt="AI color palette" class="side-image md:h-44">
+                <img src="https://images.unsplash.com/photo-1634893661513-d6d1f579fc63?w=1080&amp;q=80" alt="Layout automation" class="side-image md:h-44">
+                <img src="https://images.unsplash.com/photo-1703635531451-2e32420b164d?w=1080&amp;q=80" alt="Smart suggestions" class="side-image md:h-44">
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-3 sm:space-y-4">
+            <div class="change-item">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3">
+                <span class="change-tag">NEW</span>
+                <div class="flex-1">
+                  <p class="text-sm sm:text-base text-slate-200">AI color palette generator</p>
+                  <p class="text-xs sm:text-sm text-slate-400 mt-1">Smart color suggestions based on design context</p>
+                </div>
+              </div>
+            </div>
+            <div class="change-item">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3">
+                <span class="change-tag">FEATURE</span>
+                <div class="flex-1">
+                  <p class="text-sm sm:text-base text-slate-200">Automated layout alignment</p>
+                  <p class="text-xs sm:text-sm text-slate-400 mt-1">Intelligent element positioning and spacing</p>
+                </div>
+              </div>
+            </div>
+            <div class="change-item">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3">
+                <span class="change-tag">FIXES</span>
+                <div class="flex-1">
+                  <p class="text-sm sm:text-base text-slate-200">Text rendering inconsistencies</p>
+                  <p class="text-xs sm:text-sm text-slate-400 mt-1">Fixed font weight variations across different browsers</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Version 3.1.5 -->
+        <div class="relative">
+          <div class="mb-4 sm:mb-6">
+            <div class="flex items-center gap-2 mb-3 relative -left-[19.5px]">
+              <div class="version-dot bg-slate-500 rounded-full"></div>
+              <span class="text-sm font-medium text-slate-200">v3.1.5</span>
+              <span class="text-sm text-slate-400">November 5, 2024</span>
+            </div>
+            <h3 class="text-lg sm:text-xl font-medium text-slate-100 mb-2">Vector Tools Enhancement</h3>
+            <p class="text-sm sm:text-base text-slate-300 mb-4">Improved vector editing capabilities with advanced path operations.</p>
+            
+            <!-- Images Container -->
+            <div class="images-container mb-6">
+              <div class="main-image">
+                <img src="https://images.unsplash.com/photo-1627637819794-fba32f82be16?w=2160&amp;q=80" alt="Vector editing tools" class="update-image h-full max-h-[560px]">
+              </div>
+              <div class="side-images">
+                <img src="https://images.unsplash.com/photo-1717579425304-3329b79030a9?w=1080&amp;q=80" alt="Bezier curve editor" class="side-image md:h-44">
+                <img src="https://images.unsplash.com/photo-1715174539960-6b2f5f279ee5?w=1080&amp;q=80" alt="Boolean operations" class="side-image md:h-44">
+                <img src="https://images.unsplash.com/photo-1690046793092-f8d634523264?w=1080&amp;q=80" alt="Export settings" class="side-image md:h-44">
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-3 sm:space-y-4">
+            <div class="change-item">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3">
+                <span class="change-tag">NEW</span>
+                <div class="flex-1">
+                  <p class="text-sm sm:text-base text-slate-200">Advanced bezier curve editor</p>
+                  <p class="text-xs sm:text-sm text-slate-400 mt-1">Precise control over vector path manipulation</p>
+                </div>
+              </div>
+            </div>
+            <div class="change-item">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3">
+                <span class="change-tag">FEATURE</span>
+                <div class="flex-1">
+                  <p class="text-sm sm:text-base text-slate-200">Boolean operations toolkit</p>
+                  <p class="text-xs sm:text-sm text-slate-400 mt-1">Union, subtract, intersect, and exclude operations</p>
+                </div>
+              </div>
+            </div>
+            <div class="change-item">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3">
+                <span class="change-tag">FIXES</span>
+                <div class="flex-1">
+                  <p class="text-sm sm:text-base text-slate-200">Export quality improvements</p>
+                  <p class="text-xs sm:text-sm text-slate-400 mt-1">Enhanced SVG and PDF export with better compression</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-6 sm:pt-8 border-t border-slate-700/50 mt-8 sm:mt-12">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 flex items-center justify-center bg-purple-600 bg-[url(https://images.unsplash.com/photo-1589525231707-f2de2428f59c?w=1080&amp;q=80)] bg-cover rounded-full">
+            
+          </div>
+          <div>
+            <div class="text-sm font-medium text-slate-200">Sarah Martinez</div>
+            <div class="text-xs text-slate-400">Product Manager &amp; Release Coordinator</div>
+          </div>
+        </div>
+        <div class="text-left sm:text-right">
+          <div class="text-xs text-slate-500">Last updated: Dec 8, 2024</div>
+          <div class="text-xs text-slate-500">Next release: Q1 2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  lucide.createIcons();
+</script>
+
+</body></html>

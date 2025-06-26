@@ -1,0 +1,13 @@
+{
+  "apiKey": "{{OPENROUTER_API_KEY}}",
+  "defaultModels": {
+    "embedding": "openai/text-embedding-ada-002",
+    "completion": "anthropic/claude-3-haiku-20240307",
+    "premium": "anthropic/claude-3-opus-20240229"
+  },
+  "memory": {
+    "enabled": true,
+    "storeCalls": true,
+    "storeResults": true
+  }
+}

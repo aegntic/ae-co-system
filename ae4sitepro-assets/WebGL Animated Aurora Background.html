@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shader Aurora Background</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        #aurora-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-zinc-900 text-white overflow-hidden">
+    <canvas id="aurora-canvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('aurora-canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+
+        if (!gl) {
+            console.error('WebGL not supported');
+        }
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const vertexShaderSource = `
+            attribute vec2 a_position;
+            void main() {
+                gl_Position = vec4(a_position, 0.0, 1.0);
+            }
+        `;
+
+        const fragmentShaderSource = `
+            precision mediump float;
+            uniform float u_time;
+            uniform vec2 u_resolution;
+
+            vec3 aurora(vec2 uv, float time) {
+                vec2 p = uv - 0.5;
+                p.y += 0.3;
+                
+                // Multiple wave layers for flowing motion
+                float wave1 = sin(p.x * 3.0 + time * 0.5) * 0.08;
+                float wave2 = sin(p.x * 5.0 + time * 0.7 + sin(time * 0.3) * 2.0) * 0.04;
+                float wave3 = sin(p.x * 7.0 + time * 1.1 + cos(time * 0.4) * 1.5) * 0.025;
+                float wave4 = sin(p.x * 2.0 + time * 0.3 + sin(time * 0.6) * 3.0) * 0.06;
+                
+                float y = p.y - wave1 - wave2 - wave3 - wave4;
+                
+                // Increased intensity by 50%
+                float intensity1 = exp(-abs(y) * 16.0) * 0.375;
+                float intensity2 = exp(-abs(y + 0.1) * 24.0) * 0.3;
+                float intensity3 = exp(-abs(y - 0.05) * 30.0) * 0.225;
+                
+                vec3 color1 = vec3(0.2, 0.8, 0.9) * intensity1;
+                vec3 color2 = vec3(0.5, 0.3, 0.9) * intensity2;
+                vec3 color3 = vec3(0.1, 0.9, 0.6) * intensity3;
+                
+                return color1 + color2 + color3;
+            }
+
+            vec3 secondaryAurora(vec2 uv, float time) {
+                vec2 p = uv - 0.5;
+                p.y += 0.1;
+                
+                // More complex waving motion
+                float wave1 = sin(p.x * 2.0 + time * 0.3 + sin(time * 0.2) * 2.5) * 0.06;
+                float wave2 = cos(p.x * 4.0 + time * 0.5 + cos(time * 0.35) * 1.8) * 0.03;
+                float y = p.y - wave1 - wave2;
+                
+                float intensity = exp(-abs(y) * 12.0) * 0.225;
+                return vec3(0.8, 0.2, 0.7) * intensity;
+            }
+
+            vec3 tertiaryAurora(vec2 uv, float time) {
+                vec2 p = uv - 0.5;
+                p.y -= 0.2;
+                
+                // Additional flowing aurora band
+                float wave1 = sin(p.x * 1.5 + time * 0.4 + sin(time * 0.25) * 3.0) * 0.07;
+                float wave2 = cos(p.x * 3.5 + time * 0.6 + cos(time * 0.45) * 2.2) * 0.035;
+                float y = p.y - wave1 - wave2;
+                
+                float intensity = exp(-abs(y) * 18.0) * 0.18;
+                return vec3(0.3, 0.9, 0.5) * intensity;
+            }
+
+            float noise(vec2 p) {
+                return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+            }
+
+            void main() {
+                vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+                
+                vec3 color = vec3(0.03, 0.03, 0.075);
+                
+                // Main aurora layers
+                color += aurora(uv, u_time);
+                color += secondaryAurora(uv, u_time + 3.0);
+                color += tertiaryAurora(uv, u_time + 1.5);
+                
+                // Brighter stars
+                vec2 starUv = uv * 120.0;
+                vec2 starId = floor(starUv);
+                vec2 starFract = fract(starUv);
+                
+                float star = noise(starId);
+                if (star > 0.985) {
+                    float starBrightness = (sin(u_time * 1.5 + star * 8.0) * 0.3 + 0.4) * 0.75;
+                    float starDist = length(starFract - 0.5);
+                    if (starDist < 0.03) {
+                        color += vec3(0.8, 0.9, 1.0) * (1.0 - starDist * 30.0) * starBrightness;
+                    }
+                }
+                
+                // Enhanced atmospheric glow
+                float glow = 1.0 - length(uv - 0.5) * 0.6;
+                color += vec3(0.075, 0.15, 0.225) * glow * 0.225;
+                
+                gl_FragColor = vec4(color, 1.0);
+            }
+        `;
+
+        function createShader(gl, type, source) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                console.error('Shader compilation error:', gl.getShaderInfoLog(shader));
+                gl.deleteShader(shader);
+                return null;
+            }
+            
+            return shader;
+        }
+
+        const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+        const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+
+        const program = gl.createProgram();
+        gl.attachShader(program, vertexShader);
+        gl.attachShader(program, fragmentShader);
+        gl.linkProgram(program);
+
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+            console.error('Program linking error:', gl.getProgramInfoLog(program));
+        }
+
+        const positionAttributeLocation = gl.getAttribLocation(program, 'a_position');
+        const timeUniformLocation = gl.getUniformLocation(program, 'u_time');
+        const resolutionUniformLocation = gl.getUniformLocation(program, 'u_resolution');
+
+        const positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        const positions = [
+            -1, -1,
+             1, -1,
+            -1,  1,
+            -1,  1,
+             1, -1,
+             1,  1,
+        ];
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+        function render(time) {
+            time *= 0.001;
+
+            gl.clearColor(0, 0, 0, 1);
+            gl.clear(gl.COLOR_BUFFER_BIT);
+
+            gl.useProgram(program);
+
+            gl.enableVertexAttribArray(positionAttributeLocation);
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+
+            gl.uniform1f(timeUniformLocation, time);
+            gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
+
+            gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+            requestAnimationFrame(render);
+        }
+
+        requestAnimationFrame(render);
+    </script>
+</body>
+</html>

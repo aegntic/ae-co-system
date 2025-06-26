@@ -1,0 +1,138 @@
+# Prometheus Configuration for 4site.pro
+# Comprehensive monitoring setup with alerting rules
+
+global:
+  scrape_interval: 30s
+  evaluation_interval: 30s
+  external_labels:
+    cluster: '4site-pro'
+    environment: 'production'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+# Load rules once and periodically evaluate them
+rule_files:
+  - "alert_rules.yml"
+  - "recording_rules.yml"
+
+# Scrape configurations
+scrape_configs:
+  # Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    scrape_interval: 30s
+    metrics_path: /metrics
+
+  # 4site.pro application metrics
+  - job_name: '4site-pro-app'
+    static_configs:
+      - targets: ['monitoring-dashboard:3333']
+    scrape_interval: 30s
+    metrics_path: /metrics
+    scheme: http
+
+  # System metrics via Node Exporter
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 30s
+    metrics_path: /metrics
+
+  # Container metrics via cAdvisor
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    scrape_interval: 30s
+    metrics_path: /metrics
+
+  # PostgreSQL metrics (assuming postgres_exporter)
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+    scrape_interval: 30s
+    metrics_path: /metrics
+    params:
+      collect[]:
+        - 'pg_stat_database'
+        - 'pg_stat_user_tables'
+        - 'pg_statio_user_tables'
+        - 'pg_stat_activity'
+
+  # Redis metrics (assuming redis_exporter)
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis-exporter:9121']
+    scrape_interval: 30s
+    metrics_path: /metrics
+
+  # Nginx/Load Balancer metrics
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx-exporter:9113']
+    scrape_interval: 30s
+    metrics_path: /metrics
+
+  # Blackbox exporter for external monitoring
+  - job_name: 'blackbox'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+        - https://4site.pro
+        - https://4site.pro/api/health
+        - https://4site.pro/generator
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
+
+  # SSL certificate monitoring
+  - job_name: 'ssl-exporter'
+    static_configs:
+      - targets: ['ssl-exporter:9219']
+    scrape_interval: 300s  # 5 minutes
+    metrics_path: /probe
+    params:
+      target: ['4site.pro:443']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: ssl-exporter:9219
+
+  # Custom business metrics endpoint
+  - job_name: '4site-business-metrics'
+    static_configs:
+      - targets: ['monitoring-dashboard:3333']
+    scrape_interval: 60s
+    metrics_path: /api/metrics/prometheus
+    honor_labels: true
+    params:
+      format: ['prometheus']
+
+  # AI service metrics (if available)
+  - job_name: 'ai-services'
+    static_configs:
+      - targets: ['ai-service:8000']
+    scrape_interval: 60s
+    metrics_path: /metrics
+    scheme: http
+
+# Remote write configuration (for long-term storage)
+# remote_write:
+#   - url: "https://prometheus-us-central1.grafana.net/api/prom/push"
+#     basic_auth:
+#       username: "your-username"
+#       password: "your-api-key"

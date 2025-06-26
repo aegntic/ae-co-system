@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aegntic.ai | Advanced AI Interface Solutions</title>
+    <meta name="description" content="Professional AI interface solutions by aegntic.ai">
+    
+    <!-- Preload critical fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Critical CSS inlined for immediate rendering */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-dark: #0a0a0a;
+            --primary-light: #ffffff;
+            --accent-color: #f8f8f8;
+            --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            overflow: hidden;
+            background: var(--primary-dark);
+            color: var(--primary-light);
+        }
+        
+        /* Preloader Styles */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--primary-dark);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 1s var(--transition-smooth), 
+                        visibility 1s var(--transition-smooth);
+        }
+        
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .preloader-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .scrolling-text {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            color: var(--primary-light);
+            will-change: transform;
+            animation: scrollRightToLeft 3.5s var(--transition-smooth) 0.3s 2;
+        }
+        
+        @keyframes scrollRightToLeft {
+            0% {
+                transform: translateY(-50%) translateX(100vw);
+            }
+            100% {
+                transform: translateY(-50%) translateX(-100%);
+            }
+        }
+        
+        .progress-container {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            right: 2rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            border-radius: 1px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-light);
+            width: 0%;
+            transition: width 0.3s ease-out;
+            border-radius: 1px;
+        }
+        
+        .progress-text {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 0.05em;
+        }
+        
+        /* Skip button for accessibility */
+        .skip-preloader {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-family: inherit;
+            cursor: pointer;
+            border-radius: 0.25rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 2s forwards;
+        }
+        
+        .skip-preloader:hover,
+        .skip-preloader:focus {
+            color: var(--primary-light);
+            border-color: rgba(255, 255, 255, 0.4);
+            outline: none;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        /* Main content styles */
+        .main-content {
+            min-height: 100vh;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 1s var(--transition-smooth) 0.2s,
+                        transform 1s var(--transition-smooth) 0.2s;
+        }
+        
+        .main-content.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .content-inner {
+            text-align: center;
+            max-width: 600px;
+            padding: 2rem;
+        }
+        
+        .main-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .main-subtitle {
+            font-size: 1.125rem;
+            font-weight: 400;
+            color: rgba(10, 10, 10, 0.7);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--primary-dark);
+            color: var(--primary-light);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(10, 10, 10, 0.15);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .scrolling-text {
+                font-size: clamp(2rem, 10vw, 4rem);
+            }
+            
+            .progress-container {
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+            }
+            
+            .skip-preloader {
+                top: 1rem;
+                right: 1rem;
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <section class="preloader" id="preloader" aria-label="Loading content">
+        <div class="preloader-content">
+            <div class="scrolling-text" aria-hidden="true">aegntic.ai</div>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Loading experience...</div>
+            </div>
+            
+            <button class="skip-preloader" id="skipPreloader" aria-label="Skip loading animation">
+                Skip
+            </button>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <div class="content-inner">
+            <h1 class="main-title">Advanced AI Interface Solutions</h1>
+            <p class="main-subtitle">
+                Pioneering the future of human-computer interaction through 
+                revolutionary AI-powered interfaces and experiences.
+            </p>
+            <a href="#explore" class="cta-button">
+                Explore Our Work
+            </a>
+        </div>
+    </main>
+
+    <script>
+        class AegnicPreloader {
+            constructor() {
+                this.preloader = document.getElementById('preloader');
+                this.mainContent = document.getElementById('mainContent');
+                this.progressFill = document.getElementById('progressFill');
+                this.progressText = document.getElementById('progressText');
+                this.skipButton = document.getElementById('skipPreloader');
+                
+                this.progress = 0;
+                this.isComplete = false;
+                this.minDisplayTime = 7500; // Minimum display time (2 animation cycles + buffer)
+                this.startTime = Date.now();
+                
+                this.init();
+            }
+            
+            init() {
+                this.setupEventListeners();
+                this.simulateLoading();
+                this.preloadAssets();
+            }
+            
+            setupEventListeners() {
+                this.skipButton.addEventListener('click', () => this.completePreloader());
+                
+                // Handle reduced motion preference
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    this.minDisplayTime = 1000;
+                }
+                
+                // Keyboard accessibility
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' || e.key === ' ') {
+                        this.completePreloader();
+                    }
+                });
+            }
+            
+            simulateLoading() {
+                const duration = this.minDisplayTime;
+                const startTime = Date.now();
+                
+                const updateProgress = () => {
+                    const elapsed = Date.now() - startTime;
+                    this.progress = Math.min((elapsed / duration) * 100, 100);
+                    
+                    this.progressFill.style.width = `${this.progress}%`;
+                    
+                    // Update progress text
+                    if (this.progress < 30) {
+                        this.progressText.textContent = 'Loading experience...';
+                    } else if (this.progress < 60) {
+                        this.progressText.textContent = 'Preparing interface...';
+                    } else if (this.progress < 90) {
+                        this.progressText.textContent = 'Almost ready...';
+                    } else {
+                        this.progressText.textContent = 'Welcome to aegntic.ai';
+                    }
+                    
+                    if (this.progress < 100) {
+                        requestAnimationFrame(updateProgress);
+                    } else {
+                        this.checkCompletion();
+                    }
+                };
+                
+                requestAnimationFrame(updateProgress);
+            }
+            
+            preloadAssets() {
+                // Simulate asset loading
+                const assets = [
+                    // Add your actual assets here
+                    'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+                ];
+                
+                Promise.all(
+                    assets.map(src => {
+                        return new Promise((resolve) => {
+                            const img = new Image();
+                            img.onload = img.onerror = resolve;
+                            img.src = src;
+                        });
+                    })
+                ).then(() => {
+                    this.isComplete = true;
+                    this.checkCompletion();
+                });
+            }
+            
+            checkCompletion() {
+                const elapsed = Date.now() - this.startTime;
+                const hasMinTimeElapsed = elapsed >= this.minDisplayTime;
+                
+                if (this.progress >= 100 && this.isComplete && hasMinTimeElapsed) {
+                    setTimeout(() => this.completePreloader(), 500);
+                }
+            }
+            
+            completePreloader() {
+                if (this.preloader.classList.contains('hidden')) return;
+                
+                this.preloader.classList.add('hidden');
+                this.mainContent.classList.add('visible');
+                
+                // Re-enable body scroll
+                setTimeout(() => {
+                    document.body.style.overflow = '';
+                }, 1000);
+                
+                // Remove preloader from DOM after transition
+                setTimeout(() => {
+                    if (this.preloader.parentNode) {
+                        this.preloader.parentNode.removeChild(this.preloader);
+                    }
+                }, 1500);
+            }
+        }
+        
+        // Initialize preloader when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                new AegnicPreloader();
+            });
+        } else {
+            new AegnicPreloader();
+        }
+        
+        // Performance optimization
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+                // Preload additional resources during idle time
+                console.log('Preloader ready - aegntic.ai');
+            });
+        }
+    </script>
+</body>
+</html>

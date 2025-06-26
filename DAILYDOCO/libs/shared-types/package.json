@@ -1,0 +1,19 @@
+{
+  "name": "@dailydoco/shared-types",
+  "version": "1.0.0",
+  "description": "Shared TypeScript types and interfaces for DailyDoco Pro",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

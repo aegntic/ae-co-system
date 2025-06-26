@@ -1,0 +1,33 @@
+<svg width="1200" height="675" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="dimensional-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f0f1e;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a1a3e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3a86ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="675" fill="url(#dimensional-bg)"/>
+  
+  <!-- 3D layers effect -->
+  <rect x="350" y="200" width="400" height="300" rx="8" fill="none" stroke="#ff006e" stroke-width="2" opacity="0.8"/>
+  <rect x="400" y="250" width="400" height="300" rx="8" fill="none" stroke="#8338ec" stroke-width="2" opacity="0.7"/>
+  <rect x="450" y="300" width="400" height="300" rx="8" fill="none" stroke="#3a86ff" stroke-width="2" opacity="0.6"/>
+  
+  <!-- Data visualization elements -->
+  <rect x="380" y="230" width="80" height="120" fill="#ff006e" opacity="0.6"/>
+  <rect x="480" y="280" width="80" height="150" fill="#8338ec" opacity="0.6"/>
+  <rect x="580" y="260" width="80" height="180" fill="#3a86ff" opacity="0.6"/>
+  <rect x="680" y="290" width="80" height="130" fill="#06ffa5" opacity="0.6"/>
+  
+  <!-- Title -->
+  <text x="600" y="280" font-family="Arial, sans-serif" font-size="84" font-weight="bold" fill="white" text-anchor="middle">DIMENSIONAL</text>
+  <text x="600" y="360" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle">DASHBOARD</text>
+  
+  <!-- Features -->
+  <text x="600" y="450" font-family="Arial, sans-serif" font-size="24" fill="rgba(255,255,255,0.9)" text-anchor="middle">4D Visualization • Real-time Data • D3.js</text>
+  
+  <!-- aeLTD branding -->
+  <text x="600" y="600" font-family="Arial, sans-serif" font-size="20" fill="rgba(255,255,255,0.6)" text-anchor="middle">aeLTD Premium Collection</text>
+  <text x="600" y="625" font-family="Arial, sans-serif" font-size="20" fill="rgba(255,255,255,0.6)" text-anchor="middle">Open Tabs ∞ Certified</text>
+</svg>

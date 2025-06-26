@@ -1,0 +1,116 @@
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Design Lab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            dark: '#000000',
+            light: '#ffffff',
+            subtle: 'rgba(255,255,255,0.1)'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;family=Inter&amp;display=swap" rel="stylesheet">
+<link id="dynamic-font-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap">
+<style id="dynamic-font-style-font-instrument-serif">
+.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }
+</style>
+  <style>
+      /* Custom font utilities */
+      .font-instrument-serif { font-family: 'Instrument Serif', serif !important; }
+    </style>
+</head>
+<body class="bg-black text-white font-sans">
+  <div class="relative min-h-screen overflow-hidden">
+    <!-- Spline 3D reactive orb background -->
+    <div class="fixed inset-0 z-0">
+      <iframe src="https://my.spline.design/reactiveorb-s0GzgSco0uSVSXvwMHuJvPQs/" frameborder="0" width="100%" height="100%" class="w-full h-full"></iframe>
+    </div>
+    
+    <!-- Glass floating navbar -->
+    <nav class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 bg-opacity-5 border-opacity-10 bg-white border-white border rounded-full pt-3 pr-4 pb-3 pl-4 shadow-xl backdrop-blur-md">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"></circle>
+            <circle cx="12" cy="12" r="3" fill="white"></circle>
+          </svg>
+          <span class="ml-2 text-sm font-medium">InteractiveLab</span>
+        </div>
+        <div class="hidden md:flex items-center space-x-6 text-xs text-gray-300 ml-8">
+          <a href="#" class="hover:text-white transition-colors">Portfolio</a>
+          <a href="#" class="hover:text-white transition-colors">3D Design</a>
+          <a href="#" class="hover:text-white transition-colors">Animation</a>
+          <a href="#" class="hover:text-white transition-colors">Lab</a>
+          <a href="#" class="hover:text-white transition-colors">Connect</a>
+        </div>
+        <div class="flex items-center space-x-3 ml-8">
+          <a href="#" class="hidden md:inline-block text-xs font-medium hover:text-white transition-colors">Login</a>
+          <a href="#" class="hover:bg-gray-200 transition-colors text-xs font-medium text-black bg-white rounded-full pt-1.5 pr-3 pb-1.5 pl-3">Start Project</a>
+        </div>
+      </div>
+    </nav>
+    
+    <!-- Hero content - Left aligned -->
+    <div class="relative z-10 min-h-screen flex items-center">
+      <div class="max-w-7xl mx-auto px-6 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <!-- Left content -->
+          <div class="space-y-8">
+            <span class="px-3 py-1 text-xs font-medium text-white bg-white bg-opacity-10 backdrop-blur-sm rounded-full border border-white border-opacity-10">
+              Interactive Design Studio
+            </span>
+            
+            <h1 class="md:text-7xl leading-none text-5xl font-medium tracking-tighter">
+              Reactive
+              <span class="text-opacity-60 text-white">Dimensional</span>
+              Experiences
+            </h1>
+            
+            <p class="text-xl text-neutral-300 max-w-lg leading-relaxed">
+              We create immersive digital worlds that respond to user interaction. 
+              Every gesture, every movement becomes part of the experience.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 pt-4">
+              <a href="#" class="px-8 py-4 bg-white text-black font-medium rounded-full hover:bg-gray-200 transition-all duration-300 shadow-lg hover:shadow-xl text-center">
+                Explore Interactive Demo
+              </a>
+              <a href="#" class="px-8 py-4 bg-white bg-opacity-10 backdrop-blur-sm text-white font-medium rounded-full hover:bg-opacity-20 transition-all duration-300 border border-white border-opacity-10 text-center">
+                View Portfolio
+              </a>
+            </div>
+            
+            <div class="pt-8 space-y-4">
+              <div class="text-sm text-neutral-400">
+                Featured Technologies
+              </div>
+              <div class="flex flex-wrap gap-3">
+                <span class="px-3 py-1 text-xs bg-white bg-opacity-5 backdrop-blur-sm rounded-full border border-white border-opacity-10">WebGL</span>
+                <span class="px-3 py-1 text-xs bg-white bg-opacity-5 backdrop-blur-sm rounded-full border border-white border-opacity-10">Three.js</span>
+                <span class="px-3 py-1 text-xs bg-white bg-opacity-5 backdrop-blur-sm rounded-full border border-white border-opacity-10">Spline</span>
+                <span class="px-3 py-1 text-xs bg-white bg-opacity-5 backdrop-blur-sm rounded-full border border-white border-opacity-10">GSAP</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Right side - Empty space for 3D orb interaction -->
+          <div class="hidden lg:block">
+            <!-- This space is intentionally left empty to showcase the 3D orb -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body></html>

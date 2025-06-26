@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DailyDoco Pro Demo Video</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #1e293b 0%, #7c3aed 50%, #3b82f6 100%);
+      color: white;
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+      animation: fadeIn 1s ease-out;
+    }
+    h1 {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #f59e0b, #a855f7, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    p {
+      font-size: 1.5rem;
+      opacity: 0.8;
+    }
+    .play-button {
+      margin-top: 2rem;
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .play-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+    .play-icon {
+      width: 0;
+      height: 0;
+      border-left: 25px solid white;
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+      margin-left: 5px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>DailyDoco Pro</h1>
+    <p>AI-Generated Demo Video</p>
+    <div class="play-button">
+      <div class="play-icon"></div>
+    </div>
+    <p style="font-size: 1rem; margin-top: 2rem; opacity: 0.6;">
+      90-second demo • 4K quality • No human input needed
+    </p>
+  </div>
+</body>
+</html>
+  

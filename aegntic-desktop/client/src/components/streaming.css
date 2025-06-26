@@ -1,0 +1,114 @@
+/* Streaming Styles */
+
+/* Cursor animation for streaming responses */
+.streaming-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background-color: var(--accent-color);
+  margin-left: 2px;
+  animation: cursor-blink 1s infinite;
+  vertical-align: middle;
+}
+
+@keyframes cursor-blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Streaming indicator in tabs/headers */
+.streaming-indicator {
+  display: inline-block;
+  animation: streaming-dots 1.4s infinite both;
+  margin-left: 4px;
+}
+
+@keyframes streaming-dots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+  100% { content: '.'; }
+}
+
+/* Streaming badge for status display */
+.streaming-badge {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: var(--streaming-color);
+}
+
+.streaming-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--streaming-color);
+  border-radius: 50%;
+  margin-right: 6px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.9); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.7; }
+  100% { transform: scale(0.9); opacity: 1; }
+}
+
+/* Streaming tab indicators */
+.tab.streaming {
+  color: var(--streaming-color);
+  border-bottom-color: var(--streaming-color);
+}
+
+.split-header.streaming {
+  color: var(--streaming-color);
+}
+
+/* Error styling */
+.response-content.error,
+.split-item.error .split-content {
+  color: var(--danger-color);
+}
+
+.tab.error {
+  color: var(--danger-color);
+}
+
+.split-item.error .split-header {
+  color: var(--danger-color);
+  border-bottom-color: var(--danger-color);
+}
+
+/* Stop generation button */
+.stop-button {
+  padding: 8px 16px;
+  background-color: var(--danger-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.stop-button:hover {
+  background-color: var(--danger-hover);
+}
+
+/* Action info in status bar */
+.action-info {
+  flex: 1;
+}
+
+.streaming-info {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  color: var(--streaming-color);
+}
+
+/* Response status area */
+.response-status {
+  margin-left: auto;
+}

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProjectAssets - Elite UI Component Gallery | 4site.pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes floatLeft {
+            0%, 100% { transform: translateX(-50px); }
+            50% { transform: translateX(50px); }
+        }
+        @keyframes floatRight {
+            0%, 100% { transform: translateX(50px); }
+            50% { transform: translateX(-50px); }
+        }
+        .row-1 { animation: floatRight 8s ease-in-out infinite; }
+        .row-2 { animation: floatLeft 6s ease-in-out infinite; }
+        .row-3 { animation: floatRight 7s ease-in-out infinite; }
+        .row-4 { animation: floatLeft 9s ease-in-out infinite; }
+        
+        .noise-overlay {
+            background-image: 
+                radial-gradient(circle, transparent 1px, rgba(255,255,255,0.05) 1px);
+            background-size: 10px 10px;
+        }
+        
+        .grid-item {
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .grid-item:hover {
+            transform: scale(1.05) !important;
+        }
+        
+        .perspective {
+            perspective: 1200px;
+            perspective-origin: 50% 30%;
+        }
+        
+        .perspective-inner {
+            transform: rotateX(32deg) rotateZ(-15deg);
+            will-change: transform;
+            transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+        }
+        
+        /* Flip Card Styles */
+        .flip-card-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.95);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .flip-card-container.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .flip-card {
+            width: 90vw;
+            height: 90vh;
+            perspective: 1000px;
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        
+        .flip-card-container.active .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        .flip-card-front {
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: 300;
+        }
+        
+        .flip-card-back {
+            transform: rotateY(180deg);
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .close-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: scale(1.1);
+        }
+        
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.3));
+            color: white;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .category-tile:hover .category-overlay {
+            background: linear-gradient(transparent, rgba(0,0,0,0.5));
+        }
+        
+        .category-tile {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.2"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.2"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+
+        .brand-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .asset-grid {
+            display: none;
+        }
+
+        .asset-grid.active {
+            display: block;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .back-button.active {
+            display: block;
+        }
+
+        .back-button:hover {
+            background: rgba(0, 0, 0, 1);
+            transform: scale(1.05);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'aegntic': {
+                            'primary': '#667eea',
+                            'secondary': '#764ba2'
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+</head><body class="m-0 p-0 overflow-hidden bg-black font-sans">
+    <!-- Header Branding -->
+    <div class="fixed top-0 left-0 right-0 z-50 p-6">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold brand-gradient mb-2">ProjectAssets</h1>
+            <p class="text-gray-300 text-sm">Elite UI Component Gallery • 4site.pro/assetsgal</p>
+            <p class="text-gray-400 text-xs mt-1">58 Premium Assets • 8 Categories • Built by aegntic.ai</p>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <button id="backButton" class="back-button">← Back to Categories</button>
+
+    <!-- Flip Card Modal -->
+    <div id="flipCardModal" class="flip-card-container">
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">🎨</div>
+                        <div>Loading Asset Preview...</div>
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    <button class="close-btn" onclick="closeModal()">&times;</button>
+                    <iframe id="modalContent" class="w-full h-full rounded-lg" src="" style="border: none;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Grid Container -->
+    <div class="h-screen w-full overflow-hidden">
+        <section class="w-full h-screen overflow-hidden relative flex items-center justify-center bg-gradient-radial from-gray-900 to-black">
+            <!-- Noise overlay -->
+            <div class="absolute inset-0 pointer-events-none z-10 noise-overlay"></div>
+            
+            <!-- Categories Grid -->
+            <div id="categoriesGrid" class="perspective w-full h-full flex items-center justify-center">
+                <div class="gap-4 flex-none relative w-[150vw] h-[150vh] grid grid-rows-4 grid-cols-1 perspective-inner z-20">
+                    <!-- Row 1 - Authentication & Hero -->
+                    <div class="grid gap-4 grid-cols-7 row-1">
+                        <div class="grid-item category-tile relative w-full h-full rounded-lg" onclick="openCategory('authentication')">
+                            <div class="category-overlay">
+                                <div class="text-lg font-semibold">Authentication</div>
+                                <div class="text-sm opacity-80">8 Login & Auth Assets</div>
+                                <div class="text-xs mt-1">Glassmorphic • Enterprise Grade</div>
+                            </div>
+                        </div>
+                        <div class="grid-item category-tile relative w-full h-full rounded-lg" onclick="openCategory('hero')">
+                            <div class="category-overlay">
+                                <div class="text-lg font-semibold">Hero Sections</div>
+                                <div class="text-sm opacity-80">7 Landing Page Heroes</div>
+                                <div class="text-xs mt-1">AI-Powered • Interactive</div>
+                            </div>
+                        </div>
+                        <div class="grid-item category-tile relative w-full h-full rounded-lg" onclick="openCategory('cards')">
+                            <div class="category-overlay">
+                                <div class="text-lg font-semibold">Cards & Components</div>
+                                <div class="text-sm opacity-80">12 Interactive Elements</div>
+                                <div class="text-xs mt-1">Draggable • Animated</div>
+                            </div>
+                        </div>
+                        <div class="grid-item category-tile relative w-full h-full rounded-lg" onclick="openCategory('backgrounds')">
+                            <div class="category-overlay">
+                                <div class="text-lg font-semibold">Backgrounds</div>
+                                <div class="text-sm opacity-80">8 WebGL Effects</div>
+                                <div class="text-xs mt-1">Shader • Aurora • Neural</div>
+                            </div>
+                        </div>
+                        <div class="grid-item category-tile relative w-full h-full rounded-lg" onclick="openCategory('dashboards')">
+                            <div class="category-overlay">
+                                <div class="text-lg font-semibold">Dashboards</div>
+                                <div class="text-sm opacity-80">8 Admin Interfaces</div>
+                                <div class="text-xs mt-1">3D • Enterprise • Studio</div>
+                            </div>
+                        </div>
+                        <div class="grid-item category-tile relative w-full h-full rounded-lg" onclick="openCategory('navigation')">
+                            <div class="category-overlay">
+                                <div class="text-lg font-semibold">Navigation</div>
+                                <div class="text-sm opacity-80">6 Layout Systems</div>
+                                <div class="text-xs mt-1">3D Grid • Carousel • Portal</div>
+                            </div>
+                        </div>
+                        <div class="grid-item category-tile relative w-full h-full rounded-lg" onclick="openCategory('forms')">
+                            <div class="category-overlay">
+                                <div class="text-lg font-semibold">Forms</div>
+                                <div class="text-sm opacity-80">5 Onboarding Flows</div>
+                                <div class="text-xs mt-1">Multi-Step • Animated</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Row 2 - Additional category tile -->
+                    <div class="grid gap-4 grid-cols-7 row-2">
+                        <div class="grid-item category-tile relative w-full h-full rounded-lg" onclick="openCategory('pricing')">
+                            <div class="category-overlay">
+                                <div class="text-lg font-semibold">Pricing & Business</div>
+                                <div class="text-sm opacity-80">4 Commercial Components</div>
+                                <div class="text-xs mt-1">Plans • Timeline • Effects</div>
+                            </div>
+                        </div>
+                        <!-- Empty slots for visual balance -->
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-20" style="background: linear-gradient(45deg, #333, #555);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-20" style="background: linear-gradient(45deg, #333, #555);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-20" style="background: linear-gradient(45deg, #333, #555);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-20" style="background: linear-gradient(45deg, #333, #555);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-20" style="background: linear-gradient(45deg, #333, #555);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-20" style="background: linear-gradient(45deg, #333, #555);"></div>
+                    </div>
+                    <!-- Row 3 & 4 - Empty for visual balance -->
+                    <div class="grid gap-4 grid-cols-7 row-3">
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-10" style="background: linear-gradient(45deg, #222, #444);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-10" style="background: linear-gradient(45deg, #222, #444);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-10" style="background: linear-gradient(45deg, #222, #444);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-10" style="background: linear-gradient(45deg, #222, #444);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-10" style="background: linear-gradient(45deg, #222, #444);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-10" style="background: linear-gradient(45deg, #222, #444);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-10" style="background: linear-gradient(45deg, #222, #444);"></div>
+                    </div>
+                    <div class="grid gap-4 grid-cols-7 row-4">
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-5" style="background: linear-gradient(45deg, #111, #333);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-5" style="background: linear-gradient(45deg, #111, #333);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-5" style="background: linear-gradient(45deg, #111, #333);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-5" style="background: linear-gradient(45deg, #111, #333);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-5" style="background: linear-gradient(45deg, #111, #333);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-5" style="background: linear-gradient(45deg, #111, #333);"></div>
+                        <div class="grid-item relative w-full h-full rounded-lg opacity-5" style="background: linear-gradient(45deg, #111, #333);"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Asset Grid for each category -->
+            <div id="assetGrid" class="asset-grid perspective w-full h-full flex items-center justify-center">
+                <div class="gap-3 flex-none relative w-[200vw] h-[200vh] grid grid-rows-8 grid-cols-1 perspective-inner z-20" id="assetGridContainer">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </div>    <script>
+        // Asset categorization data
+        const categories = {
+            authentication: {
+                name: "Authentication & Login",
+                description: "Elite glassmorphic login interfaces with enterprise-grade security",
+                assets: [
+                    "Glassmorphism Sign-In Interface.html",
+                    "Enterprise Login Interface.html", 
+                    "Login Interface with Animated Background.html",
+                    "Login Interface with Animated Button.html",
+                    "Secure Two-Column Login Form.html",
+                    "User Sign-In Interface.html",
+                    "User Account Registration Interface.html",
+                    "Signup Card with Animated Visuals.html"
+                ]
+            },
+            hero: {
+                name: "Hero Sections & Landing Pages", 
+                description: "AI-powered landing pages with revolutionary visual experiences",
+                assets: [
+                    "AI Logistics Hero Section.html",
+                    "AI Platform Landing Page UI.html",
+                    "Developer Portfolio Landing Page.html",
+                    "Interactive Hero Section with Stats.html",
+                    "Minimalist Dark Mode Landing Page.html",
+                    "Music Visualizer Hero Section.html",
+                    "Scroll-Driven Landing Interface.html"
+                ]
+            },
+            cards: {
+                name: "Cards & Components",
+                description: "Interactive components with advanced animations and functionality", 
+                assets: [
+                    "Chat Metrics Summary Card.html",
+                    "Floating Glassmorphic Testimonial Cards.html",
+                    "Glass-Effect Stats Card UI.html", 
+                    "Interactive Animated Note Card UI.html",
+                    "Interactive Database Schema Card.html",
+                    "Interactive Draggable Cards UI.html",
+                    "Task Status Card Stack UI.html",
+                    "Team Member Profile Cards UI.html",
+                    "Scrolling Stacked Card Interface.html",
+                    "Interactive Camping Experience Selector.html",
+                    "Trading Intelligence Accordion UI.html",
+                    "Platform Features Showcase.html"
+                ]
+            },
+            backgrounds: {
+                name: "Backgrounds & Effects",
+                description: "WebGL shaders and neural network visualizations with elite performance",
+                assets: [
+                    "Animated Aurora Light Effect UI.html",
+                    "Animated Grid Background UI.html", 
+                    "blue-neural-background.html",
+                    "Interactive Shader Background UI.html",
+                    "Interactive Tunnel Shader Effect.html",
+                    "Shader-Based Aurora Background.html",
+                    "WebGL Animated Aurora Background.html",
+                    "WebGL Caustic Shader Background.html"
+                ]
+            },
+            dashboards: {
+                name: "Dashboards & Admin",
+                description: "3D interactive dashboards with comprehensive analytics and control",
+                assets: [
+                    "3D Interactive Design Studio UI.html",
+                    "Enterprise Infrastructure Overview.html",
+                    "Full Stack Developer Portfolio UI.html", 
+                    "Interactive Database Schema UI.html",
+                    "Minimalist Digital Studio UI.html",
+                    "Quantum Design Agency UI.html",
+                    "Unified Project Management Interface.html",
+                    "User Account Settings Panel.html"
+                ]
+            },
+            navigation: {
+                name: "Navigation & Layout",
+                description: "Advanced layout systems with 3D perspective and interactive elements",
+                assets: [
+                    "3D Perspective Grid with Flip Cards.html",
+                    "Horizontal Scroll Panel Interface.html",
+                    "Sidebar Navigation with Animated Grid.html",
+                    "Interactive Digital Portal UI.html", 
+                    "Full-Screen Black & White Image Carousel.html",
+                    "Mobile Night Sky Explorer UI.html"
+                ]
+            },
+            forms: {
+                name: "Forms & Onboarding", 
+                description: "Multi-step onboarding flows with intelligent user experience",
+                assets: [
+                    "Community Network Sign Up Interface.html",
+                    "Multi-Step Onboarding Interface.html",
+                    "Retreat Features Showcase.html",
+                    "Remote Work Multi-Section UI.html",
+                    "Technical Blog Post Layout.html"
+                ]
+            },
+            pricing: {
+                name: "Pricing & Business",
+                description: "Commercial interfaces with animated pricing and timeline components", 
+                assets: [
+                    "Pricing Plans for Creative Services.html",
+                    "Pricing Plans with Animated Background.html",
+                    "Release History Timeline and Features.html",
+                    "Neon Purple Hover Button Effect.html"
+                ]
+            }
+        };
+
+        let currentCategory = null;
+
+        function openCategory(categoryKey) {
+            currentCategory = categoryKey;
+            const category = categories[categoryKey];
+            
+            // Hide categories grid and show asset grid
+            document.getElementById('categoriesGrid').style.display = 'none';
+            document.getElementById('assetGrid').classList.add('active');
+            document.getElementById('backButton').classList.add('active');
+            
+            // Update header
+            const header = document.querySelector('.fixed.top-0 .text-center');
+            header.innerHTML = `
+                <h1 class="text-4xl font-bold brand-gradient mb-2">${category.name}</h1>
+                <p class="text-gray-300 text-sm">${category.description}</p>
+                <p class="text-gray-400 text-xs mt-1">${category.assets.length} Assets • Elite Performance • aegntic.ai</p>
+            `;
+            
+            // Populate asset grid
+            populateAssetGrid(category.assets);
+        }
+
+        function populateAssetGrid(assets) {
+            const container = document.getElementById('assetGridContainer');
+            container.innerHTML = '';
+            
+            // Calculate grid layout - use up to 8 rows and 7 columns
+            const itemsPerRow = 7;
+            const totalRows = Math.ceil(assets.length / itemsPerRow);
+            
+            for (let row = 0; row < Math.min(totalRows, 8); row++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = `grid gap-3 grid-cols-7 row-${(row % 4) + 1}`;
+                
+                for (let col = 0; col < itemsPerRow; col++) {
+                    const assetIndex = row * itemsPerRow + col;
+                    const asset = assets[assetIndex];
+                    
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'grid-item relative w-full h-full overflow-hidden rounded-lg';
+                    
+                    if (asset) {
+                        const thumbnailPath = `thumbnails/${asset.replace('.html', '.png')}`;
+                        const assetName = asset.replace('.html', '').replace(/([A-Z])/g, ' $1').trim();
+                        
+                        itemDiv.style.backgroundImage = `url('${thumbnailPath}')`;
+                        itemDiv.style.backgroundSize = 'cover';
+                        itemDiv.style.backgroundPosition = 'center';
+                        itemDiv.onclick = () => openAssetModal(asset);
+                        
+                        // Add overlay with asset name
+                        itemDiv.innerHTML = `
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                <div class="absolute bottom-0 left-0 right-0 p-3">
+                                    <div class="text-white text-sm font-medium">${assetName}</div>
+                                    <div class="text-gray-300 text-xs">Click to preview</div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // Empty slot
+                        itemDiv.style.background = 'linear-gradient(45deg, #333, #555)';
+                        itemDiv.style.opacity = '0.2';
+                    }
+                    
+                    rowDiv.appendChild(itemDiv);
+                }
+                
+                container.appendChild(rowDiv);
+            }
+        }
+
+        function backToCategories() {
+            document.getElementById('categoriesGrid').style.display = 'block';
+            document.getElementById('assetGrid').classList.remove('active');
+            document.getElementById('backButton').classList.remove('active');
+            
+            // Restore header
+            const header = document.querySelector('.fixed.top-0 .text-center');
+            header.innerHTML = `
+                <h1 class="text-4xl font-bold brand-gradient mb-2">ProjectAssets</h1>
+                <p class="text-gray-300 text-sm">Elite UI Component Gallery • 4site.pro/assetsgal</p>
+                <p class="text-gray-400 text-xs mt-1">58 Premium Assets • 8 Categories • Built by aegntic.ai</p>
+            `;
+            
+            currentCategory = null;
+        }
+
+        function openAssetModal(assetFile) {
+            const modal = document.getElementById('flipCardModal');
+            const iframe = document.getElementById('modalContent');
+            
+            iframe.src = assetFile;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('flipCardModal');
+            const iframe = document.getElementById('modalContent');
+            
+            modal.classList.remove('active');
+            setTimeout(() => {
+                iframe.src = '';
+            }, 300);
+        }
+
+        // Event listeners
+        document.getElementById('backButton').addEventListener('click', backToCategories);
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Close modal on outside click
+        document.getElementById('flipCardModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeModal();
+            }
+        });
+
+        // Analytics tracking (placeholder)
+        function trackAssetView(assetName) {
+            console.log(`Asset viewed: ${assetName}`);
+            // Add actual analytics tracking here
+        }
+
+        function trackCategoryView(categoryName) {
+            console.log(`Category viewed: ${categoryName}`);
+            // Add actual analytics tracking here
+        }
+    </script>
+</body>
+</html>

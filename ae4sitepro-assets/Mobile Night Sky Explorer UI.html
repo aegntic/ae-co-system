@@ -1,0 +1,188 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StarGaze - Night Sky Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
+                    colors: { brand: '#000000' },
+                    borderRadius: { '54': '54px' }
+                }
+            }
+        }
+    </script>
+    <style>
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border-radius: 46px;
+            overflow: hidden;
+            position: relative;
+        }
+        .orb-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .content-overlay {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.8) 100%);
+        }
+        .slide-up {
+            animation: slideUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .slide-up.delay-1 { animation-delay: 0.2s; }
+        .slide-up.delay-2 { animation-delay: 0.4s; }
+        .slide-up.delay-3 { animation-delay: 0.6s; }
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .twinkle {
+            animation: twinkle 2s infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+    </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;family=Inter&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;family=Inter&amp;display=swap" rel="stylesheet">
+</head>
+<body class="antialiased flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-neutral-900 pt-8 pr-8 pb-8 pl-8">
+
+    <!-- Black iPhone Frame -->
+    <div class="rounded-[54px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8),0_30px_60px_-30px_rgba(0,0,0,0.6),inset_0_-2px_6px_0_rgba(255,255,255,0.1)] bg-black p-2 w-[375px] h-[812px]">
+        <div class="phone-screen">
+            
+            <!-- Spline Orb Background -->
+            <div class="orb-background">
+                <iframe src="https://my.spline.design/reactiveorb-s0GzgSco0uSVSXvwMHuJvPQs/" frameborder="0" width="100%" height="100%"></iframe>
+            </div>
+            
+            <!-- Content Overlay -->
+            <div class="content-overlay">
+                
+                <!-- Status Bar -->
+                <div class="flex items-center justify-between px-6 pt-4 pb-2 text-white text-sm">
+                    <div class="flex items-center gap-1">
+                        <div class="w-1 h-1 bg-white rounded-full twinkle"></div>
+                        <div class="w-1 h-1 bg-white rounded-full twinkle" style="animation-delay: 0.5s;"></div>
+                        <div class="w-1 h-1 bg-white/50 rounded-full twinkle" style="animation-delay: 1s;"></div>
+                        <span class="ml-1 text-xs">Verizon</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="text-xs">9:41</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
+                            <rect x="1" y="3" width="15" height="6" rx="2" stroke="white" stroke-width="1"></rect>
+                            <rect x="17" y="5" width="1" height="2" rx="0.5" fill="white"></rect>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="flex-1 flex flex-col justify-between px-6 py-8">
+                    
+                    <!-- Header Section -->
+                    <div class="text-center mt-12">
+                        <div class="slide-up mb-6">
+                            <div class="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-4 border border-white/5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="wand" class="lucide lucide-wand lucide-save lucide-settings lucide-wand-sparkles twinkle w-[32px] h-[32px]" style="color: rgb(255, 255, 255);"><path d="M15 4V2"></path><path d="M15 16v-2"></path><path d="M8 9h2"></path><path d="M20 9h2"></path><path d="M17.8 11.8 19 13"></path><path d="M15 9h.01"></path><path d="M17.8 6.2 19 5"></path><path d="m3 21 9-9"></path><path d="M12.2 6.2 11 5"></path></svg>
+                            </div>
+                            <h1 class="text-3xl font-bold text-white mb-2">StarGaze</h1>
+                            <p class="text-gray-300 text-lg">Explore the cosmos tonight</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature Cards -->
+                    <div class="space-y-4 mt-8">
+                        <div class="slide-up delay-1 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="twinkle">
+                                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-white font-semibold">Night Sky Map</h3>
+                                    <p class="text-sm text-gray-400">Real-time constellation tracking</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="slide-up delay-2 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="twinkle" style="animation-delay: 0.7s;">
+                                        <circle cx="8" cy="8" r="6"></circle>
+                                        <path d="m13.7 13.7 4.3 4.3"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-white font-semibold">Planet Finder</h3>
+                                    <p class="text-gray-400 text-sm">Locate planets and satellites</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="slide-up delay-3 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="twinkle" style="animation-delay: 1.2s;">
+                                        <path d="M8 2v4"></path>
+                                        <path d="M16 2v4"></path>
+                                        <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                                        <path d="M3 10h18"></path>
+                                        <path d="m9 16 2 2 4-4"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-white">Astronomy Events</h3>
+                                    <p class="text-gray-400 text-sm">Never miss celestial shows</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Bottom Actions -->
+                    <div class="space-y-4 mt-8">
+                        <button class="w-full bg-white text-black font-semibold py-4 rounded-2xl text-lg hover:bg-gray-200 transition-all duration-200 shadow-lg">
+                            Start Stargazing
+                        </button>
+                        <button class="w-full bg-white/10 backdrop-blur-sm text-white font-semibold py-4 rounded-2xl border border-white/10 hover:bg-white/20 transition-all duration-200">
+                            Sign In
+                        </button>
+                        
+                        <!-- Page Indicators -->
+                        <div class="flex justify-center gap-2 pt-4">
+                            <div class="w-8 h-1 bg-white rounded-full"></div>
+                            <div class="w-1 h-1 bg-white/40 rounded-full twinkle"></div>
+                            <div class="w-1 h-1 bg-white/40 rounded-full twinkle" style="animation-delay: 0.3s;"></div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body></html>

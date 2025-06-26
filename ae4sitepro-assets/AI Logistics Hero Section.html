@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural - AI-Powered Logistics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark': '#000000',
+                        'accent': '#dc2626',
+                        'light': '#efeeec'
+                    },
+                    fontFamily: {
+                        'mono': ['ui-monospace', 'SFMono-Regular', 'Monaco', 'Consolas', 'monospace'],
+                        'sans': ['ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --color-primary: #dc2626;
+            --color-dark: #000000;
+            --color-light: #efeeec;
+            --gap-xxlarge: 4rem;
+            --gap-tiny: 0.5rem;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            background-color: var(--color-dark);
+            color: var(--color-light);
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background-color: var(--color-primary);
+            color: var(--color-light);
+        }
+
+        .h-display {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 0.9;
+        }
+
+        .p-reg {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        .eyebrow {
+            font-family: ui-monospace, SFMono-Regular, Monaco, Consolas, monospace;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-primary);
+        }
+
+        .home-hero__inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--gap-xxlarge);
+            min-height: 100vh;
+            align-items: center;
+            padding: 10em 2rem 2rem;
+            position: relative;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: var(--color-primary);
+            color: var(--color-light);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .button:hover {
+            transform: scale(0.95);
+        }
+
+        .button.is--secondary {
+            background-color: transparent;
+            color: var(--color-light);
+            border: 1px solid var(--color-light);
+        }
+
+        .button.is--secondary:hover {
+            background-color: var(--color-light);
+            color: var(--color-dark);
+        }
+
+        .single-letter {
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .button:hover .single-letter {
+            animation: letterJump 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes letterJump {
+            50% { transform: translateY(-1.25em); }
+        }
+
+        .mask {
+            overflow: clip;
+        }
+
+        .single-line {
+            transform: translate3d(0, 120%, 0);
+            animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .single-line:nth-child(2) { animation-delay: 0.1s; }
+        .single-line:nth-child(3) { animation-delay: 0.2s; }
+
+        @keyframes slideUp {
+            to { transform: translate3d(0, 0, 0); }
+        }
+
+        .hero-visual {
+            position: relative;
+            background: #111111;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 4rem 2rem;
+        }
+
+        .feature-card {
+            background: #111111;
+            border: 1px solid rgba(239, 238, 236, 0.2);
+            padding: 2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--color-primary);
+            background: #1a0000;
+        }
+
+        .icon-container {
+            width: 48px;
+            height: 48px;
+            background: rgba(220, 38, 38, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(239, 238, 236, 0.1);
+            margin: 8rem 0;
+        }
+
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(239, 238, 236, 0.1);
+        }
+
+        @media (max-width: 991px) {
+            .home-hero__inner {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 8em 2rem 2rem;
+            }
+            
+            .h-display {
+                font-size: clamp(2.5rem, 6vw, 6rem);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .home-hero__inner {
+                padding: 6em 1rem 1rem;
+            }
+            
+            .h-display {
+                font-size: clamp(2rem, 5vw, 4rem);
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 479px) {
+            .home-hero__inner {
+                gap: 1rem;
+            }
+            
+            .hidden-mobile {
+                display: none;
+            }
+        }
+
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(239, 238, 236, 0.1);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--color-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--color-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--color-primary);
+        }
+
+        .metric-display {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            opacity: 0.7;
+        }
+
+        .center-visual {
+            position: relative;
+            background: #111111;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            aspect-ratio: 16/9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 4rem;
+            text-align: center;
+        }
+
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(220, 38, 38, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(220, 38, 38, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        .visual-content {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <div class="nav-inner">
+            <div class="logo">Neural</div>
+            <div class="nav-links">
+                <a href="#hero" class="nav-link">Home</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#solutions" class="nav-link">Solutions</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="#" class="button">
+                    <span class="single-letter">G</span><span class="single-letter">e</span><span class="single-letter">t</span>
+                    <span class="single-letter">&nbsp;</span>
+                    <span class="single-letter">S</span><span class="single-letter">t</span><span class="single-letter">a</span><span class="single-letter">r</span><span class="single-letter">t</span><span class="single-letter">e</span><span class="single-letter">d</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="home-hero__inner">
+            <div>
+                <div class="eyebrow mask">
+                    <div class="single-line">Next-Gen Logistics</div>
+                </div>
+                <h1 class="h-display mask">
+                    <div class="single-line">AI-Powered</div>
+                    <div class="single-line">Supply</div>
+                    <div class="single-line">Revolution</div>
+                </h1>
+                <div style="margin-top: 2rem; margin-bottom: 3rem;">
+                    <p class="p-reg">
+                        Transform your supply chain with intelligent automation, predictive analytics, and real-time optimization that adapts to market changes instantly.
+                    </p>
+                </div>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="#" class="button">
+                        <span class="single-letter">S</span><span class="single-letter">t</span><span class="single-letter">a</span><span class="single-letter">r</span><span class="single-letter">t</span>
+                        <span class="single-letter">&nbsp;</span>
+                        <span class="single-letter">F</span><span class="single-letter">r</span><span class="single-letter">e</span><span class="single-letter">e</span>
+                        <span class="single-letter">&nbsp;</span>
+                        <span class="single-letter">T</span><span class="single-letter">r</span><span class="single-letter">i</span><span class="single-letter">a</span><span class="single-letter">l</span>
+                    </a>
+                    <a href="#" class="button is--secondary">
+                        <span class="single-letter">W</span><span class="single-letter">a</span><span class="single-letter">t</span><span class="single-letter">c</span><span class="single-letter">h</span>
+                        <span class="single-letter">&nbsp;</span>
+                        <span class="single-letter">D</span><span class="single-letter">e</span><span class="single-letter">m</span><span class="single-letter">o</span>
+                    </a>
+                </div>
+                <div class="metric-display">
+                    <div class="metric">
+                        <div class="metric-value">99.9%</div>
+                        <div class="metric-label">Accuracy</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">-40%</div>
+                        <div class="metric-label">Costs</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">24/7</div>
+                        <div class="metric-label">Monitoring</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="grid-pattern"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Features Section -->
+    <section id="features" style="padding-top: 8rem;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <div class="eyebrow">Intelligent Features</div>
+                <h2 class="h-display" style="font-size: clamp(2rem, 5vw, 4rem); margin-top: 1rem;">
+                    Cutting-edge Technology
+                </h2>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="icon-container">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary);">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <circle cx="12" cy="12" r="4"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--color-primary);">Predictive Analytics</h3>
+                    <p class="p-reg">Advanced AI algorithms predict demand patterns and optimize inventory levels automatically.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="icon-container">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary);">
+                            <polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--color-primary);">Real-time Tracking</h3>
+                    <p class="p-reg">Monitor your entire supply chain in real-time with instant alerts and updates.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="icon-container">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary);">
+                            <path d="M17 6.1H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V8.1a2 2 0 0 0-2-2z"/>
+                            <path d="M22 4v5l-7-3 7-2z"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--color-primary);">Smart Integration</h3>
+                    <p class="p-reg">Seamlessly connect with existing systems and automate workflow processes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="divider"></div>
+
+    <!-- Solutions Section -->
+    <section id="solutions" style="padding: 4rem 0;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
+            <div class="home-hero__inner" style="min-height: auto; padding: 0;">
+                <div>
+                    <div class="eyebrow">Enterprise Solutions</div>
+                    <h2 class="h-display" style="font-size: clamp(2rem, 5vw, 4rem); margin-top: 1rem; margin-bottom: 2rem;">
+                        Global Network Optimization
+                    </h2>
+                    <p class="p-reg" style="margin-bottom: 2rem;">
+                        Leverage machine learning to optimize routes, reduce costs, and improve delivery times across your global network.
+                    </p>
+                    <ul style="list-style: none; padding: 0; margin-bottom: 3rem;">
+                        <li style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <span style="width: 8px; height: 8px; background: var(--color-primary); margin-right: 1rem;"></span>
+                            Dynamic route optimization
+                        </li>
+                        <li style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <span style="width: 8px; height: 8px; background: var(--color-primary); margin-right: 1rem;"></span>
+                            Demand forecasting
+                        </li>
+                        <li style="display: flex; align-items: center;">
+                            <span style="width: 8px; height: 8px; background: var(--color-primary); margin-right: 1rem;"></span>
+                            Risk assessment
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="center-visual">
+                    <div class="grid-pattern"></div>
+                    <div class="visual-content">
+                        <div style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">24/7 Global Monitoring</div>
+                        <div class="p-reg">Real-time visibility across continents</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="divider"></div>
+
+    <!-- Contact Section -->
+    <section id="contact" style="padding: 4rem 2rem; text-align: center;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <div class="eyebrow">Get Started</div>
+            <h2 class="h-display" style="font-size: clamp(2rem, 5vw, 4rem); margin: 1rem 0 2rem;">
+                Ready to Transform Your Supply Chain?
+            </h2>
+            <p class="p-reg" style="margin-bottom: 3rem;">
+                Join thousands of companies already using Neural to optimize their operations
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="#" class="button">
+                    <span class="single-letter">S</span><span class="single-letter">t</span><span class="single-letter">a</span><span class="single-letter">r</span><span class="single-letter">t</span>
+                    <span class="single-letter">&nbsp;</span>
+                    <span class="single-letter">F</span><span class="single-letter">r</span><span class="single-letter">e</span><span class="single-letter">e</span>
+                    <span class="single-letter">&nbsp;</span>
+                    <span class="single-letter">T</span><span class="single-letter">r</span><span class="single-letter">i</span><span class="single-letter">a</span><span class="single-letter">l</span>
+                </a>
+                <a href="#" class="button is--secondary">
+                    <span class="single-letter">S</span><span class="single-letter">c</span><span class="single-letter">h</span><span class="single-letter">e</span><span class="single-letter">d</span><span class="single-letter">u</span><span class="single-letter">l</span><span class="single-letter">e</span>
+                    <span class="single-letter">&nbsp;</span>
+                    <span class="single-letter">D</span><span class="single-letter">e</span><span class="single-letter">m</span><span class="single-letter">o</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add staggered animation delays to buttons
+        document.querySelectorAll('.button').forEach(button => {
+            const letters = button.querySelectorAll('.single-letter');
+            letters.forEach((letter, index) => {
+                letter.style.animationDelay = `${index * 0.05}s`;
+            });
+        });
+    </script>
+</body>
+</html>

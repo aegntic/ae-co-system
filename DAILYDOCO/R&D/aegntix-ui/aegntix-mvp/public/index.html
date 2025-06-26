@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AegntiX - Orchestrated Reality Sandbox</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00ff88, #0088ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        button {
+            background: #1e3a5f;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            background: #2a4a7f;
+            transform: translateY(-1px);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .main {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background: #111;
+            border-right: 1px solid #333;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+        
+        .scenario-list {
+            margin-top: 1rem;
+        }
+        
+        .scenario-item {
+            background: #1a1a1a;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .scenario-item:hover {
+            background: #2a2a2a;
+        }
+        
+        .canvas {
+            flex: 1;
+            position: relative;
+            background: #0f0f0f;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .timeline-controls {
+            background: #1a1a1a;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid #333;
+        }
+        
+        .timeline-bar {
+            flex: 1;
+            height: 40px;
+            background: #222;
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .timeline-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88 0%, #0088ff 100%);
+            width: 0%;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        
+        .aegnt-view {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .aegnt-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .aegnt-card.active {
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+        
+        .aegnt-name {
+            font-weight: bold;
+            color: #00ff88;
+            margin-bottom: 0.5rem;
+        }
+        
+        .aegnt-action {
+            color: #ccc;
+            font-style: italic;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: #1a1a1a;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #aaa;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 0.5rem;
+            background: #222;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 4px;
+        }
+        
+        .status {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            background: #1a1a1a;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ff4444;
+        }
+        
+        .status-dot.connected {
+            background: #00ff88;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">AegntiX</div>
+        <div class="controls">
+            <button id="newScenarioBtn">New Scenario</button>
+            <button id="pauseBtn" disabled>Pause</button>
+            <button id="branchBtn" disabled>Branch Timeline</button>
+            <button id="injectContextBtn" disabled>Inject Context</button>
+        </div>
+    </div>
+    
+    <div class="main">
+        <div class="sidebar">
+            <h3>Scenarios</h3>
+            <div class="scenario-list" id="scenarioList">
+                <div class="scenario-item">
+                    <div><strong>Startup Pitch</strong></div>
+                    <div style="font-size: 0.8rem; color: #888;">Founder meets Investor</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="canvas">
+            <div class="timeline-controls">
+                <button id="playBtn">▶️</button>
+                <div class="timeline-bar" id="timelineBar">
+                    <div class="timeline-progress" id="timelineProgress"></div>
+                </div>
+                <span id="timeDisplay">00:00</span>
+            </div>
+            
+            <div class="aegnt-view" id="aegntView">
+                <div style="text-align: center; color: #666; margin-top: 4rem;">
+                    Select a scenario to begin
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="status">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">Connecting...</span>
+    </div>
+    
+    <div class="modal" id="contextModal">
+        <div class="modal-content">
+            <h3>Inject Context</h3>
+            <div class="form-group">
+                <label>Select Aegnt</label>
+                <select id="aegntSelect" style="width: 100%; padding: 0.5rem; background: #222; border: 1px solid #444; color: white;">
+                    <option>Select an aegnt...</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Context Information</label>
+                <textarea id="contextInput" rows="4" placeholder="Add new information for the aegnt..."></textarea>
+            </div>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                <button onclick="closeContextModal()">Cancel</button>
+                <button onclick="submitContext()" style="background: #00ff88; color: black;">Inject</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

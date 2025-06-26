@@ -1,0 +1,15 @@
+services:
+  web:
+    build: .
+    container_name: intelligent-repo-to-site-web
+    ports:
+      - "3100:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - VITE_GEMINI_API_KEY=${VITE_GEMINI_API_KEY:-PLACEHOLDER_API_KEY}
+      - VITE_SUPABASE_URL=${VITE_SUPABASE_URL:-http://localhost:5433}
+      - VITE_SUPABASE_ANON_KEY=${VITE_SUPABASE_ANON_KEY:-test-key-for-local-validation}
+    stdin_open: true
+    tty: true
+    restart: unless-stopped

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AE4SitePro Assets Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .thumbnail-card {
+            transition: all 0.3s ease;
+            cursor: grab;
+        }
+        .thumbnail-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .thumbnail-card:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+        .drag-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .search-highlight {
+            background: linear-gradient(120deg, #a855f7 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                        AE4SitePro Assets Gallery
+                    </h1>
+                    <p class="text-gray-400 text-sm mt-1">Drag and drop UI components into your projects</p>
+                </div>
+                
+                <!-- Search -->
+                <div class="flex items-center space-x-4">
+                    <input 
+                        type="text" 
+                        id="search" 
+                        placeholder="Search assets..."
+                        class="bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 w-64 focus:outline-none focus:border-purple-500"
+                    >
+                    <div class="text-sm text-gray-400" id="asset-count">
+                        Loading assets...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Gallery Grid -->
+    <main class="container mx-auto px-6 py-8">
+        <div id="gallery-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Assets will be loaded here -->
+        </div>
+        
+        <!-- No results message -->
+        <div id="no-results" class="hidden text-center py-16">
+            <div class="text-gray-400 text-lg">No assets found matching your search</div>
+        </div>
+    </main>
+
+    <!-- Asset Preview Modal -->
+    <div id="preview-modal" class="drag-overlay">
+        <div class="bg-gray-800 rounded-lg p-6 max-w-4xl max-h-[90vh] overflow-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modal-title" class="text-xl font-semibold"></h3>
+                <button id="close-modal" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <div class="space-y-4">
+                <img id="modal-image" class="w-full rounded-lg" alt="Asset preview">
+                <div class="flex space-x-4">
+                    <button id="open-asset" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg flex items-center space-x-2">
+                        <span>Open Asset</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </button>
+                    <button id="copy-path" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg flex items-center space-x-2">
+                        <span>Copy Path</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class AssetGallery {
+            constructor() {
+                this.assets = [];
+                this.filteredAssets = [];
+                this.currentAsset = null;
+                
+                this.init();
+            }
+            
+            async init() {
+                await this.loadAssets();
+                this.setupEventListeners();
+                this.renderGallery();
+            }
+            
+            async loadAssets() {
+                try {
+                    // Get the list of assets dynamically
+                    const assetNames = [                        "3D Interactive Design Studio UI",
+                        "3D Perspective Grid with Flip Cards",
+                        "AI Logistics Hero Section",
+                        "AI Platform Landing Page UI",
+                        "Animated Aurora Light Effect UI",
+                        "Animated Grid Background UI",
+                        "blue-neural-background",
+                        "Chat Metrics Summary Card",
+                        "Community Network Sign Up Interface",
+                        "Developer Portfolio Landing Page",
+                        "Enterprise Infrastructure Overview",
+                        "Enterprise Login Interface",
+                        "Floating Glassmorphic Testimonial Cards",
+                        "Full-Screen Black & White Image Carousel",
+                        "Full Stack Developer Portfolio UI",
+                        "Glass-Effect Stats Card UI",
+                        "Glassmorphism Sign-In Interface (1)",
+                        "Glassmorphism Sign-In Interface",
+                        "Horizontal Scroll Panel Interface",
+                        "Interactive Animated Note Card UI",
+                        "Interactive Camping Experience Selector",
+                        "Interactive Database Schema Card",
+                        "Interactive Database Schema UI",
+                        "Interactive Digital Portal UI",
+                        "Interactive Draggable Cards UI (1)",
+                        "Interactive Draggable Cards UI",
+                        "Interactive Hero Section with Stats",
+                        "Interactive Shader Background UI",
+                        "Interactive Tunnel Shader Effect",
+                        "Login Interface with Animated Background",
+                        "Login Interface with Animated Button",
+                        "Minimalist Dark Mode Landing Page",
+                        "Minimalist Digital Studio UI",
+                        "Mobile Night Sky Explorer UI",
+                        "Multi-Step Onboarding Interface",
+                        "Music Visualizer Hero Section",
+                        "Neon Purple Hover Button Effect",
+                        "Platform Features Showcase",
+                        "Pricing Plans for Creative Services",
+                        "Pricing Plans with Animated Background",
+                        "Quantum Design Agency UI",
+                        "Release History Timeline and Features (1)",
+                        "Release History Timeline and Features",
+                        "Remote Work Multi-Section UI",
+                        "Retreat Features Showcase",
+                        "Scroll-Driven Landing Interface",
+                        "Scrolling Stacked Card Interface",
+                        "Secure Two-Column Login Form",
+                        "Shader-Based Aurora Background",
+                        "Sidebar Navigation with Animated Grid",
+                        "Signup Card with Animated Visuals",
+                        "Task Status Card Stack UI",
+                        "Team Member Profile Cards UI",
+                        "Technical Blog Post Layout",
+                        "Trading Intelligence Accordion UI",
+                        "Unified Project Management Interface",
+                        "User Account Registration Interface",
+                        "User Account Settings Panel",
+                        "User Sign-In Interface",
+                        "WebGL Animated Aurora Background",
+                        "WebGL Caustic Shader Background"
+                    ];
+                    
+                    this.assets = assetNames.map(name => ({
+                        name,
+                        thumbnail: `../thumbnails/${name}.png`,
+                        htmlFile: `../${name}.html`,
+                        category: this.categorizeAsset(name)
+                    }));
+                    
+                    this.filteredAssets = [...this.assets];
+                } catch (error) {
+                    console.error('Failed to load assets:', error);
+                }
+            }
+            
+            categorizeAsset(name) {
+                const categories = {
+                    'Login': /login|sign-in|registration|signup|auth/i,
+                    'Dashboard': /dashboard|admin|panel|interface/i,
+                    'Hero': /hero|landing|portfolio/i,
+                    'Cards': /card|testimonial|profile/i,
+                    'Animation': /animated|shader|webgl|aurora|tunnel/i,
+                    'Forms': /form|input|onboarding/i,
+                    'Navigation': /nav|sidebar|menu/i,
+                    'Background': /background|gradient|neural/i
+                };
+                
+                for (const [category, regex] of Object.entries(categories)) {
+                    if (regex.test(name)) return category;
+                }
+                return 'Other';
+            }
+            
+            setupEventListeners() {
+                // Search functionality
+                const searchInput = document.getElementById('search');
+                searchInput.addEventListener('input', (e) => {
+                    this.filterAssets(e.target.value);
+                });
+                
+                // Modal controls
+                document.getElementById('close-modal').addEventListener('click', () => {
+                    this.closeModal();
+                });
+                
+                document.getElementById('preview-modal').addEventListener('click', (e) => {
+                    if (e.target === e.currentTarget) {
+                        this.closeModal();
+                    }
+                });
+                
+                // Asset actions
+                document.getElementById('open-asset').addEventListener('click', () => {
+                    if (this.currentAsset) {
+                        window.open(this.currentAsset.htmlFile, '_blank');
+                    }
+                });
+                
+                document.getElementById('copy-path').addEventListener('click', () => {
+                    if (this.currentAsset) {
+                        navigator.clipboard.writeText(this.currentAsset.htmlFile);
+                        this.showToast('Path copied to clipboard!');
+                    }
+                });
+            }
+            
+            filterAssets(query) {
+                if (!query.trim()) {
+                    this.filteredAssets = [...this.assets];
+                } else {
+                    this.filteredAssets = this.assets.filter(asset =>
+                        asset.name.toLowerCase().includes(query.toLowerCase()) ||
+                        asset.category.toLowerCase().includes(query.toLowerCase())
+                    );
+                }
+                this.renderGallery();
+            }
+            
+            renderGallery() {
+                const grid = document.getElementById('gallery-grid');
+                const noResults = document.getElementById('no-results');
+                const assetCount = document.getElementById('asset-count');
+                
+                // Update count
+                assetCount.textContent = `${this.filteredAssets.length} assets`;
+                
+                if (this.filteredAssets.length === 0) {
+                    grid.innerHTML = '';
+                    noResults.classList.remove('hidden');
+                    return;
+                }
+                
+                noResults.classList.add('hidden');
+                
+                grid.innerHTML = this.filteredAssets.map(asset => `
+                    <div class="thumbnail-card bg-gray-800 rounded-lg overflow-hidden border border-gray-700 hover:border-purple-500"
+                         draggable="true"
+                         data-asset='${JSON.stringify(asset)}'>
+                        <div class="aspect-video overflow-hidden">
+                            <img src="${asset.thumbnail}" 
+                                 alt="${asset.name}"
+                                 class="w-full h-full object-cover"
+                                 loading="lazy">
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs px-2 py-1 bg-purple-600 rounded-full">${asset.category}</span>
+                                <button class="text-gray-400 hover:text-white" onclick="gallery.openModal('${asset.name}')">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <h3 class="font-semibold text-sm mb-1 line-clamp-2">${asset.name}</h3>
+                            <p class="text-xs text-gray-400">Drag to use in project</p>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Add drag functionality
+                this.setupDragAndDrop();
+            }
+            
+            setupDragAndDrop() {
+                const cards = document.querySelectorAll('.thumbnail-card');
+                
+                cards.forEach(card => {
+                    card.addEventListener('dragstart', (e) => {
+                        const asset = JSON.parse(card.dataset.asset);
+                        
+                        // Set drag data
+                        e.dataTransfer.setData('text/html', `<link rel="asset" href="${asset.htmlFile}" data-name="${asset.name}">`);
+                        e.dataTransfer.setData('text/plain', asset.htmlFile);
+                        e.dataTransfer.effectAllowed = 'copy';
+                        
+                        // Visual feedback
+                        card.style.opacity = '0.5';
+                        this.showToast(`Dragging: ${asset.name}`);
+                    });
+                    
+                    card.addEventListener('dragend', () => {
+                        card.style.opacity = '1';
+                    });
+                });
+            }
+            
+            openModal(assetName) {
+                const asset = this.assets.find(a => a.name === assetName);
+                if (!asset) return;
+                
+                this.currentAsset = asset;
+                
+                document.getElementById('modal-title').textContent = asset.name;
+                document.getElementById('modal-image').src = asset.thumbnail;
+                document.getElementById('preview-modal').style.display = 'flex';
+            }
+            
+            closeModal() {
+                document.getElementById('preview-modal').style.display = 'none';
+                this.currentAsset = null;
+            }
+            
+            showToast(message) {
+                // Create toast notification
+                const toast = document.createElement('div');
+                toast.className = 'fixed top-4 right-4 bg-purple-600 text-white px-4 py-2 rounded-lg z-50 opacity-0 transition-opacity';
+                toast.textContent = message;
+                
+                document.body.appendChild(toast);
+                
+                // Show toast
+                setTimeout(() => toast.style.opacity = '1', 100);
+                
+                // Hide and remove toast
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+        }
+        
+        // Initialize gallery
+        const gallery = new AssetGallery();
+        
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                gallery.closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

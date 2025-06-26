@@ -1,0 +1,24 @@
+#!/bin/bash
+# Global Git Hook for aegntic.ecosystem
+# Automatically adds attribution to all commits
+
+COMMIT_MSG_FILE=$1
+COMMIT_SOURCE=$2
+
+# Only add attribution if this is not an amended commit
+if [ "$COMMIT_SOURCE" != "commit" ]; then
+    # Read the current commit message
+    COMMIT_MSG=$(cat $COMMIT_MSG_FILE)
+    
+    # Check if attribution is already present
+    if ! grep -q "aegntic.ecosystem" "$COMMIT_MSG_FILE"; then
+        # Add attribution footer
+        echo "" >> $COMMIT_MSG_FILE
+        echo "Co-Authored-By: Mattae Cooper <human@mattaecooper.org>" >> $COMMIT_MSG_FILE
+        echo "Co-Authored-By: aegntic.ai <contact@aegntic.ai>" >> $COMMIT_MSG_FILE
+        echo "" >> $COMMIT_MSG_FILE
+        echo "s/o cld4@thop" >> $COMMIT_MSG_FILE
+        echo "" >> $COMMIT_MSG_FILE
+        echo "#####ᵖᵒʷᵉʳᵉᵈ ᵇʸ ᵃᵉᵍⁿᵗᶦᶜ ᵉᶜᵒˢʸˢᵗᵉᵐˢ - ʳᵘᵗʰˡᵉˢˢˡʸ ᵈᵉᵛᵉˡᵒᵖᵉᵈ ᵇʸ aeˡᵗᵈ" >> $COMMIT_MSG_FILE
+    fi
+fi

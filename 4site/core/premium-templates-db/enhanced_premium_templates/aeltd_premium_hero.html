@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aeLTD Premium Hero - 58.8% Enhanced</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, 
+                rgba(0, 255, 255, 0.1) 0%, 
+                transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+        
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 900;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .hero-title span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        
+        .particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(0, 255, 255, 0.8);
+            border-radius: 50%;
+            filter: blur(1px);
+        }
+        
+        /* aeLTD Branding */
+        .aeltd-branding {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-family: monospace;
+            font-size: 12px;
+            z-index: 1000;
+        }
+        
+        .aeltd-branding::before {
+            content: 'AEGNT_CATFACE';
+            display: block;
+            color: rgba(0, 255, 255, 0.6);
+            font-size: 10px;
+            margin-bottom: 5px;
+        }
+        
+        .aeltd-branding::after {
+            content: 'aeLTD × 58.8%';
+            display: block;
+            color: #fff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <h1 class="hero-title">
+            <span>PREMIUM</span>
+            <span>MOTION</span>
+            <span>DESIGN</span>
+        </h1>
+        <div class="particles" id="particles"></div>
+    </section>
+    
+    <div class="aeltd-branding"></div>
+    
+    <script>
+        // GSAP Hero Animation - 58.8% Enhanced
+        const tl = gsap.timeline();
+        
+        // Animate title
+        tl.to('.hero-title span', {
+            opacity: 1,
+            y: 0,
+            duration: 1.2,
+            stagger: 0.2,
+            ease: 'power4.out'
+        });
+        
+        // Create particles
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 50;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particlesContainer.appendChild(particle);
+            
+            // Animate particle
+            gsap.to(particle, {
+                x: 'random(-100, 100)',
+                y: 'random(-100, 100)',
+                duration: 'random(3, 6)',
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut',
+                delay: Math.random() * 2
+            });
+        }
+        
+        // Parallax on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 2;
+            const y = (e.clientY / window.innerHeight - 0.5) * 2;
+            
+            gsap.to('.hero-bg', {
+                x: x * 50,
+                y: y * 50,
+                duration: 1,
+                ease: 'power2.out'
+            });
+            
+            gsap.to('.particles', {
+                x: x * 30,
+                y: y * 30,
+                duration: 1.5,
+                ease: 'power2.out'
+            });
+        });
+        
+        // aeLTD Analytics
+        console.log('✨ aeLTD Premium Hero - 58.8% Enhanced');
+        console.log('🚀 AEGNT_CATFACE Foundation');
+    </script>
+</body>
+</html>

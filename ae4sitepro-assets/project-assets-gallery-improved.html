@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProjectAssets - Elite UI Component Gallery | 4site.pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            min-height: 200px;
+            animation: slideIn 0.6s ease forwards;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+
+        .category-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .asset-grid-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .asset-grid-container.active {
+            display: block;
+        }
+
+        .asset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .asset-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 250px;
+        }
+
+        .asset-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
+        .asset-thumbnail {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .asset-info {
+            padding: 15px;
+            color: white;
+        }
+
+        .asset-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .asset-subtitle {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .modal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.9);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-container.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            width: 90vw;
+            height: 90vh;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .close-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: scale(1.1);
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1100;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .back-button.active {
+            display: block;
+        }
+
+        .back-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .brand-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,0,0,0.6));
+        }
+
+        .main-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+        }
+
+        /* Animation delays for staggered appearance */
+        .category-card:nth-child(1) { animation-delay: 0.1s; }
+        .category-card:nth-child(2) { animation-delay: 0.2s; }
+        .category-card:nth-child(3) { animation-delay: 0.3s; }
+        .category-card:nth-child(4) { animation-delay: 0.4s; }
+        .category-card:nth-child(5) { animation-delay: 0.5s; }
+        .category-card:nth-child(6) { animation-delay: 0.6s; }
+        .category-card:nth-child(7) { animation-delay: 0.7s; }
+        .category-card:nth-child(8) { animation-delay: 0.8s; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans">
+    <!-- Header -->
+    <div class="header">
+        <h1 class="text-5xl font-bold brand-gradient mb-4">ProjectAssets</h1>
+        <p class="text-gray-300 text-lg mb-2">Elite UI Component Gallery • 4site.pro/assetsgal</p>
+        <p class="text-gray-400 text-sm">58 Premium Assets • 8 Categories • Built by aegntic.ai</p>
+    </div>
+
+    <!-- Back Button -->
+    <button id="backButton" class="back-button">← Back to Categories</button>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Categories Grid -->
+        <div id="categoriesContainer" class="category-grid">        </div>
+
+        <!-- Asset Grid Container -->
+        <div id="assetGridContainer" class="asset-grid-container">
+            <div class="header">
+                <h2 id="categoryTitle" class="text-4xl font-bold brand-gradient mb-2"></h2>
+                <p id="categoryDescription" class="text-gray-300 text-lg mb-2"></p>
+                <p id="categoryStats" class="text-gray-400 text-sm"></p>
+            </div>
+            <div id="assetGrid" class="asset-grid"></div>
+        </div>
+    </div>
+
+    <!-- Modal Container -->
+    <div id="modalContainer" class="modal-container">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <iframe id="modalIframe" class="w-full h-full" style="border: none;"></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced categories data with better organization
+        const categories = {
+            authentication: {
+                name: "Authentication & Login",
+                description: "Elite glassmorphic login interfaces with enterprise-grade security",
+                icon: "🔐",
+                count: 8,
+                assets: [
+                    "Glassmorphism Sign-In Interface.html",
+                    "Enterprise Login Interface.html", 
+                    "Login Interface with Animated Background.html",
+                    "Login Interface with Animated Button.html",
+                    "Secure Two-Column Login Form.html",
+                    "User Sign-In Interface.html",
+                    "User Account Registration Interface.html",
+                    "Signup Card with Animated Visuals.html"
+                ]
+            },
+            hero: {
+                name: "Hero Sections & Landing Pages", 
+                description: "AI-powered landing pages with revolutionary visual experiences",
+                icon: "🚀",
+                count: 7,
+                assets: [
+                    "AI Logistics Hero Section.html",
+                    "AI Platform Landing Page UI.html",
+                    "Developer Portfolio Landing Page.html",
+                    "Interactive Hero Section with Stats.html",
+                    "Minimalist Dark Mode Landing Page.html",
+                    "Music Visualizer Hero Section.html",
+                    "Scroll-Driven Landing Interface.html"
+                ]
+            },
+            cards: {
+                name: "Cards & Components",
+                description: "Interactive components with advanced animations and functionality",
+                icon: "🎴",
+                count: 12,
+                assets: [
+                    "Chat Metrics Summary Card.html",
+                    "Floating Glassmorphic Testimonial Cards.html",
+                    "Glass-Effect Stats Card UI.html", 
+                    "Interactive Animated Note Card UI.html",
+                    "Interactive Database Schema Card.html",
+                    "Interactive Draggable Cards UI.html",
+                    "Task Status Card Stack UI.html",
+                    "Team Member Profile Cards UI.html",
+                    "Scrolling Stacked Card Interface.html",
+                    "Interactive Camping Experience Selector.html",
+                    "Trading Intelligence Accordion UI.html",
+                    "Platform Features Showcase.html"
+                ]
+            },
+            backgrounds: {
+                name: "Backgrounds & Effects",
+                description: "WebGL shaders and neural network visualizations with elite performance",
+                icon: "🌌",
+                count: 8,
+                assets: [
+                    "Animated Aurora Light Effect UI.html",
+                    "Animated Grid Background UI.html", 
+                    "blue-neural-background.html",
+                    "Interactive Shader Background UI.html",
+                    "Interactive Tunnel Shader Effect.html",
+                    "Shader-Based Aurora Background.html",
+                    "WebGL Animated Aurora Background.html",
+                    "WebGL Caustic Shader Background.html"
+                ]
+            },
+            dashboards: {
+                name: "Dashboards & Admin",
+                description: "3D interactive dashboards with comprehensive analytics and control",
+                icon: "📊",
+                count: 8,
+                assets: [
+                    "3D Interactive Design Studio UI.html",
+                    "Enterprise Infrastructure Overview.html",
+                    "Full Stack Developer Portfolio UI.html", 
+                    "Interactive Database Schema UI.html",
+                    "Minimalist Digital Studio UI.html",
+                    "Quantum Design Agency UI.html",
+                    "Unified Project Management Interface.html",
+                    "User Account Settings Panel.html"
+                ]
+            },
+            navigation: {
+                name: "Navigation & Layout",
+                description: "Advanced layout systems with 3D perspective and interactive elements",
+                icon: "🧭",
+                count: 6,
+                assets: [
+                    "3D Perspective Grid with Flip Cards.html",
+                    "Horizontal Scroll Panel Interface.html",
+                    "Sidebar Navigation with Animated Grid.html",
+                    "Interactive Digital Portal UI.html", 
+                    "Full-Screen Black & White Image Carousel.html",
+                    "Mobile Night Sky Explorer UI.html"
+                ]
+            },
+            forms: {
+                name: "Forms & Onboarding", 
+                description: "Multi-step onboarding flows with intelligent user experience",
+                icon: "📝",
+                count: 5,
+                assets: [
+                    "Community Network Sign Up Interface.html",
+                    "Multi-Step Onboarding Interface.html",
+                    "Retreat Features Showcase.html",
+                    "Remote Work Multi-Section UI.html",
+                    "Technical Blog Post Layout.html"
+                ]
+            },
+            pricing: {
+                name: "Pricing & Business",
+                description: "Commercial interfaces with animated pricing and timeline components",
+                icon: "💰",
+                count: 4,
+                assets: [
+                    "Pricing Plans for Creative Services.html",
+                    "Pricing Plans with Animated Background.html",
+                    "Release History Timeline and Features.html",
+                    "Neon Purple Hover Button Effect.html"
+                ]
+            }
+        };
+
+        // Initialize the gallery
+        function initializeGallery() {
+            renderCategories();
+            setupEventListeners();
+        }
+
+        // Render category cards
+        function renderCategories() {
+            const container = document.getElementById('categoriesContainer');
+            container.innerHTML = '';
+
+            Object.entries(categories).forEach(([key, category]) => {
+                const categoryCard = document.createElement('div');
+                categoryCard.className = 'category-card rounded-2xl';
+                categoryCard.onclick = () => openCategory(key);
+
+                categoryCard.innerHTML = `
+                    <div class="category-content">
+                        <div class="text-6xl mb-4">${category.icon}</div>
+                        <h3 class="text-xl font-bold text-white mb-2">${category.name}</h3>
+                        <p class="text-white/80 text-sm mb-4 line-clamp-2">${category.description}</p>
+                        <div class="text-white/60 text-xs">
+                            <span class="font-semibold">${category.count} Assets</span> • Elite Performance
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(categoryCard);
+            });
+        }
+
+        // Open category view
+        function openCategory(categoryKey) {
+            const category = categories[categoryKey];
+            
+            // Hide categories and show asset grid
+            document.getElementById('categoriesContainer').style.display = 'none';
+            document.getElementById('assetGridContainer').classList.add('active');
+            document.getElementById('backButton').classList.add('active');
+
+            // Update header
+            document.getElementById('categoryTitle').textContent = category.name;
+            document.getElementById('categoryDescription').textContent = category.description;
+            document.getElementById('categoryStats').textContent = `${category.count} Assets • Elite Performance • aegntic.ai`;
+
+            // Render assets
+            renderAssets(category.assets);
+        }
+
+        // Render assets in grid
+        function renderAssets(assets) {
+            const container = document.getElementById('assetGrid');
+            container.innerHTML = '';
+
+            assets.forEach(asset => {
+                const assetCard = document.createElement('div');
+                assetCard.className = 'asset-card';
+                assetCard.onclick = () => openAssetModal(asset);
+
+                const thumbnailPath = `thumbnails/${asset.replace('.html', '.png')}`;
+                const assetName = asset.replace('.html', '').replace(/([A-Z])/g, ' $1').trim();
+
+                assetCard.innerHTML = `
+                    <img src="${thumbnailPath}" alt="${assetName}" class="asset-thumbnail" loading="lazy">
+                    <div class="asset-info">
+                        <div class="asset-title">${assetName}</div>
+                        <div class="asset-subtitle">Click to preview</div>
+                    </div>
+                `;
+
+                container.appendChild(assetCard);
+            });
+        }
+
+        // Back to categories
+        function backToCategories() {
+            document.getElementById('categoriesContainer').style.display = 'grid';
+            document.getElementById('assetGridContainer').classList.remove('active');
+            document.getElementById('backButton').classList.remove('active');
+        }
+
+        // Open asset modal
+        function openAssetModal(assetFile) {
+            const modal = document.getElementById('modalContainer');
+            const iframe = document.getElementById('modalIframe');
+            
+            iframe.src = assetFile;
+            modal.classList.add('active');
+        }
+
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('modalContainer');
+            const iframe = document.getElementById('modalIframe');
+            
+            modal.classList.remove('active');
+            setTimeout(() => {
+                iframe.src = '';
+            }, 300);
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            document.getElementById('backButton').addEventListener('click', backToCategories);
+
+            // Close modal on escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+
+            // Close modal on outside click
+            document.getElementById('modalContainer').addEventListener('click', (e) => {
+                if (e.target === e.currentTarget) {
+                    closeModal();
+                }
+            });
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initializeGallery);
+    </script>
+</body>
+</html>

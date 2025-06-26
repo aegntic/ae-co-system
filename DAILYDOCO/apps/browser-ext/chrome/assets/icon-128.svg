@@ -1,0 +1,134 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Ultra-tier gradients for 3D effect -->
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#764ba2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="topFace" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#f8fafc;stop-opacity:0.7" />
+    </linearGradient>
+    
+    <linearGradient id="rightFace" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e2e8f0;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#cbd5e1;stop-opacity:0.6" />
+    </linearGradient>
+    
+    <linearGradient id="leftFace" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#94a3b8;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#64748b;stop-opacity:0.5" />
+    </linearGradient>
+
+    <linearGradient id="screenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:0.95" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:0.9" />
+    </linearGradient>
+
+    <linearGradient id="aiGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#059669;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#047857;stop-opacity:0.6" />
+    </linearGradient>
+
+    <!-- Advanced shadow filters -->
+    <filter id="dropShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="2" dy="4" result="offset"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge> 
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/> 
+      </feMerge>
+    </filter>
+
+    <filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+      <feOffset in="blur" dx="1" dy="2"/>
+    </filter>
+
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Base isometric cube/device -->
+  <!-- Back face -->
+  <polygon points="24,36 64,16 104,36 104,76 64,96 24,76" fill="url(#bodyGrad)" filter="url(#dropShadow)" opacity="0.9"/>
+  
+  <!-- Main device body - isometric laptop/tablet -->
+  <!-- Left face (shadow side) -->
+  <polygon points="24,36 24,76 44,86 44,46" fill="url(#leftFace)" stroke="#475569" stroke-width="0.5"/>
+  
+  <!-- Right face (light side) -->
+  <polygon points="84,46 84,86 104,76 104,36" fill="url(#rightFace)" stroke="#475569" stroke-width="0.5"/>
+  
+  <!-- Top face (main surface) -->
+  <polygon points="24,36 64,16 84,26 44,46" fill="url(#topFace)" stroke="#475569" stroke-width="0.5"/>
+  
+  <!-- Screen area (isometric perspective) -->
+  <polygon points="32,42 76,22 76,52 32,72" fill="url(#screenGrad)" stroke="#1e293b" stroke-width="1"/>
+  
+  <!-- Screen content lines (code/documentation) -->
+  <rect x="36" y="35" width="32" height="2" fill="#64748b" opacity="0.8" transform="skewY(-15)"/>
+  <rect x="36" y="39" width="28" height="1.5" fill="#94a3b8" opacity="0.7" transform="skewY(-15)"/>
+  <rect x="36" y="42" width="35" height="1.5" fill="#94a3b8" opacity="0.7" transform="skewY(-15)"/>
+  <rect x="36" y="45" width="24" height="1.5" fill="#94a3b8" opacity="0.7" transform="skewY(-15)"/>
+  <rect x="36" y="48" width="30" height="1.5" fill="#94a3b8" opacity="0.7" transform="skewY(-15)"/>
+  
+  <!-- Recording indicator (3D isometric) -->
+  <ellipse cx="74" cy="28" rx="3" ry="2" fill="#ef4444" filter="url(#glow)" transform="rotate(-15)"/>
+  <ellipse cx="75" cy="27" rx="2" ry="1.5" fill="#fca5a5" opacity="0.8" transform="rotate(-15)"/>
+  
+  <!-- AI brain/processor (isometric cube) -->
+  <g transform="translate(48, 88)">
+    <!-- AI cube base -->
+    <polygon points="0,0 12,4 24,0 24,12 12,16 0,12" fill="url(#aiGlow)" stroke="#047857" stroke-width="0.5"/>
+    <!-- AI cube top -->
+    <polygon points="0,0 12,-4 24,0 12,4" fill="#34d399" opacity="0.9"/>
+    <!-- AI cube right -->
+    <polygon points="24,0 24,12 12,16 12,4" fill="#059669" opacity="0.8"/>
+    
+    <!-- Neural network pattern -->
+    <circle cx="6" cy="6" r="1" fill="#ffffff" opacity="0.9"/>
+    <circle cx="18" cy="6" r="1" fill="#ffffff" opacity="0.9"/>
+    <circle cx="12" cy="10" r="1" fill="#ffffff" opacity="0.9"/>
+    <line x1="6" y1="6" x2="12" y2="10" stroke="#ffffff" stroke-width="0.5" opacity="0.7"/>
+    <line x1="18" y1="6" x2="12" y2="10" stroke="#ffffff" stroke-width="0.5" opacity="0.7"/>
+  </g>
+  
+  <!-- Video/Documentation symbols (floating isometric) -->
+  <g transform="translate(88, 45) rotate(10)">
+    <!-- Document icon (isometric) -->
+    <polygon points="0,0 6,2 12,0 12,8 6,10 0,8" fill="#ffffff" opacity="0.9" stroke="#e2e8f0" stroke-width="0.3"/>
+    <rect x="2" y="3" width="8" height="0.5" fill="#667eea" opacity="0.8"/>
+    <rect x="2" y="5" width="6" height="0.3" fill="#667eea" opacity="0.6"/>
+    <rect x="2" y="6.5" width="7" height="0.3" fill="#667eea" opacity="0.6"/>
+  </g>
+  
+  <!-- Connection/Network lines (3D effect) -->
+  <path d="M54,72 Q64,65 74,58" stroke="url(#aiGlow)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7" filter="url(#glow)"/>
+  <path d="M70,82 Q75,75 80,68" stroke="url(#aiGlow)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+  
+  <!-- Ultra-polished highlights and depth -->
+  <!-- Main device highlight -->
+  <polygon points="26,38 62,18 82,28 46,48" fill="#ffffff" opacity="0.15"/>
+  
+  <!-- Screen reflection -->
+  <polygon points="34,44 74,24 74,34 34,54" fill="url(#topFace)" opacity="0.1"/>
+  
+  <!-- Edge highlights for premium feel -->
+  <line x1="24" y1="36" x2="64" y2="16" stroke="#ffffff" stroke-width="0.8" opacity="0.4"/>
+  <line x1="64" y1="16" x2="104" y2="36" stroke="#cbd5e1" stroke-width="0.6" opacity="0.6"/>
+  
+  <!-- Subtle ambient occlusion -->
+  <ellipse cx="64" cy="98" rx="35" ry="8" fill="#000000" opacity="0.08"/>
+</svg>

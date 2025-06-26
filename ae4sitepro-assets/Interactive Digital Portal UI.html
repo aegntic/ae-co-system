@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&family=Space+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'primary': ['Inter', 'sans-serif'],
+                        'mono': ['Space Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        #shader-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes word-appear {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.8);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+        }
+        
+        @keyframes grid-draw {
+            0% {
+                stroke-dashoffset: 1000;
+                opacity: 0;
+            }
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 0.3;
+            }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.2);
+            }
+        }
+        
+        .word {
+            display: inline-block;
+            opacity: 0;
+            margin: 0 0.1em;
+            transition: all 0.3s ease;
+        }
+        
+        .word:hover {
+            color: #60a5fa;
+            transform: translateY(-2px);
+            text-shadow: 0 0 20px rgba(96, 165, 250, 0.5);
+        }
+        
+        .grid-line {
+            stroke: #60a5fa;
+            stroke-width: 0.8;
+            opacity: 0;
+            stroke-dasharray: 10 5;
+            stroke-dashoffset: 1000;
+            animation: grid-draw 3s ease-out forwards;
+        }
+        
+        .corner-dot {
+            fill: #60a5fa;
+            opacity: 0;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        .floating-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #60a5fa;
+            border-radius: 50%;
+            opacity: 0;
+            animation: float-particle 6s ease-in-out infinite;
+        }
+        
+        @keyframes float-particle {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0.1;
+            }
+            50% {
+                transform: translateY(-20px) translateX(10px);
+                opacity: 0.8;
+            }
+        }
+
+        .text-glow {
+            text-shadow: 0 0 30px rgba(96, 165, 250, 0.3);
+        }
+
+        .backdrop-overlay {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(1px);
+        }
+    </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-black text-white min-h-screen overflow-hidden font-primary">
+    <canvas id="shader-canvas"></canvas>
+
+    <!-- Grid Overlay -->
+    <svg class="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+                <path d="M 80 0 L 0 0 0 80" fill="none" stroke="rgba(96,165,250,0.05)" stroke-width="0.5"/>
+            </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+        
+        <!-- Main grid lines -->
+        <line x1="0" y1="25%" x2="100%" y2="25%" class="grid-line" style="animation-delay: 1s" />
+        <line x1="0" y1="75%" x2="100%" y2="75%" class="grid-line" style="animation-delay: 1.5s" />
+        <line x1="25%" y1="0" x2="25%" y2="100%" class="grid-line" style="animation-delay: 2s" />
+        <line x1="75%" y1="0" x2="75%" y2="100%" class="grid-line" style="animation-delay: 2.5s" />
+        
+        <!-- Corner dots -->
+        <circle cx="25%" cy="25%" r="3" class="corner-dot" style="animation-delay: 3s" />
+        <circle cx="75%" cy="25%" r="3" class="corner-dot" style="animation-delay: 3.2s" />
+        <circle cx="25%" cy="75%" r="3" class="corner-dot" style="animation-delay: 3.4s" />
+        <circle cx="75%" cy="75%" r="3" class="corner-dot" style="animation-delay: 3.6s" />
+        <circle cx="50%" cy="50%" r="2" class="corner-dot" style="animation-delay: 4s" />
+    </svg>
+
+    <!-- Floating Particles -->
+    <div class="floating-particle" style="top: 20%; left: 10%; animation-delay: 2s;"></div>
+    <div class="floating-particle" style="top: 60%; left: 85%; animation-delay: 3s;"></div>
+    <div class="floating-particle" style="top: 80%; left: 15%; animation-delay: 4s;"></div>
+    <div class="floating-particle" style="top: 30%; left: 90%; animation-delay: 5s;"></div>
+
+    <div class="content flex flex-col items-center justify-center min-h-screen p-8 backdrop-overlay">
+        <!-- Top Section -->
+        <div class="text-center mb-12">
+            <h2 class="text-xs md:text-sm font-mono font-light text-blue-300 uppercase tracking-[0.3em] opacity-80">
+                <span class="word" data-delay="0">Journey</span>
+                <span class="word" data-delay="200">through</span>
+                <span class="word" data-delay="400">digital</span>
+                <span class="word" data-delay="600">infinity</span>
+            </h2>
+            <div class="mt-4 w-20 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-50"></div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="text-center max-w-4xl mx-auto mb-12">
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-extralight leading-tight tracking-tight text-white text-glow mb-8">
+                <div class="mb-6">
+                    <span class="word" data-delay="800">Enter</span>
+                    <span class="word" data-delay="950">the</span>
+                    <span class="word" data-delay="1100">portal</span>
+                </div>
+                <div class="text-2xl md:text-3xl lg:text-4xl font-thin text-blue-200 leading-relaxed">
+                    <span class="word" data-delay="1400">Where</span>
+                    <span class="word" data-delay="1550">consciousness</span>
+                    <span class="word" data-delay="1700">meets</span>
+                    <span class="word" data-delay="1850">technology</span>
+                    <span class="word" data-delay="2000">and</span>
+                    <span class="word" data-delay="2150">infinite</span>
+                    <span class="word" data-delay="2300">possibilities</span>
+                    <span class="word" data-delay="2450">unfold</span>
+                </div>
+            </h1>
+
+            <!-- Central Focus Element -->
+            <div class="relative inline-block mt-8 mb-8">
+                <div class="w-4 h-4 bg-blue-400 rounded-full opacity-0 animate-pulse" style="animation: pulse-glow 3s ease-in-out infinite; animation-delay: 3s;"></div>
+                <div class="absolute inset-0 w-4 h-4 border border-blue-300 rounded-full opacity-0" style="animation: pulse-glow 3s ease-in-out infinite; animation-delay: 3.5s;"></div>
+            </div>
+        </div>
+
+        <!-- Bottom Section -->
+        <div class="text-center">
+            <div class="mb-4 w-20 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-50"></div>
+            <h2 class="text-xs md:text-sm font-mono font-light text-blue-300 uppercase tracking-[0.3em] opacity-80">
+                <span class="word" data-delay="2800">Embrace</span>
+                <span class="word" data-delay="2950">the</span>
+                <span class="word" data-delay="3100">future</span>
+                <span class="word" data-delay="3250">within</span>
+            </h2>
+            
+            <div class="mt-8 flex justify-center space-x-6 opacity-0" style="animation: word-appear 1s ease-out forwards; animation-delay: 4s;">
+                <div class="w-2 h-2 bg-blue-400 rounded-full opacity-60 animate-pulse"></div>
+                <div class="w-2 h-2 bg-blue-300 rounded-full opacity-40 animate-pulse" style="animation-delay: 0.5s;"></div>
+                <div class="w-2 h-2 bg-blue-400 rounded-full opacity-60 animate-pulse" style="animation-delay: 1s;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Three.js scene with shader
+        const canvas = document.getElementById('shader-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+        const shaderMaterial = new THREE.ShaderMaterial({
+            uniforms: {
+                iTime: { value: 0 },
+                iResolution: { value: new THREE.Vector3(window.innerWidth, window.innerHeight, 1) },
+            },
+            vertexShader: `
+                void main() {
+                    gl_Position = vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform float iTime;
+                uniform vec3 iResolution;
+
+                #define TAU 6.2831853071795865
+                #define TUNNEL_LAYERS 96
+                #define RING_POINTS 128
+                #define POINT_SIZE 1.8
+                #define POINT_COLOR_A vec3(1.0)
+                #define POINT_COLOR_B vec3(0.7)
+                #define SPEED 0.7
+
+                float sq(float x) {
+                    return x*x;   
+                }
+
+                vec2 AngRep(vec2 uv, float angle) {
+                    vec2 polar = vec2(atan(uv.y, uv.x), length(uv));
+                    polar.x = mod(polar.x + angle / 2.0, angle) - angle / 2.0; 
+                    return polar.y * vec2(cos(polar.x), sin(polar.x));
+                }
+
+                float sdCircle(vec2 uv, float r) {
+                    return length(uv) - r;
+                }
+
+                vec3 MixShape(float sd, vec3 fill, vec3 target) {
+                    float blend = smoothstep(0.0, 1.0/iResolution.y, sd);
+                    return mix(fill, target, blend);
+                }
+
+                vec2 TunnelPath(float x) {
+                    vec2 offs = vec2(0, 0);
+                    offs.x = 0.2 * sin(TAU * x * 0.5) + 0.4 * sin(TAU * x * 0.2 + 0.3);
+                    offs.y = 0.3 * cos(TAU * x * 0.3) + 0.2 * cos(TAU * x * 0.1);
+                    offs *= smoothstep(1.0, 4.0, x);
+                    return offs;
+                }
+
+                void main() {
+                    vec2 res = iResolution.xy / iResolution.y;
+                    vec2 uv = gl_FragCoord.xy / iResolution.y;
+                    uv -= res/2.0;
+                    
+                    vec3 color = vec3(0);
+                    
+                    float repAngle = TAU / float(RING_POINTS);
+                    float pointSize = POINT_SIZE/2.0/iResolution.y;
+                    
+                    float camZ = iTime * SPEED;
+                    vec2 camOffs = TunnelPath(camZ);
+                    
+                    for(int i = 1; i <= TUNNEL_LAYERS; i++) {
+                        float pz = 1.0 - (float(i) / float(TUNNEL_LAYERS));
+                        pz -= mod(camZ, 4.0 / float(TUNNEL_LAYERS));
+                        
+                        vec2 offs = TunnelPath(camZ + pz) - camOffs;
+                        float ringRad = 0.15 * (1.0 / sq(pz * 0.8 + 0.4));
+                        
+                        if(abs(length(uv + offs) - ringRad) < pointSize * 1.5) {
+                            vec2 aruv = AngRep(uv + offs, repAngle);
+                            float pdist = sdCircle(aruv - vec2(ringRad, 0), pointSize);
+                            vec3 ptColor = (mod(float(i / 2), 2.0) == 0.0) ? POINT_COLOR_A : POINT_COLOR_B;
+                            float shade = (1.0-pz);
+                            color = MixShape(pdist, ptColor * shade, color);
+                        }
+                    }
+                    
+                    gl_FragColor = vec4(color, 1.0);
+                }
+            `
+        });
+
+        const geometry = new THREE.PlaneGeometry(2, 2);
+        const mesh = new THREE.Mesh(geometry, shaderMaterial);
+        scene.add(mesh);
+
+        let lastTime = 0;
+        const speedMultiplier = 0.3;
+
+        function animate(time) {
+            requestAnimationFrame(animate);
+            time *= 0.001;
+            const deltaTime = time - lastTime;
+            lastTime = time;
+            
+            shaderMaterial.uniforms.iTime.value += deltaTime * speedMultiplier;
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            shaderMaterial.uniforms.iResolution.value.set(window.innerWidth, window.innerHeight, 1);
+        });
+
+        // Word animation
+        function animateWords() {
+            const words = document.querySelectorAll('.word');
+            words.forEach(word => {
+                const delay = parseInt(word.getAttribute('data-delay')) || 0;
+                setTimeout(() => {
+                    word.style.animation = 'word-appear 1s ease-out forwards';
+                }, delay);
+            });
+        }
+
+        // Mouse interaction
+        document.addEventListener('mousemove', (e) => {
+            const words = document.querySelectorAll('.word');
+            words.forEach(word => {
+                const rect = word.getBoundingClientRect();
+                const distance = Math.sqrt(
+                    Math.pow(e.clientX - (rect.left + rect.width/2), 2) + 
+                    Math.pow(e.clientY - (rect.top + rect.height/2), 2)
+                );
+                
+                if (distance < 100) {
+                    word.style.transform = 'translateY(-3px) scale(1.05)';
+                    word.style.color = '#60a5fa';
+                } else {
+                    word.style.transform = 'translateY(0) scale(1)';
+                    word.style.color = '';
+                }
+            });
+        });
+
+        window.addEventListener('load', () => {
+            setTimeout(animateWords, 500);
+        });
+
+        animate(0);
+    </script>
+</body>
+</html>

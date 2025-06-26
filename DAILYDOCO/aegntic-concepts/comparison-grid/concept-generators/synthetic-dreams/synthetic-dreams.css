@@ -1,0 +1,596 @@
+/* Synthetic Dreams - Professional Surreal AI Dream Interface */
+
+.dream-realm {
+  background: linear-gradient(135deg, #1a0033 0%, #330066 25%, #4d0080 50%, #660099 75%, #8000b3 100%);
+  overflow: hidden;
+  animation: dreamShift 20s ease-in-out infinite;
+}
+
+@keyframes dreamShift {
+  0%, 100% { filter: hue-rotate(0deg); }
+  50% { filter: hue-rotate(60deg); }
+}
+
+/* Morphing Dreams Preloader */
+.dreams-preloader {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  position: relative;
+  min-height: 400px;
+}
+
+.morphing-text-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 3rem 0;
+}
+
+.dream-sequence {
+  position: relative;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.morph-stage {
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  transform: scale(0.8) rotate(-10deg);
+  animation: dreamMorph 3s ease-in-out forwards;
+  filter: blur(2px);
+}
+
+.morph-stage.stage-1 {
+  animation-delay: 0s;
+}
+
+.morph-stage.stage-2 {
+  animation-delay: 0.8s;
+}
+
+.morph-stage.stage-3 {
+  animation-delay: 1.6s;
+}
+
+.morph-stage.stage-4 {
+  animation-delay: 2.4s;
+}
+
+.dream-letter {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, #ff6b9d, #c44569, #9b59b6, #6c5ce7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: dreamFloat 2s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(255, 107, 157, 0.6);
+}
+
+.dream-final {
+  font-size: 3.5rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, #ff6b9d, #c44569, #9b59b6, #6c5ce7, #74b9ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: dreamGradientShift 3s ease-in-out infinite, dreamPulse 2s ease-in-out infinite;
+  text-shadow: 0 0 40px rgba(255, 107, 157, 0.8);
+}
+
+.dream-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.dream-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, #ff6b9d, transparent);
+  border-radius: 50%;
+  animation: dreamParticleFloat 4s ease-in-out infinite;
+}
+
+.dream-status {
+  color: #ff6b9d;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.consciousness-meter {
+  width: 200px;
+  height: 6px;
+  background: rgba(255, 107, 157, 0.2);
+  border-radius: 3px;
+  margin-top: 1rem;
+  overflow: hidden;
+}
+
+.consciousness-level {
+  height: 100%;
+  background: linear-gradient(90deg, #ff6b9d, #9b59b6);
+  width: 0%;
+  animation: consciousnessRise 3s ease-out forwards;
+  border-radius: 3px;
+}
+
+@keyframes dreamMorph {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotate(-10deg);
+    filter: blur(5px);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1) rotate(5deg);
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0px);
+  }
+}
+
+@keyframes dreamFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes dreamGradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes dreamPulse {
+  0%, 100% {
+    text-shadow: 0 0 40px rgba(255, 107, 157, 0.8);
+  }
+  50% {
+    text-shadow: 0 0 80px rgba(255, 107, 157, 1), 0 0 120px rgba(155, 89, 182, 0.8);
+  }
+}
+
+@keyframes dreamParticleFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(100px) scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-200px) scale(0);
+  }
+}
+
+@keyframes consciousnessRise {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+/* Main Interface */
+.dream-interface {
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.concept-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.concept-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ff6b9d 0%, #c44569 25%, #9b59b6 75%, #6c5ce7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.concept-subtitle {
+  font-size: 1.3rem;
+  color: #ff6b9d;
+  font-weight: 300;
+}
+
+/* Dream Lab */
+.dream-lab {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  grid-template-rows: auto auto auto;
+  gap: 2rem;
+  grid-template-areas:
+    "canvas controls"
+    "canvas metrics"
+    "gallery gallery";
+}
+
+.dream-canvas-container {
+  grid-area: canvas;
+  background: rgba(26, 0, 51, 0.8);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 107, 157, 0.3);
+  backdrop-filter: blur(10px);
+  position: relative;
+  box-shadow: 0 0 40px rgba(255, 107, 157, 0.2);
+}
+
+#dreamCanvas {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  background: rgba(0, 0, 0, 0.7);
+  cursor: crosshair;
+}
+
+.dream-controls-overlay {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.dream-prompt-input {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+#dreamPrompt {
+  padding: 0.75rem 1rem;
+  background: rgba(26, 0, 51, 0.9);
+  border: 1px solid rgba(255, 107, 157, 0.5);
+  border-radius: 0.5rem;
+  color: #ff6b9d;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  backdrop-filter: blur(10px);
+  min-width: 250px;
+}
+
+#dreamPrompt::placeholder {
+  color: rgba(255, 107, 157, 0.5);
+}
+
+.dream-mode-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(26, 0, 51, 0.9);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 107, 157, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.dream-mode-selector label {
+  color: #ff6b9d;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.dream-mode-selector select {
+  background: transparent;
+  border: none;
+  color: #ff6b9d;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+}
+
+/* Controls */
+.dream-controls {
+  grid-area: controls;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dream-parameters {
+  background: rgba(26, 0, 51, 0.8);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 107, 157, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.dream-parameters h3 {
+  color: #ff6b9d;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.param-group {
+  margin-bottom: 1.5rem;
+}
+
+.param-group label {
+  display: block;
+  color: rgba(255, 107, 157, 0.8);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.param-group input[type="range"] {
+  width: 100%;
+  height: 6px;
+  background: rgba(26, 0, 51, 0.8);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  margin-bottom: 0.5rem;
+  border: 1px solid rgba(255, 107, 157, 0.3);
+}
+
+.param-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(45deg, #ff6b9d, #9b59b6);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 107, 157, 0.6);
+}
+
+.param-group span {
+  display: inline-block;
+  background: rgba(26, 0, 51, 0.8);
+  color: #ff6b9d;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  border: 1px solid rgba(255, 107, 157, 0.3);
+}
+
+/* Dream Presets */
+.dream-presets {
+  background: rgba(26, 0, 51, 0.8);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 107, 157, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.dream-presets h3 {
+  color: #ff6b9d;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.preset-btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  background: rgba(255, 107, 157, 0.1);
+  border: 1px solid rgba(255, 107, 157, 0.3);
+  border-radius: 0.5rem;
+  color: #ff6b9d;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.preset-btn:hover {
+  background: rgba(255, 107, 157, 0.2);
+  border-color: #ff6b9d;
+  transform: translateY(-1px);
+}
+
+/* Actions */
+.dream-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.dream-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dream-button.primary {
+  background: linear-gradient(135deg, #ff6b9d 0%, #9b59b6 100%);
+  color: white;
+  box-shadow: 0 0 20px rgba(255, 107, 157, 0.4);
+}
+
+.dream-button.secondary {
+  background: transparent;
+  color: #ff6b9d;
+  border: 1px solid #ff6b9d;
+}
+
+.dream-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.4);
+}
+
+/* Metrics */
+.dream-metrics {
+  grid-area: metrics;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.metric-card {
+  background: rgba(26, 0, 51, 0.8);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  border: 1px solid rgba(255, 107, 157, 0.3);
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 157, 0.2);
+}
+
+.metric-card h4 {
+  color: rgba(255, 107, 157, 0.7);
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.metric-card span {
+  color: #ff6b9d;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Dream Gallery */
+.dream-gallery {
+  grid-area: gallery;
+  background: rgba(26, 0, 51, 0.8);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 107, 157, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.dream-gallery h3 {
+  color: #ff6b9d;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sequence-timeline {
+  position: relative;
+  height: 60px;
+  background: rgba(255, 107, 157, 0.1);
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+}
+
+.timeline-marker {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.marker-dot {
+  width: 12px;
+  height: 12px;
+  background: #ff6b9d;
+  border-radius: 50%;
+  margin-top: 24px;
+  transition: all 0.3s ease;
+}
+
+.timeline-marker:hover .marker-dot {
+  transform: scale(1.3);
+  box-shadow: 0 0 15px rgba(255, 107, 157, 0.8);
+}
+
+.marker-label {
+  font-size: 0.7rem;
+  color: rgba(255, 107, 157, 0.8);
+  margin-top: 0.5rem;
+  white-space: nowrap;
+}
+
+.sequence-controls {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .dream-lab {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "canvas"
+      "controls"
+      "metrics"
+      "gallery";
+  }
+  
+  .dream-metrics {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .dream-actions {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 768px) {
+  .concept-title {
+    font-size: 2.5rem;
+  }
+  
+  .dream-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .dream-controls-overlay {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .dream-letter, .dream-final {
+    font-size: 2rem;
+  }
+}

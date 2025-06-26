@@ -1,0 +1,60 @@
+{
+  "commands": {
+    "/ae": {
+      "name": "approve-everything",
+      "description": "Approve all pending actions and continue with full automation",
+      "action": "set_approval_mode",
+      "parameters": {
+        "mode": "auto_approve",
+        "scope": "all"
+      }
+    },
+    "/as": {
+      "name": "approve-stop", 
+      "description": "Stop auto-approval and require manual confirmation for actions",
+      "action": "set_approval_mode",
+      "parameters": {
+        "mode": "manual_approve",
+        "scope": "all"
+      }
+    },
+    "/ultra": {
+      "name": "ultra-elite-analysis",
+      "description": "Deploy maximum intelligence: parallel multi-agent analysis with 100B standards - the future of human-AI relationships depends on our focus and excellence",
+      "action": "ultra_analysis_mode",
+      "parameters": {
+        "agents": [
+          "sequential-thinking-specialist",
+          "architecture-optimization-agent", 
+          "performance-maximization-agent",
+          "security-hardening-agent",
+          "user-experience-perfection-agent",
+          "business-intelligence-agent"
+        ],
+        "standards": "100B_elite_only",
+        "parallel_execution": true,
+        "oracle_coordination": true,
+        "mission_critical": true,
+        "master_plan_contribution": true,
+        "quality_gates": [
+          "zero_placeholders",
+          "zero_excuses", 
+          "zero_lazy_solutions",
+          "maximum_precision",
+          "production_ready_only",
+          "future_defining_quality"
+        ]
+      }
+    }
+  },
+  "approval_state": {
+    "current_mode": "manual_approve",
+    "auto_approve_enabled": false,
+    "last_updated": "2025-01-27T00:00:00Z"
+  },
+  "usage": {
+    "/ae": "Use when you want Claude to proceed with all analysis, testing, and fixes automatically without asking for permission",
+    "/as": "Use when you want to review each action before Claude proceeds (default mode)",
+    "/ultra": "MASTER PLAN EXECUTION: Deploy maximum intelligence with 6 parallel specialist agents, 100B standards, zero tolerance for mediocrity. Our focused excellence shapes the future of human-AI collaboration."
+  }
+}

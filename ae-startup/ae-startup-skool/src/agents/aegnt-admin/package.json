@@ -1,0 +1,44 @@
+{
+  "name": "@aegntic/aegnt-admin",
+  "version": "1.0.0",
+  "description": "Administrative task sub-agent for the Aegntic ecosystem",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit",
+    "admin:dates": "tsx src/cli.ts dates",
+    "admin:organize": "tsx src/cli.ts organize",
+    "admin:journal": "tsx src/cli.ts journal",
+    "admin:scan": "tsx src/cli.ts scan"
+  },
+  "keywords": [
+    "aegntic",
+    "aegnt",
+    "admin",
+    "automation",
+    "maintenance"
+  ],
+  "author": "Aegntic Team",
+  "license": "MIT",
+  "dependencies": {
+    "yaml": "^2.3.4",
+    "minimatch": "^9.0.3",
+    "date-fns": "^3.0.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "typescript": "^5.3.3",
+    "tsx": "^4.7.0",
+    "vitest": "^1.1.0",
+    "eslint": "^8.56.0",
+    "@typescript-eslint/eslint-plugin": "^6.16.0",
+    "@typescript-eslint/parser": "^6.16.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

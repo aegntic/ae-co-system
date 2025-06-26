@@ -1,0 +1,143 @@
+{
+  "summary": {
+    "totalTests": 18,
+    "passedTests": 16,
+    "failedTests": 2,
+    "successRate": "89%",
+    "overallStatus": "GOOD"
+  },
+  "performance": {
+    "jsHeapUsed": 22.27,
+    "jsHeapTotal": 33.27,
+    "domContentLoaded": 233,
+    "pageLoad": 239,
+    "firstPaint": 168,
+    "firstContentfulPaint": 576
+  },
+  "bundle": {
+    "totalJSSize": 2145,
+    "usedJSSize": 973,
+    "jsUtilization": 45,
+    "totalCSSSize": 72,
+    "usedCSSSize": 9,
+    "cssUtilization": 12
+  },
+  "accessibility": {
+    "issuesFound": 0,
+    "issues": []
+  },
+  "detailedTests": [
+    {
+      "name": "page-load",
+      "passed": true,
+      "message": "Page loaded successfully",
+      "timestamp": "2025-06-25T22:22:44.523Z"
+    },
+    {
+      "name": "logo-render",
+      "passed": true,
+      "message": "Logo rendered successfully",
+      "timestamp": "2025-06-25T22:22:44.536Z"
+    },
+    {
+      "name": "hero-text",
+      "passed": true,
+      "message": "Hero text: \"Transform GitHub RepositoriesInto Professional Websites\"",
+      "timestamp": "2025-06-25T22:22:44.540Z"
+    },
+    {
+      "name": "input-form",
+      "passed": true,
+      "message": "URL input found",
+      "timestamp": "2025-06-25T22:22:44.541Z"
+    },
+    {
+      "name": "primary-button",
+      "passed": true,
+      "message": "Primary button found",
+      "timestamp": "2025-06-25T22:22:44.543Z"
+    },
+    {
+      "name": "feature-cards",
+      "passed": true,
+      "message": "Found 3 feature cards",
+      "timestamp": "2025-06-25T22:22:44.556Z"
+    },
+    {
+      "name": "animations",
+      "passed": true,
+      "message": "Found 1 animated elements",
+      "timestamp": "2025-06-25T22:22:44.562Z"
+    },
+    {
+      "name": "glassmorphism",
+      "passed": true,
+      "message": "Found 2 glass elements",
+      "timestamp": "2025-06-25T22:22:44.568Z"
+    },
+    {
+      "name": "memory-usage",
+      "passed": true,
+      "message": "Memory usage: 22.27MB",
+      "timestamp": "2025-06-25T22:22:45.419Z"
+    },
+    {
+      "name": "page-load-speed",
+      "passed": true,
+      "message": "Page load: 239ms",
+      "timestamp": "2025-06-25T22:22:45.419Z"
+    },
+    {
+      "name": "fcp-performance",
+      "passed": true,
+      "message": "First Contentful Paint: 576ms",
+      "timestamp": "2025-06-25T22:22:45.419Z"
+    },
+    {
+      "name": "js-utilization",
+      "passed": false,
+      "message": "JS utilization: 45%",
+      "timestamp": "2025-06-25T22:22:45.480Z"
+    },
+    {
+      "name": "css-utilization",
+      "passed": false,
+      "message": "CSS utilization: 12%",
+      "timestamp": "2025-06-25T22:22:45.480Z"
+    },
+    {
+      "name": "accessibility",
+      "passed": true,
+      "message": "No accessibility issues found",
+      "timestamp": "2025-06-25T22:22:45.482Z"
+    },
+    {
+      "name": "url-input-interaction",
+      "passed": true,
+      "message": "Input value: https://github.com/example/repo",
+      "timestamp": "2025-06-25T22:22:45.670Z"
+    },
+    {
+      "name": "button-hover-effect",
+      "passed": true,
+      "message": "Transform applied: matrix(1, 0, 0, 1, 0, 0)",
+      "timestamp": "2025-06-25T22:22:45.724Z"
+    },
+    {
+      "name": "card-hover-effect",
+      "passed": true,
+      "message": "Card transform: matrix(1, 0, 0, 1, 0, 0)",
+      "timestamp": "2025-06-25T22:22:45.777Z"
+    },
+    {
+      "name": "screenshot-capture",
+      "passed": true,
+      "message": "Screenshot saved: ./frontend-comprehensive-test.png",
+      "timestamp": "2025-06-25T22:22:46.129Z"
+    }
+  ],
+  "recommendations": [
+    "Address failed test cases to improve application stability",
+    "Remove unused JavaScript code to improve bundle efficiency"
+  ]
+}

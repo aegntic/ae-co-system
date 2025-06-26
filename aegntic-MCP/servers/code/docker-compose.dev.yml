@@ -1,0 +1,137 @@
+version: '3.8'
+
+services:
+  porkbun-mcp-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: porkbun-mcp-dev
+    restart: "no"
+    
+    # Environment variables for development
+    environment:
+      - ENVIRONMENT=development
+      - DEBUG=true
+      - LOG_LEVEL=DEBUG
+      - HOST=0.0.0.0
+      - PORT=8080
+      - PORKBUN_MCP_ENCRYPTION_KEY=${PORKBUN_MCP_ENCRYPTION_KEY}
+      - PORKBUN_API_KEY=${PORKBUN_API_KEY}
+      - PORKBUN_SECRET_API_KEY=${PORKBUN_SECRET_API_KEY}
+    
+    # Ports
+    ports:
+      - "8080:8080"
+      - "8000:8000"  # Additional port for debugging
+    
+    # Volume mounts for development
+    volumes:
+      - .:/app
+      - dev_data:/app/data
+      - dev_logs:/app/logs
+      - dev_ssl:/app/ssl_certificates
+      - dev_temp:/app/temp
+    
+    # Override entrypoint for development
+    command: ["python", "-m", "pytest", "test_porkbun_mcp.py", "-v", "--tb=short"]
+    
+    # Interactive terminal
+    stdin_open: true
+    tty: true
+    
+    # No resource limits in development
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+
+  # Test runner service
+  test-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: porkbun-mcp-test
+    restart: "no"
+    
+    environment:
+      - ENVIRONMENT=test
+      - DEBUG=true
+      - LOG_LEVEL=DEBUG
+      - PORKBUN_API_KEY=${PORKBUN_API_KEY}
+      - PORKBUN_SECRET_API_KEY=${PORKBUN_SECRET_API_KEY}
+    
+    volumes:
+      - .:/app
+      - test_data:/app/data
+      - test_logs:/app/logs
+    
+    command: ["python", "-m", "pytest", "test_porkbun_mcp.py", "-v", "--cov=porkbun_mcp_server", "--cov-report=html"]
+    
+    profiles:
+      - "test"
+
+  # Code quality checker
+  linter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: porkbun-mcp-linter
+    restart: "no"
+    
+    volumes:
+      - .:/app
+    
+    command: ["sh", "-c", "black --check . && flake8 . && mypy porkbun_mcp_server.py"]
+    
+    profiles:
+      - "lint"
+
+  # Interactive development shell
+  shell:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: porkbun-mcp-shell
+    restart: "no"
+    
+    environment:
+      - ENVIRONMENT=development
+      - DEBUG=true
+      - PORKBUN_API_KEY=${PORKBUN_API_KEY}
+      - PORKBUN_SECRET_API_KEY=${PORKBUN_SECRET_API_KEY}
+    
+    volumes:
+      - .:/app
+      - dev_data:/app/data
+      - dev_logs:/app/logs
+    
+    command: ["bash"]
+    stdin_open: true
+    tty: true
+    
+    profiles:
+      - "shell"
+
+volumes:
+  dev_data:
+    driver: local
+  dev_logs:
+    driver: local
+  dev_ssl:
+    driver: local
+  dev_temp:
+    driver: local
+  test_data:
+    driver: local
+  test_logs:
+    driver: local
+
+networks:
+  default:
+    name: porkbun-mcp-dev-network
+    driver: bridge

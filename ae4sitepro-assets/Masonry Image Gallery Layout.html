@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ProjectAssets Gallery | 4site.pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000000;
+      color: #ffffff;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Animated smoke background effects */
+    .smoke-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .smoke-element {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(128,128,128,0.4) 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+      filter: blur(40px);
+      animation: float 20s infinite linear;
+    }
+
+    .smoke-element:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+      animation-duration: 25s;
+    }
+
+    .smoke-element:nth-child(2) {
+      width: 200px;
+      height: 200px;
+      top: 60%;
+      right: 15%;
+      animation-delay: -5s;
+      animation-duration: 30s;
+    }
+
+    .smoke-element:nth-child(3) {
+      width: 250px;
+      height: 250px;
+      bottom: 20%;
+      left: 20%;
+      animation-delay: -10s;
+      animation-duration: 35s;
+    }
+
+    .smoke-element:nth-child(4) {
+      width: 180px;
+      height: 180px;
+      top: 30%;
+      right: 30%;
+      animation-delay: -15s;
+      animation-duration: 20s;
+    }
+
+    .smoke-element:nth-child(5) {
+      width: 320px;
+      height: 320px;
+      bottom: 10%;
+      right: 10%;
+      animation-delay: -20s;
+      animation-duration: 40s;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px) translateX(0px) rotate(0deg);
+        opacity: 0.3;
+      }
+      25% {
+        transform: translateY(-20px) translateX(10px) rotate(90deg);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translateY(-40px) translateX(-10px) rotate(180deg);
+        opacity: 0.4;
+      }
+      75% {
+        transform: translateY(-20px) translateX(-20px) rotate(270deg);
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(0px) translateX(0px) rotate(360deg);
+        opacity: 0.3;
+      }
+    }
+
+    .header {
+      text-align: center;
+      padding: 2rem 1rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .header h1 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #ffffff, #cccccc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .header p {
+      font-size: 1.1rem;
+      color: #aaaaaa;
+      margin-bottom: 1rem;
+    }
+
+    .branding {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .brand-tag {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      color: #cccccc;
+    }
+
+    .gallery-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1rem 2rem;
+      position: relative;
+      z-index: 5;
+    }
+
+    .category-section {
+      margin-bottom: 3rem;
+    }
+
+    .category-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 1.5rem;
+      padding-left: 1rem;
+      border-left: 4px solid rgba(255,255,255,0.5);
+    }
+
+    .masonry-grid {
+      column-count: 1;
+      column-gap: 1rem;
+      column-fill: balance;
+    }
+
+    @media (min-width: 640px) {
+      .masonry-grid { column-count: 2; }
+    }
+
+    @media (min-width: 768px) {
+      .masonry-grid { column-count: 3; }
+    }
+
+    @media (min-width: 1024px) {
+      .masonry-grid { column-count: 4; }
+    }
+
+    @media (min-width: 1280px) {
+      .masonry-grid { column-count: 5; }
+    }
+
+    .glass-thumbnail {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      break-inside: avoid;
+      transition: all 0.3s ease;
+      cursor: grab;
+      position: relative;
+    }
+
+    .glass-thumbnail:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+    }
+
+    .glass-thumbnail:active {
+      cursor: grabbing;
+      transform: translateY(-2px) scale(0.98);
+    }
+
+    .thumbnail-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .thumbnail-info {
+      padding: 1rem;
+    }
+
+    .thumbnail-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    .thumbnail-description {
+      font-size: 0.8rem;
+      color: #aaaaaa;
+      line-height: 1.3;
+    }
+
+    .drag-indicator {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .glass-thumbnail:hover .drag-indicator {
+      opacity: 1;
+    }
+
+    .stats-bar {
+      text-align: center;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 2rem;
+    }
+
+    .stats-bar p {
+      color: #aaaaaa;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated smoke background -->
+  <div class="smoke-container">
+    <div class="smoke-element"></div>
+    <div class="smoke-element"></div>
+    <div class="smoke-element"></div>
+    <div class="smoke-element"></div>
+    <div class="smoke-element"></div>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>ProjectAssets</h1>
+    <p>Premium UI Components & Templates</p>
+    <div class="branding">
+      <span class="brand-tag">4site.pro</span>
+      <span class="brand-tag">aegntic</span>
+      <span class="brand-tag">{ae}</span>
+      <span class="brand-tag">aegnt</span>
+    </div>
+  </div>
+
+  <!-- Gallery Container -->
+  <div class="gallery-container">
+    
+    <!-- Navigation & Layout Components -->
+    <div class="category-section">
+      <h2 class="category-title">Navigation & Layout Components</h2>
+      <div class="masonry-grid">
+        
+        <div class="glass-thumbnail" draggable="true" data-asset="sidebar-navigation-with-animated-grid">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Sidebar Navigation with Animated Grid.png" alt="Sidebar Navigation with Animated Grid" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Sidebar Navigation with Animated Grid</div>
+            <div class="thumbnail-description">Sidebar Navigation with Animated Grid - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Interactive Elements -->
+    <div class="category-section">
+      <h2 class="category-title">Interactive Elements</h2>
+      <div class="masonry-grid">
+        
+        <div class="glass-thumbnail" draggable="true" data-asset="3d-interactive-design-studio-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/3D Interactive Design Studio UI.png" alt="3D Interactive Design Studio UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">3D Interactive Design Studio UI</div>
+            <div class="thumbnail-description">3D Interactive Design Studio UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="full-screen-black-&-white-image-carousel">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Full-Screen Black & White Image Carousel.png" alt="Full-Screen Black & White Image Carousel" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Full-Screen Black & White Image Carousel</div>
+            <div class="thumbnail-description">Full-Screen Black & White Image Carousel - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="interactive-animated-note-card-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Interactive Animated Note Card UI.png" alt="Interactive Animated Note Card UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Interactive Animated Note Card UI</div>
+            <div class="thumbnail-description">Interactive Animated Note Card UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="interactive-camping-experience-selector">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Interactive Camping Experience Selector.png" alt="Interactive Camping Experience Selector" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Interactive Camping Experience Selector</div>
+            <div class="thumbnail-description">Interactive Camping Experience Selector - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="interactive-database-schema-card">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Interactive Database Schema Card.png" alt="Interactive Database Schema Card" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Interactive Database Schema Card</div>
+            <div class="thumbnail-description">Interactive Database Schema Card - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="interactive-database-schema-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Interactive Database Schema UI.png" alt="Interactive Database Schema UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Interactive Database Schema UI</div>
+            <div class="thumbnail-description">Interactive Database Schema UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="interactive-digital-portal-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Interactive Digital Portal UI.png" alt="Interactive Digital Portal UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Interactive Digital Portal UI</div>
+            <div class="thumbnail-description">Interactive Digital Portal UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="interactive-draggable-cards-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Interactive Draggable Cards UI.png" alt="Interactive Draggable Cards UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Interactive Draggable Cards UI</div>
+            <div class="thumbnail-description">Interactive Draggable Cards UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="interactive-hero-section-with-stats">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Interactive Hero Section with Stats.png" alt="Interactive Hero Section with Stats" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Interactive Hero Section with Stats</div>
+            <div class="thumbnail-description">Interactive Hero Section with Stats - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="interactive-shader-background-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Interactive Shader Background UI.png" alt="Interactive Shader Background UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Interactive Shader Background UI</div>
+            <div class="thumbnail-description">Interactive Shader Background UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="interactive-tunnel-shader-effect">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Interactive Tunnel Shader Effect.png" alt="Interactive Tunnel Shader Effect" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Interactive Tunnel Shader Effect</div>
+            <div class="thumbnail-description">Interactive Tunnel Shader Effect - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="trading-intelligence-accordion-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Trading Intelligence Accordion UI.png" alt="Trading Intelligence Accordion UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Trading Intelligence Accordion UI</div>
+            <div class="thumbnail-description">Trading Intelligence Accordion UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Content Display -->
+    <div class="category-section">
+      <h2 class="category-title">Content Display</h2>
+      <div class="masonry-grid">
+        
+        <div class="glass-thumbnail" draggable="true" data-asset="3d-perspective-grid-with-flip-cards">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/3D Perspective Grid with Flip Cards.png" alt="3D Perspective Grid with Flip Cards" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">3D Perspective Grid with Flip Cards</div>
+            <div class="thumbnail-description">3D Perspective Grid with Flip Cards - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="ae-co-system-command-center">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/AE-CO-SYSTEM-Command-Center.png" alt="AE-CO-SYSTEM-Command-Center" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">AE-CO-SYSTEM-Command-Center</div>
+            <div class="thumbnail-description">AE-CO-SYSTEM-Command-Center - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="ai-logistics-hero-section">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/AI Logistics Hero Section.png" alt="AI Logistics Hero Section" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">AI Logistics Hero Section</div>
+            <div class="thumbnail-description">AI Logistics Hero Section - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="animated-aurora-light-effect-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Animated Aurora Light Effect UI.png" alt="Animated Aurora Light Effect UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Animated Aurora Light Effect UI</div>
+            <div class="thumbnail-description">Animated Aurora Light Effect UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="chat-metrics-summary-card">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Chat Metrics Summary Card.png" alt="Chat Metrics Summary Card" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Chat Metrics Summary Card</div>
+            <div class="thumbnail-description">Chat Metrics Summary Card - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="community-network-sign-up-interface">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Community Network Sign Up Interface.png" alt="Community Network Sign Up Interface" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Community Network Sign Up Interface</div>
+            <div class="thumbnail-description">Community Network Sign Up Interface - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="developer-portfolio-landing-page">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Developer Portfolio Landing Page.png" alt="Developer Portfolio Landing Page" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Developer Portfolio Landing Page</div>
+            <div class="thumbnail-description">Developer Portfolio Landing Page - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="enterprise-infrastructure-overview">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Enterprise Infrastructure Overview.png" alt="Enterprise Infrastructure Overview" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Enterprise Infrastructure Overview</div>
+            <div class="thumbnail-description">Enterprise Infrastructure Overview - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="floating-glassmorphic-testimonial-cards">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Floating Glassmorphic Testimonial Cards.png" alt="Floating Glassmorphic Testimonial Cards" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Floating Glassmorphic Testimonial Cards</div>
+            <div class="thumbnail-description">Floating Glassmorphic Testimonial Cards - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="full-stack-developer-portfolio-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Full Stack Developer Portfolio UI.png" alt="Full Stack Developer Portfolio UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Full Stack Developer Portfolio UI</div>
+            <div class="thumbnail-description">Full Stack Developer Portfolio UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="glass-effect-stats-card-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Glass-Effect Stats Card UI.png" alt="Glass-Effect Stats Card UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Glass-Effect Stats Card UI</div>
+            <div class="thumbnail-description">Glass-Effect Stats Card UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="glassmorphism-sign-in-interface">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Glassmorphism Sign-In Interface.png" alt="Glassmorphism Sign-In Interface" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Glassmorphism Sign-In Interface</div>
+            <div class="thumbnail-description">Glassmorphism Sign-In Interface - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="horizontal-scroll-panel-interface">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Horizontal Scroll Panel Interface.png" alt="Horizontal Scroll Panel Interface" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Horizontal Scroll Panel Interface</div>
+            <div class="thumbnail-description">Horizontal Scroll Panel Interface - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="minimalist-dark-mode-landing-page">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Minimalist Dark Mode Landing Page.png" alt="Minimalist Dark Mode Landing Page" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Minimalist Dark Mode Landing Page</div>
+            <div class="thumbnail-description">Minimalist Dark Mode Landing Page - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="minimalist-digital-studio-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Minimalist Digital Studio UI.png" alt="Minimalist Digital Studio UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Minimalist Digital Studio UI</div>
+            <div class="thumbnail-description">Minimalist Digital Studio UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="mobile-night-sky-explorer-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Mobile Night Sky Explorer UI.png" alt="Mobile Night Sky Explorer UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Mobile Night Sky Explorer UI</div>
+            <div class="thumbnail-description">Mobile Night Sky Explorer UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="multi-step-onboarding-interface">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Multi-Step Onboarding Interface.png" alt="Multi-Step Onboarding Interface" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Multi-Step Onboarding Interface</div>
+            <div class="thumbnail-description">Multi-Step Onboarding Interface - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="music-visualizer-hero-section">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Music Visualizer Hero Section.png" alt="Music Visualizer Hero Section" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Music Visualizer Hero Section</div>
+            <div class="thumbnail-description">Music Visualizer Hero Section - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="neon-purple-hover-button-effect">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Neon Purple Hover Button Effect.png" alt="Neon Purple Hover Button Effect" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Neon Purple Hover Button Effect</div>
+            <div class="thumbnail-description">Neon Purple Hover Button Effect - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="pricing-plans-for-creative-services">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Pricing Plans for Creative Services.png" alt="Pricing Plans for Creative Services" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Pricing Plans for Creative Services</div>
+            <div class="thumbnail-description">Pricing Plans for Creative Services - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="pricing-plans-with-animated-background">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Pricing Plans with Animated Background.png" alt="Pricing Plans with Animated Background" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Pricing Plans with Animated Background</div>
+            <div class="thumbnail-description">Pricing Plans with Animated Background - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="quantum-design-agency-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Quantum Design Agency UI.png" alt="Quantum Design Agency UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Quantum Design Agency UI</div>
+            <div class="thumbnail-description">Quantum Design Agency UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="release-history-timeline-and-features">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Release History Timeline and Features.png" alt="Release History Timeline and Features" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Release History Timeline and Features</div>
+            <div class="thumbnail-description">Release History Timeline and Features - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="remote-work-multi-section-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Remote Work Multi-Section UI.png" alt="Remote Work Multi-Section UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Remote Work Multi-Section UI</div>
+            <div class="thumbnail-description">Remote Work Multi-Section UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="retreat-features-showcase">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Retreat Features Showcase.png" alt="Retreat Features Showcase" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Retreat Features Showcase</div>
+            <div class="thumbnail-description">Retreat Features Showcase - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="scroll-driven-landing-interface">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Scroll-Driven Landing Interface.png" alt="Scroll-Driven Landing Interface" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Scroll-Driven Landing Interface</div>
+            <div class="thumbnail-description">Scroll-Driven Landing Interface - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="scrolling-stacked-card-interface">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Scrolling Stacked Card Interface.png" alt="Scrolling Stacked Card Interface" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Scrolling Stacked Card Interface</div>
+            <div class="thumbnail-description">Scrolling Stacked Card Interface - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="shader-based-aurora-background">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Shader-Based Aurora Background.png" alt="Shader-Based Aurora Background" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Shader-Based Aurora Background</div>
+            <div class="thumbnail-description">Shader-Based Aurora Background - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="signup-card-with-animated-visuals">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Signup Card with Animated Visuals.png" alt="Signup Card with Animated Visuals" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Signup Card with Animated Visuals</div>
+            <div class="thumbnail-description">Signup Card with Animated Visuals - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="task-status-card-stack-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Task Status Card Stack UI.png" alt="Task Status Card Stack UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Task Status Card Stack UI</div>
+            <div class="thumbnail-description">Task Status Card Stack UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="team-member-profile-cards-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Team Member Profile Cards UI.png" alt="Team Member Profile Cards UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Team Member Profile Cards UI</div>
+            <div class="thumbnail-description">Team Member Profile Cards UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="technical-blog-post-layout">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Technical Blog Post Layout.png" alt="Technical Blog Post Layout" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Technical Blog Post Layout</div>
+            <div class="thumbnail-description">Technical Blog Post Layout - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="unified-project-management-interface">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Unified Project Management Interface.png" alt="Unified Project Management Interface" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Unified Project Management Interface</div>
+            <div class="thumbnail-description">Unified Project Management Interface - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="user-account-settings-panel">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/User Account Settings Panel.png" alt="User Account Settings Panel" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">User Account Settings Panel</div>
+            <div class="thumbnail-description">User Account Settings Panel - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="user-sign-in-interface">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/User Sign-In Interface.png" alt="User Sign-In Interface" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">User Sign-In Interface</div>
+            <div class="thumbnail-description">User Sign-In Interface - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="webgl-animated-aurora-background">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/WebGL Animated Aurora Background.png" alt="WebGL Animated Aurora Background" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">WebGL Animated Aurora Background</div>
+            <div class="thumbnail-description">WebGL Animated Aurora Background - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="webgl-caustic-shader-background">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/WebGL Caustic Shader Background.png" alt="WebGL Caustic Shader Background" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">WebGL Caustic Shader Background</div>
+            <div class="thumbnail-description">WebGL Caustic Shader Background - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="blue-neural-background">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/blue-neural-background.png" alt="blue-neural-background" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">blue-neural-background</div>
+            <div class="thumbnail-description">blue-neural-background - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Forms & Input -->
+    <div class="category-section">
+      <h2 class="category-title">Forms & Input</h2>
+      <div class="masonry-grid">
+        
+        <div class="glass-thumbnail" draggable="true" data-asset="ai-platform-landing-page-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/AI Platform Landing Page UI.png" alt="AI Platform Landing Page UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">AI Platform Landing Page UI</div>
+            <div class="thumbnail-description">AI Platform Landing Page UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="enterprise-login-interface">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Enterprise Login Interface.png" alt="Enterprise Login Interface" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Enterprise Login Interface</div>
+            <div class="thumbnail-description">Enterprise Login Interface - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="login-interface-with-animated-background">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Login Interface with Animated Background.png" alt="Login Interface with Animated Background" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Login Interface with Animated Background</div>
+            <div class="thumbnail-description">Login Interface with Animated Background - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="login-interface-with-animated-button">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Login Interface with Animated Button.png" alt="Login Interface with Animated Button" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Login Interface with Animated Button</div>
+            <div class="thumbnail-description">Login Interface with Animated Button - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="platform-features-showcase">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Platform Features Showcase.png" alt="Platform Features Showcase" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Platform Features Showcase</div>
+            <div class="thumbnail-description">Platform Features Showcase - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="secure-two-column-login-form">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Secure Two-Column Login Form.png" alt="Secure Two-Column Login Form" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Secure Two-Column Login Form</div>
+            <div class="thumbnail-description">Secure Two-Column Login Form - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+        <div class="glass-thumbnail" draggable="true" data-asset="user-account-registration-interface">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/User Account Registration Interface.png" alt="User Account Registration Interface" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">User Account Registration Interface</div>
+            <div class="thumbnail-description">User Account Registration Interface - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <!-- Advanced Layout -->
+    <div class="category-section">
+      <h2 class="category-title">Advanced Layout</h2>
+      <div class="masonry-grid">
+        
+        <div class="glass-thumbnail" draggable="true" data-asset="animated-grid-background-ui">
+          <div class="drag-indicator">⋮⋮</div>
+          <img src="thumbnails/Animated Grid Background UI.png" alt="Animated Grid Background UI" class="thumbnail-image">
+          <div class="thumbnail-info">
+            <div class="thumbnail-title">Animated Grid Background UI</div>
+            <div class="thumbnail-description">Animated Grid Background UI - A professional UI component with modern design and interactive features.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <p>59 Premium Components • 8 Categories • Drag & Drop Ready • Built for 4site.pro</p>
+  </div>
+
+  <script>
+    // Drag and drop functionality
+    document.querySelectorAll('.glass-thumbnail').forEach(thumbnail => {
+      thumbnail.addEventListener('dragstart', (e) => {
+        const assetName = e.target.dataset.asset;
+        const assetData = {
+          name: assetName,
+          source: '4site.pro/assetsgal',
+          type: 'ui-component'
+        };
+        
+        e.dataTransfer.setData('text/plain', JSON.stringify(assetData));
+        e.dataTransfer.setData('text/html', `<div data-asset="${assetName}" class="ui-component">${assetName}</div>`);
+        e.dataTransfer.effectAllowed = 'copy';
+        
+        // Add dragging visual feedback
+        e.target.style.opacity = '0.7';
+      });
+      
+      thumbnail.addEventListener('dragend', (e) => {
+        e.target.style.opacity = '1';
+      });
+    });
+
+    // Console info for developers
+    console.log('ProjectAssets Gallery loaded - 59 components ready for drag & drop');
+    console.log('Built with 4site.pro • aegntic • {ae} • aegnt');
+  </script>
+</body>
+</html>

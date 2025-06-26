@@ -1,0 +1,136 @@
+version: '3.8'
+
+services:
+  porkbun-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: porkbun-mcp-server
+    restart: unless-stopped
+    
+    # Environment variables
+    environment:
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+      - HOST=0.0.0.0
+      - PORT=8080
+      - PORKBUN_MCP_ENCRYPTION_KEY=${PORKBUN_MCP_ENCRYPTION_KEY}
+    
+    # Ports (if running as HTTP server)
+    ports:
+      - "${HOST_PORT:-8080}:8080"
+    
+    # Volumes for persistent data
+    volumes:
+      - porkbun_data:/app/data
+      - porkbun_logs:/app/logs
+      - porkbun_ssl:/app/ssl_certificates
+      - porkbun_temp:/app/temp
+    
+    # Security settings
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:size=100M,noexec,nosuid,nodev
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Optional: Nginx reverse proxy for production
+  nginx:
+    image: nginx:alpine
+    container_name: porkbun-mcp-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - nginx_logs:/var/log/nginx
+    depends_on:
+      - porkbun-mcp
+    profiles:
+      - "proxy"
+
+  # Optional: Prometheus monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: porkbun-mcp-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    profiles:
+      - "monitoring"
+
+  # Optional: Grafana dashboard
+  grafana:
+    image: grafana/grafana:latest
+    container_name: porkbun-mcp-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin}
+    depends_on:
+      - prometheus
+    profiles:
+      - "monitoring"
+
+volumes:
+  porkbun_data:
+    driver: local
+  porkbun_logs:
+    driver: local
+  porkbun_ssl:
+    driver: local
+  porkbun_temp:
+    driver: local
+  nginx_logs:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+networks:
+  default:
+    name: porkbun-mcp-network
+    driver: bridge

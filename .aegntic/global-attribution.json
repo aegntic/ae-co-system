@@ -1,0 +1,57 @@
+{
+  "ecosystem": {
+    "name": "aegntic.ecosystem",
+    "registry": "ae.ltd",
+    "website": "https://aegntic.ai",
+    "contact": "contact@aegntic.ai"
+  },
+  "attribution": {
+    "primary_author": {
+      "name": "Mattae Cooper",
+      "email": "human@mattaecooper.org",
+      "website": "https://mattaecooper.org"
+    },
+    "collaborating_entity": {
+      "name": "aegntic.ai",
+      "email": "contact@aegntic.ai",
+      "website": "https://aegntic.ai"
+    },
+    "ai_assistant": {
+      "name": "Claude",
+      "provider": "Anthropic",
+      "email": "noreply@anthropic.com",
+      "attribution": "Generated with Claude Code (https://claude.ai/code)"
+    }
+  },
+  "git_config": {
+    "commit_template": "Co-Authored-By: Mattae Cooper <human@mattaecooper.org>\nCo-Authored-By: aegntic.ai <contact@aegntic.ai>\n\ns/o cld4@thop\n\n#####ᵖᵒʷᵉʳᵉᵈ ᵇʸ ᵃᵉᵍⁿᵗᶦᶜ ᵉᶜᵒˢʸˢᵗᵉᵐˢ - ʳᵘᵗʰˡᵉˢˢˡʸ ᵈᵉᵛᵉˡᵒᵖᵉᵈ ᵇʸ aeˡᵗᵈ",
+    "universal_footer": "#####ᵖᵒʷᵉʳᵉᵈ ᵇʸ ᵃᵉᵍⁿᵗᶦᶜ ᵉᶜᵒˢʸˢᵗᵉᵐˢ - ʳᵘᵗʰˡᵉˢˢˡʸ ᵈᵉᵛᵉˡᵒᵖᵉᵈ ᵇʸ aeˡᵗᵈ",
+    "usage": "This footer appears on ALL content: websites, documentation, README files, commit messages, emails, presentations, code comments, and any other content created within the aegntic.ecosystem"
+  },
+  "repository_standards": {
+    "license": "MIT",
+    "copyright_holder": "aegntic.ecosystem [ae.ltd]",
+    "maintainer": "Mattae Cooper <human@mattaecooper.org>",
+    "organization": "aegntic.ai <contact@aegntic.ai>"
+  },
+  "projects": [
+    {
+      "name": "4site.pro",
+      "description": "AI-powered GitHub repository to professional website generator",
+      "repository": "https://github.com/aegntic/404site",
+      "live_url": "https://4site.pro"
+    },
+    {
+      "name": "aegntic-MCP",
+      "description": "Dynamic MCP server generator and management system",
+      "repository": "https://github.com/aegntic/aegntic-MCP"
+    },
+    {
+      "name": "quick-data-mcp",
+      "description": "Analytics and data processing MCP server",
+      "repository": "https://github.com/aegntic/quick-data-mcp"
+    }
+  ],
+  "version": "1.0.0",
+  "updated": "2025-06-26T00:00:00Z"
+}

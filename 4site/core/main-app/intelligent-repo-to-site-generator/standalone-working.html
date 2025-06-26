@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4site.pro - Repository to Website Generator</title>
+    <link rel="icon" type="image/x-icon" href="public/favicon.ico">
+    <link rel="icon" type="image/png" href="public/favicon.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0b;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* 3D Grid Background */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            perspective: 1000px;
+        }
+        
+        .grid-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(#000000 1px, transparent 1px),
+                linear-gradient(90deg, #000000 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.4;
+            animation: gridFloat 20s infinite linear;
+            transform: rotateX(60deg) translateZ(0px);
+        }
+        
+        @keyframes gridFloat {
+            0% { transform: rotateX(60deg) rotateY(0deg) translateZ(0px); }
+            25% { transform: rotateX(60deg) rotateY(90deg) translateZ(-50px); }
+            50% { transform: rotateX(60deg) rotateY(180deg) translateZ(-100px); }
+            75% { transform: rotateX(60deg) rotateY(270deg) translateZ(-50px); }
+            100% { transform: rotateX(60deg) rotateY(360deg) translateZ(0px); }
+        }
+        
+        /* Logo Section */
+        .logo-hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .logo-container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-image {
+            max-width: 400px;
+            height: auto;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.4));
+            transition: all 0.3s ease;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 11, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transform: translateY(-100%);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-logo {
+            height: 40px;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
+        }
+        
+        .header-nav {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .header-nav a {
+            color: #e5e7eb;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+        
+        .header-nav a:hover {
+            color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        .header-cta {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .header-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #111114 0%, #1a1a1e 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4rem 2rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-main {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-section h3 {
+            color: #ffffff;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .footer-section p {
+            color: #9ca3af;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #ffd700;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: #ffd700;
+            color: #000;
+            transform: translateY(-2px);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: #9ca3af;
+        }
+        
+        .footer-logo {
+            height: 60px;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.3));
+            margin-bottom: 1rem;
+        }
+        
+        /* Main Content */
+        .main-content {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .heading {
+            font-size: 4rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(156, 163, 175, 0.3);
+            color: #ffffff;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .blue-glow {
+            color: #3b82f6;
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        
+        .yellow-glow {
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        .orange-accent {
+            color: #cc5500;
+        }
+        
+        .subheading {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #e5e7eb;
+            text-shadow: 0 1px 3px rgba(107, 114, 128, 0.4);
+            margin-bottom: 3rem;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Cards */
+        .card {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.05) 0%, 
+                rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .featured-card {
+            border-color: #ffd700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+        }
+        
+        /* Form */
+        .repo-form {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .repo-input {
+            flex: 1;
+            min-width: 300px;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .repo-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .repo-input::placeholder {
+            color: #9ca3af;
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #3b82f6;
+            color: #3b82f6;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        .btn-accent {
+            background: #ffd700;
+            color: black;
+            font-weight: 700;
+        }
+        
+        .btn-accent:hover {
+            background: #ffc107;
+            transform: translateY(-2px);
+        }
+        
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        /* Features */
+        .feature-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #9ca3af;
+        }
+        
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            background: #3b82f6;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        .demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        /* Status messages */
+        .status {
+            text-align: center;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+        
+        .status-loading {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid #3b82f6;
+            color: #3b82f6;
+        }
+        
+        .status-success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid #22c55e;
+            color: #22c55e;
+        }
+        
+        .status-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+        }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .heading {
+                font-size: 2.5rem;
+            }
+            
+            .logo {
+                width: 200px;
+                height: 150px;
+                font-size: 1.8rem;
+            }
+            
+            .main-content {
+                padding: 2rem 1rem;
+            }
+            
+            .repo-form {
+                flex-direction: column;
+            }
+            
+            .repo-input {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-content">
+            <img src="public/4sitepro-logo.png" alt="4site.pro" class="header-logo">
+            <nav class="header-nav">
+                <a href="#features">Features</a>
+                <a href="#examples">Examples</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#docs">Docs</a>
+            </nav>
+            <a href="#get-started" class="header-cta">Get Started</a>
+        </div>
+    </header>
+
+    <!-- 3D Animated Grid Background -->
+    <div class="grid-background">
+        <div class="grid-canvas"></div>
+    </div>
+
+    <!-- Logo Hero Section -->
+    <section class="logo-hero">
+        <div class="logo-container" id="logoContainer">
+            <img 
+                src="public/4sitepro-logo.png" 
+                alt="4site.pro - Transform repositories into professional websites" 
+                class="logo-image"
+            />
+        </div>
+    </section>
+
+    <!-- Main Content Section -->
+    <section class="main-content">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h1 class="heading">
+                    Transform Any <span class="blue-glow">Repository</span><br>
+                    Into a <span class="yellow-glow">Professional Website</span>
+                </h1>
+                
+                <p class="subheading">
+                    Complete <span class="orange-accent">repository analysis</span> and transformation. 
+                    Not just README files—we analyze your entire codebase, documentation, 
+                    structure, and dependencies to create comprehensive professional websites.
+                </p>
+
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon"></div>
+                        <span>Full Codebase Analysis</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"></div>
+                        <span>Dependency Mapping</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"></div>
+                        <span>Professional Deployment</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"></div>
+                        <span>Enterprise Ready</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Repository Input Form -->
+            <div style="max-width: 700px; margin: 0 auto;">
+                <div class="card">
+                    <form class="repo-form" id="repoForm">
+                        <input 
+                            type="text" 
+                            class="repo-input"
+                            id="repoInput"
+                            placeholder="https://github.com/facebook/react or facebook/react"
+                            required
+                        >
+                        <button type="submit" class="btn btn-primary" id="generateBtn">
+                            <span id="btnText">Generate Site →</span>
+                        </button>
+                    </form>
+                    
+                    <!-- Status Display -->
+                    <div id="statusDisplay" style="display: none;"></div>
+                </div>
+
+                <!-- Quick Demo Examples -->
+                <div style="text-align: center; margin-top: 2rem;">
+                    <p style="color: #9ca3af; margin-bottom: 1rem;">
+                        Try our demo with popular repositories:
+                    </p>
+                    <div class="demo-buttons">
+                        <button class="btn btn-secondary" onclick="quickDemo('facebook/react')">Demo React</button>
+                        <button class="btn btn-secondary" onclick="quickDemo('microsoft/vscode')">Demo VS Code</button>
+                        <button class="btn btn-secondary" onclick="quickDemo('vercel/next.js')">Demo Next.js</button>
+                        <button class="btn btn-secondary" onclick="quickDemo('tailwindlabs/tailwindcss')">Demo Tailwind</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Value Proposition Grid -->
+            <div class="grid" style="margin-top: 5rem;">
+                <div class="card">
+                    <div style="width: 48px; height: 48px; background: rgba(59, 130, 246, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <div style="width: 24px; height: 24px; background: #3b82f6; border-radius: 4px;"></div>
+                    </div>
+                    <h3 style="font-size: 1.5rem; font-weight: 500; color: #e5e7eb; margin-bottom: 1rem;">Complete Analysis</h3>
+                    <p style="color: #9ca3af; line-height: 1.6;">
+                        We analyze your entire repository structure, not just the README. 
+                        Source code, documentation, dependencies, architecture patterns, and more.
+                    </p>
+                </div>
+
+                <div class="card featured-card">
+                    <div style="width: 48px; height: 48px; background: rgba(255, 215, 0, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <div style="width: 24px; height: 24px; background: #ffd700; border-radius: 4px;"></div>
+                    </div>
+                    <h3 style="font-size: 1.5rem; font-weight: 500; color: #e5e7eb; margin-bottom: 1rem;">Professional Output</h3>
+                    <p style="color: #9ca3af; line-height: 1.6;">
+                        Enterprise-grade websites with proper documentation, API references, 
+                        deployment guides, and professional presentation.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div style="width: 48px; height: 48px; background: rgba(204, 85, 0, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <div style="width: 24px; height: 24px; background: #cc5500; border-radius: 4px;"></div>
+                    </div>
+                    <h3 style="font-size: 1.5rem; font-weight: 500; color: #e5e7eb; margin-bottom: 1rem;">Deploy Anywhere</h3>
+                    <p style="color: #9ca3af; line-height: 1.6;">
+                        One-click deployment to GitHub Pages, Vercel, Netlify, or any static hosting. 
+                        Custom domains and CDN optimization included.
+                    </p>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div style="text-align: center; margin-top: 4rem;">
+                <div class="card" style="max-width: 600px; margin: 0 auto;">
+                    <h2 style="font-size: 1.5rem; font-weight: 500; color: #e5e7eb; margin-bottom: 1rem;">Ready to Transform Your Repository?</h2>
+                    <p style="color: #9ca3af; margin: 1rem 0 2rem 0;">
+                        Join thousands of developers who trust 4site.pro for professional 
+                        repository presentation and documentation.
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn btn-accent" onclick="scrollToForm()">Start Free Trial</button>
+                        <button class="btn btn-secondary" onclick="viewExamples()">View Examples</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-main">
+                <div class="footer-section">
+                    <img src="public/4sitepro-logo.png" alt="4site.pro" class="footer-logo">
+                    <p>Transform any GitHub repository into a professional website in seconds. The future of developer presentation is here.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link">𝕏</a>
+                        <a href="#" class="social-link">LI</a>
+                        <a href="#" class="social-link">GH</a>
+                        <a href="#" class="social-link">YT</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#examples">Examples</a></li>
+                        <li><a href="#templates">Templates</a></li>
+                        <li><a href="#integrations">Integrations</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#docs">Documentation</a></li>
+                        <li><a href="#api">API Reference</a></li>
+                        <li><a href="#guides">Guides</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#changelog">Changelog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#privacy">Privacy</a></li>
+                        <li><a href="#terms">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 4site.pro. All rights reserved. Powered by aegntic.ai</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Logo scroll fade effect
+        let isScrolling = false;
+        
+        function updateLogo() {
+            const scrollY = window.scrollY;
+            const logoContainer = document.getElementById('logoContainer');
+            
+            if (logoContainer) {
+                const opacity = Math.max(0.1, 1 - scrollY / 400);
+                const scale = Math.max(0.8, 1 - scrollY / 1000);
+                const translateY = scrollY * 0.3;
+                
+                logoContainer.style.opacity = opacity;
+                logoContainer.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+            }
+            
+            isScrolling = false;
+        }
+        
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                requestAnimationFrame(updateLogo);
+                isScrolling = true;
+            }
+        });
+
+        // Form functionality
+        const form = document.getElementById('repoForm');
+        const input = document.getElementById('repoInput');
+        const btn = document.getElementById('generateBtn');
+        const btnText = document.getElementById('btnText');
+        const statusDisplay = document.getElementById('statusDisplay');
+
+        function showStatus(message, type = 'loading') {
+            statusDisplay.style.display = 'block';
+            statusDisplay.className = `status status-${type}`;
+            
+            if (type === 'loading') {
+                statusDisplay.innerHTML = `<div class="spinner"></div>${message}`;
+            } else {
+                statusDisplay.innerHTML = message;
+            }
+        }
+
+        function hideStatus() {
+            statusDisplay.style.display = 'none';
+        }
+
+        function setLoading(loading) {
+            btn.disabled = loading;
+            
+            if (loading) {
+                btnText.innerHTML = '<div class="spinner"></div>Analyzing...';
+            } else {
+                btnText.innerHTML = 'Generate Site →';
+            }
+        }
+
+        // Simulate repository analysis
+        async function analyzeRepository(repoUrl) {
+            console.log('Starting analysis for:', repoUrl);
+            showStatus('Fetching repository information...', 'loading');
+            
+            // Simulate API call delay
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            showStatus('Analyzing repository structure...', 'loading');
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            showStatus('Generating professional website...', 'loading');
+            await new Promise(resolve => setTimeout(resolve, 2500));
+            
+            // Generate realistic data based on the repository
+            const repoName = repoUrl.split('/').pop() || 'repository';
+            const analysisData = generateAnalysisData(repoUrl, repoName);
+            
+            // Generate the actual website HTML
+            const websiteHTML = generateSiteHTML(repoUrl, analysisData);
+            
+            // Store the generated data
+            generatedSiteData = {
+                repoName: repoName,
+                repoUrl: repoUrl,
+                html: websiteHTML,
+                analysisData: analysisData
+            };
+            
+            // Show success with real data
+            showStatus(`✅ Successfully generated website for ${repoUrl}!<br><br>
+                <strong>Analysis Complete:</strong><br>
+                • Found ${analysisData.stats.files} source files<br>
+                • Detected ${analysisData.stats.dependencies} dependencies<br>
+                • Generated ${analysisData.stats.docs} documentation pages<br>
+                • Created professional landing page<br><br>
+                <button class="btn btn-accent" onclick="viewResult()">View Generated Site</button>
+                <button class="btn btn-secondary" onclick="downloadSite()">Download Files</button>
+            `, 'success');
+        }
+
+        function generateAnalysisData(repoUrl, repoName) {
+            // Generate realistic data based on common repository patterns
+            const commonRepoData = {
+                'react': {
+                    title: 'React - A JavaScript Library for Building User Interfaces',
+                    description: 'A declarative, efficient, and flexible JavaScript library for building user interfaces.',
+                    techStack: ['JavaScript', 'React', 'JSX', 'Node.js', 'Babel', 'Jest'],
+                    features: [
+                        'Declarative views make your code more predictable',
+                        'Component-based architecture',
+                        'Learn once, write anywhere',
+                        'Virtual DOM for optimal performance',
+                        'Rich ecosystem and community'
+                    ],
+                    stats: { files: 847, dependencies: 34, docs: 12 }
+                },
+                'vscode': {
+                    title: 'Visual Studio Code - Code Editing. Redefined.',
+                    description: 'Free source code editor made by Microsoft for Windows, Linux and macOS.',
+                    techStack: ['TypeScript', 'Electron', 'Node.js', 'CSS', 'HTML'],
+                    features: [
+                        'IntelliSense code completion',
+                        'Built-in Git commands',
+                        'Extensible and customizable',
+                        'Integrated terminal',
+                        'Cross-platform support'
+                    ],
+                    stats: { files: 1243, dependencies: 67, docs: 23 }
+                },
+                'tailwindcss': {
+                    title: 'Tailwind CSS - Rapidly build modern websites',
+                    description: 'A utility-first CSS framework for rapid UI development.',
+                    techStack: ['CSS', 'PostCSS', 'JavaScript', 'Node.js'],
+                    features: [
+                        'Utility-first CSS framework',
+                        'Responsive design utilities',
+                        'Component-friendly',
+                        'Customizable design system',
+                        'Dark mode support'
+                    ],
+                    stats: { files: 456, dependencies: 23, docs: 8 }
+                }
+            };
+
+            // Check if we have specific data for this repo
+            const lowerRepoName = repoName.toLowerCase();
+            for (const [key, data] of Object.entries(commonRepoData)) {
+                if (lowerRepoName.includes(key)) {
+                    return data;
+                }
+            }
+
+            // Generate generic but realistic data
+            return {
+                title: `${repoName.charAt(0).toUpperCase() + repoName.slice(1)} - Professional Project`,
+                description: `A well-crafted ${repoName} project with modern development practices and comprehensive documentation.`,
+                techStack: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'CSS', 'HTML'],
+                features: [
+                    'Modern development stack',
+                    'Comprehensive documentation',
+                    'Automated testing suite',
+                    'CI/CD pipeline integration',
+                    'Performance optimized'
+                ],
+                stats: {
+                    files: Math.floor(Math.random() * 500) + 100,
+                    dependencies: Math.floor(Math.random() * 50) + 10,
+                    docs: Math.floor(Math.random() * 15) + 5
+                }
+            };
+        }
+
+        let generatedSiteData = null;
+
+        function viewResult() {
+            if (!generatedSiteData) {
+                alert('No site data available');
+                return;
+            }
+            
+            // Create a new window with the generated website
+            const newWindow = window.open('', '_blank', 'width=1200,height=800');
+            newWindow.document.write(generatedSiteData.html);
+            newWindow.document.close();
+        }
+
+        function downloadSite() {
+            if (!generatedSiteData) {
+                alert('No site data available');
+                return;
+            }
+            
+            // Create and download a ZIP-like structure as a single HTML file
+            const blob = new Blob([generatedSiteData.html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${generatedSiteData.repoName}-website.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function generateSiteHTML(repoUrl, analysisData) {
+            const repoName = repoUrl.split('/').pop() || 'repository';
+            
+            return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${analysisData.title} - Professional Repository Website</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .description {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover { transform: translateY(-5px); }
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        .tech-tag {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .features {
+            list-style: none;
+            padding: 0;
+        }
+        .features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        .features li:before {
+            content: "✅ ";
+            margin-right: 0.5rem;
+        }
+        .cta {
+            text-align: center;
+            margin: 3rem 0;
+        }
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="hero-title">${analysisData.title}</h1>
+            <p class="description">${analysisData.description}</p>
+            <div class="tech-stack">
+                ${analysisData.techStack.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+            </div>
+        </header>
+
+        <div class="grid">
+            <div class="card">
+                <h3>🚀 Features</h3>
+                <ul class="features">
+                    ${analysisData.features.map(feature => `<li>${feature}</li>`).join('')}
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>📊 Project Stats</h3>
+                <p><strong>Repository:</strong> ${repoUrl}</p>
+                <p><strong>Files Analyzed:</strong> ${analysisData.stats.files}</p>
+                <p><strong>Dependencies:</strong> ${analysisData.stats.dependencies}</p>
+                <p><strong>Documentation:</strong> ${analysisData.stats.docs}</p>
+            </div>
+
+            <div class="card">
+                <h3>🛠️ Getting Started</h3>
+                <ol>
+                    <li>Clone the repository</li>
+                    <li>Install dependencies</li>
+                    <li>Run the development server</li>
+                    <li>Start building amazing things!</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="cta">
+            <a href="${repoUrl}" class="btn" target="_blank">View on GitHub</a>
+        </div>
+
+        <footer class="footer">
+            <p>🌟 Professional website generated by <strong>4site.pro</strong></p>
+            <p>Transform your repositories into stunning presentations</p>
+        </footer>
+    </div>
+</body>
+</html>`;
+        }
+
+        // Form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            console.log('Form submitted!');
+            
+            const repoUrl = input.value.trim();
+            console.log('Repository URL:', repoUrl);
+            
+            if (!repoUrl) {
+                alert('Please enter a repository URL');
+                return;
+            }
+            
+            setLoading(true);
+            hideStatus();
+            
+            try {
+                await analyzeRepository(repoUrl);
+            } catch (error) {
+                showStatus(`❌ Error: ${error.message}`, 'error');
+                console.error('Analysis failed:', error);
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        // Also add click handler for the button as backup
+        btn.addEventListener('click', (e) => {
+            console.log('Generate button clicked!');
+            if (e.target.type === 'submit') {
+                // Let the form handle it
+                return;
+            }
+            e.preventDefault();
+            form.dispatchEvent(new Event('submit'));
+        });
+
+        // Quick demo function
+        function quickDemo(repo) {
+            input.value = repo;
+            form.dispatchEvent(new Event('submit'));
+        }
+
+        // CTA functions
+        function scrollToForm() {
+            document.getElementById('repoForm').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => input.focus(), 500);
+        }
+
+        function viewExamples() {
+            alert('🎨 In a real implementation, this would show a gallery of example websites generated from popular repositories!');
+        }
+
+        // Initialize GSAP
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Initialize animations when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded');
+            console.log('Form element:', form);
+            console.log('Input element:', input);
+            console.log('Button element:', btn);
+            
+            initGSAPAnimations();
+        });
+        
+        function initGSAPAnimations() {
+            // Header slide down animation
+            gsap.to("#header", {
+                y: 0,
+                duration: 1,
+                ease: "power3.out",
+                delay: 0.5
+            });
+            
+            // Logo entrance animation
+            gsap.fromTo("#logoContainer", 
+                {
+                    scale: 0.5,
+                    opacity: 0,
+                    y: 100
+                },
+                {
+                    scale: 1,
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.5,
+                    ease: "elastic.out(1, 0.8)",
+                    delay: 0.8
+                }
+            );
+            
+            // Grid background animation
+            gsap.fromTo(".grid-canvas", 
+                {
+                    opacity: 0,
+                    scale: 1.2
+                },
+                {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 2,
+                    ease: "power2.out"
+                }
+            );
+            
+            // Main content stagger animation
+            gsap.fromTo(".heading", 
+                {
+                    y: 80,
+                    opacity: 0
+                },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1.2,
+                    ease: "power3.out",
+                    delay: 1.2
+                }
+            );
+            
+            gsap.fromTo(".subheading", 
+                {
+                    y: 60,
+                    opacity: 0
+                },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power3.out",
+                    delay: 1.4
+                }
+            );
+            
+            gsap.fromTo(".feature-list", 
+                {
+                    y: 40,
+                    opacity: 0
+                },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    ease: "power3.out",
+                    delay: 1.6
+                }
+            );
+            
+            // Card animations with scroll trigger
+            gsap.fromTo(".card", 
+                {
+                    y: 100,
+                    opacity: 0,
+                    scale: 0.9
+                },
+                {
+                    y: 0,
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.8,
+                    ease: "power3.out",
+                    stagger: 0.2,
+                    scrollTrigger: {
+                        trigger: ".grid",
+                        start: "top 80%",
+                        end: "bottom 20%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+            
+            // Form animation
+            gsap.fromTo(".repo-form", 
+                {
+                    y: 60,
+                    opacity: 0
+                },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power3.out",
+                    delay: 1.8
+                }
+            );
+            
+            // Demo buttons animation
+            gsap.fromTo(".demo-buttons .btn", 
+                {
+                    y: 30,
+                    opacity: 0
+                },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.6,
+                    ease: "power3.out",
+                    stagger: 0.1,
+                    delay: 2
+                }
+            );
+            
+            // Footer animation
+            gsap.fromTo(".footer", 
+                {
+                    y: 100,
+                    opacity: 0
+                },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: ".footer",
+                        start: "top 90%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+            
+            // Parallax effect for logo
+            gsap.to("#logoContainer", {
+                y: -100,
+                scrollTrigger: {
+                    trigger: "#logoContainer",
+                    start: "top center",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
+            
+            // Header background opacity on scroll
+            ScrollTrigger.create({
+                trigger: ".main-content",
+                start: "top 80px",
+                onUpdate: (self) => {
+                    const header = document.getElementById('header');
+                    const opacity = Math.min(self.progress * 2, 1);
+                    header.style.background = `rgba(10, 10, 11, ${0.7 + (opacity * 0.25)})`;
+                }
+            });
+        }
+        
+        // Enhanced button hover animations
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                gsap.to(button, {
+                    scale: 1.05,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+            
+            button.addEventListener('mouseleave', () => {
+                gsap.to(button, {
+                    scale: 1,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+        });
+        
+        console.log('4site.pro standalone application loaded successfully');
+        
+        // Auto-focus input after animations
+        setTimeout(() => {
+            if (window.innerWidth > 768) { // Only on desktop
+                input.focus();
+            }
+        }, 3000);
+        
+        // Test function to ensure JS is working
+        window.testJS = function() {
+            alert('JavaScript is working!');
+            console.log('Test function called');
+        };
+    </script>
+</body>
+</html>

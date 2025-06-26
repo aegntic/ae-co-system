@@ -1,0 +1,52 @@
+Okay, here's a 90-second video script for DailyDoco Pro, focusing on energetic delivery and developer appeal:
+
+**Video Title:** Don't Lose Your Code Documen-TIME! (DailyDoco Pro)
+
+**(0-5 seconds: PAIN POINT)**
+
+*   **Visual:** Opens with quick, slightly chaotic cuts:
+    *   A crowded room, laptops everywhere, people talking over each other during a meeting (looks like sprint planning).
+    *   A whiteboard with frantic scribbles.
+    *   A tired developer sighing while trying to take frantic notes on their laptop.
+    *   Quick cuts of open browser tabs with incomplete README files or Swagger docs.
+    *   A subtle, frustrated sound effect (like overlapping voices slightly distorted).
+*   **Dialogue (Voiceover - energetic, relatable):** "Sprint planning? Brilliant. But then... what happens to the documentation? It gets pushed aside. Forgotten. Lost in the code. That crucial context, the decisions made, the 'why' behind the 'what'? It vanishes faster than a dev debugging a 404. Developers, we know the *real* pain: valuable meeting time wasted *creating* docs you'll *never* update."
+*   **Music:** Starts slightly tense, then becomes fast-paced and energetic.
+
+**(5-15 seconds: INTRODUCTORY STATEMENT)**
+
+*   **Visual:** Quick dissolve to a sleek, modern interface of DailyDoco Pro in action – maybe a subtle robot icon appearing, or a clean UI overlaying the meeting scene visually (like a transparent window).
+*   **Dialogue (Voiceover):** "Until now. Introducing DailyDoco Pro. Powered by AI, we watch and listen automatically. We capture the live conversation, the presentations, the code snippets discussed – everything – in the background of your meetings."
+*   **Visual:** Text overlay: "DailyDoco Pro"
+*   **Music:** Becomes more dynamic, techy sound elements.
+
+**(15-30 seconds: KEY FEATURES)**
+
+*   **Visual:** Split screen or quick cuts showcasing features:
+    *   **AI Prediction:** Show a dashboard snippet where topics are automatically highlighted or a document outline being generated mid-meeting. Text appears: "AI Predicts Content."
+    *   **Automatic Capture:** Show a visual representation of a meeting (generic face blur) with text bubbles popping up corresponding to spoken points. Text appears: "Automatic Capture. No Setup Needed."
+    *   **Human Narration:** Show a clean, professional voiceover recording the meeting's key points – maybe a waveform graphic under the audio. Text appears: "Professional Human Narration."
+    *   **Video Export:** Show the final output – a polished, short video summarizing the meeting with speaker views (blurred faces) and key text highlights. Text appears: "Export in Video Format."
+*   **Dialogue (Voiceover - faster pace, enthusiastic):** "Imagine: AI *predicts* what needs documenting. Our smart engine *automatically captures* everything – audio, presentations, context. Then, we provide *human-quality narration* for clarity. Finally, you can *export it all – even in video*! Documentation that just *creates itself*."
+*   **Music:** Remains energetic, perhaps with sound effects matching the visuals (beeps for capture, smooth transition for narration).
+
+**(30-45 seconds: HIGHLIGHT RESULTS)**
+
+*   **Visual:** Show a split screen:
+    *   Left: Happy, focused developers working efficiently at their desks (stock footage or mock-up).
+    *   Right: A visual representation of time saved – maybe a giant calendar page with "127 hours saved" highlighted, or a clock ticking away time.
+*   **Dialogue (Voiceover):** "The results speak for themselves. 12,000+ teams already trust DailyDoco Pro to keep their knowledgebase fresh. That means an average of 127 hours saved *each month*! Stop fighting fires with documentation. Start building."
+*   **Visual:** Briefly flash the DailyDoco Pro logo again.
+*   **Music:** Sustained, positive, achievement-oriented track.
+
+**(45-90 seconds: STRONG CTA)**
+
+*   **Visual:** Full screen of the DailyDoco Pro logo. Text overlay appears:
+    *   "Start your free trial today"
+    *   "See the difference AI makes"
+    *   Website URL: dailydoco.pro (animated bounce or pulse effect)
+*   **Dialogue (Voiceover - urgent, confident):** "Ready to bring your documentation out of the sprint shadows? Stop the drain. Join the thousands of efficient teams. Try DailyDoco Pro completely free today. Visit DailyDoco.Pro. Your future, documented, awaits."
+*   **Visual:** Text overlay with final URL: dailydoco.pro
+*   **Music:** Builds slightly to a final, strong beat before fading.
+
+**End Screen:** Website URL: dailydoco.pro (can stay for a few seconds after the last beat)

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarah Chen - Full Stack Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'gray-950': '#0a0a0a',
+                        'gray-900': '#161616',
+                        'gray-850': '#1a1a1a',
+                        'gray-800': '#262626',
+                        'gray-700': '#404040',
+                        'gray-600': '#525252',
+                        'gray-400': '#a3a3a3',
+                        'gray-300': '#d4d4d4',
+                        'purple-500': '#8b5cf6',
+                        'purple-400': '#a78bfa',
+                        'blue-500': '#3b82f6',
+                        'emerald-400': '#34d399'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Inter&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-950 text-white font-inter min-h-screen overflow-x-hidden">
+    <!-- Enhanced Grid Background -->
+    <div class="fixed inset-0 opacity-40 pointer-events-none">
+        <div class="absolute inset-0 grid-bg"></div>
+        
+        <!-- Enhanced grid elements -->
+        <div class="absolute grid-elements">
+            <!-- Larger feature squares -->
+            <div class="feature-square top-[120px] left-[180px]"></div>
+            <div class="feature-square top-[240px] right-[280px]"></div>
+            <div class="feature-square bottom-[180px] left-[380px]"></div>
+            
+            <!-- Small accent dots -->
+            <div class="accent-dot top-[160px] right-[180px]"></div>
+            <div class="accent-dot bottom-[280px] left-[280px]"></div>
+            <div class="accent-dot top-[320px] left-[120px]"></div>
+            
+            <!-- Connecting lines -->
+            <div class="connect-line-h top-[180px] left-[260px]"></div>
+            <div class="connect-line-v top-[180px] left-[340px]"></div>
+            <div class="connect-line-h bottom-[200px] right-[380px]"></div>
+        </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="relative z-20 flex items-center justify-between px-6 pt-4 text-xs text-gray-500">
+        <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-1">
+                <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                <span>Available for projects</span>
+            </div>
+            <span>Based in San Francisco</span>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span>UTC-8</span>
+            <div class="flex items-center space-x-1">
+                <div class="w-1 h-1 bg-gray-600 rounded-full"></div>
+                <div class="w-1 h-1 bg-gray-600 rounded-full"></div>
+                <div class="w-1 h-1 bg-white rounded-full"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mac Dock Style Navigation -->
+    <nav class="relative z-10 flex items-center justify-center pt-6 px-6">
+        <div class="bg-gray-900/80 border border-gray-800/50 rounded-2xl px-8 py-4 backdrop-blur-xl shadow-2xl">
+            <div class="flex items-center justify-center space-x-8">
+                <a href="#" class="nav-item group flex flex-col items-center space-y-2" data-active="false">
+                    <span class="text-gray-400 group-hover:text-white transition-all duration-200 text-sm font-medium">About</span>
+                    <div class="nav-dot w-1 h-1 bg-transparent rounded-full transition-all duration-200"></div>
+                </a>
+                <a href="#" class="nav-item group flex flex-col items-center space-y-2" data-active="true">
+                    <span class="text-white font-medium text-sm">Work</span>
+                    <div class="nav-dot w-1 h-1 bg-white rounded-full"></div>
+                </a>
+                <a href="#" class="nav-item group flex flex-col items-center space-y-2" data-active="false">
+                    <span class="text-gray-400 group-hover:text-white transition-all duration-200 text-sm font-medium">Experience</span>
+                    <div class="nav-dot w-1 h-1 bg-transparent rounded-full transition-all duration-200"></div>
+                </a>
+                <a href="#" class="nav-item group flex flex-col items-center space-y-2" data-active="false">
+                    <span class="text-gray-400 group-hover:text-white transition-all duration-200 text-sm font-medium">Contact</span>
+                    <div class="nav-dot w-1 h-1 bg-transparent rounded-full transition-all duration-200"></div>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 -mt-16">
+        <div class="text-center max-w-6xl mx-auto">
+            <!-- Badge -->
+            <div class="inline-flex items-center space-x-2 bg-gray-900/50 border border-gray-800/50 rounded-full px-4 py-2 mb-8 backdrop-blur-sm">
+                <div class="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                <span class="text-gray-300 text-sm font-medium">Currently building AI-powered web applications</span>
+            </div>
+
+            <!-- Subtitle -->
+            <p class="text-gray-400 text-sm font-medium uppercase tracking-widest mb-8 letter-spacing-2">
+                Full Stack Developer & UI/UX Designer
+            </p>
+
+            <!-- Main Heading -->
+            <h1 class="text-5xl lg:text-7xl font-bold leading-tight mb-8 tracking-tight">
+                Crafting Digital<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-blue-500 to-emerald-400">Experiences</span><br>
+                <span class="text-gray-300">That Matter</span>
+            </h1>
+
+            <!-- Description -->
+            <p class="text-gray-300 text-xl font-normal mb-12 max-w-2xl mx-auto leading-relaxed">
+                Hey there! I'm Sarah Chen, a passionate full-stack developer specializing in React, Node.js, and modern web technologies. I transform complex ideas into elegant, user-centric digital solutions.
+            </p>
+
+            <!-- Stats -->
+            <div class="flex items-center justify-center space-x-12 mb-12 text-center">
+                <div class="stat-item">
+                    <div class="text-2xl font-bold text-white">50+</div>
+                    <div class="text-sm text-gray-400">Projects Delivered</div>
+                </div>
+                <div class="w-px h-8 bg-gray-800"></div>
+                <div class="stat-item">
+                    <div class="text-2xl font-bold text-white">5</div>
+                    <div class="text-sm text-gray-400">Years Experience</div>
+                </div>
+                <div class="w-px h-8 bg-gray-800"></div>
+                <div class="stat-item">
+                    <div class="text-2xl font-bold text-white">98%</div>
+                    <div class="text-sm text-gray-400">Client Satisfaction</div>
+                </div>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="flex items-center justify-center space-x-4">
+                <button class="primary-btn group bg-white text-gray-950 px-8 py-4 rounded-xl font-semibold text-sm transition-all duration-200 flex items-center space-x-2 hover:bg-gray-200 hover:scale-105 shadow-lg">
+                    <span>View My Work</span>
+                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </button>
+                <button class="secondary-btn group bg-gray-900/80 border border-gray-700 hover:border-gray-600 text-white px-8 py-4 rounded-xl font-medium text-sm transition-all duration-200 flex items-center space-x-2 hover:bg-gray-800 backdrop-blur-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                    </svg>
+                    <span>Let's Talk</span>
+                </button>
+            </div>
+
+            <!-- Tech Stack -->
+            <div class="mt-16 pt-8 border-t border-gray-800">
+                <p class="text-gray-500 text-sm mb-6">Technologies I work with</p>
+                <div class="flex items-center justify-center space-x-8 text-gray-400">
+                    <div class="tech-item">React</div>
+                    <div class="tech-item">Next.js</div>
+                    <div class="tech-item">Node.js</div>
+                    <div class="tech-item">TypeScript</div>
+                    <div class="tech-item">PostgreSQL</div>
+                    <div class="tech-item">Figma</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+        }
+        
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(64, 64, 64, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(64, 64, 64, 0.2) 1px, transparent 1px);
+            background-size: 32px 32px;
+            background-position: 0 0, 0 0;
+        }
+        
+        .feature-square {
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1));
+            border-radius: 4px;
+        }
+        
+        .accent-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: rgba(52, 211, 153, 0.6);
+            border-radius: 50%;
+        }
+        
+        .connect-line-h {
+            position: absolute;
+            width: 32px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.4), transparent);
+        }
+        
+        .connect-line-v {
+            position: absolute;
+            width: 1px;
+            height: 32px;
+            background: linear-gradient(180deg, transparent, rgba(139, 92, 246, 0.4), transparent);
+        }
+        
+        .letter-spacing-2 {
+            letter-spacing: 0.2em;
+        }
+        
+        .nav-item:hover .nav-dot {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .nav-item[data-active="true"] .nav-dot {
+            background-color: white;
+        }
+        
+        .stat-item {
+            transition: transform 0.2s ease;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-2px);
+        }
+        
+        .tech-item {
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(64, 64, 64, 0.5);
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        
+        .tech-item:hover {
+            border-color: rgba(139, 92, 246, 0.5);
+            color: rgba(139, 92, 246, 1);
+            transform: translateY(-1px);
+        }
+        
+        .primary-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .secondary-btn:active {
+            transform: scale(0.98);
+        }
+        
+        /* Focus states */
+        button:focus-visible, a:focus-visible {
+            outline: 2px solid rgba(139, 92, 246, 0.5);
+            outline-offset: 2px;
+            border-radius: 8px;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .feature-square {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .feature-square:nth-child(2) {
+            animation-delay: -2s;
+        }
+        
+        .feature-square:nth-child(3) {
+            animation-delay: -4s;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Enhanced nav interactions
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active state from all items
+                    navItems.forEach(nav => {
+                        nav.setAttribute('data-active', 'false');
+                        nav.querySelector('.nav-dot').style.backgroundColor = 'transparent';
+                    });
+                    
+                    // Set active state for clicked item
+                    this.setAttribute('data-active', 'true');
+                    this.querySelector('.nav-dot').style.backgroundColor = 'white';
+                });
+            });
+            
+            // Button animations
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // Parallax effect for grid elements
+            window.addEventListener('mousemove', function(e) {
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+                
+                const gridElements = document.querySelectorAll('.feature-square, .accent-dot');
+                gridElements.forEach((element, index) => {
+                    const speed = (index + 1) * 0.5;
+                    const x = (mouseX - 0.5) * speed;
+                    const y = (mouseY - 0.5) * speed;
+                    element.style.transform = `translate(${x}px, ${y}px)`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

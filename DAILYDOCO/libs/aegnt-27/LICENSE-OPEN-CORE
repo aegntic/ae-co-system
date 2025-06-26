@@ -1,0 +1,126 @@
+# Open Core License for aegnt-27: The Human Peak Protocol
+
+**Version 1.0 - Effective Date: December 6, 2024**
+
+This Open Core License Agreement ("Agreement") governs the use of the open source components of aegnt-27: The Human Peak Protocol software ("Software").
+
+## Open Source Components
+
+The following components are licensed under the MIT License and are free to use:
+
+### ✅ **Framework & Interfaces** (MIT Licensed)
+- Core engine interfaces and builder patterns (`src/lib.rs`)
+- Configuration structures and validation (`src/config.rs`) 
+- Error handling and result types (`src/error.rs`)
+- Basic utility functions (`src/utils.rs`)
+- Example code and documentation (`examples/`, `docs/`)
+
+### ✅ **Basic Implementations** (MIT Licensed)
+- **Basic Mouse Movement**: Simple linear interpolation and basic curves
+- **Basic Typing Simulation**: Fixed timing patterns with simple WPM variation
+- **Basic Detection Validation**: Heuristic checks (60-70% accuracy)
+- **Basic Audio Processing**: Simple filtering and noise injection
+- **Basic Visual Enhancement**: Simple gaze pattern simulation
+
+## Performance Limitations of Open Source Version
+
+| Feature | Open Source | Proprietary |
+|---------|-------------|-------------|
+| Mouse Authenticity | 75% | 96% |
+| Typing Authenticity | 70% | 95% |
+| Audio Authenticity | 70% | 94% |
+| Visual Authenticity | 65% | 93% |
+| AI Detection Resistance | 60-70% | 98%+ |
+
+## 🔒 **Proprietary Components** (Commercial License Required)
+
+The following components require a commercial license:
+
+### **Advanced Engines** (Located in `proprietary/` directory)
+- **Advanced Mouse Authenticity Engine**: Neural-based movement simulation
+- **Advanced Typing Authenticity Engine**: Cognitive load and keystroke dynamics
+- **Advanced AI Detection Resistance**: Multi-model evasion algorithms  
+- **Advanced Audio Spectral Humanization**: Voice tract and breathing modeling
+- **Advanced Visual Authenticity Engine**: Attention modeling and gaze physics
+
+### **Premium Features**
+- 27-point behavioral pattern algorithms
+- Neural network-based authenticity modeling
+- Real-time adaptation and learning systems
+- Enterprise-grade performance optimization
+- Custom pattern development tools
+
+## MIT License Terms (Open Source Components)
+
+```
+MIT License
+
+Copyright (c) 2024 Anthropic PBC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+## Upgrade Path to Commercial
+
+### **When You Need Commercial License:**
+- Authenticity requirements above 80%
+- Production applications requiring optimal performance
+- AI detection resistance above 70%
+- Revenue-generating applications
+- Enterprise deployment requirements
+
+### **Commercial Benefits:**
+- Full access to proprietary engines
+- 20-30% performance improvement
+- Priority support and SLA
+- Custom feature development
+- Enterprise-grade security and compliance
+
+## Commercial Licensing
+
+**Contact**: licensing@aegntic.com  
+**Pricing**: See [LICENSE-COMMERCIAL](LICENSE-COMMERCIAL)  
+**Evaluation**: 30-day commercial trial available  
+
+## Attribution Requirements
+
+All uses of open source components must include:
+```
+"Built with aegnt-27: The Human Peak Protocol (Open Core)"
+https://github.com/aegntic/aegnt27
+```
+
+## Mixing Open Source and Proprietary
+
+- ✅ You may use open source components independently
+- ✅ You may extend open source components  
+- ✅ You may distribute applications using only open source components
+- ❌ You may not reverse engineer proprietary components
+- ❌ You may not redistribute proprietary binaries
+- ❌ You may not use proprietary components without commercial license
+
+## Community Contributions
+
+Contributions to open source components are welcome under the MIT License. Contributors retain copyright but grant broad usage rights for both open source and commercial versions.
+
+---
+
+© 2024 Anthropic PBC. All rights reserved.  
+Open source components: MIT License  
+Proprietary components: Commercial license required

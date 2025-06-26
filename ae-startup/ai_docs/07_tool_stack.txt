@@ -1,0 +1,40 @@
+MATTAE'S AI TOOL STACK
+===================
+
+IDEATION:
+- ideabrowser.com
+
+SKETCHING:
+- tldraw or FigJam
+
+VOICE PROMPTING:
+- Wispr Flow
+
+SCOPING OUT PROTOTYPES:
+- Manus
+
+VIBE CODING:
+- Bolt.new → friendly for non-technical folks
+- Loveable → friendly for non-technical folks
+- Cursor → more technical
+- Windsurf → more technical
+
+VIBE MARKETING WITH AI WORKFLOWS:
+- Lindy → friendly for non-technical folks
+- Gumloop → friendly for non-technical folks
+- N8N → more technical
+
+CATEGORIES:
+- Non-technical friendly: Bolt.new, Loveable, Lindy, Gumloop
+- More technical: Cursor, Windsurf, N8N
+
+TOTAL BUDGET: < $500
+TOTAL TIME: 3 hours
+
+This stack allows you to replace multiple roles:
+- Developer
+- Salesperson
+- Designer
+- Marketer
+- Researcher
+- Product Manager

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silk Shader Background</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+            color: white;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        
+        .content a {
+            color: #a78bfa;
+            text-decoration: none;
+        }
+        
+        .content a:hover {
+            text-decoration: underline;
+        }
+        
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 10px;
+            color: white;
+        }
+        
+        .control-group {
+            margin-bottom: 0.5rem;
+        }
+        
+        label {
+            display: block;
+            font-size: 0.8rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+        
+        input[type="color"] {
+            width: 100%;
+            height: 30px;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+<script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <div class="content">
+        <h1>Silk Shader Background</h1>
+        <p>Beautiful animated shader background with customizable parameters</p>
+        <p><small>Original design from <a href="https://www.reactbits.dev/backgrounds/silk" target="_blank">ReactBits Silk Background</a></small></p>
+    </div>
+    
+    <div class="controls">
+        <div class="control-group">
+            <label for="speed">Speed</label>
+            <input type="range" id="speed" min="0" max="10" step="0.1" value="5">
+        </div>
+        <div class="control-group">
+            <label for="scale">Scale</label>
+            <input type="range" id="scale" min="0.1" max="5" step="0.1" value="1">
+        </div>
+        <div class="control-group">
+            <label for="noise">Noise Intensity</label>
+            <input type="range" id="noise" min="0" max="5" step="0.1" value="1.5">
+        </div>
+        <div class="control-group">
+            <label for="rotation">Rotation</label>
+            <input type="range" id="rotation" min="0" max="6.28" step="0.1" value="0">
+        </div>
+        <div class="control-group">
+            <label for="color">Color</label>
+            <input type="color" id="color" value="#7B7481">
+        </div>
+    </div>
+
+    <script>
+        // Utility function to convert hex to normalized RGB
+        function hexToNormalizedRGB(hex) {
+            hex = hex.replace("#", "");
+            return [
+                parseInt(hex.slice(0, 2), 16) / 255,
+                parseInt(hex.slice(2, 4), 16) / 255,
+                parseInt(hex.slice(4, 6), 16) / 255,
+            ];
+        }
+
+        // Shader code
+        const vertexShader = `
+            varying vec2 vUv;
+            varying vec3 vPosition;
+
+            void main() {
+                vPosition = position;
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `;
+
+        const fragmentShader = `
+            varying vec2 vUv;
+            varying vec3 vPosition;
+
+            uniform float uTime;
+            uniform vec3  uColor;
+            uniform float uSpeed;
+            uniform float uScale;
+            uniform float uRotation;
+            uniform float uNoiseIntensity;
+
+            const float e = 2.71828182845904523536;
+
+            float noise(vec2 texCoord) {
+                float G = e;
+                vec2  r = (G * sin(G * texCoord));
+                return fract(r.x * r.y * (1.0 + texCoord.x));
+            }
+
+            vec2 rotateUvs(vec2 uv, float angle) {
+                float c = cos(angle);
+                float s = sin(angle);
+                mat2  rot = mat2(c, -s, s, c);
+                return rot * uv;
+            }
+
+            void main() {
+                float rnd        = noise(gl_FragCoord.xy);
+                vec2  uv         = rotateUvs(vUv * uScale, uRotation);
+                vec2  tex        = uv * uScale;
+                float tOffset    = uSpeed * uTime;
+
+                tex.y += 0.03 * sin(8.0 * tex.x - tOffset);
+
+                float pattern = 0.6 +
+                              0.4 * sin(5.0 * (tex.x + tex.y +
+                                               cos(3.0 * tex.x + 5.0 * tex.y) +
+                                               0.02 * tOffset) +
+                                       sin(20.0 * (tex.x + tex.y - 0.1 * tOffset)));
+
+                vec4 col = vec4(uColor, 1.0) * vec4(pattern) - rnd / 15.0 * uNoiseIntensity;
+                col.a = 1.0;
+                gl_FragColor = col;
+            }
+        `;
+
+        // Three.js setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        
+        const container = document.getElementById('canvas-container');
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        // Shader uniforms
+        const uniforms = {
+            uSpeed: { value: 5 },
+            uScale: { value: 1 },
+            uNoiseIntensity: { value: 1.5 },
+            uColor: { value: new THREE.Color(...hexToNormalizedRGB("#7B7481")) },
+            uRotation: { value: 0 },
+            uTime: { value: 0 }
+        };
+
+        // Create shader material and mesh
+        const material = new THREE.ShaderMaterial({
+            uniforms: uniforms,
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader
+        });
+
+        const geometry = new THREE.PlaneGeometry(2, 2);
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        // Controls
+        const speedControl = document.getElementById('speed');
+        const scaleControl = document.getElementById('scale');
+        const noiseControl = document.getElementById('noise');
+        const rotationControl = document.getElementById('rotation');
+        const colorControl = document.getElementById('color');
+
+        speedControl.addEventListener('input', (e) => {
+            uniforms.uSpeed.value = parseFloat(e.target.value);
+        });
+
+        scaleControl.addEventListener('input', (e) => {
+            uniforms.uScale.value = parseFloat(e.target.value);
+        });
+
+        noiseControl.addEventListener('input', (e) => {
+            uniforms.uNoiseIntensity.value = parseFloat(e.target.value);
+        });
+
+        rotationControl.addEventListener('input', (e) => {
+            uniforms.uRotation.value = parseFloat(e.target.value);
+        });
+
+        colorControl.addEventListener('input', (e) => {
+            const rgb = hexToNormalizedRGB(e.target.value);
+            uniforms.uColor.value.setRGB(rgb[0], rgb[1], rgb[2]);
+        });
+
+        // Animation loop
+        const clock = new THREE.Clock();
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            const delta = clock.getDelta();
+            uniforms.uTime.value += 0.1 * delta;
+            
+            renderer.render(scene, camera);
+        }
+
+        // Handle window resize
+        function onWindowResize() {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        window.addEventListener('resize', onWindowResize);
+
+        // Start animation
+        animate();
+    </script>
+</body>
+</html>

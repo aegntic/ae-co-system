@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "UltraPlan - First Principles Project Resolver",
+  "version": "1.0.0",
+  "description": "Transform any codebase into actionable, parallel-executable project plans using First Principles methodology",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "identity",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://github.com/*",
+    "https://gitlab.com/*",
+    "https://bitbucket.org/*",
+    "https://api.github.com/*",
+    "https://gitlab.com/api/*",
+    "https://api.bitbucket.org/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://github.com/*",
+        "https://gitlab.com/*",
+        "https://bitbucket.org/*"
+      ],
+      "js": ["content-script.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "UltraPlan Project Analyzer"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["inject.js", "analyzer.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

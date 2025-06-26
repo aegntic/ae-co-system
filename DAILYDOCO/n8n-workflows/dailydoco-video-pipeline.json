@@ -1,0 +1,200 @@
+{
+  "name": "DailyDoco Pro Video Generation Pipeline",
+  "description": "Complete zero-cost video generation workflow with AI coordination",
+  "version": "2.0.0",
+  "nodes": [
+    {
+      "id": "video_trigger",
+      "type": "n8n-nodes-base.webhook",
+      "name": "Video Generation Request",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "generate-video",
+        "responseMode": "responseNode"
+      },
+      "position": [200, 300]
+    },
+    {
+      "id": "script_generator",
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "AI Script Generation",
+      "parameters": {
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "method": "POST",
+        "headers": {
+          "entries": [
+            {"name": "Authorization", "value": "Bearer {{ $secrets.OPENROUTER_API_KEY }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "body": {
+          "model": "deepseek/deepseek-r1.1",
+          "messages": [
+            {
+              "role": "system", 
+              "content": "Generate professional video scripts for developer documentation"
+            },
+            {
+              "role": "user",
+              "content": "={{ 'Create a 90-second script about: ' + $json.topic }}"
+            }
+          ],
+          "max_tokens": 1000
+        },
+        "options": {
+          "response": {
+            "fullResponse": false
+          }
+        }
+      },
+      "position": [400, 200]
+    },
+    {
+      "id": "image_generator",
+      "type": "n8n-nodes-base.httpRequest", 
+      "name": "Generate Visuals",
+      "parameters": {
+        "url": "https://image.pollinations.ai/prompt/{{ $json.imagePrompt }}?width=1920&height=1080&seed=42",
+        "method": "GET",
+        "options": {
+          "response": {
+            "fullResponse": true,
+            "responseFormat": "file"
+          }
+        }
+      },
+      "position": [400, 300]
+    },
+    {
+      "id": "voice_synthesizer",
+      "type": "n8n-nodes-base.executeCommand",
+      "name": "Voice Synthesis",
+      "parameters": {
+        "command": "edge-tts",
+        "arguments": "--voice en-US-AriaNeural --file {{ $json.scriptFile }} --write-media {{ $json.audioOutput }}"
+      },
+      "position": [400, 400]
+    },
+    {
+      "id": "video_composer",
+      "type": "n8n-nodes-base.executeCommand",
+      "name": "Video Composition",
+      "parameters": {
+        "command": "ffmpeg",
+        "arguments": "-loop 1 -i {{ $json.image }} -i {{ $json.audio }} -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -shortest {{ $json.output }}"
+      },
+      "position": [600, 300]
+    },
+    {
+      "id": "authenticity_enhancer",
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "aegnt-27 Humanization",
+      "parameters": {
+        "url": "http://localhost:8080/api/humanize",
+        "method": "POST",
+        "body": {
+          "content": "={{ $json.script }}",
+          "target_authenticity": 97,
+          "detection_resistance": true
+        }
+      },
+      "position": [600, 200]
+    },
+    {
+      "id": "quality_validator",
+      "type": "n8n-nodes-base.code",
+      "name": "Quality Validation",
+      "parameters": {
+        "jsCode": "// Video quality validation\nconst validator = {\n  validateVideo: async (videoData) => {\n    const checks = {\n      duration: videoData.duration > 80 && videoData.duration < 100, // 80-100 seconds\n      fileSize: videoData.size < 50 * 1024 * 1024, // < 50MB\n      resolution: videoData.width >= 1920 && videoData.height >= 1080,\n      authenticity: videoData.authenticityScore > 95,\n      audioQuality: videoData.audioScore > 80\n    };\n    \n    const passed = Object.values(checks).every(check => check);\n    \n    return {\n      success: passed,\n      quality_score: passed ? 95 : 65,\n      checks,\n      recommendations: passed ? [] : [\n        'Consider adjusting script length',\n        'Optimize video compression',\n        'Enhance audio quality'\n      ]\n    };\n  }\n};\n\nconst result = await validator.validateVideo($json);\nreturn result;"
+      },
+      "position": [800, 300]
+    },
+    {
+      "id": "distribution_engine",
+      "type": "n8n-nodes-base.switch",
+      "name": "Distribution Router",
+      "parameters": {
+        "values": [
+          {
+            "conditions": {
+              "boolean": [{"value1": "={{ $json.success }}", "value2": true}]
+            }
+          }
+        ]
+      },
+      "position": [1000, 300]
+    },
+    {
+      "id": "upload_to_cdn",
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "Upload to CDN",
+      "parameters": {
+        "url": "https://api.cloudflare.com/client/v4/accounts/{{ $secrets.CLOUDFLARE_ACCOUNT_ID }}/stream",
+        "method": "POST",
+        "headers": {
+          "entries": [
+            {"name": "Authorization", "value": "Bearer {{ $secrets.CLOUDFLARE_TOKEN }}"}
+          ]
+        },
+        "sendBinaryData": true,
+        "binaryPropertyName": "video"
+      },
+      "position": [1200, 200]
+    },
+    {
+      "id": "notify_completion",
+      "type": "n8n-nodes-base.slack",
+      "name": "Slack Notification",
+      "parameters": {
+        "channel": "#dailydoco-videos",
+        "text": "🎬 New video generated: {{ $json.title }}\n📊 Quality Score: {{ $json.quality_score }}%\n🔗 URL: {{ $json.video_url }}\n⏱️ Processing Time: {{ $json.processing_time }}ms"
+      },
+      "position": [1200, 300]
+    },
+    {
+      "id": "video_response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "name": "Video Generation Response",
+      "parameters": {
+        "responseCode": 200,
+        "responseData": "={{ JSON.stringify({\n  success: $json.success,\n  video_url: $json.video_url,\n  quality_score: $json.quality_score,\n  processing_time: $json.processing_time,\n  authenticity_score: $json.authenticity_score\n}) }}"
+      },
+      "position": [1200, 400]
+    }
+  ],
+  "connections": {
+    "video_trigger": {
+      "main": [["script_generator", "image_generator", "voice_synthesizer"]]
+    },
+    "script_generator": {
+      "main": [["authenticity_enhancer"]]
+    },
+    "image_generator": {
+      "main": [["video_composer"]]
+    },
+    "voice_synthesizer": {
+      "main": [["video_composer"]]
+    },
+    "authenticity_enhancer": {
+      "main": [["video_composer"]]
+    },
+    "video_composer": {
+      "main": [["quality_validator"]]
+    },
+    "quality_validator": {
+      "main": [["distribution_engine"]]
+    },
+    "distribution_engine": {
+      "main": [["upload_to_cdn", "notify_completion", "video_response"]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "2.0.0"
+}

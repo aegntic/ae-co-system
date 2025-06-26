@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyDoco Pro</title>
+    <link rel="stylesheet" href="popup.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">📹</div>
+                    <div class="logo-text">
+                        <div class="logo-title">DailyDoco Pro</div>
+                        <div class="logo-subtitle">AI Documentation Assistant</div>
+                    </div>
+                </div>
+                <div class="status-indicator" id="statusIndicator">
+                    <div class="status-dot"></div>
+                    <span class="status-text">Ready</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Current Project Info -->
+            <section class="project-section">
+                <div class="section-header">
+                    <h3>Current Project</h3>
+                    <button class="btn-icon" id="refreshProject" title="Refresh project detection">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <polyline points="1 20 1 14 7 14"></polyline>
+                            <path d="m3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="project-info" id="projectInfo">
+                    <div class="project-loading">
+                        <div class="spinner"></div>
+                        <span>Detecting project...</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Capture Controls -->
+            <section class="capture-section">
+                <div class="capture-main">
+                    <button class="capture-btn" id="captureBtn" data-state="ready">
+                        <div class="capture-btn-content">
+                            <div class="capture-icon">
+                                <svg class="record-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                </svg>
+                                <svg class="stop-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <rect x="6" y="6" width="12" height="12" rx="2"></rect>
+                                </svg>
+                            </div>
+                            <div class="capture-text">
+                                <span class="capture-title">Start Recording</span>
+                                <span class="capture-subtitle">Intelligent capture with AI optimization</span>
+                            </div>
+                        </div>
+                        <div class="capture-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <div class="capture-time">00:00</div>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <button class="action-btn" id="analyzeBtn" title="Quick project analysis">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 11H1v10h8V11zM15 5h-4v16h4V5zM21 3h-4v18h4V3z"></path>
+                        </svg>
+                        <span>Analyze</span>
+                    </button>
+                    <button class="action-btn" id="settingsBtn" title="Extension settings">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="m12 1 2.01 2.01L16 3l-.99 2.99L18 6l-2.99.99L15 9l-2.99-.99L12 11l-2.01-2.01L8 9l.99-2.99L6 6l2.99-.99L9 3l2.01 2.01z"></path>
+                        </svg>
+                        <span>Settings</span>
+                    </button>
+                    <button class="action-btn" id="helpBtn" title="Help & documentation">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                        <span>Help</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- AI Features -->
+            <section class="ai-section">
+                <div class="section-header">
+                    <h3>AI Features</h3>
+                    <div class="ai-badge">ELITE</div>
+                </div>
+                <div class="ai-features">
+                    <div class="feature-toggle">
+                        <div class="feature-info">
+                            <div class="feature-name">Test Audience</div>
+                            <div class="feature-desc">50-100 synthetic viewers</div>
+                        </div>
+                        <label class="toggle">
+                            <input type="checkbox" id="testAudienceToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="feature-toggle">
+                        <div class="feature-info">
+                            <div class="feature-name">Personal Branding</div>
+                            <div class="feature-desc">Adapts to your style</div>
+                        </div>
+                        <label class="toggle">
+                            <input type="checkbox" id="brandingToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="feature-toggle">
+                        <div class="feature-info">
+                            <div class="feature-name">AI Narration</div>
+                            <div class="feature-desc">Natural voice generation</div>
+                        </div>
+                        <label class="toggle">
+                            <input type="checkbox" id="narrationToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Performance Stats -->
+            <section class="stats-section">
+                <div class="section-header">
+                    <h3>Performance</h3>
+                    <div class="performance-indicator" id="performanceIndicator">
+                        <div class="perf-dot"></div>
+                        <span>Elite</span>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="processingSpeed">1.7x</div>
+                        <div class="stat-label">Processing Speed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="memoryUsage">185MB</div>
+                        <div class="stat-label">Memory Usage</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="authenticityScore">97%</div>
+                        <div class="stat-label">Authenticity</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#" id="openDashboard" class="footer-link">Dashboard</a>
+                <a href="#" id="openDocumentation" class="footer-link">Docs</a>
+                <a href="#" id="openSupport" class="footer-link">Support</a>
+            </div>
+            <div class="footer-version">v1.0.0</div>
+        </footer>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

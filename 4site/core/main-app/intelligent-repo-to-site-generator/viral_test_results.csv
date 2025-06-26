@@ -1,0 +1,10 @@
+test_name,result,expected,status,performance_ms,description
+viral_score_calculation,303.73,>200,PASS,15,Viral score calculated correctly with time decay and tier bonuses
+commission_rate_6_months,0.200,0.200,PASS,5,20% commission for new relationships (0-12 months)
+commission_rate_24_months,0.250,0.250,PASS,4,25% commission for established relationships (13-48 months)
+commission_rate_60_months,0.400,0.400,PASS,3,40% commission for legacy relationships (49+ months)
+external_share_tracking,success,success,PASS,12,External share tracked and viral score updated
+share_count_increase,9,9,PASS,8,Share count increased from 8 to 9 after tracking
+viral_score_update,315.43,>303.73,PASS,10,Viral score increased after new share
+auto_featuring_trigger,true,true,PASS,6,Auto-featuring triggered at 5+ shares (currently 9)
+database_performance,sub_20ms,<100ms,PASS,15,All queries executing under 20ms target

@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  
+  * {
+    @apply border-neural-800;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .neural-card {
+    @apply bg-neural-900/50 backdrop-blur-sm border border-neural-800 rounded-xl shadow-lg;
+  }
+  
+  .neural-button {
+    @apply bg-aegntic-600 hover:bg-aegntic-700 text-white font-medium px-4 py-2 rounded-lg transition-all duration-200 hover:shadow-lg active:scale-95;
+  }
+  
+  .neural-button-secondary {
+    @apply bg-neural-800 hover:bg-neural-700 text-neural-100 font-medium px-4 py-2 rounded-lg transition-all duration-200 border border-neural-700 hover:border-neural-600;
+  }
+  
+  .neural-input {
+    @apply bg-neural-900 border border-neural-700 rounded-lg px-3 py-2 text-neural-100 placeholder-neural-400 focus:border-aegntic-500 focus:ring-1 focus:ring-aegntic-500 transition-colors;
+  }
+  
+  .aegntic-gradient {
+    @apply bg-gradient-to-r from-aegntic-600 to-aegntic-500;
+  }
+  
+  .neural-gradient {
+    @apply bg-gradient-to-br from-neural-900 via-neural-800 to-neural-900;
+  }
+  
+  .data-flow-animation {
+    @apply relative overflow-hidden;
+  }
+  
+  .data-flow-animation::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-aegntic-500/20 to-transparent;
+    animation: data-flow 3s ease-in-out infinite;
+  }
+  
+  .neural-glow {
+    box-shadow: 0 0 20px rgba(12, 154, 229, 0.3);
+  }
+  
+  .neural-glow-hover:hover {
+    box-shadow: 0 0 30px rgba(12, 154, 229, 0.5);
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-aegntic-400 to-aegntic-600 bg-clip-text text-transparent;
+  }
+  
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(125, 205, 249, 0.3) transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgba(125, 205, 249, 0.3);
+    border-radius: 3px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(125, 205, 249, 0.5);
+  }
+}
+
+/* Custom animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 5px rgba(12, 154, 229, 0.3);
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 20px rgba(12, 154, 229, 0.6);
+  }
+}
+
+@keyframes data-flow {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes neural-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}

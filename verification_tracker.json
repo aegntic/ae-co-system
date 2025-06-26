@@ -1,0 +1,122 @@
+{
+  "domains": [
+    {
+      "domain": "prompt.fail",
+      "email": "claube@prompt.fail",
+      "name": "Claude Prompt"
+    },
+    {
+      "domain": "4site.pro",
+      "email": "projects@4site.pro",
+      "name": "4Site Projects"
+    },
+    {
+      "domain": "aegntic.com",
+      "email": "info@aegntic.com",
+      "name": "Aegntic Info"
+    },
+    {
+      "domain": "aegntic.ai",
+      "email": "human@aegntic.ai",
+      "name": "Aegntic AI"
+    },
+    {
+      "domain": "ae.ltd",
+      "email": "human@ae.ltd",
+      "name": "AE Limited"
+    },
+    {
+      "domain": "ultraplan.pro",
+      "email": "vibe@ultraplan.pro",
+      "name": "UltraPlan Pro"
+    },
+    {
+      "domain": "aegnt27.xyz",
+      "email": "auth@aegnt27.xyz",
+      "name": "Aegnt27 Auth"
+    },
+    {
+      "domain": "dailydoco.com",
+      "email": "docs@dailydoco.com",
+      "name": "DailyDoco"
+    },
+    {
+      "domain": "credability.pro",
+      "email": "verify@credability.pro",
+      "name": "Credability Pro"
+    },
+    {
+      "domain": "mattaecooper.org",
+      "email": "human@mattaecooper.org",
+      "name": "Mattae Cooper"
+    },
+    {
+      "domain": "skool.food",
+      "email": "chef@skool.food",
+      "name": "Skool Food"
+    },
+    {
+      "domain": "1minskool.com",
+      "email": "learn@1minskool.com",
+      "name": "1 Min Skool"
+    }
+  ],
+  "verification_status": {
+    "email_forwarding": {
+      "prompt.fail": false,
+      "4site.pro": false,
+      "aegntic.com": false,
+      "aegntic.ai": false,
+      "ae.ltd": false,
+      "ultraplan.pro": false,
+      "aegnt27.xyz": false,
+      "dailydoco.com": false,
+      "credability.pro": false,
+      "mattaecooper.org": false,
+      "skool.food": false,
+      "1minskool.com": false
+    },
+    "send_as_added": {
+      "prompt.fail": false,
+      "4site.pro": false,
+      "aegntic.com": false,
+      "aegntic.ai": false,
+      "ae.ltd": false,
+      "ultraplan.pro": false,
+      "aegnt27.xyz": false,
+      "dailydoco.com": false,
+      "credability.pro": false,
+      "mattaecooper.org": false,
+      "skool.food": false,
+      "1minskool.com": false
+    },
+    "send_as_verified": {
+      "prompt.fail": false,
+      "4site.pro": false,
+      "aegntic.com": false,
+      "aegntic.ai": false,
+      "ae.ltd": false,
+      "ultraplan.pro": false,
+      "aegnt27.xyz": false,
+      "dailydoco.com": false,
+      "credability.pro": false,
+      "mattaecooper.org": false,
+      "skool.food": false,
+      "1minskool.com": false
+    },
+    "filters_created": {
+      "prompt.fail": false,
+      "4site.pro": false,
+      "aegntic.com": false,
+      "aegntic.ai": false,
+      "ae.ltd": false,
+      "ultraplan.pro": false,
+      "aegnt27.xyz": false,
+      "dailydoco.com": false,
+      "credability.pro": false,
+      "mattaecooper.org": false,
+      "skool.food": false,
+      "1minskool.com": false
+    }
+  }
+}

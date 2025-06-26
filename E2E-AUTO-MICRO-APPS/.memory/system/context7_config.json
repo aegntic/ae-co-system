@@ -1,0 +1,24 @@
+{
+  "data": {
+    "timestamp": "2025-05-05T04:24:41.676Z",
+    "config": {
+      "mcpServer": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "@upstash/context7-mcp@latest"
+        ],
+        "env": {
+          "DEFAULT_MINIMUM_TOKENS": "10000",
+          "MEMORY_ENABLED": "true",
+          "MEMORY_PATH": "/home/tabs/E2E-AUTO-MICRO-APPS/.memory"
+        }
+      }
+    }
+  },
+  "metadata": {
+    "timestamp": "2025-05-05T04:24:41.676Z",
+    "category": "system",
+    "key": "context7_config"
+  }
+}

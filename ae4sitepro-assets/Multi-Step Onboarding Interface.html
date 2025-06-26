@@ -1,0 +1,295 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome – Glass Onboarding</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .glass-filter { filter: url(#glass-distortion); }
+        .backdrop-blur-sm { backdrop-filter: blur(3px); }
+        .transition-custom { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2); }
+        
+        .beautiful-shadow {
+            box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        }
+
+        .step-indicator {
+            transition: all 0.3s ease;
+        }
+
+        .step-indicator.active {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2));
+        }
+
+        .dropdown-container {
+            position: relative;
+        }
+
+        .dropdown-trigger {
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .dropdown-menu.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-option {
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+
+        .dropdown-option:hover {
+            background: rgba(255, 255, 255, 0.15) !important;
+        }
+
+        .dropdown-menu::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .dropdown-menu::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .dropdown-menu::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="flex items-center justify-center min-h-screen font-light bg-[url(https://images.unsplash.com/photo-1635151227785-429f420c6b9d?w=2160&q=80)] bg-cover">
+    
+    <!-- Main Container -->
+    <div class="relative flex flex-col overflow-hidden cursor-default beautiful-shadow transition-custom max-w-2xl w-full font-semibold text-white rounded-3xl mx-4">
+        <div class="absolute z-0 inset-0 backdrop-blur-md glass-filter overflow-hidden isolate"></div>
+        <div class="z-10 absolute inset-0 bg-white bg-opacity-15"></div>
+        <div class="absolute inset-0 z-20 overflow-hidden shadow-inner" style="box-shadow: inset 2px 2px 1px 0 rgba(255, 255, 255, 0.5), inset -1px -1px 1px 1px rgba(255, 255, 255, 0.5); border-radius: 24px;"></div>
+        
+        <!-- Top Section - Welcome & Progress -->
+        <div class="z-30 h-2/4 flex flex-col relative text-center bg-black/10 pt-8 pr-8 pb-8 pl-8 items-center justify-center">
+            <!-- Logo & Brand -->
+            <div class="mb-4">
+                <div class="relative inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-3 overflow-hidden">
+                    <div class="absolute z-0 inset-0 backdrop-blur-sm glass-filter"></div>
+                    <div class="z-10 absolute inset-0 bg-gradient-to-br from-white/30 to-white/10"></div>
+                    <div class="absolute inset-0 z-20" style="box-shadow: inset 3px 3px 2px 0 rgba(255, 255, 255, 0.6), inset -2px -2px 2px 2px rgba(255, 255, 255, 0.4); border-radius: 16px;"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round" class="z-30 text-white">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                </div>
+                <h1 class="leading-tight text-5xl font-normal text-white tracking-tighter mb-2">Welcome to Glass</h1>
+                <p class="leading-relaxed text-sm font-light text-white/80">Let's get you set up with your new account in just a few simple steps.</p>
+            </div>
+
+            <!-- Progress Steps -->
+            <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2">
+                    <div class="step-indicator active w-8 h-8 rounded-lg flex items-center justify-center text-xs font-semibold backdrop-blur-sm">1</div>
+                    <span class="text-xs font-medium text-white/90 hidden sm:block">Personal</span>
+                </div>
+                <div class="w-6 h-px bg-white/30"></div>
+                <div class="flex items-center gap-2">
+                    <div class="step-indicator w-8 h-8 rounded-lg flex items-center justify-center text-xs font-semibold backdrop-blur-sm bg-white/10">2</div>
+                    <span class="text-xs font-medium text-white/60 hidden sm:block">Preferences</span>
+                </div>
+                <div class="w-6 h-px bg-white/30"></div>
+                <div class="flex items-center gap-2">
+                    <div class="step-indicator w-8 h-8 rounded-lg flex items-center justify-center text-xs font-semibold backdrop-blur-sm bg-white/10">3</div>
+                    <span class="text-xs font-medium text-white/60 hidden sm:block">Complete</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section - Onboarding Form -->
+        <div class="z-30 h-full flex flex-col p-8 justify-start overflow-y-auto">
+            <!-- Header -->
+            <div class="mb-6">
+                <h2 class="text-2xl font-medium text-white mb-2">Tell us about yourself</h2>
+                <p class="text-sm font-normal text-white/70">Step 1 of 3 • This helps us personalize your experience</p>
+            </div>
+
+            <!-- Onboarding Form -->
+            <form class="flex-1 mb-6 space-y-4">
+                <!-- Name Fields -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label for="firstName" class="block text-sm font-medium text-white mb-2">First name</label>
+                        <div class="relative overflow-hidden rounded-xl">
+                            <div class="absolute z-0 inset-0 backdrop-blur-sm glass-filter"></div>
+                            <div class="z-10 absolute inset-0 bg-white bg-opacity-10"></div>
+                            <div class="absolute inset-0 z-20" style="box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.3), inset -1px -1px 1px 1px rgba(255, 255, 255, 0.1); border-radius: 12px;"></div>
+                            <input type="text" id="firstName" class="z-30 relative bg-transparent w-full px-4 py-3 text-sm placeholder-gray-300 text-white border-none focus:outline-none" placeholder="John" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="lastName" class="block text-sm font-medium text-white mb-2">Last name</label>
+                        <div class="relative overflow-hidden rounded-xl">
+                            <div class="absolute z-0 inset-0 backdrop-blur-sm glass-filter"></div>
+                            <div class="z-10 absolute inset-0 bg-white bg-opacity-10"></div>
+                            <div class="absolute inset-0 z-20" style="box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.3), inset -1px -1px 1px 1px rgba(255, 255, 255, 0.1); border-radius: 12px;"></div>
+                            <input type="text" id="lastName" class="z-30 relative bg-transparent w-full px-4 py-3 text-sm placeholder-gray-300 text-white border-none focus:outline-none" placeholder="Doe" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Company & Role -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label for="company" class="block text-sm font-medium text-white mb-2">Company</label>
+                        <div class="relative overflow-hidden rounded-xl">
+                            <div class="absolute z-0 inset-0 backdrop-blur-sm glass-filter"></div>
+                            <div class="z-10 absolute inset-0 bg-white bg-opacity-10"></div>
+                            <div class="absolute inset-0 z-20" style="box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.3), inset -1px -1px 1px 1px rgba(255, 255, 255, 0.1); border-radius: 12px;"></div>
+                            <input type="text" id="company" class="z-30 relative bg-transparent w-full px-4 py-3 text-sm placeholder-gray-300 text-white border-none focus:outline-none" placeholder="Acme Corp" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="role" class="block text-sm font-medium text-white mb-2">Your role</label>
+                        <div class="dropdown-container">
+                            <div class="relative overflow-hidden rounded-xl dropdown-trigger">
+                                <div class="absolute z-0 inset-0 backdrop-blur-sm glass-filter"></div>
+                                <div class="z-10 absolute inset-0 bg-white bg-opacity-10"></div>
+                                <div class="absolute inset-0 z-20" style="box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.3), inset -1px -1px 1px 1px rgba(255, 255, 255, 0.1); border-radius: 12px;"></div>
+                                <div id="roleDisplay" class="z-30 relative w-full px-4 py-3 text-sm text-white flex items-center justify-between">
+                                    <span class="text-gray-300">Select your role</span>
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="text-white/50 transition-transform duration-200" id="dropdownChevron">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <!-- Custom Dropdown Menu -->
+                            <div class="dropdown-menu" id="roleDropdown">
+                                <div class="relative overflow-hidden rounded-xl">
+                                    <div class="absolute z-0 inset-0 backdrop-blur-lg glass-filter"></div>
+                                    <div class="z-10 absolute inset-0 bg-white bg-opacity-15"></div>
+                                    <div class="absolute inset-0 z-20" style="box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.4), inset -1px -1px 1px 1px rgba(255, 255, 255, 0.2); border-radius: 12px;"></div>
+                                    <div class="z-30 relative py-2">
+                                        <div class="dropdown-option px-4 py-2 text-sm text-white bg-white/5" data-value="designer">Designer</div>
+                                        <div class="dropdown-option px-4 py-2 text-sm text-white bg-white/5" data-value="developer">Developer</div>
+                                        <div class="dropdown-option px-4 py-2 text-sm text-white bg-white/5" data-value="manager">Manager</div>
+                                        <div class="dropdown-option px-4 py-2 text-sm text-white bg-white/5" data-value="founder">Founder</div>
+                                        <div class="dropdown-option px-4 py-2 text-sm text-white bg-white/5" data-value="marketing">Marketing</div>
+                                        <div class="dropdown-option px-4 py-2 text-sm text-white bg-white/5" data-value="sales">Sales</div>
+                                        <div class="dropdown-option px-4 py-2 text-sm text-white bg-white/5" data-value="other">Other</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label for="password" class="block text-sm font-medium text-white mb-2">Create password</label>
+                    <div class="relative overflow-hidden rounded-xl">
+                        <div class="absolute z-0 inset-0 backdrop-blur-sm glass-filter"></div>
+                        <div class="z-10 absolute inset-0 bg-white bg-opacity-10"></div>
+                        <div class="absolute inset-0 z-20" style="box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.3), inset -1px -1px 1px 1px rgba(255, 255, 255, 0.1); border-radius: 12px;"></div>
+                        <input type="password" id="password" class="z-30 relative bg-transparent w-full px-4 py-3 text-sm placeholder-gray-300 text-white border-none focus:outline-none" placeholder="Minimum 8 characters" required>
+                    </div>
+                </div>
+
+                <!-- Terms Checkbox -->
+                <div class="flex gap-3 pt-2 items-center">
+                    <input type="checkbox" class="w-4 h-4 bg-opacity-20 border-opacity-30 focus:ring-0 focus:ring-offset-0 bg-white border-white rounded" required>
+                    <p class="leading-relaxed text-sm font-normal text-white/70">
+                        I agree to the <a href="#" class="text-white hover:opacity-80 transition-opacity font-medium underline">Terms of Service</a> and <a href="#" class="text-white hover:opacity-80 transition-opacity font-medium underline">Privacy Policy</a>
+                    </p>
+                </div>
+
+                <!-- Continue Button -->
+                <div class="relative overflow-hidden rounded-xl cursor-pointer transition-custom hover:shadow-lg pt-4">
+                    <div class="absolute z-0 inset-0 backdrop-blur-sm glass-filter"></div>
+                    <div class="z-10 absolute inset-0 bg-gradient-to-r from-white/30 to-white/20"></div>
+                    <div class="absolute inset-0 z-20 items-center" style="box-shadow: inset 2px 2px 1px 0 rgba(255, 255, 255, 0.5), inset -1px -1px 1px 1px rgba(255, 255, 255, 0.3); border-radius: 12px;"></div>
+                    <button type="submit" class="z-30 relative w-full border-none flex gap-2 text-sm font-semibold text-white bg-transparent pt-0 pr-4 pb-3 pl-4 items-center justify-center">
+                        <span>Continue to Step 2</span>
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Footer -->
+            <div class="text-center mt-auto">
+                <p class="text-sm font-normal text-white/70 mb-3">
+                    Already have an account? 
+                    <a href="#" class="text-white hover:opacity-80 transition-opacity font-semibold ml-1">Sign in here</a>
+                </p>
+                <div class="flex gap-4 text-xs font-normal text-white/50 items-center justify-center">
+                    <a href="#" class="hover:text-white/70 transition-colors">Help Center</a>
+                    <span>•</span>
+                    <a href="#" class="hover:text-white/70 transition-colors">Contact Support</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Custom Dropdown Functionality
+        const dropdownTrigger = document.querySelector('.dropdown-trigger');
+        const dropdownMenu = document.getElementById('roleDropdown');
+        const dropdownDisplay = document.getElementById('roleDisplay');
+        const dropdownChevron = document.getElementById('dropdownChevron');
+        const dropdownOptions = document.querySelectorAll('.dropdown-option');
+        
+        let selectedValue = '';
+        let isOpen = false;
+
+        function toggleDropdown() {
+            isOpen = !isOpen;
+            dropdownMenu.classList.toggle('open', isOpen);
+            dropdownChevron.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        function closeDropdown() {
+            isOpen = false;
+            dropdownMenu.classList.remove('open');
+            dropdownChevron.style.transform = 'rotate(0deg)';
+        }
+
+        dropdownTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleDropdown();
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!dropdownTrigger.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                closeDropdown();
+            }
+        });
+
+        dropdownOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const value = option.getAttribute('data-value');
+                const text = option.textContent.trim();
+                
+                selectedValue = value;
+                dropdownDisplay.querySelector('span').textContent = text;
+                dropdownDisplay.querySelector('span').classList.remove('text-gray-300');
+                dropdownDisplay.querySelector('span').classList.add('text-white');
+                
+                closeDropdown();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth antialiased">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum Analytics - Advanced Trading Intelligence</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif']
+      }
+    }
+  }
+}
+</script>
+
+<style>
+.accordion-item {
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 1rem;
+  background: rgba(255,255,255,0.02);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.accordion-item:hover {
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.04);
+}
+
+.accordion-item.active {
+  border-color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.05);
+}
+
+.accordion-header {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.accordion-content.active {
+  max-height: 500px;
+}
+
+.chevron {
+  transition: transform 0.3s ease;
+}
+
+.chevron.rotate {
+  transform: rotate(180deg);
+}
+
+.metric-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  transition: all 0.2s ease;
+}
+
+.metric-card:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.2);
+}
+
+.icon-container {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.status-badge {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+</style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Inter&display=swap" rel="stylesheet">
+</head>
+<body class="bg-black text-white font-sans">
+
+<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+  <!-- Header -->
+  <section class="text-center mb-16">
+    <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-white/10">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white">
+        <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>
+      </svg>
+      <span class="text-sm font-medium">Quantum Analytics Suite</span>
+    </div>
+    <h1 class="text-4xl lg:text-6xl font-semibold tracking-tighter mb-6">
+      Professional <span class="text-white">Trading Intelligence</span>
+    </h1>
+    <p class="max-w-2xl mx-auto text-lg text-gray-300 leading-relaxed">
+      Advanced market intelligence tools powered by real-time data streams and AI-driven analytics.
+    </p>
+  </section>
+
+  <!-- Vertical Accordion -->
+  <section class="space-y-4">
+    
+    <!-- Real-Time Market Data -->
+    <div class="accordion-item">
+      <div class="accordion-header p-6 flex items-center justify-between" onclick="toggleAccordion(this)">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-lg icon-container flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-1">Real-Time Market Data</h3>
+            <p class="text-gray-400 text-sm">Zero-latency feeds from 15+ global exchanges</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-1 status-badge px-2 py-1 rounded-full">
+            <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+            <span class="text-xs font-medium">LIVE</span>
+          </div>
+          <svg class="chevron w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </div>
+      </div>
+      <div class="accordion-content">
+        <div class="px-6 pb-6">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="metric-card">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-gray-300">NASDAQ:TSLA</span>
+                <span class="text-xs text-white">+2.4%</span>
+              </div>
+              <div class="text-2xl font-bold">$847.32</div>
+            </div>
+            <div class="metric-card">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-gray-300">NYSE:AAPL</span>
+                <span class="text-xs text-gray-400">-1.2%</span>
+              </div>
+              <div class="text-2xl font-bold">$178.91</div>
+            </div>
+            <div class="metric-card">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-gray-300">CRYPTO:BTC</span>
+                <span class="text-xs text-white">+3.8%</span>
+              </div>
+              <div class="text-2xl font-bold">$42,156</div>
+            </div>
+          </div>
+          <p class="text-gray-300 mb-4">Experience microsecond precision timing with institutional-grade market data feeds. Our quantum processing engine delivers real-time price updates, order book depth, and trade execution data.</p>
+          <button class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black hover:bg-gray-200 transition text-sm font-medium">
+            View Live Dashboard
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 7h10v10M7 17L17 7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Price Predictions -->
+    <div class="accordion-item">
+      <div class="accordion-header p-6 flex items-center justify-between" onclick="toggleAccordion(this)">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-lg icon-container flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/>
+              <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-1">AI Price Predictions</h3>
+            <p class="text-gray-400 text-sm">Machine learning models with 87% accuracy</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs status-badge px-2 py-1 rounded-full font-medium">87% Accuracy</span>
+          <svg class="chevron w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </div>
+      </div>
+      <div class="accordion-content">
+        <div class="px-6 pb-6">
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="metric-card">
+              <div class="text-sm text-gray-300 mb-1">1-Hour Prediction</div>
+              <div class="text-xl font-bold text-white">+2.3%</div>
+              <div class="text-xs text-gray-400">Confidence: 92%</div>
+            </div>
+            <div class="metric-card">
+              <div class="text-sm text-gray-300 mb-1">24-Hour Prediction</div>
+              <div class="text-xl font-bold text-white">+5.7%</div>
+              <div class="text-xs text-gray-400">Confidence: 78%</div>
+            </div>
+          </div>
+          <p class="text-gray-300 mb-4">Our neural networks analyze over 200 market indicators, social sentiment, and technical patterns to generate highly accurate price predictions with confidence intervals.</p>
+          <button class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black hover:bg-gray-200 transition text-sm font-medium">
+            View AI Models
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Risk Analytics -->
+    <div class="accordion-item">
+      <div class="accordion-header p-6 flex items-center justify-between" onclick="toggleAccordion(this)">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-lg icon-container flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-1">Risk Analytics</h3>
+            <p class="text-gray-400 text-sm">Portfolio protection and risk management</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs status-badge px-2 py-1 rounded-full font-medium">Protected</span>
+          <svg class="chevron w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </div>
+      </div>
+      <div class="accordion-content">
+        <div class="px-6 pb-6">
+          <div class="grid grid-cols-3 gap-4 mb-6">
+            <div class="metric-card">
+              <div class="text-sm text-gray-300 mb-1">VaR (95%)</div>
+              <div class="text-lg font-bold">-$2,450</div>
+            </div>
+            <div class="metric-card">
+              <div class="text-sm text-gray-300 mb-1">Sharpe Ratio</div>
+              <div class="text-lg font-bold text-white">1.82</div>
+            </div>
+            <div class="metric-card">
+              <div class="text-sm text-gray-300 mb-1">Beta</div>
+              <div class="text-lg font-bold">0.94</div>
+            </div>
+          </div>
+          <p class="text-gray-300 mb-4">Advanced risk metrics including Value at Risk, Expected Shortfall, and stress testing scenarios to protect your portfolio from market volatility.</p>
+          <button class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black hover:bg-gray-200 transition text-sm font-medium">
+            Risk Dashboard
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social Sentiment -->
+    <div class="accordion-item">
+      <div class="accordion-header p-6 flex items-center justify-between" onclick="toggleAccordion(this)">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-lg icon-container flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 7h6v6M22 7l-8.5 8.5-5-5L2 17"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-1">Social Sentiment Analysis</h3>
+            <p class="text-gray-400 text-sm">Real-time sentiment from social media & news</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs status-badge px-2 py-1 rounded-full font-medium">Bullish +72%</span>
+          <svg class="chevron w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </div>
+      </div>
+      <div class="accordion-content">
+        <div class="px-6 pb-6">
+          <div class="space-y-3 mb-6">
+            <div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
+              <span class="text-sm">Twitter Sentiment</span>
+              <span class="text-white font-medium">+68%</span>
+            </div>
+            <div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
+              <span class="text-sm">Reddit Discussion</span>
+              <span class="text-white font-medium">+75%</span>
+            </div>
+            <div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
+              <span class="text-sm">News Articles</span>
+              <span class="text-white font-medium">+58%</span>
+            </div>
+          </div>
+          <p class="text-gray-300 mb-4">Track market sentiment across social platforms, news outlets, and financial forums using advanced NLP to gauge market psychology and predict price movements.</p>
+          <button class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black hover:bg-gray-200 transition text-sm font-medium">
+            Sentiment Dashboard
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Options Flow -->
+    <div class="accordion-item">
+      <div class="accordion-header p-6 flex items-center justify-between" onclick="toggleAccordion(this)">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-lg icon-container flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 3v16a2 2 0 0 0 2 2h16M18 17V9M13 17V5M8 17v-3"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-1">Options Flow Tracking</h3>
+            <p class="text-gray-400 text-sm">Unusual options activity and dark pool data</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs status-badge px-2 py-1 rounded-full font-medium">Unusual Activity</span>
+          <svg class="chevron w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </div>
+      </div>
+      <div class="accordion-content">
+        <div class="px-6 pb-6">
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="metric-card">
+              <div class="text-sm text-gray-300 mb-1">Call/Put Ratio</div>
+              <div class="text-xl font-bold text-white">1.34</div>
+            </div>
+            <div class="metric-card">
+              <div class="text-sm text-gray-300 mb-1">Dark Pool Volume</div>
+              <div class="text-xl font-bold">$2.4B</div>
+            </div>
+          </div>
+          <p class="text-gray-300 mb-4">Monitor institutional money flow through options markets and dark pools to identify smart money movements before they impact stock prices.</p>
+          <button class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black hover:bg-gray-200 transition text-sm font-medium">
+            Options Flow
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Smart Alerts -->
+    <div class="accordion-item">
+      <div class="accordion-header p-6 flex items-center justify-between" onclick="toggleAccordion(this)">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-lg icon-container flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.268 21a2 2 0 0 0 3.464 0M4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326A1 1 0 0 0 4 17"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-1">Smart Alerts System</h3>
+            <p class="text-gray-400 text-sm">AI-powered notifications and trade signals</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs status-badge px-2 py-1 rounded-full font-medium">24/7 Monitor</span>
+          <svg class="chevron w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </div>
+      </div>
+      <div class="accordion-content">
+        <div class="px-6 pb-6">
+          <div class="space-y-3 mb-6">
+            <div class="flex items-center gap-3 p-3 bg-white/5 border border-white/20 rounded-lg">
+              <div class="w-2 h-2 bg-white rounded-full"></div>
+              <div class="flex-1">
+                <div class="text-sm font-medium">Price Breakout Alert</div>
+                <div class="text-xs text-gray-400">TSLA broke above $850 resistance</div>
+              </div>
+              <div class="text-xs text-gray-400">2m ago</div>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-white/5 border border-white/20 rounded-lg">
+              <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
+              <div class="flex-1">
+                <div class="text-sm font-medium">Volume Spike</div>
+                <div class="text-xs text-gray-400">AAPL volume 3x above average</div>
+              </div>
+              <div class="text-xs text-gray-400">5m ago</div>
+            </div>
+          </div>
+          <p class="text-gray-300 mb-4">Intelligent alerts powered by machine learning that adapt to market conditions and your trading preferences. Never miss important market movements again.</p>
+          <button class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black hover:bg-gray-200 transition text-sm font-medium">
+            Configure Alerts
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<script>
+function toggleAccordion(header) {
+  const item = header.parentElement;
+  const content = item.querySelector('.accordion-content');
+  const chevron = header.querySelector('.chevron');
+  const isActive = content.classList.contains('active');
+  
+  // Close all other accordions
+  document.querySelectorAll('.accordion-item').forEach(otherItem => {
+    if (otherItem !== item) {
+      otherItem.classList.remove('active');
+      otherItem.querySelector('.accordion-content').classList.remove('active');
+      otherItem.querySelector('.chevron').classList.remove('rotate');
+    }
+  });
+  
+  // Toggle current accordion
+  if (isActive) {
+    content.classList.remove('active');
+    chevron.classList.remove('rotate');
+    item.classList.remove('active');
+  } else {
+    content.classList.add('active');
+    chevron.classList.add('rotate');
+    item.classList.add('active');
+  }
+}
+
+// Auto-open first accordion on load
+document.addEventListener('DOMContentLoaded', function() {
+  const firstAccordion = document.querySelector('.accordion-item .accordion-header');
+  if (firstAccordion) {
+    toggleAccordion(firstAccordion);
+  }
+});
+</script>
+
+</body></html>

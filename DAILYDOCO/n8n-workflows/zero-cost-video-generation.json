@@ -1,0 +1,219 @@
+{
+  "name": "DailyDoco Zero-Cost Video Generation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "generate-video",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook_trigger",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "HTTP-Referer",
+              "value": "https://dailydoco.pro"
+            },
+            {
+              "name": "X-Title", 
+              "value": "DailyDoco Pro"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "meta-llama/llama-3.3-70b-instruct:free"
+            },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"system\",\"content\":\"You are an expert video script writer.\"},{\"role\":\"user\",\"content\":\"Create a 90-second video script for DailyDoco Pro with 5 scenes. Include Visual: and Narration: for each scene.\"}]"
+            },
+            {
+              "name": "temperature",
+              "value": "0.7"
+            },
+            {
+              "name": "max_tokens",
+              "value": "2000"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "generate_script",
+      "name": "Generate Script (Free Model)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [450, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "openrouter_auth",
+          "name": "OpenRouter API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse the script into scenes\nconst script = $input.first().json.choices[0].message.content;\nconst scenes = [];\nconst sceneMatches = script.match(/\\[SCENE[^\\]]+\\][^[]+/g) || [];\n\nfor (const match of sceneMatches) {\n  const visualMatch = match.match(/Visual:\\s*([^\\n]+)/);\n  const narrationMatch = match.match(/Narration:\\s*([^\\n]+)/);\n  \n  if (visualMatch && narrationMatch) {\n    scenes.push({\n      visual: visualMatch[1].trim(),\n      narration: narrationMatch[1].trim()\n    });\n  }\n}\n\n// Combine all narration\nconst fullNarration = scenes.map(s => s.narration).join(' ');\n\nreturn {\n  script,\n  scenes,\n  fullNarration\n};"
+      },
+      "id": "parse_script",
+      "name": "Parse Script",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "command": "edge-tts --voice \"en-US-AriaNeural\" --rate \"+5%\" --text \"{{ $json.fullNarration }}\" --write-media /tmp/narration.mp3"
+      },
+      "id": "generate_voice",
+      "name": "Generate Voice (Edge-TTS)",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [850, 200]
+    },
+    {
+      "parameters": {
+        "operation": "multipleItems",
+        "items": {
+          "item": [
+            {
+              "operation": "downloadFile",
+              "url": "=https://image.pollinations.ai/prompt/{{ encodeURIComponent($json.visual + ', professional UI, dark theme, purple gradient, high quality') }}",
+              "options": {
+                "fileName": "=scene_{{ $itemIndex }}.png"
+              }
+            }
+          ]
+        }
+      },
+      "id": "generate_images",
+      "name": "Generate Images (Pollinations.ai)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [850, 400],
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Wait for all images to download\nawait new Promise(resolve => setTimeout(resolve, 2000));\n\n// Return paths\nreturn {\n  imagePath: `/tmp/scene_${$itemIndex}.png`,\n  audioPath: '/tmp/narration.mp3'\n};"
+      },
+      "id": "wait_for_assets",
+      "name": "Wait for Assets",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1050, 300]
+    },
+    {
+      "parameters": {
+        "command": "ffmpeg -y -loop 1 -t 18 -i /tmp/scene_0.png -loop 1 -t 18 -i /tmp/scene_1.png -loop 1 -t 18 -i /tmp/scene_2.png -loop 1 -t 18 -i /tmp/scene_3.png -loop 1 -t 18 -i /tmp/scene_4.png -i /tmp/narration.mp3 -filter_complex \"[0:v][1:v][2:v][3:v][4:v]concat=n=5:v=1:a=0[v]\" -map \"[v]\" -map 5:a -c:v libx264 -preset fast -crf 22 -c:a aac -shortest /tmp/output.mp4"
+      },
+      "id": "compose_video",
+      "name": "Compose Video (FFmpeg)",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [1250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "filePath": "/tmp/output.mp4",
+        "dataPropertyName": "video"
+      },
+      "id": "read_video",
+      "name": "Read Video File",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [1450, 300]
+    },
+    {
+      "parameters": {
+        "mode": "responseNode",
+        "responseCode": 200,
+        "responseHeaders": {
+          "entries": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "responseData": "={\"success\":true,\"message\":\"Video generated for $0.00\",\"videoUrl\":\"/api/video/{{ $workflow.id }}\",\"metadata\":{\"duration\":90,\"cost\":\"$0.00\",\"models\":{\"script\":\"llama-3.3-70b:free\",\"images\":\"pollinations.ai\",\"voice\":\"edge-tts\",\"video\":\"ffmpeg\"}}}"
+      },
+      "id": "webhook_response",
+      "name": "Webhook Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1650, 300]
+    }
+  ],
+  "connections": {
+    "webhook_trigger": {
+      "main": [[{"node": "generate_script", "type": "main", "index": 0}]]
+    },
+    "generate_script": {
+      "main": [[{"node": "parse_script", "type": "main", "index": 0}]]
+    },
+    "parse_script": {
+      "main": [[
+        {"node": "generate_voice", "type": "main", "index": 0},
+        {"node": "generate_images", "type": "main", "index": 0}
+      ]]
+    },
+    "generate_voice": {
+      "main": [[{"node": "wait_for_assets", "type": "main", "index": 0}]]
+    },
+    "generate_images": {
+      "main": [[{"node": "wait_for_assets", "type": "main", "index": 0}]]
+    },
+    "wait_for_assets": {
+      "main": [[{"node": "compose_video", "type": "main", "index": 0}]]
+    },
+    "compose_video": {
+      "main": [[{"node": "read_video", "type": "main", "index": 0}]]
+    },
+    "read_video": {
+      "main": [[{"node": "webhook_response", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "staticData": null,
+  "meta": {
+    "templateId": "dailydoco-zero-cost-video"
+  },
+  "pinData": {},
+  "versionId": "1.0.0",
+  "triggerCount": 1,
+  "tags": [
+    {
+      "name": "DailyDoco",
+      "createdAt": "2025-01-15"
+    },
+    {
+      "name": "Zero-Cost",
+      "createdAt": "2025-01-15"
+    }
+  ]
+}

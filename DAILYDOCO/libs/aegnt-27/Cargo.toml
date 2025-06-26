@@ -1,0 +1,134 @@
+[package]
+name = "aegnt-27"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "aegnt-27: The Human Peak Protocol - Autonomous Elite Generation Neural Technology System 2.7"
+homepage = "https://github.com/aegntic/aegnt-27"
+repository = "https://github.com/aegntic/aegnt-27"
+documentation = "https://docs.rs/aegnt-27"
+keywords = ["ai-detection", "humanization", "authenticity", "automation", "privacy"]
+categories = ["multimedia", "authentication", "simulation"]
+readme = "README.md"
+
+[dependencies]
+# Workspace dependencies
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+log.workspace = true
+env_logger.workspace = true
+futures.workspace = true
+async-trait.workspace = true
+parking_lot.workspace = true
+
+# Cryptography and security
+rand = "0.8"
+sha2 = "0.10"
+aes-gcm = "0.10"
+ed25519-dalek = "2.0"
+
+# Audio processing
+cpal = "0.15"
+hound = "3.5"
+rubato = "0.14"
+rustfft = "6.1"
+
+# Mathematical utilities
+num-cpus = "1.0"
+rand_distr = "0.4"
+
+# HMAC and cryptography
+hmac = "0.12"
+pbkdf2 = "0.12"
+
+# Image and video processing
+image = "0.24"
+opencv = { version = "0.88", optional = true }
+ffmpeg-next = { version = "6.0", optional = true }
+
+# Machine learning and AI
+candle-core = { version = "0.3", optional = true }
+candle-nn = { version = "0.3", optional = true }
+tch = { version = "0.14", optional = true }
+
+# System integration
+# Platform-specific dependencies
+[target.'cfg(target_os = "windows")'.dependencies]
+winapi = { version = "0.3", features = ["winuser", "wingdi"] }
+
+[target.'cfg(target_os = "linux")'.dependencies] 
+x11 = "2.21"
+
+[target.'cfg(target_os = "macos")'.dependencies]
+cocoa = "0.24"
+core-graphics = "0.22"
+
+# Input simulation
+enigo = "0.1"
+inputbot = "0.5"
+
+# Network and HTTP
+reqwest = { version = "0.11", features = ["json"], optional = true }
+hyper = { version = "0.14", optional = true }
+
+# Configuration and serialization
+toml = "0.8"
+config = "0.13"
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+proptest = "1.0"
+tempfile = "3.0"
+wiremock = "0.5"
+
+[features]
+default = ["basic-humanization", "detection-validation"]
+full = ["all-humanization", "ml-models", "video-processing", "network-features"]
+
+# Core feature sets
+basic-humanization = []
+all-humanization = ["mouse", "typing", "audio", "visual"]
+detection-validation = ["detection", "authenticity"]
+ml-models = ["candle-core", "candle-nn", "tch"]
+video-processing = ["opencv", "ffmpeg-next"]
+network-features = ["reqwest", "hyper"]
+
+# Individual modules
+mouse = []
+typing = []
+audio = []
+visual = []
+detection = []
+authenticity = []
+persistence = []
+
+# Benchmarks disabled for now
+# [[bench]]
+# name = "humanization_benchmarks"
+# harness = false
+
+[[example]]
+name = "basic_integration"
+required-features = ["basic-humanization"]
+
+[[example]]
+name = "advanced_customization"
+required-features = ["all-humanization"]
+
+[[example]]
+name = "multi_platform_deployment"
+required-features = ["basic-humanization"]
+
+[[example]]
+name = "performance_optimization"
+required-features = ["basic-humanization"]
+
+[lib]
+name = "aegnt_27"
+path = "src/lib.rs"

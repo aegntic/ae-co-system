@@ -1,0 +1,40 @@
+<svg width="1200" height="675" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="liquid-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#16213e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f3460;stop-opacity:1" />
+    </linearGradient>
+    <filter id="liquid-glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <rect width="1200" height="675" fill="url(#liquid-bg)"/>
+  
+  <!-- Grid pattern -->
+  <g stroke="rgba(255,255,255,0.05)" stroke-width="1">
+    <path d="M0,0 L0,675 M50,0 L50,675 M100,0 L100,675 M150,0 L150,675 M200,0 L200,675 M250,0 L250,675 M300,0 L300,675 M350,0 L350,675 M400,0 L400,675 M450,0 L450,675 M500,0 L500,675 M550,0 L550,675 M600,0 L600,675 M650,0 L650,675 M700,0 L700,675 M750,0 L750,675 M800,0 L800,675 M850,0 L850,675 M900,0 L900,675 M950,0 L950,675 M1000,0 L1000,675 M1050,0 L1050,675 M1100,0 L1100,675 M1150,0 L1150,675"/>
+    <path d="M0,0 L1200,0 M0,50 L1200,50 M0,100 L1200,100 M0,150 L1200,150 M0,200 L1200,200 M0,250 L1200,250 M0,300 L1200,300 M0,350 L1200,350 M0,400 L1200,400 M0,450 L1200,450 M0,500 L1200,500 M0,550 L1200,550 M0,600 L1200,600 M0,650 L1200,650"/>
+  </g>
+  
+  <!-- Liquid metal shapes -->
+  <circle cx="300" cy="200" r="80" fill="#00ffff" opacity="0.2" filter="url(#liquid-glow)"/>
+  <circle cx="900" cy="400" r="100" fill="#00ffff" opacity="0.15" filter="url(#liquid-glow)"/>
+  <circle cx="600" cy="500" r="60" fill="#00ffff" opacity="0.25" filter="url(#liquid-glow)"/>
+  
+  <!-- Title -->
+  <text x="600" y="280" font-family="Arial, sans-serif" font-size="96" font-weight="bold" fill="#00ffff" text-anchor="middle" filter="url(#liquid-glow)">LIQUID METAL</text>
+  <text x="600" y="360" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#00ffff" text-anchor="middle">COMMERCE</text>
+  
+  <!-- Features -->
+  <text x="600" y="450" font-family="Arial, sans-serif" font-size="24" fill="rgba(255,255,255,0.8)" text-anchor="middle">WebGL • AR Try-On • AI Recommendations</text>
+  
+  <!-- aeLTD branding -->
+  <text x="600" y="600" font-family="Arial, sans-serif" font-size="20" fill="rgba(255,255,255,0.5)" text-anchor="middle">aeLTD Premium Collection</text>
+  <text x="600" y="625" font-family="Arial, sans-serif" font-size="20" fill="rgba(255,255,255,0.5)" text-anchor="middle">Open Tabs ∞ Certified</text>
+</svg>

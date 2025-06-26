@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCTM MVP - Basic Terminal Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #00ff00;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .header {
+            background: #333;
+            padding: 10px 20px;
+            border-bottom: 2px solid #00ff00;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .status {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            width: 300px;
+            background: #2a2a2a;
+            border-right: 2px solid #00ff00;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .terminal-area {
+            flex: 1;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .section-title {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #00ff00;
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+        }
+
+        .terminal-list {
+            list-style: none;
+        }
+
+        .terminal-item {
+            background: #333;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .terminal-item:hover {
+            background: #444;
+            border-left-color: #00ff00;
+        }
+
+        .terminal-item.active {
+            border-left-color: #00ff00;
+            background: #444;
+        }
+
+        .terminal-item.attention {
+            border-left-color: #ff6b6b;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { background: #333; }
+            50% { background: #4a2a2a; }
+            100% { background: #333; }
+        }
+
+        .terminal-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .terminal-status {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .terminal-display {
+            background: #000;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            height: 100%;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .terminal-output {
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .prompt {
+            color: #00ff00;
+        }
+
+        .command {
+            color: #ffffff;
+        }
+
+        .output {
+            color: #cccccc;
+            margin: 5px 0;
+        }
+
+        .error {
+            color: #ff6b6b;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background: #333;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 8px 16px;
+            margin-right: 10px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            background: #00ff00;
+            color: #000;
+        }
+
+        .stats {
+            margin-top: 30px;
+            padding: 15px;
+            background: #333;
+            border-radius: 5px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+
+        .mvp-notice {
+            background: #444;
+            border: 1px solid #00ff00;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">CCTM MVP - Terminal Manager</div>
+        <div class="status" id="status">Active Terminals: 0 | Memory: 45MB</div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="mvp-notice">
+                <strong>MVP Demo</strong><br>
+                Original concept - Simple terminal management without tab switching
+            </div>
+
+            <div class="controls">
+                <button class="btn" onclick="createTerminal()">New Terminal</button>
+                <button class="btn" onclick="simulateActivity()">Simulate Work</button>
+            </div>
+
+            <div class="section-title">Active Terminals</div>
+            <ul class="terminal-list" id="terminalList">
+                <!-- Terminals will be added here dynamically -->
+            </ul>
+
+            <div class="stats">
+                <div class="section-title">Stats</div>
+                <div class="stat-item">
+                    <span>Active:</span>
+                    <span id="activeCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Idle:</span>
+                    <span id="idleCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Needs Attention:</span>
+                    <span id="attentionCount">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="terminal-area">
+            <div class="terminal-display" id="terminalDisplay">
+                <div class="terminal-output">
+<span class="prompt">CCTM-MVP$</span> <span class="command">echo "Welcome to CCTM MVP Demo"</span>
+<span class="output">Welcome to CCTM MVP Demo</span>
+
+<span class="prompt">CCTM-MVP$</span> <span class="command">cat README.md</span>
+<span class="output">CCTM MVP - The Original Vision
+============================
+
+This is where it all started - a simple idea to manage multiple terminals
+without constantly switching tabs and losing track of running processes.
+
+Key MVP Features:
+• Multiple terminal sessions in one interface  
+• Basic status tracking (running/idle/attention-needed)
+• Simple resource monitoring
+• Foundation for attention detection
+
+The genius was recognizing that this simple concept could evolve into
+the world's first multi-instance Claude Code workflow manager.
+
+Try creating terminals and see the basic management in action!</span>
+
+<span class="prompt">CCTM-MVP$</span> <span class="command">ls -la</span>
+<span class="output">total 8
+drwxr-xr-x  4 user user 4096 Jun  9 2025 .
+drwxr-xr-x  3 user user 4096 Jun  9 2025 ..
+-rw-r--r--  1 user user  823 Jun  9 2025 basic-ui.html
+-rw-r--r--  1 user user 1247 Jun  9 2025 mvp-terminal-manager.js
+-rw-r--r--  1 user user 2156 Jun  9 2025 README.md</span>
+
+<span class="prompt">CCTM-MVP$</span> <span class="cursor">█</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="mvp-terminal-manager.js"></script>
+</body>
+</html>

@@ -1,0 +1,499 @@
+# ================================================================================================
+# GLOBAL DEPLOYMENT INFRASTRUCTURE - $100B COMPANY STANDARDS
+# Infinite scale, 99.99% uptime, sub-200ms global response times
+# ================================================================================================
+
+version: '3.8'
+
+services:
+  # API Gateway - Enterprise Load Balancer
+  api-gateway:
+    build: 
+      context: ./services/api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "80:3001"
+      - "443:3001"
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=${REDIS_CLUSTER_URL}
+      - RATE_LIMIT_STORE=redis
+      - SECURITY_INTELLIGENCE=enabled
+      - LOG_LEVEL=info
+    deploy:
+      replicas: 6
+      update_config:
+        parallelism: 2
+        delay: 10s
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      placement:
+        constraints:
+          - node.role == manager
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    depends_on:
+      - redis-cluster
+      - prometheus
+    networks:
+      - frontend
+      - backend
+
+  # Main Application - React Frontend + Express Backend
+  main-app:
+    build:
+      context: ./core/main-app/project4site_-github-readme-to-site-generator
+      dockerfile: Dockerfile.production
+    environment:
+      - NODE_ENV=production
+      - VITE_API_URL=https://api.4site.pro
+      - VITE_ENABLE_ANALYTICS=true
+      - DATABASE_URL=${PRODUCTION_DATABASE_URL}
+      - REDIS_URL=${REDIS_CLUSTER_URL}
+    deploy:
+      replicas: 8
+      update_config:
+        parallelism: 2
+        delay: 10s
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - frontend
+      - backend
+
+  # AI Analysis Pipeline - Rust High Performance
+  ai-analysis-pipeline:
+    build:
+      context: ./services/ai-analysis-pipeline
+      dockerfile: Dockerfile
+    environment:
+      - RUST_LOG=info
+      - DATABASE_URL=${PRODUCTION_DATABASE_URL}
+      - REDIS_URL=${REDIS_CLUSTER_URL}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+    deploy:
+      replicas: 4
+      update_config:
+        parallelism: 1
+        delay: 30s
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G
+        reservations:
+          cpus: '2'
+          memory: 4G
+    networks:
+      - backend
+      - ai-network
+
+  # Site Generation Engine - Next.js Templates
+  site-generation-engine:
+    build:
+      context: ./services/site-generation-engine
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=${PRODUCTION_DATABASE_URL}
+      - CDN_URL=${CDN_BASE_URL}
+    deploy:
+      replicas: 6
+      update_config:
+        parallelism: 2
+        delay: 15s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+    networks:
+      - backend
+
+  # Commission Service - Viral Mechanics Engine
+  commission-service:
+    build:
+      context: ./services/commission-service
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=${PRODUCTION_DATABASE_URL}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+    deploy:
+      replicas: 4
+      update_config:
+        parallelism: 1
+        delay: 20s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    networks:
+      - backend
+      - payment-network
+
+  # Video Slideshow Generator - Python AI Service
+  video-slideshow-generator:
+    build:
+      context: ./services/video-slideshow-generator
+      dockerfile: Dockerfile
+    environment:
+      - PYTHONPATH=/app
+      - DATABASE_URL=${PRODUCTION_DATABASE_URL}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - STORAGE_BUCKET=${VIDEO_STORAGE_BUCKET}
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+        delay: 30s
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G
+        reservations:
+          cpus: '2'
+          memory: 4G
+    networks:
+      - backend
+      - ai-network
+
+  # Redis Cluster - High Availability Caching
+  redis-cluster:
+    image: redis/redis-stack-server:7.2.0-v6
+    deploy:
+      replicas: 6
+      placement:
+        max_replicas_per_node: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+    volumes:
+      - redis-data:/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # PostgreSQL Primary - Production Database
+  postgres-primary:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_REPLICATION_MODE=master
+      - POSTGRES_REPLICATION_USER=${POSTGRES_REPLICATION_USER}
+      - POSTGRES_REPLICATION_PASSWORD=${POSTGRES_REPLICATION_PASSWORD}
+    volumes:
+      - postgres-primary-data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G
+        reservations:
+          cpus: '2'
+          memory: 4G
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # PostgreSQL Read Replicas
+  postgres-replica:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_REPLICATION_MODE=slave
+      - POSTGRES_REPLICATION_USER=${POSTGRES_REPLICATION_USER}
+      - POSTGRES_REPLICATION_PASSWORD=${POSTGRES_REPLICATION_PASSWORD}
+      - POSTGRES_MASTER_HOST=postgres-primary
+      - POSTGRES_MASTER_PORT=5432
+    deploy:
+      replicas: 3
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+    depends_on:
+      - postgres-primary
+    networks:
+      - backend
+
+  # Prometheus - Metrics Collection
+  prometheus:
+    image: prom/prometheus:v2.47.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=90d'
+      - '--web.enable-lifecycle'
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+    networks:
+      - monitoring
+
+  # Grafana - Metrics Visualization
+  grafana:
+    image: grafana/grafana:10.1.0
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+    depends_on:
+      - prometheus
+    networks:
+      - monitoring
+      - frontend
+
+  # Nginx - Global Load Balancer & SSL Termination
+  nginx-lb:
+    image: nginx:1.25-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      placement:
+        constraints:
+          - node.role == manager
+    depends_on:
+      - api-gateway
+    networks:
+      - frontend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Elasticsearch - Centralized Logging
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.9.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+    networks:
+      - logging
+
+  # Kibana - Log Analysis
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.9.0
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    deploy:
+      replicas: 1
+    depends_on:
+      - elasticsearch
+    networks:
+      - logging
+      - frontend
+
+  # Filebeat - Log Shipping
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.9.0
+    user: root
+    volumes:
+      - ./monitoring/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    deploy:
+      mode: global
+    depends_on:
+      - elasticsearch
+    networks:
+      - logging
+
+# Networks for Service Isolation
+networks:
+  frontend:
+    driver: overlay
+    attachable: true
+  backend:
+    driver: overlay
+    internal: true
+  ai-network:
+    driver: overlay
+    internal: true
+  payment-network:
+    driver: overlay
+    internal: true
+  monitoring:
+    driver: overlay
+    attachable: true
+  logging:
+    driver: overlay
+    internal: true
+
+# Persistent Storage Volumes
+volumes:
+  postgres-primary-data:
+    driver: local
+  redis-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+  elasticsearch-data:
+    driver: local
+
+# ================================================================================================
+# DEPLOYMENT CONFIGURATION
+# ================================================================================================
+
+# Swarm Configuration
+x-deploy-defaults: &deploy-defaults
+  restart_policy:
+    condition: on-failure
+    delay: 5s
+    max_attempts: 3
+    window: 120s
+  update_config:
+    parallelism: 2
+    delay: 10s
+    failure_action: rollback
+    monitor: 60s
+    max_failure_ratio: 0.3
+  rollback_config:
+    parallelism: 2
+    delay: 0s
+    failure_action: pause
+    monitor: 60s
+    max_failure_ratio: 0.3
+
+# Resource Limits
+x-resource-limits: &resource-limits
+  limits:
+    cpus: '2'
+    memory: 4G
+  reservations:
+    cpus: '1'
+    memory: 2G
+
+# Health Check Template
+x-healthcheck: &healthcheck
+  interval: 10s
+  timeout: 5s
+  retries: 3
+  start_period: 30s

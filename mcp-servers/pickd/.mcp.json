@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "updated-pickd": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        ".",
+        "run",
+        "mcp-server-pickd",
+        "--database",
+        "./database.db"
+      ]
+    }
+  }
+}

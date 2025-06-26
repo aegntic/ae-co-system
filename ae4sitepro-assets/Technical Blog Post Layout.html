@@ -1,0 +1,200 @@
+<html lang="en" class="dark"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Building SmartPay: A Technical Deep Dive</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script>
+tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{sans:['Inter','ui-sans-serif','system-ui']},
+colors:{surface:{900:'#0c0c0c',800:'#141414'},accent:{500:'#4ade80',600:'#22c55e'}},borderRadius:{xl2:'1.25rem'}}}};
+</script>
+<style>
+body{background:#0c0c0c;color:#e5e7eb}
+.window{background:#141414;border:1px solid #1f1f1f;border-radius:1rem;box-shadow:0 20px 60px rgba(0,0,0,.6);overflow:hidden}
+.placeholder{background:repeating-linear-gradient(90deg,#1f1f1f 0 8px,#141414 8px 16px);height:6px;border-radius:2px}
+.annotation{font-size:10px;letter-spacing:.04em;color:#9ca3af;position:absolute;white-space:nowrap}
+.annotation-line{position:absolute;height:1px;background:#333;z-index:1}
+.annotation-left{right:calc(100% + 20px);text-align:right}
+.annotation-right{left:calc(100% + 20px);text-align:left}
+.grid-row{display:grid;grid-template-columns:120px 1fr;gap:1rem;align-items:center;padding:0.75rem 0;border-bottom:1px solid #1f1f1f}
+.grid-row:last-child{border-bottom:none}
+.label{color:#9ca3af;font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.05em}
+.value{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap}
+@media(max-width:1200px){.annotation,.annotation-line{display:none}}
+@media(max-width:640px){.grid-row{grid-template-columns:1fr;gap:0.25rem}.label{margin-bottom:0.25rem}}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }
+</style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;family=Instrument+Serif:wght@400;500;600;700&amp;family=Inter&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&amp;display=swap" rel="stylesheet">
+  <style>
+      /* Custom font utilities */
+      .font-instrument-serif { font-family: 'Instrument Serif', serif !important; }
+    </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;family=Instrument+Serif:wght@400;500;600;700&amp;family=Inter&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&amp;display=swap" rel="stylesheet">
+  <style>
+      /* Custom font utilities */
+      .font-instrument-serif { font-family: 'Instrument Serif', serif !important; }
+    </style>
+<link id="dynamic-font-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap">
+<style id="dynamic-font-style-font-instrument-serif">
+.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }
+</style>
+</head>
+<body class="bg-zinc-900">
+
+<section class="max-w-6xl mr-auto ml-auto pt-4 pr-4 pb-16 pl-4">
+
+  <!-- Heading -->
+  
+
+  <!-- Blog Post Card with annotations -->
+  <div class="relative w-full max-w-2xl lg:max-w-3xl mt-12 mr-auto ml-auto">
+    
+    <!-- Left annotations with lines -->
+    <div class="annotation annotation-left" style="top:60px">TECHNICAL<br>BLOG POST<br>STRUCTURE</div>
+    <div class="annotation-line" style="top:75px;right:calc(100% - 20px);width:40px"></div>
+    
+    <div class="annotation annotation-left" style="top:180px">DEVELOPMENT<br>INSIGHTS &amp;<br>METADATA</div>
+    <div class="annotation-line" style="top:195px;right:calc(100% - 20px);width:40px"></div>
+    
+    <div class="annotation annotation-left" style="top:380px">PROJECT<br>TIMELINE</div>
+    <div class="annotation-line" style="top:395px;right:calc(100% - 20px);width:40px"></div>
+
+    <!-- Right annotations with lines -->
+    <div class="annotation annotation-right" style="top:20px">ARTICLE<br>HEADER</div>
+    <div class="annotation-line" style="top:35px;left:calc(100% - 20px);width:40px"></div>
+    
+    <div class="annotation annotation-right" style="top:100px">CONTENT<br>CATEGORIZATION</div>
+    <div class="annotation-line" style="top:115px;left:calc(100% - 20px);width:40px"></div>
+    
+    <div class="annotation annotation-right" style="top:160px">TECHNICAL<br>SPECIFICATIONS</div>
+    <div class="annotation-line" style="top:175px;left:calc(100% - 20px);width:40px"></div>
+    
+    <div class="annotation annotation-right" style="top:520px">VISUAL<br>CONTENT</div>
+    <div class="annotation-line" style="top:535px;left:calc(100% - 20px);width:40px"></div>
+
+    <!-- Main blog card -->
+    <div class="window sm:p-6 lg:p-8 relative z-10 bg-zinc-900 border-zinc-800 pt-4 pr-4 pb-4 pl-4">
+
+      <!-- Blog Header -->
+      <div class="border-zinc-800 border-b mb-6 pb-4">
+        <h2 class="sm:text-xl flex items-center gap-2 text-lg font-normal mb-2">I can't believe how good Claude 4 is at generating responsive UI.</h2>
+        <p class="sm:text-sm text-xs text-zinc-400 mb-3">Okay, many are asking how to get to SUPER nice designs. Here's a trick I use and it works on any design.</p>
+        <div class="flex items-center gap-4 text-xs text-gray-500">
+          <span class="">Aug 15, 2024</span>
+          <span class="">8 min read</span>
+          <span class="">Technical Deep Dive</span>
+        </div>
+      </div>
+
+      <!-- Article Metadata -->
+      <div class="mb-6">
+        
+
+        <div class="grid-row">
+          <div class="label">Category</div>
+          <div class="value">
+            <span class="flex items-center gap-1 text-sm text-gray-300">UI Prompting</span>
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <div class="label">Author</div>
+          <div class="value">
+            <div class="w-6 h-6 flex items-center justify-center bg-zinc-700 rounded-full">
+              <span class="text-xs font-semibold text-white">MT</span>
+            </div>
+            <span class="text-sm text-white">Meng To</span>
+            <span class="w-2 h-2 rounded-full bg-green-400"></span>
+          </div>
+        </div>
+
+        
+
+        
+
+        
+
+        <div class="grid-row">
+          <div class="label">Topics</div>
+          <div class="value">
+            <span class="hover:bg-gray-600 cursor-pointer transition-colors text-xs bg-gray-700 rounded pt-1 pr-2 pb-1 pl-2">AI</span>
+            <span class="hover:bg-gray-600 cursor-pointer transition-colors text-xs bg-gray-700 rounded pt-1 pr-2 pb-1 pl-2">Prompting</span>
+            <span class="hover:bg-gray-600 cursor-pointer transition-colors text-xs bg-gray-700 rounded pt-1 pr-2 pb-1 pl-2">Image to HMTL</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Article Content Sections -->
+      
+
+      <!-- Main Article Content -->
+      <div class="border-zinc-800 border-t pt-6">
+        <h3 class="flex items-center gap-2 text-sm font-medium mb-4">UI Prompting</h3>
+        
+        <!-- Architecture diagram -->
+        <div class="overflow-hidden bg-zinc-800/50 border-zinc-800 border rounded-lg mb-4">
+          <div class="aspect-video flex items-center justify-center relative">
+            <div class="absolute inset-1 flex items-center justify-center bg-[url(https://images.unsplash.com/photo-1634635720982-88d440c3f4a7?w=2160&amp;q=80)] bg-cover border-zinc-800 border rounded-md">
+              
+            </div>
+            
+            
+            
+          </div>
+        </div>
+
+        <!-- Article text content -->
+        <div class="mb-6 space-y-4">
+          
+          <p class="leading-relaxed text-sm text-gray-300">It's done with a screenshot of a layout, pasted into Aura. I already embedded a ton of prompting into Aura for image to HTML. </p>
+          <p class="leading-relaxed text-sm text-gray-400">BUT you can also use ChatGPT's o3 (paid), which has the best vision, with this prompt:   </p>
+          <p class="leading-relaxed text-sm text-gray-400">"Generate the HTML with TailwindCSS and javascript and use lucide icons. In the end, create a downloadable html file. Make sure to respect the fonts, the rounded corners, containers, padding, design systems. In the style of {FAV SITES} (don't mention names). Checkboxes, sliders, dropdowns, toggles should be custom. Adapt all texts for {YOUR APP}: {APP DESC}. Be extremely accurate with fonts. "</p>
+          <p class="leading-relaxed text-sm text-gray-400">Can add more design details where you feel AI is lacking. Avoid illustrations, tons of effects, animations -- those
+          won't work. You can add them later in Aura as an asset. Focus on simple, effective layouts, grids, typography, info
+          architecture, responsive design, etc.</p>
+            <p class="leading-relaxed text-sm text-gray-400">Save HTML, view them until you're satisfied. Don't pay attention to broken images, bad icons, these can be fixed easily.
+            KEEP good layouts with good typography and colors. That's the hardest to edit. As a designer, you want to focus on your
+            creativity, post-gen, not on fighting with auto layout. Such as picking the right font weight, images, avatars, copy,
+            adding animations, effects, etc. I like the 90% ai/10% human rule.</p>
+              <p class="leading-relaxed text-sm text-gray-400">With a strong html as attachment, Aura will generate a really good result. From there, use Design mode to fix texts,
+              images, colors. Use the Prompt builder to add animation. Use the Code Mode for editing code/adding new code, new
+              buttons, links etc. Knowing Tailwind will help a ton.</p>
+                <p class="leading-relaxed text-sm text-gray-400">Yep, if you know HTML, you can build an entire landing page in Aura. No React needed, just a single file.</p>
+        </div>
+
+        <!-- Author section -->
+        <div class="flex items-center justify-between border-zinc-800/50 border-t pt-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 flex items-center justify-center bg-zinc-700 rounded-full">
+              <span class="text-sm font-semibold text-white">AR</span>
+            </div>
+            <div class="">
+              <div class="text-sm font-medium text-white">Meng TO</div>
+              <div class="text-xs text-gray-400">Designer and creator of Aura</div>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="text-gray-300 font-instrument-serif mb-1">Meng To</div>
+            <div class="text-xs text-gray-500">Published: June 5, 2025</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<script>
+  lucide.createIcons();
+</script>
+
+
+</body></html>

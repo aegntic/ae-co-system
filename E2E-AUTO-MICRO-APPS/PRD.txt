@@ -1,0 +1,577 @@
+# E2E-AUTO-MICRO-APPS: Linux-Based AI Project Auto-Initiation System
+# Product Requirements Document (PRD)
+# Version 1.0 | May 5, 2025
+
+## 1. EXECUTIVE SUMMARY
+
+E2E-AUTO-MICRO-APPS is an end-to-end automated system for discovering, validating, and bootstrapping high-ROI micro-application projects. The system leverages AI capabilities to transform trending topics into fully-scaffolded development environments with minimal human intervention. By automating the ideation-to-implementation pipeline, developers can focus on building valuable solutions rather than repetitive setup tasks.
+
+The system operates primarily on Linux environments, using a combination of Python, Bash, and Node.js components to orchestrate various AI models and development tools. It emphasizes cost efficiency by utilizing OpenRouter for model access, offline capabilities through caching mechanisms, and productivity through integrations with tools like Claude Desktop, GitHub, Context7, Shippie, Task-Master-AI, and n8n.
+
+## 2. BUSINESS OBJECTIVES
+
+### 2.1. Primary Objectives
+- Reduce time-to-implementation for new software projects by 80%
+- Increase developer productivity through automation of repetitive tasks
+- Generate consistently high-quality project ideas based on current trends
+- Ensure uniform setup and configuration across all generated projects
+- Minimize API costs by prioritizing open-source or efficient AI models
+- Enable offline functionality for core system features
+
+### 2.2. Success Metrics
+- Average time from idea selection to functional repository < 10 minutes
+- RICE score of generated ideas consistently above threshold (40+)
+- System functions with 90% capability without internet connection
+- Premium AI model usage < 5% of total operations
+- User satisfaction rating > 4.5/5 in developer feedback
+
+## 3. USER PERSONAS
+
+### 3.1. Primary: Solo Developer / Indie Hacker
+- Time-constrained developer building multiple micro-SaaS products
+- Seeks automation to reduce repetitive setup work
+- Wants data-driven idea validation to focus on promising projects
+
+### 3.2. Secondary: Small Development Team
+- 2-5 developers collaborating on multiple concurrent projects
+- Need standardized repositories and tooling across projects
+- Want consistent documentation and onboarding for new team members
+
+### 3.3. Tertiary: AI Product Researcher
+- Experiments with different AI-assisted development approaches
+- Uses the system as a testbed for AI orchestration patterns
+- Contributes to or extends the platform with new capabilities
+
+## 4. DETAILED REQUIREMENTS
+
+### 4.1. Core System Architecture
+
+#### 4.1.1. Modular Component Design
+- System divided into isolated, independently testable modules
+- Clear interfaces between components for maintainability
+- Support for future extensions and alternative implementations
+- Configuration-driven behavior for maximum flexibility
+
+#### 4.1.2. Directory Structure
+```
+/microapp_orchestrator/
+├── README.md           # Documentation & usage
+├── config.yaml         # Configuration file
+├── bin/                # CLI entry-point scripts
+├── modules/            # Core functional modules
+│   ├── generate_ideas.py    # Idea generation logic
+│   ├── validate_ideas.py    # Idea validation logic
+│   ├── bootstrap_project.sh # Project setup
+│   └── notify.sh            # Notification helper
+├── templates/          # Templates for projects
+└── projects/           # Generated ideas and projects
+```
+
+#### 4.1.3. Command-Line Interface
+- Simple, intuitive CLI for all operations
+- Consistent command pattern and output formatting
+- Support for both interactive and non-interactive modes
+- Comprehensive help and documentation accessible from CLI
+
+### 4.2. Trend Analysis Module
+
+#### 4.2.1. Data Sources
+- Google Trends API (via pytrends)
+- Exploding Topics (web scraping or API if available)
+- Optional: Twitter API, Product Hunt, GitHub Trending
+- User-defined custom sources via configuration
+
+#### 4.2.2. Caching Mechanism
+- Local storage of trend data with timestamp
+- Configurable cache expiration (default: 24 hours)
+- Offline mode falling back to most recent cache
+- Manual override option to force refresh
+
+#### 4.2.3. Filtering Capabilities
+- Blacklist/whitelist for keywords
+- Category filtering (e.g., technology, health, education)
+- Customizable relevance scoring
+- Removal of inappropriate or restricted topics
+
+### 4.3. Idea Generation Module
+
+#### 4.3.1. AI Model Integration
+- Primary: OpenRouter API for model access
+- Default: Small, efficient models (Claude 3 Haiku, Mistral)
+- Support for local models via Ollama (optional)
+- Fallback chain for handling API failures
+
+#### 4.3.2. Prompt Engineering
+- Templated prompts for consistent outputs
+- Dynamic insertion of trend data
+- Instructions for RICE scoring methodology
+- Format specifications for structured JSON responses
+
+#### 4.3.3. RICE Scoring Implementation
+- Clear definitions for Reach (1-10)
+- Clear definitions for Impact (1-10)
+- Clear definitions for Confidence (0-1)
+- Clear definitions for Effort (1-3)
+- Automated calculation: (R*I*C)/E
+- Threshold filtering (default: score > 40)
+
+#### 4.3.4. Output Format
+- Standardized JSON structure for machine processing
+- Markdown files for human readability
+- Unique identifiers for each idea
+- Master index of all generated ideas
+
+### 4.4. Idea Validation Module
+
+#### 4.4.1. Deep-Dive Analysis
+- Market potential assessment
+- Technical feasibility evaluation
+- Competitive landscape overview
+- Potential revenue/monetization strategies
+- Implementation challenges and mitigations
+
+#### 4.4.2. Model Selection Logic
+- Base validation with cost-effective models
+- Optional escalation to premium models (--premium flag)
+- Configurable token budget constraints
+- Performance/quality tradeoff settings
+
+#### 4.4.3. Storage & Presentation
+- Comprehensive analysis in markdown format
+- Standardized sections for consistency
+- Links to supporting references when available
+- Summary metrics for quick evaluation
+
+### 4.5. Notification System
+
+#### 4.5.1. Desktop Notifications
+- Integration with libnotify system
+- Configurable urgency levels
+- Custom icons for different notification types
+- Sound alerts using system sound theme
+
+#### 4.5.2. Notification Types
+- Idea generation completion
+- Analysis ready notification
+- Project bootstrapping status updates
+- Error/warning alerts
+- Long-running process completion
+
+#### 4.5.3. Action Support
+- Click to view idea details (when supported)
+- Accept/reject buttons for ideas (when supported)
+- Quick access to log files
+- Resume interrupted operations
+
+### 4.6. Project Bootstrapping Pipeline
+
+#### 4.6.1. Project Directory Creation
+- Consistent naming convention
+- Standard directory structure
+- Basic README template
+- License file generation
+
+#### 4.6.2. Claude Desktop Integration
+- Creation of instruction file for context
+- Structured format for AI assistance
+- Integration with Claude Desktop configuration
+- Support for other AI assistants (fallback mode)
+
+#### 4.6.3. Git & GitHub Setup
+- Local git repository initialization
+- .gitignore appropriate for project type
+- GitHub repository creation via API/CLI
+- Initial commit with all scaffold files
+- Default to private repositories
+
+#### 4.6.4. Development Tool Integration
+
+##### 4.6.4.1. Shippie Integration
+- Installation as development dependency
+- Configuration file generation
+- API key management
+- Integration with GitHub Actions (optional)
+
+##### 4.6.4.2. Context7 Setup
+- Installation of MCP server
+- Configuration for documentation sources
+- Integration with Claude/AI workflows
+- Testing of documentation retrieval
+
+##### 4.6.4.3. Task-Master-AI Implementation
+- Installation and initialization
+- PRD parsing to generate task list
+- Task priority and dependency setup
+- Integration with development workflow
+
+##### 4.6.4.4. n8n Workflow Configuration
+- Template workflow selection based on project type
+- Customization of workflow parameters
+- Deployment to local or cloud n8n instance
+- Documentation of workflow endpoints/triggers
+
+#### 4.6.5. Branding & Consistency
+- Application of brand prefix to repository names
+- Insertion of brand assets (logos, colors)
+- Consistent naming patterns across assets
+- Central index of all projects (AllProjects.md)
+
+### 4.7. Cost Optimization
+
+#### 4.7.1. Token Budget Management
+- Tracking of token usage across operations
+- Configurable budget limits (daily/weekly/monthly)
+- Warnings when approaching limits
+- Forced use of efficient models when near limits
+
+#### 4.7.2. Model Selection Strategy
+- Decision tree for model selection based on task
+- Default to smallest sufficient model
+- Optional premium model usage with explicit flag
+- Cost estimation before expensive operations
+
+#### 4.7.3. Caching & Reuse
+- Storage of common AI responses
+- Reuse of results for similar queries
+- Offline operation from cached results
+- Incremental updates to reduce redundant operations
+
+### 4.8. Offline Capability
+
+#### 4.8.1. Dependency Management
+- Local storage of all required dependencies
+- Automatic detection of offline status
+- Graceful degradation of features when offline
+- Clear user communication about reduced functionality
+
+#### 4.8.2. Local Model Support
+- Optional integration with Ollama
+- Support for running 7B parameter models locally
+- Configuration for local model endpoints
+- Performance expectations documentation
+
+#### 4.8.3. Operation Resumability
+- Checkpoint system for long operations
+- Ability to resume from last successful step
+- Local storage of intermediate results
+- Manual override options for stuck processes
+
+### 4.9. Security Considerations
+
+#### 4.9.1. API Key Management
+- No hardcoded credentials in source code
+- Support for environment variables
+- Optional integration with system keyring
+- Documentation of required permissions/scopes
+
+#### 4.9.2. Data Privacy
+- Clear documentation of data usage
+- Local storage of sensitive information
+- No unnecessary data transmission
+- Secure handling of project information
+
+#### 4.9.3. Repository Security
+- Default to private GitHub repositories
+- Generated .gitignore with security focus
+- Documentation of security considerations
+- Scanning for accidental credential inclusion
+
+## 5. TECHNICAL SPECIFICATIONS
+
+### 5.1. System Requirements
+
+#### 5.1.1. Hardware Requirements
+- Minimum: 4GB RAM, dual-core CPU, 10GB free disk space
+- Recommended: 8GB+ RAM, quad-core CPU, 20GB+ free disk space
+- Optional: GPU for local model acceleration
+
+#### 5.1.2. Software Requirements
+- Linux distribution (Ubuntu/Debian-based recommended)
+- Python 3.10+
+- Node.js 18+
+- Git 2.25+
+- libnotify and sound theme packages
+
+#### 5.1.3. Network Requirements
+- Internet connection for initial setup
+- Optional: Internet for API-based features
+- Support for proxy configuration
+- Bandwidth requirements documentation
+
+### 5.2. Dependencies
+
+#### 5.2.1. Python Packages
+- pytrends
+- requests
+- pyyaml
+- openai (v1.x for OpenRouter compatibility)
+- beautifulsoup4 (for web scraping)
+- pytest (for testing)
+
+#### 5.2.2. Node.js Packages
+- shippie
+- task-master-ai
+- context7
+- n8n (optional)
+
+#### 5.2.3. System Packages
+- git
+- curl
+- build-essential
+- libnotify-bin
+- sound-theme-freedesktop
+
+### 5.3. API Integrations
+
+#### 5.3.1. OpenRouter API
+- Authentication method: API key
+- Endpoints used: /chat/completions
+- Error handling strategy
+- Rate limiting considerations
+
+#### 5.3.2. GitHub API
+- Authentication method: Personal access token
+- Endpoints used: repos, users, contents
+- Permission scopes required
+- Organization support (optional)
+
+#### 5.3.3. Optional API Integrations
+- Twitter API (for trend analysis)
+- Product Hunt API (for trend analysis)
+- Anthropic API (direct Claude access)
+- OpenAI API (direct GPT access)
+
+### 5.4. Storage & Data Management
+
+#### 5.4.1. Configuration Management
+- YAML-based central configuration
+- Environment variable override support
+- User-specific vs. system-wide settings
+- Configuration validation and defaults
+
+#### 5.4.2. Data Storage Strategy
+- Local file storage for all outputs
+- JSON for machine-readable data
+- Markdown for human-readable outputs
+- SQLite for structured data (optional)
+
+#### 5.4.3. Logging & Monitoring
+- Comprehensive logging system
+- Configurable verbosity levels
+- Rotation and retention policies
+- Analytics for system usage (optional)
+
+## 6. USER INTERFACE
+
+### 6.1. Command-Line Interface
+
+#### 6.1.1. Command Structure
+- microapp generate - Create new ideas
+- microapp list - Display available ideas
+- microapp accept <id> - Bootstrap selected idea
+- microapp status - Show system status
+- microapp config - View/edit configuration
+
+#### 6.1.2. Output Formatting
+- Consistent color coding
+- Progress indicators for long operations
+- Tabular display for idea listings
+- Clear error messages with suggested fixes
+
+#### 6.1.3. Interactive Mode
+- Optional TUI for navigation
+- Selection menus for idea browsing
+- Confirmation prompts for destructive actions
+- Step-by-step guidance for complex operations
+
+### 6.2. Notifications
+
+#### 6.2.1. Desktop Notifications
+- Minimal, non-intrusive design
+- Consistent formatting
+- Clear action instructions
+- Appropriate urgency levels
+
+#### 6.2.2. Sound Alerts
+- Distinct sounds for different events
+- Volume control integration
+- Silent mode option
+- Custom sound support
+
+### 6.3. Optional Web Dashboard
+
+#### 6.3.1. Basic Implementation
+- Simple Flask/FastAPI application
+- Idea browsing and management
+- Project status overview
+- Configuration interface
+
+#### 6.3.2. Advanced Features
+- Visualization of idea metrics
+- RICE score comparisons
+- Project analytics dashboard
+- User accounts and permissions
+
+## 7. TESTING STRATEGY
+
+### 7.1. Unit Testing
+
+#### 7.1.1. Core Module Tests
+- Test coverage requirements (>80%)
+- Mock framework for external dependencies
+- Isolation of components
+- Edge case identification and testing
+
+#### 7.1.2. Integration Testing
+- Cross-module interaction testing
+- Full pipeline verification
+- API mock responses
+- Error condition simulation
+
+#### 7.1.3. Offline Testing
+- Verification of offline functionality
+- Simulation of connectivity loss
+- Recovery testing
+- Cache validation
+
+### 7.2. Performance Testing
+
+#### 7.2.1. Response Time Benchmarks
+- Maximum acceptable latency for operations
+- Performance degradation tracking
+- Resource utilization monitoring
+- Optimization opportunities identification
+
+#### 7.2.2. Token Usage Analysis
+- Cost efficiency metrics
+- Token optimization strategies
+- Budget adherence verification
+- Model comparison benchmarks
+
+### 7.3. User Acceptance Testing
+
+#### 7.3.1. Test Scenarios
+- First-time setup experience
+- Complete idea-to-project workflow
+- Error recovery procedures
+- Configuration customization
+
+#### 7.3.2. Usability Metrics
+- Time-to-completion for key tasks
+- Error rate monitoring
+- User satisfaction surveys
+- Feature discoverability assessment
+
+## 8. IMPLEMENTATION TIMELINE
+
+### 8.1. Phase 1: Setup & Core Infrastructure (1-2 days)
+- System dependencies installation
+- Repository structure creation
+- Configuration system implementation
+- CLI skeleton development
+
+### 8.2. Phase 2: Trend Analysis & Idea Generation (1-2 days)
+- Trend fetching implementation
+- Model integration via OpenRouter
+- RICE scoring algorithm development
+- Idea storage and organization
+
+### 8.3. Phase 3: Validation & Notification (1-2 days)
+- Deep-dive analysis implementation
+- Notification system development
+- Desktop integration testing
+- Output formatting refinement
+
+### 8.4. Phase 4: Project Bootstrapping (2-3 days)
+- GitHub integration development
+- Claude instruction file generation
+- Shippie and Context7 integration
+- Task-Master-AI and n8n setup
+
+### 8.5. Phase 5: Testing & Refinement (1-2 days)
+- End-to-end testing
+- Performance optimization
+- Error handling improvements
+- Documentation completion
+
+### 8.6. Phase 6: Advanced Features (1-2 days)
+- Offline mode enhancements
+- Local model integration
+- Automation and scheduling
+- Optional web dashboard
+
+### 8.7. Phase 7: Final Documentation & Release (1 day)
+- User guide completion
+- Installation script creation
+- Video walkthrough recording
+- Release preparation
+
+## 9. MAINTENANCE & SUPPORT
+
+### 9.1. Update Strategy
+- Regular dependency updates
+- API compatibility monitoring
+- New model integration as available
+- Feature deprecation policy
+
+### 9.2. Troubleshooting
+- Common issues documentation
+- Self-diagnosis tools
+- Log analysis utilities
+- Support request templates
+
+### 9.3. Community Engagement
+- Contribution guidelines
+- Feature request process
+- Issue reporting procedures
+- Communication channels
+
+## 10. FUTURE ROADMAP
+
+### 10.1. Short-term Enhancements (1-3 months)
+- Additional trend sources integration
+- Expanded template library
+- More granular RICE scoring
+- Enhanced offline capabilities
+
+### 10.2. Medium-term Features (3-6 months)
+- Full MCP orchestration support
+- IDE plugin development
+- Feedback loop from deployed projects
+- Multi-platform support (macOS, Windows)
+
+### 10.3. Long-term Vision (6+ months)
+- Cloud-hosted version
+- Collaborative team features
+- Enterprise integration capabilities
+- Advanced analytics and recommendations
+
+## 11. APPENDICES
+
+### 11.1. Glossary of Terms
+- Micro-app: Small, focused application solving a specific problem
+- RICE score: Prioritization metric (Reach × Impact × Confidence ÷ Effort)
+- Bootstrap: Process of setting up a complete project environment
+- Orchestration: Coordination of multiple tools and services
+- MCP: Model Context Protocol for AI context sharing
+- OpenRouter: API gateway for accessing multiple AI models
+
+### 11.2. Reference Materials
+- OpenRouter API documentation
+- GitHub API documentation
+- Claude Desktop integration guide
+- RICE scoring methodology
+- Linux desktop notification specifications
+
+### 11.3. Decision Log
+- Selection of OpenRouter over direct API integration
+- Choice of Python/Bash for core components
+- Decision to prioritize offline capabilities
+- Approach to token budget management
+- Repository structure rationale
+
+---
+
+Document Owner: Dev Team
+Last Updated: May 5, 2025
+Status: Approved

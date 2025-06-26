@@ -1,0 +1,24 @@
+[project]
+name = "mcp-server-pickd"
+version = "0.1.0"
+description = "Your Personal Knowledge Base with MCP"
+readme = "README.md"
+authors = [
+    { name = "IndyDevDan", email = "agentic@indydevdan.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "click>=8.1.7",
+    "mcp>=1.0.0",
+    "pydantic>=2.0.0",
+]
+
+[project.scripts]
+mcp-server-pickd = "mcp_server_pickd:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = ["pytest>=8.0.0"]

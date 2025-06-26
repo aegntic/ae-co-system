@@ -1,0 +1,30 @@
+{
+    "timestamp": "2025-06-04_21-10-15",
+    "working_directory": "/home/tabs/DAILYDOCO",
+    "git_status": " M .mcp.json
+ M CLAUDE.md
+ M README.md
+ M TASKS.md
+ M aegnt-27-standalone
+ M apps/browser-ext/package.json
+ M apps/web-dashboard/src/App.tsx
+ M apps/web-dashboard/src/components/RealTimePreview.tsx
+ M apps/web-dashboard/src/index.css
+?? .claude/
+?? CHROME_STORE_SUBMISSION_PACKAGE.md
+?? DIGITAL_PRESENCE_STRATEGY.md
+?? META_DEMO_SCRIPT.md
+?? R&D/
+?? YOUTUBE_CHANNEL_STRATEGY.md
+?? apps/browser-ext/package-lock.json
+?? research-journal/
+?? restart-claude
+?? video-recording-setup.md",
+    "git_branch": "main",
+    "recent_files": [],
+    "environment": {
+        "USER": "tabs",
+        "HOME": "/home/tabs",
+        "PATH": "/home/tabs/.local/bin:/home/tabs/.bun/bin:/home/tabs/.nvm/versions/node/v20.19.0/bin:/home/tabs/goog..."
+    }
+}

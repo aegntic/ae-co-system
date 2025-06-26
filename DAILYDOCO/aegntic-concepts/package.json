@@ -1,0 +1,47 @@
+{
+  "name": "@aegntic/concept-portfolio",
+  "version": "1.0.0",
+  "description": "Revolutionary AI-powered concept website generator and portfolio",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:core\" \"npm run dev:concepts\" \"npm run dev:grid\"",
+    "dev:core": "cd core-services && npm run dev",
+    "dev:concepts": "cd concept-generators && npm run dev",
+    "dev:grid": "cd comparison-grid && npm run dev",
+    "build": "npm run build:core && npm run build:concepts && npm run build:grid",
+    "build:core": "cd core-services && npm run build",
+    "build:concepts": "cd concept-generators && npm run build",
+    "build:grid": "cd comparison-grid && npm run build",
+    "deploy": "npm run build && npm run deploy:all",
+    "deploy:all": "node scripts/deploy-all.js",
+    "performance": "node scripts/performance-audit.js",
+    "seo-audit": "node scripts/seo-audit.js"
+  },
+  "keywords": ["ai", "concepts", "aegntic", "web-design", "innovation", "micro-services"],
+  "authors": [
+    "Mattae Cooper <human@mattaecooper.org>",
+    "'{ae}'aegntic.ai <contact@aegntic.ai>"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.0.0",
+    "vite": "^5.0.0",
+    "typescript": "^5.0.0",
+    "@types/three": "^0.160.0",
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0"
+  },
+  "dependencies": {
+    "three": "^0.160.0",
+    "gsap": "^3.12.0",
+    "lenis": "^1.0.0",
+    "canvas-sketch": "^0.7.7"
+  },
+  "workspaces": [
+    "core-services",
+    "concept-generators/*",
+    "comparison-grid",
+    "shared-components",
+    "performance-monitoring"
+  ]
+}

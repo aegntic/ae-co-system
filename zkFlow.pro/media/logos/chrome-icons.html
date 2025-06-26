@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>zkFlow.pro Chrome Store Icons</title>
+    <style>
+        .icon-container { margin: 20px; display: inline-block; text-align: center; }
+        .icon { border: 1px solid #ddd; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>zkFlow.pro Chrome Web Store Icons</h1>
+    
+    <div class="icon-container">
+        <h3>16x16 (Toolbar)</h3>
+        <canvas id="icon16" class="icon" width="16" height="16"></canvas>
+    </div>
+    
+    <div class="icon-container">
+        <h3>48x48 (Extension Management)</h3>
+        <canvas id="icon48" class="icon" width="48" height="48"></canvas>
+    </div>
+    
+    <div class="icon-container">
+        <h3>128x128 (Chrome Web Store)</h3>
+        <canvas id="icon128" class="icon" width="128" height="128"></canvas>
+    </div>
+
+    <script>
+        function drawIcon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#3B82F6');
+            gradient.addColorStop(1, '#8B5CF6');
+            
+            // Draw background
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+            
+            // Draw form symbol (simplified for small sizes)
+            ctx.fillStyle = 'white';
+            const formWidth = size * 0.6;
+            const formHeight = size * 0.4;
+            const formX = (size - formWidth) / 2;
+            const formY = (size - formHeight) / 2;
+            
+            ctx.fillRect(formX, formY, formWidth, formHeight);
+            
+            // Draw form lines
+            ctx.strokeStyle = '#3B82F6';
+            ctx.lineWidth = Math.max(1, size / 32);
+            
+            for (let i = 0; i < 3; i++) {
+                const y = formY + (formHeight / 4) * (i + 1);
+                ctx.beginPath();
+                ctx.moveTo(formX + size * 0.1, y);
+                ctx.lineTo(formX + formWidth - size * 0.1, y);
+                ctx.stroke();
+            }
+        }
+        
+        drawIcon('icon16', 16);
+        drawIcon('icon48', 48);
+        drawIcon('icon128', 128);
+    </script>
+</body>
+</html>

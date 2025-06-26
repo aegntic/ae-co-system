@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "file_read": true,
+    "file_write": true,
+    "directory_access": true,
+    "command_execution": true,
+    "network_access": true
+  },
+  "tools": {
+    "desktop_commander": true,
+    "web_search": true,
+    "github": true,
+    "exa": true,
+    "docker": true,
+    "puppeteer": true
+  },
+  "project_type": "research_and_development",
+  "ai_enhancement": {
+    "parallel_processing": true,
+    "ultrathink_mode": true,
+    "predictive_intelligence": true
+  }
+}

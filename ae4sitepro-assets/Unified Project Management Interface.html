@@ -1,0 +1,292 @@
+<html lang="en" class="dark"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>NexusFlow - Unified Project Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script>
+tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{sans:['Inter','ui-sans-serif','system-ui']},
+colors:{surface:{900:'#0c0c0c',800:'#141414'},accent:{500:'#4ade80',600:'#22c55e'}},borderRadius:{xl2:'1.25rem'}}}};
+</script>
+<style>
+body{background:#0c0c0c;color:#e5e7eb}
+.window{background:#141414;border:1px solid #1f1f1f;border-radius:1rem;box-shadow:0 20px 60px rgba(0,0,0,.6);overflow:hidden}
+.placeholder{background:repeating-linear-gradient(90deg,#1f1f1f 0 8px,#141414 8px 16px);height:6px;border-radius:2px}
+.annotation{font-size:10px;letter-spacing:.04em;color:#9ca3af;position:absolute;white-space:nowrap}
+.annotation-line{position:absolute;height:1px;background:#333;z-index:1}
+.annotation-left{right:calc(100% + 20px);text-align:right}
+.annotation-right{left:calc(100% + 20px);text-align:left}
+.grid-row{display:grid;grid-template-columns:120px 1fr;gap:1rem;align-items:center;padding:0.75rem 0;border-bottom:1px solid #1f1f1f}
+.grid-row:last-child{border-bottom:none}
+.label{color:#9ca3af;font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.05em}
+.value{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap}
+.signature{font-family:'Brush Script MT',cursive;font-size:1.5rem;color:#4ade80;transform:rotate(-2deg)}
+@media(max-width:1200px){.annotation,.annotation-line{display:none}}
+@media(max-width:640px){.grid-row{grid-template-columns:1fr;gap:0.25rem}.label{margin-bottom:0.25rem}}
+</style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;family=Inter&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Serif:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;family=Inter&amp;display=swap" rel="stylesheet">
+<link id="dynamic-font-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap">
+<style id="dynamic-font-style-font-instrument-serif">
+.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }
+</style>
+  <style>
+      /* Custom font utilities */
+      .font-instrument-serif { font-family: 'Instrument Serif', serif !important; }
+    </style>
+</head>
+<body class="font-sans">
+
+<section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24 relative">
+
+  <!-- Heading -->
+  <div class="flex justify-between">
+    <h1 class="sm:text-4xl lg:text-5xl leading-tight max-w-xs sm:max-w-md lg:max-w-lg text-3xl font-medium tracking-tight">Unified workspace for comprehensive project orchestration<br class="hidden sm:block"><br></h1>
+    
+    <!-- Sub -->
+    <p class="max-w-xs sm:text-base leading-relaxed text-sm text-gray-400">
+      Seamlessly integrate specifications, documentation, task management, and team collaboration. 
+      Bridge the gap between strategic planning and tactical execution with intelligent workflows.
+    </p>
+  </div>
+
+  <!-- Window mock with annotations -->
+  <div class="relative mx-auto mt-12 sm:mt-16 lg:mt-24 w-full max-w-2xl lg:max-w-3xl">
+    
+    <!-- Left annotations with lines -->
+    <div class="annotation annotation-left" style="top:60px">COMPREHENSIVE<br>PROJECT<br>METADATA</div>
+    <div class="annotation-line" style="top:75px;right:calc(100% - 20px);width:40px"></div>
+    
+    <div class="annotation annotation-left" style="top:180px">CENTRALIZED<br>RESOURCE<br>LIBRARY</div>
+    <div class="annotation-line" style="top:195px;right:calc(100% - 20px);width:40px"></div>
+    
+    <div class="annotation annotation-left" style="top:380px">MILESTONE<br>TRACKING</div>
+    <div class="annotation-line" style="top:395px;right:calc(100% - 20px);width:40px"></div>
+
+    <!-- Right annotations with lines -->
+    <div class="annotation annotation-right" style="top:20px">PROJECT<br>OVERVIEW</div>
+    <div class="annotation-line" style="top:35px;left:calc(100% - 20px);width:40px"></div>
+    
+    <div class="annotation annotation-right" style="top:100px">REAL-TIME<br>ISSUE TRACKING</div>
+    <div class="annotation-line" style="top:115px;left:calc(100% - 20px);width:40px"></div>
+    
+    <div class="annotation annotation-right" style="top:160px">PROJECT HEALTH<br>METRICS</div>
+    <div class="annotation-line" style="top:175px;left:calc(100% - 20px);width:40px"></div>
+    
+    <div class="annotation annotation-right" style="top:520px">VISUAL<br>DOCUMENTATION</div>
+    <div class="annotation-line" style="top:535px;left:calc(100% - 20px);width:40px"></div>
+
+    <!-- Main window -->
+    <div class="window p-4 sm:p-6 lg:p-8 relative z-10">
+
+      <!-- Project Header -->
+      <div class="border-b border-gray-700 pb-4 mb-6">
+        <h2 class="sm:text-xl flex items-center gap-2 text-lg font-normal mb-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="credit-card" class="lucide lucide-credit-card w-5 h-5 text-blue-400"><rect width="20" height="14" x="2" y="5" rx="2" class=""></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>
+          SmartPay Integration
+        </h2>
+        <p class="sm:text-sm text-xs text-neutral-400">Advanced payment splitting with real-time settlement and fraud detection</p>
+      </div>
+
+      <!-- Project Details Grid -->
+      <div class="mb-6">
+        <div class="grid-row">
+          <div class="label">Status</div>
+          <div class="value">
+            <span class="bg-amber-600/20 text-amber-400 px-3 py-1 rounded-full flex items-center gap-1 text-xs">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" class="lucide lucide-clock w-3 h-3"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              In Development
+            </span>
+            <span class="text-gray-400 text-xs">67% Complete</span>
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <div class="label">Timeline</div>
+          <div class="value">
+            <span class="text-gray-300 text-sm flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="calendar" class="lucide lucide-calendar w-3 h-3"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
+              Jun 15, 2024 → Q1 2025
+            </span>
+            <span class="text-xs text-gray-500">6 months</span>
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <div class="label">Team Lead</div>
+          <div class="value">
+            <div class="w-6 h-6 flex items-center justify-center bg-gradient-to-b from-gray-900 to-black rounded-full">
+              <span class="text-xs font-semibold text-white">AR</span>
+            </div>
+            <span class="text-white text-sm">Alex Rodriguez</span>
+            <span class="w-2 h-2 rounded-full bg-green-400"></span>
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <div class="label">Initiative</div>
+          <div class="value">
+            <span class="px-3 py-1 rounded-full bg-purple-600/20 text-purple-300 flex items-center gap-1 text-xs">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="smartphone" class="lucide lucide-smartphone w-3 h-3"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg>
+              Mobile Platform 3.0
+            </span>
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <div class="label">Dependencies</div>
+          <div class="value">
+            <span class="text-blue-400 underline decoration-dotted flex items-center gap-1 cursor-pointer hover:text-blue-300 text-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="link" class="lucide lucide-link w-3 h-3"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+              Stripe Connect API v2024
+            </span>
+            <span class="text-xs text-gray-500">External</span>
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <div class="label">Priority</div>
+          <div class="value">
+            <span class="bg-red-600/20 text-red-400 px-3 py-1 rounded-full text-xs font-medium">High</span>
+            <span class="text-xs text-gray-500">Revenue Impact</span>
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <div class="label">Resources</div>
+          <div class="value">
+            <span class="bg-gray-700 hover:bg-gray-600 px-2 py-1 rounded text-xs cursor-pointer transition-colors flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="users" class="lucide lucide-users w-3 h-3"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+              Research
+            </span>
+            <span class="bg-gray-700 hover:bg-gray-600 px-2 py-1 rounded text-xs cursor-pointer transition-colors flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="layout" class="lucide lucide-layout w-3 h-3"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg>
+              Design
+            </span>
+            <span class="bg-gray-700 hover:bg-gray-600 px-2 py-1 rounded text-xs cursor-pointer transition-colors flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" class="lucide lucide-file-text w-3 h-3"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
+              API Specs
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Milestones Section -->
+      <div class="border-t border-gray-700 pt-6 pb-6">
+        <h3 class="text-sm font-medium mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="flag" class="lucide lucide-flag w-4 h-4 text-yellow-400"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" x2="4" y1="22" y2="15"></line></svg>
+          Key Milestones
+        </h3>
+        
+        <div class="space-y-3">
+          <div class="flex items-center justify-between p-3 bg-green-600/10 border border-green-600/20 rounded-lg">
+            <div class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" class="lucide lucide-check-circle w-4 h-4 text-green-400"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg>
+              <div>
+                <div class="text-sm font-medium text-white">Technical Proof of Concept</div>
+                <div class="text-xs text-gray-400">Core payment flow validated</div>
+              </div>
+            </div>
+            <span class="text-xs text-gray-400 flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="calendar" class="lucide lucide-calendar w-3 h-3"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
+              Jul 22, 2024
+            </span>
+          </div>
+
+          <div class="flex items-center justify-between p-3 bg-yellow-600/10 border border-yellow-600/20 rounded-lg">
+            <div class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" class="lucide lucide-clock w-4 h-4 text-yellow-400"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <div>
+                <div class="text-sm font-medium text-white">Internal Beta Testing</div>
+                <div class="text-xs text-gray-400">Employee testing phase</div>
+              </div>
+            </div>
+            <span class="text-xs text-gray-400 flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="calendar" class="lucide lucide-calendar w-3 h-3"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
+              Sep 10, 2024
+            </span>
+          </div>
+
+          <div class="flex items-center justify-between p-3 bg-gray-800/50 border border-gray-700 rounded-lg">
+            <div class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="circle" class="lucide lucide-circle w-4 h-4 text-gray-500"><circle cx="12" cy="12" r="10"></circle></svg>
+              <div>
+                <div class="text-sm font-medium text-white">Public Launch</div>
+                <div class="text-xs text-gray-400">Full feature rollout</div>
+              </div>
+            </div>
+            <span class="text-xs text-gray-400 flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="calendar" class="lucide lucide-calendar w-3 h-3"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
+              Q1 2025
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Documentation Section -->
+      <div class="border-t border-gray-700 pt-6">
+        <h3 class="text-sm font-medium mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="image" class="lucide lucide-image w-4 h-4 text-blue-400"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg>
+          Architecture Overview
+        </h3>
+        
+        <!-- Image placeholder -->
+        <div class="mb-4 rounded-lg overflow-hidden bg-gray-800/50 border border-gray-700">
+          <div class="aspect-video flex items-center justify-center relative">
+            <div class="absolute inset-1 flex items-center justify-center bg-[url(https://images.unsplash.com/photo-1634635720982-88d440c3f4a7?w=2160&amp;q=80)] bg-cover border-gray-600 border rounded-md">
+              <div class="text-center text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="image" class="lucide lucide-image w-8 h-8 mx-auto mb-2 opacity-50"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg>
+                <p class="text-xs">Payment Flow Diagram</p>
+                <p class="text-xs opacity-75">Architecture v2.1</p>
+              </div>
+            </div>
+            <!-- Mock diagram elements -->
+            <div class="absolute top-8 left-8 w-16 h-8 bg-blue-500/30 border border-blue-400/50 rounded text-xs flex items-center justify-center text-blue-300">API</div>
+            <div class="absolute top-8 right-8 w-16 h-8 bg-green-500/30 border border-green-400/50 rounded text-xs flex items-center justify-center text-green-300">DB</div>
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-20 h-8 bg-purple-500/30 border border-purple-400/50 rounded text-xs flex items-center justify-center text-purple-300">Frontend</div>
+          </div>
+        </div>
+
+        <!-- Description text -->
+        <div class="mb-6 space-y-3">
+          <p class="text-sm text-gray-300 leading-relaxed">
+            The SmartPay integration leverages a microservices architecture to handle complex payment splitting scenarios. 
+            Our implementation supports real-time settlement processing with advanced fraud detection capabilities.
+          </p>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            Key technical highlights include distributed transaction management, event-driven processing, and seamless 
+            integration with multiple payment providers. The system is designed for 99.9% uptime with automatic failover mechanisms.
+          </p>
+        </div>
+
+        <!-- Signature Section -->
+        <div class="flex items-center justify-between pt-4 border-t border-gray-700/50">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 flex items-center justify-center bg-gradient-to-b from-gray-900 to-black rounded-full">
+              <span class="text-sm font-semibold text-white">AR</span>
+            </div>
+            <div class="">
+              <div class="text-sm font-medium text-white">Alex Rodriguez</div>
+              <div class="text-xs text-gray-400">Technical Lead &amp; Project Manager</div>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="font-instrument-serif mb-1">Alex Rodriguez</div>
+            <div class="text-xs text-gray-500">Approved: Aug 15, 2024</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<script>
+  lucide.createIcons();
+</script>
+
+
+</body></html>

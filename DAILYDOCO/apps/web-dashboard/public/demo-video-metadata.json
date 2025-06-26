@@ -1,0 +1,17 @@
+{
+  "title": "DailyDoco Pro - AI-Powered Documentation",
+  "description": "Watch how DailyDoco Pro automatically creates video documentation from your code",
+  "duration": 90,
+  "scenes": 0,
+  "created_at": "2025-06-17T18:54:08.602Z",
+  "generation_cost": {
+    "deepseek_r1": "$0.001",
+    "flux_schnell": "$0.01",
+    "total": "$0.011"
+  },
+  "models_used": [
+    "deepseek/deepseek-r1",
+    "black-forest-labs/flux-schnell",
+    "comfyui/video-composition"
+  ]
+}

@@ -1,0 +1,1 @@
+import{j as n,r}from"./react-vendor-CRoq-vpZ.js";const s=r.createContext(void 0),e=({children:r})=>n.jsx(s.Provider,{value:{user:null,profile:null,loading:!1,signIn:async()=>{},signUp:async()=>{},signInWithProvider:async()=>{},signOut:async()=>{},updateProfile:async()=>{}},children:r});export{e as M};

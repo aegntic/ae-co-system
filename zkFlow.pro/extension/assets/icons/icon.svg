@@ -1,0 +1,28 @@
+
+<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="#5b4cdb"/>
+  
+  <!-- Key shape -->
+  <g transform="translate(64, 64)">
+    <!-- Key handle -->
+    <circle cx="-20" cy="0" r="16" fill="white" opacity="0.9"/>
+    <circle cx="-20" cy="0" r="10" fill="#5b4cdb"/>
+    
+    <!-- Key shaft -->
+    <rect x="-8" y="-4" width="40" height="8" fill="white" opacity="0.9"/>
+    
+    <!-- Key teeth -->
+    <rect x="28" y="-4" width="4" height="12" fill="white" opacity="0.9"/>
+    <rect x="24" y="-4" width="4" height="8" fill="white" opacity="0.9"/>
+    <rect x="20" y="-4" width="4" height="10" fill="white" opacity="0.9"/>
+    
+    <!-- Flow indicator dots -->
+    <circle cx="8" cy="0" r="2" fill="#5b4cdb"/>
+    <circle cx="14" cy="0" r="2" fill="#5b4cdb"/>
+    <circle cx="20" cy="0" r="2" fill="#5b4cdb"/>
+  </g>
+  
+  <!-- zkFlow text (optional for larger sizes) -->
+  <text x="64" y="100" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">zkFlow</text>
+</svg>

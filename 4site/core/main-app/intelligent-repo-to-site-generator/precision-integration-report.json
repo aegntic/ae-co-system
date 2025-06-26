@@ -1,0 +1,48 @@
+{
+  "timestamp": "2025-06-26T00:14:18.479Z",
+  "tests": [
+    {
+      "name": "Backend Health",
+      "status": "PASS",
+      "details": {
+        "status": "healthy",
+        "timestamp": "2025-06-26T00:14:19.064Z",
+        "supabase": true
+      }
+    },
+    {
+      "name": "Performance Metrics",
+      "status": "PASS",
+      "details": {
+        "domContentLoaded": null,
+        "loadComplete": null,
+        "firstPaint": 0,
+        "firstContentfulPaint": 0,
+        "resourceCount": 0
+      }
+    }
+  ],
+  "performance": {
+    "domContentLoaded": null,
+    "loadComplete": null,
+    "firstPaint": 0,
+    "firstContentfulPaint": 0,
+    "resourceCount": 0
+  },
+  "errors": [
+    {
+      "type": "user_journey",
+      "message": "net::ERR_CONNECTION_REFUSED at http://localhost:5174",
+      "timestamp": "2025-06-26T00:14:19.082Z"
+    }
+  ],
+  "success": true,
+  "summary": {
+    "totalTests": 2,
+    "passedTests": 2,
+    "failedTests": 0,
+    "successRate": "100.0%",
+    "errorCount": 1,
+    "overallStatus": "SUCCESS"
+  }
+}

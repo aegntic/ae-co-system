@@ -1,0 +1,462 @@
+/**
+ * Aegntic.ai Universal Color Palette
+ * Neural-Themed Design System
+ * 
+ * Usage: Import this file in any project to apply the universal Aegntic.ai color scheme
+ */
+
+:root {
+  /* ================================
+     AEGNTIC BRAND COLORS
+     ================================ */
+  
+  /* Primary Brand Blues - Neural Intelligence Theme */
+  --aegntic-50: #f0f7ff;
+  --aegntic-100: #e0f0fe;
+  --aegntic-200: #bbe3fc;
+  --aegntic-300: #7dcdf9;
+  --aegntic-400: #36b4f4;
+  --aegntic-500: #0c9ae5;  /* PRIMARY BRAND COLOR */
+  --aegntic-600: #027bc4;
+  --aegntic-700: #0361a0;
+  --aegntic-800: #075284;
+  --aegntic-900: #0c446d;
+  --aegntic-950: #082b48;
+
+  /* ================================
+     NEURAL BACKGROUND COLORS
+     ================================ */
+     
+  /* Neural Dark Theme - Deep Space Intelligence */
+  --neural-50: #f8fafc;
+  --neural-100: #f1f5f9;  /* Primary text on dark */
+  --neural-200: #e2e8f0;
+  --neural-300: #cbd5e1;  /* Secondary text */
+  --neural-400: #94a3b8;  /* Muted text */
+  --neural-500: #64748b;  /* Placeholder text */
+  --neural-600: #475569;
+  --neural-700: #334155;  /* Subtle borders */
+  --neural-800: #1e293b;  /* Card borders */
+  --neural-900: #0f172a;  /* Card backgrounds */
+  --neural-950: #020617;  /* PRIMARY BACKGROUND */
+
+  /* ================================
+     SEMANTIC COLORS
+     ================================ */
+     
+  /* Success - Green Accents */
+  --success-50: #f0fdf4;
+  --success-100: #dcfce7;
+  --success-200: #bbf7d0;
+  --success-300: #86efac;
+  --success-400: #4ade80;
+  --success-500: #22c55e;
+  --success-600: #16a34a;
+  --success-700: #15803d;
+  --success-800: #166534;
+  --success-900: #14532d;
+
+  /* Warning - Amber Accents */
+  --warning-50: #fffbeb;
+  --warning-100: #fef3c7;
+  --warning-200: #fde68a;
+  --warning-300: #fcd34d;
+  --warning-400: #fbbf24;
+  --warning-500: #f59e0b;
+  --warning-600: #d97706;
+  --warning-700: #b45309;
+  --warning-800: #92400e;
+  --warning-900: #78350f;
+
+  /* Error - Red Accents */
+  --error-50: #fef2f2;
+  --error-100: #fee2e2;
+  --error-200: #fecaca;
+  --error-300: #fca5a5;
+  --error-400: #f87171;
+  --error-500: #ef4444;
+  --error-600: #dc2626;
+  --error-700: #b91c1c;
+  --error-800: #991b1b;
+  --error-900: #7f1d1d;
+
+  /* Info - Cyan Accents */
+  --info-50: #ecfeff;
+  --info-100: #cffafe;
+  --info-200: #a5f3fc;
+  --info-300: #67e8f9;
+  --info-400: #22d3ee;
+  --info-500: #06b6d4;
+  --info-600: #0891b2;
+  --info-700: #0e7490;
+  --info-800: #155e75;
+  --info-900: #164e63;
+
+  /* ================================
+     THEME ALIASES
+     ================================ */
+     
+  /* Background Hierarchy */
+  --bg-primary: var(--neural-950);
+  --bg-secondary: var(--neural-900);
+  --bg-tertiary: var(--neural-800);
+  --bg-elevated: var(--neural-800);
+  --bg-overlay: rgba(15, 23, 42, 0.9);
+
+  /* Text Hierarchy */
+  --text-primary: var(--neural-100);
+  --text-secondary: var(--neural-300);
+  --text-tertiary: var(--neural-400);
+  --text-muted: var(--neural-500);
+  --text-disabled: var(--neural-600);
+
+  /* Border Colors */
+  --border-primary: var(--neural-700);
+  --border-secondary: var(--neural-800);
+  --border-focus: var(--aegntic-500);
+
+  /* Interactive States */
+  --hover-bg: var(--neural-800);
+  --active-bg: var(--neural-700);
+  --disabled-bg: var(--neural-900);
+
+  /* Shadow Colors */
+  --shadow-sm: rgba(0, 0, 0, 0.1);
+  --shadow-md: rgba(0, 0, 0, 0.2);
+  --shadow-lg: rgba(0, 0, 0, 0.3);
+  --shadow-glow: rgba(12, 154, 229, 0.3);
+  --shadow-glow-strong: rgba(12, 154, 229, 0.5);
+}
+
+/* ================================
+   COMPONENT BASE CLASSES
+   ================================ */
+
+/* Apply global styles */
+* {
+  border-color: var(--border-primary);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Neural Card Component */
+.neural-card {
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-primary);
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px var(--shadow-lg);
+}
+
+/* Neural Button Component */
+.neural-button {
+  background: linear-gradient(135deg, var(--aegntic-500) 0%, var(--aegntic-600) 100%);
+  color: white;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px var(--shadow-glow);
+}
+
+.neural-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px var(--shadow-glow-strong);
+}
+
+.neural-button:active {
+  transform: translateY(0);
+}
+
+.neural-button:disabled {
+  background: var(--disabled-bg);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Neural Button Secondary */
+.neural-button-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.neural-button-secondary:hover {
+  background: var(--hover-bg);
+  border-color: var(--border-focus);
+}
+
+/* Neural Input Component */
+.neural-input {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  color: var(--text-primary);
+  transition: border-color 200ms ease;
+  width: 100%;
+}
+
+.neural-input::placeholder {
+  color: var(--text-muted);
+}
+
+.neural-input:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(12, 154, 229, 0.1);
+}
+
+.neural-input:disabled {
+  background: var(--disabled-bg);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+/* ================================
+   UTILITY CLASSES
+   ================================ */
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--aegntic-400) 0%, var(--aegntic-600) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Neural Glow Effects */
+.neural-glow {
+  box-shadow: 0 0 20px var(--shadow-glow);
+}
+
+.neural-glow-hover:hover {
+  box-shadow: 0 0 30px var(--shadow-glow-strong);
+}
+
+/* Animation Classes */
+.neural-pulse {
+  animation: neural-pulse 2s ease-in-out infinite;
+}
+
+@keyframes neural-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+.data-flow {
+  position: relative;
+  overflow: hidden;
+}
+
+.data-flow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--shadow-glow), transparent);
+  animation: data-flow 3s ease-in-out infinite;
+}
+
+@keyframes data-flow {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Transition Utilities */
+.transition-smooth {
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-fast {
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-slow {
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover Effects */
+.scale-hover:hover {
+  transform: scale(1.02);
+}
+
+.lift-hover:hover {
+  transform: translateY(-2px);
+}
+
+/* Status Colors */
+.status-success {
+  color: var(--success-400);
+}
+
+.status-warning {
+  color: var(--warning-400);
+}
+
+.status-error {
+  color: var(--error-400);
+}
+
+.status-info {
+  color: var(--info-400);
+}
+
+/* Background Status Colors */
+.bg-status-success {
+  background-color: rgba(34, 197, 94, 0.1);
+  border-color: var(--success-600);
+}
+
+.bg-status-warning {
+  background-color: rgba(245, 158, 11, 0.1);
+  border-color: var(--warning-600);
+}
+
+.bg-status-error {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: var(--error-600);
+}
+
+.bg-status-info {
+  background-color: rgba(6, 182, 212, 0.1);
+  border-color: var(--info-600);
+}
+
+/* ================================
+   RESPONSIVE DESIGN
+   ================================ */
+
+/* Mobile-first responsive design */
+@media (max-width: 640px) {
+  .neural-card {
+    border-radius: 0.5rem;
+    margin: 0.5rem;
+  }
+  
+  .neural-button,
+  .neural-button-secondary {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Tablet styles */
+@media (min-width: 768px) {
+  .neural-card {
+    border-radius: 0.75rem;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+  .neural-card {
+    border-radius: 1rem;
+  }
+}
+
+/* ================================
+   PRINT STYLES
+   ================================ */
+
+@media print {
+  .neural-card {
+    border: 1px solid #ccc;
+    box-shadow: none;
+    background: white;
+  }
+  
+  .gradient-text {
+    color: #333;
+    background: none;
+    -webkit-text-fill-color: initial;
+  }
+}
+
+/* ================================
+   DARK MODE SUPPORT
+   ================================ */
+
+/* Light theme override */
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: var(--neural-50);
+  --bg-tertiary: var(--neural-100);
+  --text-primary: var(--neural-900);
+  --text-secondary: var(--neural-700);
+  --text-tertiary: var(--neural-500);
+  --border-primary: var(--neural-200);
+  --border-secondary: var(--neural-300);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast support */
+@media (prefers-contrast: high) {
+  .neural-card {
+    border-width: 2px;
+  }
+  
+  .neural-button {
+    border: 2px solid var(--aegntic-400);
+  }
+}
+
+/* ================================
+   ACCESSIBILITY
+   ================================ */
+
+/* Focus visible styles */
+.neural-button:focus-visible,
+.neural-input:focus-visible {
+  outline: 2px solid var(--aegntic-400);
+  outline-offset: 2px;
+}
+
+/* Screen reader only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

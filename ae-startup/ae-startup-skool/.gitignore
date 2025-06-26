@@ -1,0 +1,78 @@
+# Environment files
+.env
+.env.local
+.env.production
+*.env
+
+# API Keys and Secrets
+**/api-keys/
+**/secrets/
+*.key
+*.pem
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+*.egg-info/
+
+# Node/Bun
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+out/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Docker
+*.log
+tmp/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+data/
+
+# Media files (screenshots stored separately)
+recordings/
+*.mp4
+*.mov
+*.avi
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Keep screenshots organized
+!screenshots/.gitkeep
+!course/assets/.gitkeep

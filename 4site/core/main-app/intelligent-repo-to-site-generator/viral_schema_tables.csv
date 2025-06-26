@@ -1,0 +1,13 @@
+table_name,column_count,has_viral_features,performance_index_count,rls_enabled,function_dependencies
+users,25,true,8,true,calculate_viral_score|update_viral_coefficient
+websites,30,true,10,true,calculate_viral_score|track_external_share
+referrals,15,true,5,true,calculate_commission_rate|process_referral_milestone
+commission_earnings,12,true,3,true,calculate_commission_rate
+share_tracking,12,true,4,true,track_external_share|check_auto_featuring
+auto_featuring_events,10,true,2,true,check_auto_featuring
+pro_showcase_entries,12,true,4,true,refresh_pro_showcase
+analytics_events,15,false,5,true,none
+website_analytics_daily,15,true,3,true,daily_viral_score_update
+user_engagement,10,true,2,true,update_viral_coefficient
+subscription_history,10,false,2,true,none
+usage_tracking,8,false,2,true,none

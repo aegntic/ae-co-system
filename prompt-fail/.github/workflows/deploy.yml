@@ -1,0 +1,49 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Run on pushes to the main branch
+  push:
+    branches: [ main ] # Changed from gh-pages to main (or master, if that's your default branch)
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Allow one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4 # Updated to v4
+
+      - name: Setup Node.js 🔧
+        uses: actions/setup-node@v4 # Updated to v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          # Ensure package-lock.json is used for caching key
+          # cache-dependency-path: package-lock.json # Usually default, but can be explicit
+
+      - name: Install dependencies 📦
+        run: npm ci # Uses package-lock.json for clean install
+
+      - name: Build 🔨
+        # Ensure this script builds to the 'dist' directory as expected by the deploy step
+        run: npm run build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.6.3 # Using a specific recent version
+        with:
+          folder: dist # The folder the action should deploy.
+          branch: gh-pages # The branch the action should deploy to.
+          # Optional: token: ${{ secrets.GITHUB_TOKEN }} # Default, usually not needed explicitly unless specific permissions are required elsewhere

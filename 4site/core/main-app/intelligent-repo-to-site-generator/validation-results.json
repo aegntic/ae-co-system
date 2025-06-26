@@ -1,0 +1,77 @@
+{
+  "timestamp": "2025-06-26T00:16:27.843Z",
+  "tests": [
+    {
+      "name": "Environment Configuration",
+      "status": "PASS",
+      "details": {
+        "envFile": "Found",
+        "openRouterKey": "Configured",
+        "supabaseConfig": "Configured"
+      },
+      "timestamp": "2025-06-26T00:16:28.120Z"
+    },
+    {
+      "name": "AI Service Configuration",
+      "status": "PASS",
+      "details": {
+        "geminiService": "Found",
+        "falService": "Found",
+        "updatedModels": "Yes",
+        "falIntegration": "Working"
+      },
+      "timestamp": "2025-06-26T00:16:28.120Z"
+    },
+    {
+      "name": "Build System",
+      "status": "PASS",
+      "details": {
+        "distFolder": "Found",
+        "packageJson": "Found",
+        "devScript": "Configured",
+        "buildScript": "Configured"
+      },
+      "timestamp": "2025-06-26T00:16:28.120Z"
+    },
+    {
+      "name": "Application Loading",
+      "status": "PASS",
+      "details": {
+        "url": "http://localhost:3000",
+        "loadTime": "Under 10 seconds"
+      },
+      "timestamp": "2025-06-26T00:16:29.322Z"
+    },
+    {
+      "name": "UI Components",
+      "status": "PASS",
+      "details": {
+        "foundElements": 2,
+        "totalElements": 4,
+        "details": {
+          "URL Input Form": "Found",
+          "Generate Button": "Error: SyntaxError: Failed to execute 'querySelector' on 'Document': 'button[type=\"submit\"], button:contains(\"Generate\"), button:contains(\"Create\")' is not a valid selector.",
+          "Hero Section": "Found",
+          "Navigation": "Not found"
+        }
+      },
+      "timestamp": "2025-06-26T00:16:29.639Z"
+    },
+    {
+      "name": "Repository Analysis",
+      "status": "FAIL",
+      "details": {
+        "error": "SyntaxError: Failed to execute 'querySelector' on 'Document': 'button[type=\"submit\"], button:contains(\"Generate\"), button:contains(\"Create\")' is not a valid selector."
+      },
+      "timestamp": "2025-06-26T00:16:30.125Z"
+    }
+  ],
+  "summary": {
+    "total": 6,
+    "passed": 5,
+    "failed": 1,
+    "issues": [
+      "Repository Analysis"
+    ]
+  }
+}

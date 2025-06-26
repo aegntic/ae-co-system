@@ -1,0 +1,15 @@
+{
+  "data": {
+    "role": "user",
+    "content": "Can we use it to capture our current conversation?",
+    "turnId": 3,
+    "timestamp": "2025-05-05T06:21:00.760Z"
+  },
+  "metadata": {
+    "timestamp": "2025-05-05T06:21:00.760Z",
+    "category": "conversations",
+    "key": "session_1746426060742_turn_3",
+    "source": "claude-conversation",
+    "sessionKey": "session_1746426060742"
+  }
+}

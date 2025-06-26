@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>4site.pro Email Templates</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .template { border: 1px solid #ddd; margin: 20px 0; padding: 20px; }
+        .template h2 { color: #8B5CF6; }
+        .email-content { background: #f9f9f9; padding: 15px; margin: 10px 0; }
+        code { background: #e1e1e1; padding: 2px 4px; }
+    </style>
+</head>
+<body>
+    <h1>4site.pro Email Templates</h1>
+    <p>These templates should be created in your SendGrid account.</p>
+
+    <div class="template">
+        <h2>1. Welcome Email</h2>
+        <p><strong>Template ID:</strong> <code>welcome_email</code></p>
+        <p><strong>Subject:</strong> Welcome to 4site.pro - Transform your GitHub repos! 🚀</p>
+        
+        <div class="email-content">
+            <h3>Hi {{name}},</h3>
+            
+            <p>Welcome to <strong>4site.pro</strong> - where your GitHub repositories become stunning websites in seconds!</p>
+            
+            <p>You're now part of an exclusive community of developers who are transforming how they showcase their projects.</p>
+            
+            <h4>What you can do next:</h4>
+            <ul>
+                <li>🔗 <a href="https://4site.pro">Generate your first site</a> from any GitHub repo</li>
+                <li>🎨 Choose from our premium templates</li>
+                <li>📊 Track analytics and capture leads</li>
+                <li>🚀 Deploy instantly to GitHub Pages</li>
+            </ul>
+            
+            <p>As a new user, you have <strong>10 free site generations</strong> to get started.</p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="https://4site.pro/dashboard" style="background: #8B5CF6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">Go to Dashboard</a>
+            </div>
+            
+            <p>Need help? Reply to this email or check out our <a href="https://4site.pro/docs">documentation</a>.</p>
+            
+            <p>Happy building!<br>
+            The 4site.pro Team</p>
+            
+            <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
+            <p style="font-size: 12px; color: #666;">
+                You're receiving this because you signed up for 4site.pro. 
+                <a href="{{unsubscribe_url}}">Unsubscribe</a>
+            </p>
+        </div>
+        
+        <p><strong>Dynamic Template Data:</strong></p>
+        <ul>
+            <li><code>{{name}}</code> - User's full name</li>
+            <li><code>{{email}}</code> - User's email address</li>
+            <li><code>{{dashboard_url}}</code> - Link to user dashboard</li>
+            <li><code>{{unsubscribe_url}}</code> - Unsubscribe link</li>
+        </ul>
+    </div>
+
+    <div class="template">
+        <h2>2. Lead Notification</h2>
+        <p><strong>Template ID:</strong> <code>lead_notification</code></p>
+        <p><strong>Subject:</strong> New lead captured on {{site_title}} 🎯</p>
+        
+        <div class="email-content">
+            <h3>New Lead Alert!</h3>
+            
+            <p>Someone just submitted their information on your site <strong>{{site_title}}</strong>.</p>
+            
+            <div style="background: white; padding: 15px; border-left: 4px solid #8B5CF6; margin: 20px 0;">
+                <h4>Lead Details:</h4>
+                <p><strong>Name:</strong> {{lead_name}}</p>
+                <p><strong>Email:</strong> {{lead_email}}</p>
+                <p><strong>Company:</strong> {{lead_company}}</p>
+                <p><strong>Message:</strong></p>
+                <blockquote>{{lead_message}}</blockquote>
+                <p><strong>Source:</strong> {{source_url}}</p>
+                <p><strong>Submitted:</strong> {{submitted_at}}</p>
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="https://4site.pro/leads/{{lead_id}}" style="background: #10B981; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">View Lead Details</a>
+            </div>
+            
+            <p><strong>Quick Actions:</strong></p>
+            <ul>
+                <li><a href="mailto:{{lead_email}}?subject=Re: {{site_title}}">Reply directly</a></li>
+                <li><a href="https://4site.pro/leads">View all leads</a></li>
+                <li><a href="https://4site.pro/analytics/{{site_id}}">Check site analytics</a></li>
+            </ul>
+            
+            <p>Best of luck with your new lead!</p>
+        </div>
+        
+        <p><strong>Dynamic Template Data:</strong></p>
+        <ul>
+            <li><code>{{site_title}}</code> - Name of the site</li>
+            <li><code>{{site_id}}</code> - Site ID for analytics</li>
+            <li><code>{{lead_name}}</code> - Lead's name</li>
+            <li><code>{{lead_email}}</code> - Lead's email</li>
+            <li><code>{{lead_company}}</code> - Lead's company</li>
+            <li><code>{{lead_message}}</code> - Lead's message</li>
+            <li><code>{{lead_id}}</code> - Lead ID for CRM</li>
+            <li><code>{{source_url}}</code> - Page where lead was captured</li>
+            <li><code>{{submitted_at}}</code> - Timestamp</li>
+        </ul>
+    </div>
+
+    <div class="template">
+        <h2>3. Site Created Notification</h2>
+        <p><strong>Template ID:</strong> <code>site_created</code></p>
+        <p><strong>Subject:</strong> Your site is ready! 🚀 {{site_title}}</p>
+        
+        <div class="email-content">
+            <h3>🎉 Your site is live!</h3>
+            
+            <p>Great news! We've successfully generated a beautiful website from your GitHub repository.</p>
+            
+            <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
+                <h4>{{site_title}}</h4>
+                <p>{{site_description}}</p>
+                <img src="{{site_preview_image}}" alt="Site preview" style="max-width: 100%; border-radius: 4px; margin: 10px 0;">
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="{{site_url}}" style="background: #8B5CF6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 0 10px;">View Your Site</a>
+                <a href="{{edit_url}}" style="background: #6B7280; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 0 10px;">Edit Site</a>
+            </div>
+            
+            <h4>What's next?</h4>
+            <ul>
+                <li>🎨 Customize the design and content</li>
+                <li>🚀 Deploy to GitHub Pages or custom domain</li>
+                <li>📊 Enable lead capture widget</li>
+                <li>📈 Track visitor analytics</li>
+            </ul>
+            
+            <p><strong>Site Details:</strong></p>
+            <ul>
+                <li><strong>Repository:</strong> {{repo_url}}</li>
+                <li><strong>Template:</strong> {{template_name}}</li>
+                <li><strong>Generated:</strong> {{generated_at}}</li>
+                <li><strong>Processing time:</strong> {{generation_time}} seconds</li>
+            </ul>
+            
+            <div style="background: #F3F4F6; padding: 15px; border-radius: 6px; margin: 20px 0;">
+                <p><strong>💡 Pro Tip:</strong> Add the lead capture widget to start collecting visitor information automatically.</p>
+            </div>
+            
+            <p>Questions? <a href="mailto:hello@4site.pro">Get in touch</a> - we're here to help!</p>
+        </div>
+        
+        <p><strong>Dynamic Template Data:</strong></p>
+        <ul>
+            <li><code>{{site_title}}</code> - Generated site title</li>
+            <li><code>{{site_description}}</code> - Site description</li>
+            <li><code>{{site_url}}</code> - Live site URL</li>
+            <li><code>{{site_preview_image}}</code> - Screenshot of site</li>
+            <li><code>{{edit_url}}</code> - Edit site URL</li>
+            <li><code>{{repo_url}}</code> - Original GitHub repo</li>
+            <li><code>{{template_name}}</code> - Template used</li>
+            <li><code>{{generated_at}}</code> - Generation timestamp</li>
+            <li><code>{{generation_time}}</code> - Processing time</li>
+        </ul>
+    </div>
+
+    <div class="template">
+        <h2>4. Weekly Analytics Summary</h2>
+        <p><strong>Template ID:</strong> <code>weekly_analytics</code></p>
+        <p><strong>Subject:</strong> Your weekly 4site.pro analytics 📊</p>
+        
+        <div class="email-content">
+            <h3>Weekly Analytics Report</h3>
+            
+            <p>Here's how your sites performed this week:</p>
+            
+            <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <h4>📊 Overall Stats</h4>
+                <div style="display: flex; flex-wrap: wrap;">
+                    <div style="flex: 1; margin: 10px; text-align: center;">
+                        <h3 style="margin: 0; color: #8B5CF6;">{{total_views}}</h3>
+                        <p style="margin: 5px 0;">Total Views</p>
+                    </div>
+                    <div style="flex: 1; margin: 10px; text-align: center;">
+                        <h3 style="margin: 0; color: #10B981;">{{total_leads}}</h3>
+                        <p style="margin: 5px 0;">New Leads</p>
+                    </div>
+                    <div style="flex: 1; margin: 10px; text-align: center;">
+                        <h3 style="margin: 0; color: #F59E0B;">{{conversion_rate}}%</h3>
+                        <p style="margin: 5px 0;">Conversion Rate</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h4>🏆 Top Performing Sites</h4>
+            {{#each top_sites}}
+            <div style="background: #F9FAFB; padding: 15px; margin: 10px 0; border-radius: 6px;">
+                <h5 style="margin: 0;">{{title}}</h5>
+                <p style="margin: 5px 0;">{{views}} views • {{leads}} leads • {{conversion_rate}}% conversion</p>
+                <a href="{{url}}">View site</a> | <a href="{{analytics_url}}">Analytics</a>
+            </div>
+            {{/each}}
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="https://4site.pro/analytics" style="background: #8B5CF6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">View Full Analytics</a>
+            </div>
+            
+            <p>Keep up the great work! 🚀</p>
+        </div>
+        
+        <p><strong>Dynamic Template Data:</strong></p>
+        <ul>
+            <li><code>{{total_views}}</code> - Week's total views</li>
+            <li><code>{{total_leads}}</code> - Week's total leads</li>
+            <li><code>{{conversion_rate}}</code> - Average conversion rate</li>
+            <li><code>{{top_sites}}</code> - Array of top performing sites</li>
+        </ul>
+    </div>
+
+    <hr>
+    <h2>SendGrid Setup Instructions</h2>
+    
+    <ol>
+        <li><strong>Domain Authentication:</strong>
+            <p>Add these DNS records to authenticate your domain:</p>
+            <pre>
+CNAME em1234.4site.pro sendgrid.net
+CNAME s1._domainkey.4site.pro s1.domainkey.u1234.wl.sendgrid.net  
+CNAME s2._domainkey.4site.pro s2.domainkey.u1234.wl.sendgrid.net
+            </pre>
+        </li>
+        
+        <li><strong>Create Templates:</strong>
+            <p>In SendGrid dashboard, go to Email API → Dynamic Templates</p>
+            <p>Create each template above with the specified IDs and content</p>
+        </li>
+        
+        <li><strong>Test Templates:</strong>
+            <p>Use the SendGrid template testing feature to verify all dynamic data renders correctly</p>
+        </li>
+        
+        <li><strong>API Integration:</strong>
+            <p>Use the SendGrid Node.js SDK in your backend:</p>
+            <pre>
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.EMAIL_API_KEY);
+
+const msg = {
+  to: 'user@example.com',
+  from: 'hello@4site.pro',
+  templateId: 'welcome_email',
+  dynamicTemplateData: {
+    name: 'John Doe',
+    dashboard_url: 'https://4site.pro/dashboard'
+  }
+};
+
+await sgMail.send(msg);
+            </pre>
+        </li>
+    </ol>
+</body>
+</html>

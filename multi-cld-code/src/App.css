@@ -1,0 +1,91 @@
+:root {
+  --terminal-bg: 12 12 12;
+  --terminal-text: 255 255 255;
+  --attention: 255 59 48;
+  --panel-bg: 28 28 30;
+  --success: 52 199 89;
+  --warning: 255 149 0;
+  --info: 0 122 255;
+}
+
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.control-trigger {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  background: rgba(var(--panel-bg), 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 8px;
+  z-index: 1000;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: none;
+}
+
+.trigger-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.trigger-icons svg {
+  transition: color 0.2s ease;
+}
+
+.control-trigger:hover .trigger-icons svg {
+  color: rgba(255, 255, 255, 1);
+}
+
+.status-bar {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 8px 16px;
+  background: rgba(var(--panel-bg), 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 8px 0 0 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: none;
+  border-right: none;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  gap: 16px;
+  z-index: 100;
+}
+
+/* Theme Variables for Different Modes */
+[data-theme="focus"] {
+  --terminal-bg: 0 0 0;
+  --terminal-text: 255 255 255;
+  --attention: 255 69 58;
+}
+
+[data-theme="ambient"] {
+  --terminal-bg: 20 20 20;
+  --terminal-text: 200 200 200;
+  --attention: 255 159 10;
+}
+
+[data-theme="debug"] {
+  --terminal-bg: 25 0 25;
+  --terminal-text: 0 255 0;
+  --attention: 255 20 147;
+}
+
+[data-theme="presentation"] {
+  --terminal-bg: 248 248 248;
+  --terminal-text: 51 51 51;
+  --attention: 255 45 85;
+}

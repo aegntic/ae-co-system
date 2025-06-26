@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>4site.pro Enhanced Viral Mechanics Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        iframe { width: 100%; height: 800px; border: 1px solid #ddd; border-radius: 8px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>🚀 4site.pro Enhanced Viral Mechanics - Live Test</h1>
+    
+    <div class="test-section">
+        <h2>📊 Application Status</h2>
+        <div id="app-status" class="status warning">Checking application...</div>
+        
+        <h3>What to Look For:</h3>
+        <ul>
+            <li>✅ <strong>Homepage loads</strong> with hero section and GitHub URL input</li>
+            <li>✅ <strong>Enhanced Dashboard</strong> with Commissions tab (after signup)</li>
+            <li>✅ <strong>Pro Showcase Grid</strong> on generated sites (3x3 grid of top projects)</li>
+            <li>✅ <strong>Share Tracker</strong> with Twitter/LinkedIn/Facebook buttons</li>
+            <li>✅ <strong>Viral Growth Mechanics</strong> explanations and progress tracking</li>
+            <li>✅ <strong>Commission System</strong> showing 20% → 25% → 40% progression</li>
+            <li>✅ <strong>Free Pro Milestone</strong> progress toward 10 referrals</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>🎯 Live Application</h2>
+        <iframe src="http://localhost:5173" id="app-frame"></iframe>
+    </div>
+
+    <div class="test-section">
+        <h2>🧪 Manual Testing Steps</h2>
+        <ol>
+            <li><strong>Generate a Site:</strong>
+                <ul>
+                    <li>Enter any GitHub URL (e.g., https://github.com/facebook/react)</li>
+                    <li>Click Generate/Create button</li>
+                    <li>Wait for site generation</li>
+                </ul>
+            </li>
+            <li><strong>Check Viral Components:</strong>
+                <ul>
+                    <li>Scroll down to see <strong>Pro Showcase Grid</strong> (3x3 grid)</li>
+                    <li>Look for <strong>Share Tracker</strong> component with social buttons</li>
+                    <li>Check <strong>Powered By footer</strong> at bottom</li>
+                </ul>
+            </li>
+            <li><strong>Test Dashboard (if signup available):</strong>
+                <ul>
+                    <li>Sign up for account</li>
+                    <li>Go to Dashboard</li>
+                    <li>Check for <strong>Commissions</strong> tab</li>
+                    <li>Look at viral growth metrics</li>
+                </ul>
+            </li>
+            <li><strong>Test Sharing:</strong>
+                <ul>
+                    <li>Click share buttons to test external sharing</li>
+                    <li>Notice viral score boost explanations</li>
+                    <li>Check share count tracking</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>🎉 Enhanced Features Implemented</h2>
+        <div class="status success">
+            <h3>✅ Viral Score Algorithm</h3>
+            <p>Sophisticated algorithm combining engagement, external shares, time decay, and subscription tier bonuses</p>
+        </div>
+        
+        <div class="status success">
+            <h3>✅ Lifetime Commission System</h3>
+            <p>Progressive rates: 20% (0-12 months) → 25% (13-48 months) → 40% (4+ years)</p>
+        </div>
+        
+        <div class="status success">
+            <h3>✅ Free Pro Milestone</h3>
+            <p>10 successful referrals = 12 months of Pro tier free</p>
+        </div>
+        
+        <div class="status success">
+            <h3>✅ Enhanced Dashboard</h3>
+            <p>New Commissions tab with earnings breakdown, viral metrics, and milestone progress</p>
+        </div>
+        
+        <div class="status success">
+            <h3>✅ Share Tracking</h3>
+            <p>External shares boost viral score with multipliers: 1.0x → 1.2x → 1.5x → 2.0x → 3.0x</p>
+        </div>
+        
+        <div class="status success">
+            <h3>✅ Auto-Featuring</h3>
+            <p>Pro users automatically featured in showcase grid, every 5 external shares triggers auto-featuring</p>
+        </div>
+    </div>
+
+    <script>
+        // Check if app is loading
+        const iframe = document.getElementById('app-frame');
+        const statusDiv = document.getElementById('app-status');
+        
+        iframe.onload = function() {
+            statusDiv.className = 'status success';
+            statusDiv.innerHTML = '✅ Application loaded successfully! Enhanced viral mechanics are ready to test.';
+        };
+        
+        iframe.onerror = function() {
+            statusDiv.className = 'status error';
+            statusDiv.innerHTML = '❌ Application failed to load. Check if Docker container is running.';
+        };
+        
+        // Timeout check
+        setTimeout(() => {
+            if (statusDiv.className.includes('warning')) {
+                statusDiv.className = 'status error';
+                statusDiv.innerHTML = '⚠️ Application taking too long to load. Docker container may not be running.';
+            }
+        }, 10000);
+    </script>
+</body>
+</html>

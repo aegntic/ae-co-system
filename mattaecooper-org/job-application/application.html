@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mattae Cooper - AI Systems Integration Specialist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --background: #ffffff;
+            --surface: #f8fafc;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--background);
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--gradient);
+            color: white;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.2s forwards;
+        }
+
+        .header .subtitle {
+            font-size: 1.25rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.4s forwards;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.6s forwards;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navigation */
+        .nav {
+            background: var(--background);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav a:hover {
+            color: var(--primary-color);
+            background: var(--surface);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 4rem 0;
+        }
+
+        .section {
+            margin-bottom: 6rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        /* Cover Letter */
+        .cover-letter {
+            background: var(--surface);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover-letter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        .cover-letter h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .cover-letter p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category {
+            background: var(--background);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .skill-category h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 0.3rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .skill-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: var(--background);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-period {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            background: var(--surface);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .project-description {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .achievements {
+            margin-bottom: 1.5rem;
+        }
+
+        .achievements h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .achievements ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .achievements li {
+            padding: 0.3rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .achievements li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: var(--surface);
+            color: var(--text-secondary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Achievements Section */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .metric-card {
+            text-align: center;
+            background: var(--background);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .metric-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Call to Action */
+        .cta {
+            background: var(--gradient);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .cover-letter,
+            .project-card {
+                padding: 2rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation delays for staggered appearance */
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+        .section:nth-child(5) { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1>Mattae Cooper</h1>
+                <p class="subtitle">AI Systems Integration & Developer Platform Architecture</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📍</span>
+                        <span>Sydney, Australia</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>🌐</span>
+                        <span>aegntic.ai</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <span>[contact information]</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <ul>
+                <li><a href="#letter">Cover Letter</a></li>
+                <li><a href="#skills">Technical Skills</a></li>
+                <li><a href="#projects">Key Projects</a></li>
+                <li><a href="#achievements">Achievements</a></li>
+                <li><a href="#contact">Let's Connect</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Cover Letter Section -->
+            <section id="letter" class="section">
+                <h2 class="section-title">Thoughts on AI Integration Challenges</h2>
+                <div class="cover-letter">
+                    <h2>Hey there,</h2>
+                    <p>I hope this message finds you well. I've been following your work in artificial intelligence, and honestly, it's exciting to see how you're pushing the boundaries of what's possible with machine learning systems.</p>
+                    
+                    <p>I'm reaching out because I've been spending the last couple of years working on some problems that I think might be relevant to challenges your team faces - particularly around human-AI collaboration, system integration, and making AI tools actually useful for developers in real-world scenarios.</p>
+                    
+                    <h3 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">A bit about what I've been building</h3>
+                    <p>I started noticing that while individual AI models are getting incredibly powerful, the tooling around them - especially for developers - was still pretty fragmented. So I began working on some solutions that might help bridge that gap.</p>
+                    
+                    <p>One project that's gotten some traction is a supervised AI collaboration platform that lets humans maintain oversight while multiple AI models work together. The core insight was that most AI integration attempts fail not because the models aren't capable, but because there's no good way to coordinate them with human judgment in the loop.</p>
+                    
+                    <p>The performance optimization side of things has been particularly interesting - I've been working with Rust for the core processing components and managed to get some pretty decent results. For example, the screen capture system I built can handle 4K recording at 263 FPS while using only 1.6% CPU.</p>
+                    
+                    <h3 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">What I'm curious about</h3>
+                    <p>I've been thinking a lot about the privacy and security implications of AI systems, especially as they become more integrated into development workflows. Most solutions I've seen require sending data to external services, which creates obvious challenges for enterprise adoption.</p>
+                    
+                    <p>What I'm really curious about is how your team approaches the balance between AI capability and user control. Do you find that developers want more automation, or do they prefer systems where they maintain more direct oversight?</p>
+                    
+                    <h3 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">What interests me about your mission</h3>
+                    <p>I've been following your approach to AI development, and I think your focus on responsible AI advancement is exactly where the industry needs to go. The technical challenges around scaling AI systems while maintaining reliability and user trust are fascinating.</p>
+                    
+                    <p>I'm particularly interested in how you're thinking about the future of human-AI collaboration and the role human oversight should play as AI capabilities continue to advance.</p>
+                    
+                    <p>I'd love to learn more about the specific challenges your team is working on and see if there's alignment between what you're building and some of the solutions I've been exploring.</p>
+                    
+                    <p style="margin-top: 2rem;"><strong>Best regards,<br>Mattae Cooper</strong></p>
+                    
+                    <p style="font-style: italic; color: var(--text-muted); margin-top: 1rem;">P.S. - My cat has strong opinions about AI development (mostly that it interrupts his screen time), but I try not to let that influence my technical decisions too much.</p>
+                </div>
+            </section>
+
+            <!-- Skills Section -->
+            <section id="skills" class="section">
+                <h2 class="section-title">Technical Expertise</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>🤖 AI & Machine Learning</h3>
+                        <ul class="skill-list">
+                            <li>Multi-model AI orchestration and coordination</li>
+                            <li>Real-time AI collaboration systems</li>
+                            <li>Context management (1M+ tokens)</li>
+                            <li>AI behavior simulation and optimization</li>
+                            <li>Custom model training workflows</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>⚡ Performance & Systems</h3>
+                        <ul class="skill-list">
+                            <li>Rust for high-performance applications</li>
+                            <li>GPU acceleration and optimization</li>
+                            <li>Sub-100ms real-time processing</li>
+                            <li>Memory management and optimization</li>
+                            <li>Cross-platform development</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>🌐 Web Technologies</h3>
+                        <ul class="skill-list">
+                            <li>TypeScript/JavaScript, React, Node.js</li>
+                            <li>WebRTC and real-time communication</li>
+                            <li>Browser extension development</li>
+                            <li>Progressive Web Apps</li>
+                            <li>RESTful and WebSocket APIs</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>🛡️ Security & Privacy</h3>
+                        <ul class="skill-list">
+                            <li>Zero-knowledge architecture design</li>
+                            <li>AES-256 encryption systems</li>
+                            <li>Privacy-first data processing</li>
+                            <li>Enterprise security compliance</li>
+                            <li>Local-first application architecture</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="section">
+                <h2 class="section-title">Key Projects & Achievements</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">AI Collaboration Platform (aegntic-MCP)</h3>
+                                <div class="project-period">2024 - Present</div>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Developed the first supervised AI-to-AI communication platform enabling human-controlled collaboration between multiple AI models.
+                        </p>
+                        <div class="achievements">
+                            <h4>Key Achievements:</h4>
+                            <ul>
+                                <li>Implemented real-time coordination supporting 1M+ token contexts</li>
+                                <li>Achieved 95% cost reduction through optimized model routing</li>
+                                <li>Built comprehensive Docker architecture with automated deployment</li>
+                                <li>Created developer APIs enabling third-party ecosystem growth</li>
+                            </ul>
+                        </div>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Docker</span>
+                            <span class="tech-tag">WebSocket</span>
+                            <span class="tech-tag">OpenRouter API</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">Elite Documentation Platform (DAILYDOCO)</h3>
+                                <div class="project-period">2023 - Present</div>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Built predictive intelligence system that automatically captures and documents important development moments.
+                        </p>
+                        <div class="achievements">
+                            <h4>Key Achievements:</h4>
+                            <ul>
+                                <li>Developed 24/7 omnipresent logging with intelligent detection</li>
+                                <li>Created AI test audience system with 87% accuracy</li>
+                                <li>Implemented capture engine: 263 FPS @ 4K (1.6% CPU)</li>
+                                <li>Designed privacy-first architecture with local processing</li>
+                            </ul>
+                        </div>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Rust</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Tauri</span>
+                            <span class="tech-tag">GPU Acceleration</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">AI Behavior Simulation (aegnt-27)</h3>
+                                <div class="project-period">2023 - 2024</div>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Created comprehensive behavioral simulation achieving 98% AI detection resistance through 27 distinct patterns.
+                        </p>
+                        <div class="achievements">
+                            <h4>Key Achievements:</h4>
+                            <ul>
+                                <li>Developed mouse movement simulation with 96% authenticity</li>
+                                <li>Built typing pattern engine with realistic timing</li>
+                                <li>Implemented voice synthesis with breathing patterns</li>
+                                <li>Achieved sub-100ms processing (50% faster than alternatives)</li>
+                            </ul>
+                        </div>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Rust</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Neural Networks</span>
+                            <span class="tech-tag">Audio Processing</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">Technical SEO Automation Platform</h3>
+                                <div class="project-period">2022 - 2024</div>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Built end-to-end automation platform transforming technical SEO from manual consulting to scalable product.
+                        </p>
+                        <div class="achievements">
+                            <h4>Key Achievements:</h4>
+                            <ul>
+                                <li>Developed crawler handling 10,000+ pages in <60 minutes</li>
+                                <li>Created automated implementation with Git integration</li>
+                                <li>Achieved 80%+ reduction in technical SEO issues</li>
+                                <li>Built white-label agency portal with multi-client management</li>
+                            </ul>
+                        </div>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">Express</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">Playwright</span>
+                            <span class="tech-tag">Docker</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Achievements Section -->
+            <section id="achievements" class="section">
+                <h2 class="section-title">Notable Technical Achievements</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-number">263</div>
+                        <div class="metric-label">FPS @ 4K Resolution<br>with 1.6% CPU Usage</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number">98%</div>
+                        <div class="metric-label">AI Detection Resistance<br>Through Behavioral Patterns</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number">87%</div>
+                        <div class="metric-label">Content Engagement<br>Prediction Accuracy</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number">95%</div>
+                        <div class="metric-label">Cost Reduction Through<br>AI Optimization</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number">1M+</div>
+                        <div class="metric-label">Token Context<br>Management Capability</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number">31</div>
+                        <div class="metric-label">Integrated Modules<br>in AI Ecosystem</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Call to Action -->
+    <section id="contact" class="cta">
+        <div class="container">
+            <h2>Let's Build the Future of AI Together</h2>
+            <p>I'm excited about the possibility of contributing to fundamental challenges in AI development and would love to learn more about how I can help advance your mission.</p>
+            <a href="mailto:[contact]" class="cta-button">Start the Conversation</a>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animation triggers
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Add subtle parallax effect to header
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('.header');
+            if (header) {
+                header.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Dynamic typing effect for key metrics
+        function animateNumber(element, target, duration = 2000) {
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current);
+            }, 16);
+        }
+
+        // Trigger number animations when metrics come into view
+        const metricsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const numberElement = entry.target.querySelector('.metric-number');
+                    const targetNumber = parseInt(numberElement.textContent.replace(/[^0-9]/g, ''));
+                    if (targetNumber) {
+                        numberElement.textContent = '0';
+                        setTimeout(() => {
+                            animateNumber(numberElement, targetNumber);
+                        }, 200);
+                    }
+                    metricsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.metric-card').forEach(card => {
+            metricsObserver.observe(card);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,302 @@
+/* Premium Complete Styles - Additional fixes for $100B standards */
+
+/* Navigation Styles */
+.premium-navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-top, 500);
+  padding: var(--space-md) var(--space-xl);
+  backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.premium-nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.premium-nav-logo {
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.premium-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.premium-nav-tier {
+  padding: var(--space-xs) var(--space-md);
+  background: linear-gradient(135deg, var(--premium-gold), var(--premium-gold-deep));
+  color: var(--premium-black);
+  font-size: var(--scale-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--space-sm);
+}
+
+.premium-nav-user {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-premium);
+}
+
+.premium-nav-user:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: var(--premium-gold);
+}
+
+/* Footer Styles */
+.premium-footer {
+  padding: var(--space-2xl) var(--space-xl);
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: auto;
+}
+
+/* Notification Styles */
+.premium-notification {
+  position: fixed;
+  top: var(--space-xl);
+  right: var(--space-xl);
+  z-index: var(--z-notification, 400);
+  padding: var(--space-md) var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-width: 300px;
+  max-width: 500px;
+}
+
+.premium-notification-success {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #22c55e;
+}
+
+.premium-notification-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+.premium-notification-info {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #3b82f6;
+}
+
+.premium-notification-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.premium-notification-close:hover {
+  opacity: 1;
+}
+
+/* Loader Styles */
+.premium-loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2xl);
+}
+
+.premium-loader-text {
+  text-align: center;
+  max-width: 600px;
+}
+
+.premium-loader-text h3 {
+  margin-bottom: var(--space-lg);
+}
+
+/* Showcase Styles */
+.premium-showcase-section {
+  padding: calc(var(--space-3xl) * 2) var(--space-xl);
+  text-align: center;
+}
+
+.premium-showcase-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.premium-showcase-logos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-lg);
+  margin-top: var(--space-2xl);
+}
+
+.premium-showcase-logo {
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  transition: all 0.3s var(--ease-premium);
+}
+
+.premium-showcase-logo:hover {
+  transform: translateY(-4px);
+  border-color: var(--premium-gold);
+}
+
+/* Generator Modal Styles */
+.premium-generator-modes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-lg);
+  margin: var(--space-2xl) 0;
+}
+
+.premium-generator-mode {
+  padding: var(--space-xl);
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s var(--ease-premium);
+}
+
+.premium-generator-mode.active {
+  border-color: var(--premium-gold);
+  background: rgba(255, 215, 0, 0.05);
+}
+
+.premium-generator-mode.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.premium-generator-mode h3 {
+  font-size: var(--scale-lg);
+  margin: var(--space-md) 0;
+}
+
+.premium-generator-mode p {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: var(--space-md);
+}
+
+.premium-generator-mode ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: var(--scale-sm);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.premium-generator-mode li {
+  margin: var(--space-xs) 0;
+}
+
+.premium-mode-locked {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--space-xs);
+  font-size: var(--scale-xs);
+}
+
+/* Preview Styles */
+.premium-preview-container {
+  padding: var(--space-2xl) var(--space-xl);
+  min-height: 100vh;
+}
+
+.premium-preview-header {
+  max-width: 1400px;
+  margin: 0 auto var(--space-2xl);
+  padding: var(--space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+}
+
+.premium-preview-actions {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.premium-preview-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--space-lg);
+}
+
+.premium-preview-iframe-container {
+  position: relative;
+  width: 100%;
+  height: 800px;
+  border-radius: var(--space-md);
+  overflow: hidden;
+}
+
+.premium-preview-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: var(--premium-black);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .premium-navigation {
+    padding: var(--space-sm) var(--space-md);
+  }
+  
+  .premium-nav-logo {
+    font-size: 1.25rem;
+  }
+  
+  .premium-notification {
+    right: var(--space-md);
+    left: var(--space-md);
+    max-width: none;
+  }
+  
+  .premium-preview-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .premium-preview-actions {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .premium-button {
+    width: 100%;
+  }
+}

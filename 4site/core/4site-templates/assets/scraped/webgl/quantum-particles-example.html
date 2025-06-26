@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Particle System</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: Arial, sans-serif;
+        }
+        #canvas {
+            width: 100vw;
+            height: 100vh;
+        }
+        #info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #fff;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="info">Quantum Particle System - Move mouse to interact</div>
+    <canvas id="canvas"></canvas>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Quantum particle shaders
+        const vertexShader = `
+            attribute float size;
+            attribute float phase;
+            attribute vec3 velocity;
+            
+            uniform float time;
+            uniform vec3 mouse;
+            
+            varying vec3 vColor;
+            varying float vPhase;
+            
+            void main() {
+                vPhase = phase;
+                
+                // Quantum uncertainty position
+                vec3 pos = position;
+                float uncertainty = sin(phase + time * 2.0) * 0.5;
+                pos += velocity * uncertainty;
+                
+                // Mouse interaction - quantum entanglement effect
+                float distToMouse = distance(pos, mouse);
+                if (distToMouse < 100.0) {
+                    float influence = 1.0 - (distToMouse / 100.0);
+                    pos += normalize(pos - mouse) * influence * 20.0;
+                    vColor = vec3(0.0, influence, 1.0 - influence);
+                } else {
+                    vColor = vec3(0.5, 0.8, 1.0);
+                }
+                
+                vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+                
+                // Quantum size fluctuation
+                float quantumSize = size * (1.0 + sin(phase + time * 3.0) * 0.3);
+                gl_PointSize = quantumSize * (300.0 / -mvPosition.z);
+                
+                gl_Position = projectionMatrix * mvPosition;
+            }
+        `;
+        
+        const fragmentShader = `
+            uniform sampler2D pointTexture;
+            uniform float time;
+            
+            varying vec3 vColor;
+            varying float vPhase;
+            
+            void main() {
+                vec2 uv = gl_PointCoord;
+                
+                // Quantum probability cloud
+                float dist = distance(uv, vec2(0.5));
+                float alpha = exp(-dist * dist * 4.0);
+                
+                // Phase-based color oscillation
+                vec3 color = vColor;
+                color *= 1.0 + sin(vPhase + time * 2.0) * 0.3;
+                
+                // Quantum interference pattern
+                float interference = sin(dist * 20.0 - time * 3.0) * 0.5 + 0.5;
+                color *= 0.7 + interference * 0.3;
+                
+                gl_FragColor = vec4(color, alpha * 0.8);
+            }
+        `;
+        
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ 
+            canvas: document.getElementById('canvas'), 
+            antialias: true,
+            alpha: true
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        
+        // Quantum particle system
+        const PARTICLE_COUNT = 10000;
+        const geometry = new THREE.BufferGeometry();
+        
+        const positions = new Float32Array(PARTICLE_COUNT * 3);
+        const velocities = new Float32Array(PARTICLE_COUNT * 3);
+        const sizes = new Float32Array(PARTICLE_COUNT);
+        const phases = new Float32Array(PARTICLE_COUNT);
+        
+        // Initialize quantum particles
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            const i3 = i * 3;
+            
+            // Spherical distribution
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(Math.random() * 2 - 1);
+            const radius = 50 + Math.random() * 150;
+            
+            positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+            positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+            positions[i3 + 2] = radius * Math.cos(phi);
+            
+            // Random velocities for quantum motion
+            velocities[i3] = (Math.random() - 0.5) * 2;
+            velocities[i3 + 1] = (Math.random() - 0.5) * 2;
+            velocities[i3 + 2] = (Math.random() - 0.5) * 2;
+            
+            sizes[i] = Math.random() * 3 + 1;
+            phases[i] = Math.random() * Math.PI * 2;
+        }
+        
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('velocity', new THREE.BufferAttribute(velocities, 3));
+        geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+        geometry.setAttribute('phase', new THREE.BufferAttribute(phases, 1));
+        
+        // Create quantum material
+        const material = new THREE.ShaderMaterial({
+            uniforms: {
+                time: { value: 0 },
+                mouse: { value: new THREE.Vector3() },
+                pointTexture: { value: new THREE.TextureLoader().load('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==') }
+            },
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+            blending: THREE.AdditiveBlending,
+            depthTest: false,
+            transparent: true,
+            vertexColors: true
+        });
+        
+        const particleSystem = new THREE.Points(geometry, material);
+        scene.add(particleSystem);
+        
+        // Add quantum field lines
+        const fieldGeometry = new THREE.BufferGeometry();
+        const fieldPositions = [];
+        const fieldColors = [];
+        
+        // Create field lines
+        for (let i = 0; i < 50; i++) {
+            const angle = (i / 50) * Math.PI * 2;
+            const radius = 100;
+            
+            for (let j = 0; j < 100; j++) {
+                const t = j / 100;
+                const x = Math.cos(angle) * radius * t;
+                const y = Math.sin(angle) * radius * t;
+                const z = Math.sin(t * Math.PI * 4) * 20;
+                
+                fieldPositions.push(x, y, z);
+                
+                const color = new THREE.Color();
+                color.setHSL(0.6 + t * 0.1, 1.0, 0.5);
+                fieldColors.push(color.r, color.g, color.b);
+            }
+        }
+        
+        fieldGeometry.setAttribute('position', new THREE.Float32BufferAttribute(fieldPositions, 3));
+        fieldGeometry.setAttribute('color', new THREE.Float32BufferAttribute(fieldColors, 3));
+        
+        const fieldMaterial = new THREE.LineBasicMaterial({
+            vertexColors: true,
+            blending: THREE.AdditiveBlending,
+            opacity: 0.3,
+            transparent: true
+        });
+        
+        const fieldLines = new THREE.LineSegments(fieldGeometry, fieldMaterial);
+        scene.add(fieldLines);
+        
+        camera.position.z = 300;
+        
+        // Mouse tracking
+        const mouse = new THREE.Vector2();
+        const raycaster = new THREE.Raycaster();
+        
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            
+            raycaster.setFromCamera(mouse, camera);
+            const intersectPoint = new THREE.Vector3();
+            raycaster.ray.at(200, intersectPoint);
+            material.uniforms.mouse.value = intersectPoint;
+        });
+        
+        // Animation
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            const time = Date.now() * 0.001;
+            material.uniforms.time.value = time;
+            
+            // Rotate particle system
+            particleSystem.rotation.y += 0.001;
+            fieldLines.rotation.y -= 0.002;
+            
+            // Update particle positions for quantum behavior
+            const positions = geometry.attributes.position.array;
+            const velocities = geometry.attributes.velocity.array;
+            const phases = geometry.attributes.phase.array;
+            
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                const i3 = i * 3;
+                
+                // Quantum tunneling effect
+                if (Math.random() < 0.001) {
+                    positions[i3] += (Math.random() - 0.5) * 50;
+                    positions[i3 + 1] += (Math.random() - 0.5) * 50;
+                    positions[i3 + 2] += (Math.random() - 0.5) * 50;
+                }
+                
+                // Boundary check
+                const dist = Math.sqrt(
+                    positions[i3] * positions[i3] +
+                    positions[i3 + 1] * positions[i3 + 1] +
+                    positions[i3 + 2] * positions[i3 + 2]
+                );
+                
+                if (dist > 200 || dist < 50) {
+                    // Reflect back
+                    velocities[i3] *= -1;
+                    velocities[i3 + 1] *= -1;
+                    velocities[i3 + 2] *= -1;
+                }
+            }
+            
+            geometry.attributes.position.needsUpdate = true;
+            
+            renderer.render(scene, camera);
+        }
+        
+        // Handle resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        animate();
+    </script>
+</body>
+</html>

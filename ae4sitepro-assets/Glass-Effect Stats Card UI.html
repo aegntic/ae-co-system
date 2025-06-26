@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Glass Card Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            500: 'hsl(25, 95%, 53%)', // orange
+                            600: 'hsl(15, 95%, 50%)', // darker orange
+                            700: 'hsl(35, 95%, 60%)', // lighter orange
+                        },
+                        secondary: {
+                            800: 'hsl(45, 90%, 80%)', // light orange/gold
+                        },
+                        darkGray: {
+                            50: 'hsl(25, 20%, 10%)', // dark orange-tinted gray
+                            100: 'hsl(25, 15%, 15%)', // slightly lighter
+                        }
+                    },
+                    fontFamily: {
+                        jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-effect {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        
+        .card-top {
+            width: 31.65em;
+            height: 18em;
+            border-radius: 1em;
+        }
+        
+        .card-bottom {
+            width: calc(31.65em * 0.8); /* 80% of the top card width */
+            height: 18em;
+            border-radius: 1em;
+        }
+        
+        .card-content-gradient {
+            background-image: 
+                linear-gradient(to bottom, 
+                    rgba(255,255,255,0) 3.125em,
+                    hsl(35, 95%, 60%) 3.375em,
+                    hsl(45, 90%, 80%) 4.5em
+                ),
+                linear-gradient(to right,
+                    hsl(45, 90%, 80%) 19.5em,
+                    hsl(35, 95%, 60%) calc(100% - 6em),
+                    rgba(255,255,255,0) 28.65em
+                ),
+                linear-gradient(to right,
+                    rgba(255,255,255,0.5) 6em,
+                    rgba(255,255,255,0.2)
+                );
+            background-size: calc(100% - 6em) 35%, 100% 35%, 100% 100%;
+            background-position: 0 0, 0 100%, 0 0;
+            background-repeat: no-repeat;
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        
+        .card-divider {
+            height: 1px;
+            background-image: linear-gradient(90deg, 
+                transparent, 
+                rgba(255,255,255,0.3) 20%, 
+                rgba(255,255,255,0.5) 50%,
+                rgba(255,255,255,0.3) 80%,
+                transparent
+            );
+        }
+        
+        .card-vertical-divider {
+            width: 1px;
+            background-image: linear-gradient(180deg, 
+                transparent, 
+                rgba(255,255,255,0.3) 20%, 
+                rgba(255,255,255,0.5) 50%,
+                rgba(255,255,255,0.3) 80%,
+                transparent
+            );
+        }
+        
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 600;
+            line-height: 1.1;
+        }
+        
+        .stat-label {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .glow {
+            box-shadow: 0 0 15px rgba(255, 149, 0, 0.6);
+        }
+        
+        .icon-circle {
+            height: 2rem;
+            width: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-darkGray-100 to-darkGray-50 text-white font-inter h-screen grid place-items-center">
+    <div class="relative">
+        <!-- Base Card (Orange) - 80% width of top card -->
+        <div class="card-bottom bg-gradient-to-br from-primary-700 via-primary-500 to-primary-600 shadow-lg absolute -translate-x-1/2 -translate-y-1/2 top-8 left-0 glow"></div>
+        
+        <!-- Glass Card -->
+        <div class="card-top glass-effect bg-gradient-to-r from-white/20 to-white/5 absolute -translate-x-1/2 -translate-y-1/2 -top-8 left-0 overflow-hidden">
+            <!-- Border overlay -->
+            <div class="absolute inset-0 rounded-[1em] border border-white/50 [mask-image:linear-gradient(135deg,white,transparent_50%)]"></div>
+            <div class="absolute inset-0 rounded-[1em] border border-primary-500/50 [mask-image:linear-gradient(135deg,transparent_50%,white)]"></div>
+            
+            <!-- Content -->
+            <div class="flex flex-col h-full p-5 pb-6 card-content-gradient">
+                <div class="flex justify-between items-start">
+                    <h1 class="w-3/4 text-[24px] font-light leading-tight tracking-tight font-jakarta">Advancing Digital Innovation for Tomorrow</h1>
+                    <div class="w-1/4 text-[24px] font-semibold text-right font-jakarta">NOVA</div>
+                </div>
+                
+                <!-- Icon strip -->
+                <div class="flex items-center gap-2 mt-3">
+                    <div class="icon-circle">
+                        <i class="fas fa-microchip text-xs"></i>
+                    </div>
+                    <div class="card-vertical-divider h-4"></div>
+                    <div class="icon-circle">
+                        <i class="fas fa-network-wired text-xs"></i>
+                    </div>
+                    <div class="card-vertical-divider h-4"></div>
+                    <div class="icon-circle">
+                        <i class="fas fa-brain text-xs"></i>
+                    </div>
+                </div>
+                
+                <!-- Main divider -->
+                <div class="card-divider w-full my-4"></div>
+                
+                <!-- Stats Section -->
+                <div class="flex justify-between mb-3 max-w-md">
+                    <div class="text-center px-2">
+                        <div class="stat-value gradient-text bg-gradient-to-r from-white/90 to-white/70">97<span class="text-sm">%</span></div>
+                        <div class="stat-label">Efficiency</div>
+                    </div>
+                    <div class="card-vertical-divider h-12 my-auto"></div>
+                    <div class="text-center px-2">
+                        <div class="stat-value gradient-text bg-gradient-to-r from-white/90 to-white/70">156<span class="text-sm">+</span></div>
+                        <div class="stat-label">Patents</div>
+                    </div>
+                    <div class="card-vertical-divider h-12 my-auto"></div>
+                    <div class="text-center px-2">
+                        <div class="stat-value gradient-text bg-gradient-to-r from-white/90 to-white/70">23</div>
+                        <div class="stat-label">Markets</div>
+                    </div>
+                </div>
+                
+                <!-- Secondary divider -->
+                <div class="card-divider w-full my-1 opacity-70"></div>
+                
+                <!-- Feature tags -->
+                <div class="flex flex-wrap gap-2 mt-2 mb-4">
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/10 border border-white/20">QUANTUM READY</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/10 border border-white/20">AI OPTIMIZED</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/10 border border-white/20">CARBON NEUTRAL</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/10 border border-white/20">EDGE COMPUTING</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/10 border border-white/20">BLOCKCHAIN SECURED</span>
+                </div>
+                
+                <!-- Additional Details -->
+                <div class="mt-auto flex justify-between w-full">
+                    <div class="flex flex-col">
+                        <span class="opacity-70 flex items-center gap-1 text-[0.8rem] mb-1">
+                            <i class="fas fa-shield-alt text-xs"></i> ISO 27001
+                        </span>
+                        <span class="text-[0.75rem] opacity-60 flex items-center gap-1">
+                            <i class="fas fa-key text-xs"></i> ID:87A52C
+                        </span>
+                    </div>
+                    
+                    <div class="flex flex-col items-end">
+                        <span class="opacity-70 flex items-center gap-1 text-[0.8rem] mb-1">
+                            <i class="fas fa-code-branch text-xs"></i> v3.8.2
+                        </span>
+                        <p class="text-[0.9rem] font-medium flex items-center gap-1">
+                            <i class="fas fa-globe text-xs"></i> nova-systems.xyz
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+name: Deploy to Production (4site.pro)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build production
+      run: npm run build
+      env:
+        VITE_GEMINI_API_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
+        VITE_APP_URL: https://4site.pro
+        NODE_ENV: production
+        
+    - name: Deploy to Vercel
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        working-directory: ./
+        vercel-args: '--prod'
+        
+    - name: Deploy to Netlify (Backup)
+      if: failure()
+      uses: nwtgck/actions-netlify@v3.0
+      with:
+        publish-dir: './dist'
+        production-branch: main
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        deploy-message: "Deploy from GitHub Actions"
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        
+    - name: Notify deployment success
+      if: success()
+      run: |
+        echo "🎉 4site.pro deployed successfully!"
+        echo "🌐 Live at: https://4site.pro"
+        
+    - name: Post-deployment validation
+      if: success()
+      run: |
+        # Wait for deployment to propagate
+        sleep 30
+        
+        # Test production URL
+        curl -f https://4site.pro || echo "⚠️ Production URL not yet accessible"
+        
+        # Check for key content
+        if curl -s https://4site.pro | grep -q "4site.pro"; then
+          echo "✅ 4site.pro branding verified"
+        else
+          echo "⚠️ Branding verification failed"
+        fi

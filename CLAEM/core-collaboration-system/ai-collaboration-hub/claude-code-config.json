@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "ai-collaboration-hub": {
+      "command": "uv",
+      "args": ["run", "python", "-m", "ai_collaboration_hub.server"],
+      "cwd": "/home/tabs/aegntic-MCP/servers/ai-collaboration-hub",
+      "env": {
+        "OPENROUTER_API_KEY": "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"
+      }
+    }
+  }
+}

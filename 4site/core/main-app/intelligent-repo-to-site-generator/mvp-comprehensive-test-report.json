@@ -1,0 +1,69 @@
+{
+  "timestamp": "2025-06-25T08:05:05.094Z",
+  "testResults": {
+    "pageLoadPerformance": {
+      "status": "PASS",
+      "loadTime": "2003ms"
+    },
+    "coreElement_navigation": {
+      "status": "PASS"
+    },
+    "coreElement_heroTitle": {
+      "status": "PASS"
+    },
+    "coreElement_urlInput": {
+      "status": "PASS"
+    },
+    "coreElement_submitButton": {
+      "status": "PASS"
+    },
+    "coreElement_exampleButtons": {
+      "status": "PASS"
+    },
+    "urlInputFunctionality": {
+      "status": "FAIL",
+      "error": "page.keyboard.selectAll is not a function"
+    },
+    "demoModeGeneration": {
+      "status": "FAIL",
+      "error": "Waiting for selector `.animate-spin, [class*=\"loading\"]` failed: Waiting failed: 5000ms exceeded"
+    },
+    "actionButtons": {
+      "status": "FAIL"
+    },
+    "mobileResponsive": {
+      "status": "WARN",
+      "mobileLayout": {
+        "bodyWidth": 468,
+        "hasHorizontalScroll": true,
+        "navResponsive": true,
+        "inputResponsive": true
+      }
+    },
+    "performanceMetrics": {
+      "status": "PASS",
+      "metrics": {
+        "memoryUsage": 8,
+        "layoutCount": 8,
+        "styleRecalcs": 28,
+        "acceptable": true
+      }
+    },
+    "errorHandling": {
+      "status": "FAIL",
+      "error": "page.keyboard.selectAll is not a function"
+    }
+  },
+  "errors": [],
+  "warnings": [],
+  "recommendations": [
+    "⚠️ MVP needs significant improvements before production",
+    "Critical: Fix AI generation service integration",
+    "Improve mobile responsiveness for better user experience",
+    "Enhance error handling and user feedback",
+    "Add comprehensive loading states and progress indicators",
+    "Implement analytics to track user behavior and conversion",
+    "Add real GitHub repository deployment functionality"
+  ],
+  "mvpReadinessScore": 58
+}

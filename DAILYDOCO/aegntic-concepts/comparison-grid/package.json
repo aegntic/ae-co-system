@@ -1,0 +1,23 @@
+{
+  "name": "@aegntic/comparison-grid",
+  "version": "1.0.0",
+  "description": "Revolutionary 3x3 Concept Portfolio Comparison Interface",
+  "main": "comparison-grid.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "python3 -m http.server 8080"
+  },
+  "keywords": ["concept-portfolio", "comparison-grid", "annotation-system", "aegntic", "ai-interface"],
+  "authors": [
+    "Mattae Cooper <human@mattaecooper.org>",
+    "'{ae}'aegntic.ai <contact@aegntic.ai>"
+  ],
+  "dependencies": {
+    "gsap": "^3.12.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

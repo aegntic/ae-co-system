@@ -1,0 +1,46 @@
+{
+  "mcpServers": {
+    "allowedMcpServers": ["*"],
+    "autoReconnect": true,
+    "contextPreservation": true,
+    "priorityServers": ["quick-data", "just-prompt", "memory", "git", "filesystem"]
+  },
+  "commands": {
+    "enabled": true,
+    "allowCustomCommands": true,
+    "contextSaving": true
+  },
+  "permissions": {
+    "filesystem": {
+      "allowedPaths": ["/home/tabs"],
+      "readWrite": true
+    },
+    "shell": {
+      "enabled": true,
+      "allowedCommands": [
+        "npm run *", "bun run *", "uv run *", "cargo *",
+        "git *", "docker-compose *", "pytest *", "ruff *"
+      ],
+      "deniedCommands": ["rm -rf *", "sudo rm *", "chmod 777 *", "eval *"]
+    },
+    "network": {
+      "enabled": true,
+      "allowOutbound": true
+    }
+  },
+  "features": {
+    "parallelProcessing": true,
+    "ultrathink": true,
+    "contextWindow": {
+      "preservation": true,
+      "autoSave": true,
+      "restoreOnRestart": true
+    }
+  },
+  "project_context": {
+    "name": "DailyDoco Pro",
+    "type": "automated-documentation-platform",
+    "architecture": "Trinity Architecture (uv + fast-agent + MCP)",
+    "core_principles": ["ultrathink", "privacy-first", "performance-excellence"]
+  }
+}

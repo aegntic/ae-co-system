@@ -1,0 +1,217 @@
+{
+  "metadata": {
+    "curator": "Mattae Cooper",
+    "scraper": "AEGNT27 Human-Level Scraper",
+    "timestamp": "2025-06-26T18:17:07.854389",
+    "total_scraped": 9,
+    "total_approved": 1,
+    "total_rejected": 8,
+    "quality_threshold": "Ultra Premium Only"
+  },
+  "approved_templates": [
+    {
+      "title": "Ethereal Portfolio X",
+      "author": "Cosmic Designs",
+      "price": 149,
+      "category": "Portfolio",
+      "features": [
+        "Smooth Scroll",
+        "Lenis",
+        "SplitType",
+        "Custom Cursors"
+      ],
+      "design_style": "Minimalist Luxury",
+      "preview_url": "https://ethereal-portfolio.demo",
+      "awards": [
+        "Mobile Excellence"
+      ],
+      "performance_score": 96,
+      "source": "Awwwards Inspired",
+      "quality_tier": "Ultra Premium",
+      "scraped_at": "2025-06-26T18:16:56.951733",
+      "approved": true,
+      "mattae_rating": 6
+    }
+  ],
+  "rejected_templates": [
+    {
+      "title": "Quantum Interface Pro",
+      "author": "Studio Disruptive",
+      "price": 189,
+      "category": "Creative Agency",
+      "features": [
+        "WebGL",
+        "GSAP",
+        "Three.js",
+        "Particle Systems"
+      ],
+      "design_style": "Futuristic Brutalism",
+      "preview_url": "https://quantum-interface.demo",
+      "awards": [
+        "Site of the Day",
+        "Developer Award"
+      ],
+      "performance_score": 98,
+      "source": "Awwwards Inspired",
+      "quality_tier": "Ultra Premium",
+      "scraped_at": "2025-06-26T18:16:56.409837",
+      "rejected": true,
+      "rejection_reasons": [
+        "Design style not cutting-edge enough"
+      ]
+    },
+    {
+      "title": "Neural Commerce Platform",
+      "author": "AI Studio Berlin",
+      "price": 299,
+      "category": "E-commerce",
+      "features": [
+        "AI Recommendations",
+        "3D Product Views",
+        "AR Try-On"
+      ],
+      "design_style": "Tech Minimalism",
+      "preview_url": "https://neural-commerce.demo",
+      "awards": [
+        "Innovation Award"
+      ],
+      "performance_score": 94,
+      "source": "Awwwards Inspired",
+      "quality_tier": "Ultra Premium",
+      "scraped_at": "2025-06-26T18:16:57.460405",
+      "rejected": true,
+      "rejection_reasons": [
+        "Lacks modern technical features"
+      ]
+    },
+    {
+      "title": "Glassmorphism Suite 2025",
+      "author": "Viktor Petrov",
+      "price": 79,
+      "category": "UI Kit",
+      "features": [
+        "Glass Effects",
+        "Backdrop Filters",
+        "CSS Variables",
+        "Dark Mode"
+      ],
+      "design_style": "Glassmorphism",
+      "components": 120,
+      "preview_url": "https://glass-suite-2025.demo",
+      "source": "Behance Curated",
+      "quality_tier": "Premium Plus",
+      "scraped_at": "2025-06-26T18:16:59.401659",
+      "rejected": true,
+      "rejection_reasons": [
+        "Lacks modern technical features"
+      ]
+    },
+    {
+      "title": "Brutalist Banking",
+      "author": "Helvetica Neue Studio",
+      "price": 159,
+      "category": "Financial",
+      "features": [
+        "Bold Typography",
+        "Asymmetric Grids",
+        "Micro-interactions"
+      ],
+      "design_style": "Neo-Brutalism",
+      "components": 85,
+      "preview_url": "https://brutalist-banking.demo",
+      "source": "Behance Curated",
+      "quality_tier": "Premium Plus",
+      "scraped_at": "2025-06-26T18:17:01.345679",
+      "rejected": true,
+      "rejection_reasons": [
+        "Lacks modern technical features"
+      ]
+    },
+    {
+      "title": "Cosmic Dashboard Pro",
+      "author": "Lunar Design Co",
+      "price": 99,
+      "category": "Dashboard",
+      "features": [
+        "Real-time Data Viz",
+        "D3.js Charts",
+        "WebSocket Support"
+      ],
+      "design_style": "Space Theme",
+      "preview_url": "https://cosmic-dashboard.demo",
+      "source": "Dribbble Select",
+      "quality_tier": "Premium",
+      "scraped_at": "2025-06-26T18:17:02.728709",
+      "rejected": true,
+      "rejection_reasons": [
+        "Lacks modern technical features",
+        "Design style not cutting-edge enough"
+      ]
+    },
+    {
+      "title": "Organic Flow Landing",
+      "author": "Nature Pixels",
+      "price": 69,
+      "category": "Landing Page",
+      "features": [
+        "SVG Morphing",
+        "Scroll Animations",
+        "Organic Shapes"
+      ],
+      "design_style": "Organic Design",
+      "preview_url": "https://organic-flow.demo",
+      "source": "Dribbble Select",
+      "quality_tier": "Premium",
+      "scraped_at": "2025-06-26T18:17:03.539755",
+      "rejected": true,
+      "rejection_reasons": [
+        "Lacks modern technical features"
+      ]
+    },
+    {
+      "title": "Monochrome Mastery",
+      "author": "Design Monopoly",
+      "price": 249,
+      "category": "Multi-purpose",
+      "features": [
+        "Variable Fonts",
+        "CSS Grid Mastery",
+        "Performance First"
+      ],
+      "design_style": "Monochromatic",
+      "exclusivity": "Limited Edition",
+      "licenses_available": 100,
+      "preview_url": "https://monochrome-mastery.demo",
+      "source": "Gumroad Exclusive",
+      "quality_tier": "Ultra Premium",
+      "scraped_at": "2025-06-26T18:17:05.732113",
+      "rejected": true,
+      "rejection_reasons": [
+        "Lacks modern technical features",
+        "Design style not cutting-edge enough"
+      ]
+    },
+    {
+      "title": "Retro-Future Agency",
+      "author": "Synthwave Studios",
+      "price": 179,
+      "category": "Agency",
+      "features": [
+        "Neon Effects",
+        "Retro Animations",
+        "Synthwave Aesthetics"
+      ],
+      "design_style": "Retro-Futurism",
+      "exclusivity": "Creator Pro",
+      "preview_url": "https://retro-future.demo",
+      "source": "Gumroad Exclusive",
+      "quality_tier": "Ultra Premium",
+      "scraped_at": "2025-06-26T18:17:07.853726",
+      "rejected": true,
+      "rejection_reasons": [
+        "Lacks modern technical features",
+        "Design style not cutting-edge enough"
+      ]
+    }
+  ]
+}

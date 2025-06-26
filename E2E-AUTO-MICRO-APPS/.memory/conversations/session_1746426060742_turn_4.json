@@ -1,0 +1,15 @@
+{
+  "data": {
+    "role": "assistant",
+    "content": "Yes, I created a capture utility that will store our conversation turns in the Memory-Bank persistence layer.",
+    "turnId": 4,
+    "timestamp": "2025-05-05T06:21:00.761Z"
+  },
+  "metadata": {
+    "timestamp": "2025-05-05T06:21:00.761Z",
+    "category": "conversations",
+    "key": "session_1746426060742_turn_4",
+    "source": "claude-conversation",
+    "sessionKey": "session_1746426060742"
+  }
+}

@@ -1,0 +1,147 @@
+/* Font-face declarations for free alternatives */
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('/fonts/ebgaramond-regular.woff2') format('woff2'),
+       url('/fonts/ebgaramond-regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/spacegrotesk-medium.woff2') format('woff2'),
+       url('/fonts/spacegrotesk-medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/spacegrotesk-bold.woff2') format('woff2'),
+       url('/fonts/spacegrotesk-bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif Pro';
+  src: url('/fonts/sourceserifpro-regular.woff2') format('woff2'),
+       url('/fonts/sourceserifpro-regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif Pro';
+  src: url('/fonts/sourceserifpro-bold.woff2') format('woff2'),
+       url('/fonts/sourceserifpro-bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Base Styles and Variables */
+:root {
+  /* Updated color scheme */
+  --dark-bg: #121212; /* near-black, soft matte */
+  --light-bg: #F8F4ED; /* creamy off-white */
+  --accent-color: #E05B32; /* soft burnt orange / red clay */
+  --text-dark-mode: #FAF8F4; /* near white, not pure white */
+  --text-light-mode: #121212; /* same as dark background, for contrast */
+  
+  /* Original theme colors - keeping for now for compatibility */
+  --primary-color: var(--accent-color);
+  --primary-dark: #c14a28; /* darker version of accent */
+  --secondary-color: var(--accent-color);
+  --text-color: var(--text-dark-mode);
+  --darker-bg: #0a0a08; /* slightly darker version of dark bg */
+  --card-bg: rgba(25, 25, 25, 0.85);
+  
+  /* Spacing and other variables */
+  --glitch-offset: 0.5rem;
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+  --font-main: 'Source Serif Pro', Georgia, serif;
+  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-logo: 'EB Garamond', serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --shadow-neon: 0 0 10px rgba(224, 91, 50, 0.5), 0 0 20px rgba(224, 91, 50, 0.3);
+  --shadow-glow: 0 0 8px rgba(224, 91, 50, 0.5), 0 0 16px rgba(224, 91, 50, 0.3);
+  --shadow-card: 0 10px 30px rgba(5, 5, 5, 0.5);
+  --transition-fast: 0.2s ease;
+  --transition-med: 0.4s ease;
+  --transition-slow: 0.8s ease;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 16px;
+}
+
+/* Reset and Base Styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-color) var(--dark-bg);
+}
+
+body {
+  font-family: var(--font-main);
+  color: var(--text-color);
+  background-color: var(--dark-bg);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color var(--transition-fast), text-shadow var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-color);
+  text-shadow: var(--shadow-glow);
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-heading);
+  border: none;
+  outline: none;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Apply heading fonts */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--space-md);
+}
+
+/* Specific styles for our app components will be in component-specific CSS */

@@ -1,0 +1,18 @@
+STEP 4: VIBE CODE THE PROTOTYPE
+==============================
+
+TOOL: Bolt.new
+- AI web development agent
+
+PROCESS:
+- Manus gave a super long prompt that would take humans HOURS to write
+- Feed that into Bolt.new
+- Result: A sleek, functional landing page
+
+WHAT YOU GET:
+- Now you have a working interface/frontend
+- To get the actual quiz results, you need a ChatGPT API key
+- In < 1 hour, you can have ChatGPT analyze the data, then feed its output into a database tool (Supabase) via an integration
+
+KEY ADVANTAGE:
+AI can generate complex, detailed prompts that would be extremely time-consuming for humans to write, leading to better development outcomes.

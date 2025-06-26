@@ -1,0 +1,56 @@
+<svg width="1280" height="800" viewBox="0 0 1280 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8FAFC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E2E8F0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="zkflowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1280" height="800" fill="url(#bgGradient)"/>
+  
+  <!-- Main content area -->
+  <rect x="100" y="100" width="1080" height="600" rx="24" fill="white" stroke="#E5E7EB" stroke-width="2"/>
+  
+  <!-- Header -->
+  <text x="640" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="700" text-anchor="middle" fill="url(#zkflowGradient)">zkFlow.pro</text>
+  <text x="640" y="240" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="500" text-anchor="middle" fill="#6B7280">Smart Form Automation for Professionals</text>
+  
+  <!-- Features grid -->
+  <g transform="translate(200,300)">
+    <!-- Feature 1 -->
+    <circle cx="80" cy="60" r="40" fill="url(#zkflowGradient)" opacity="0.1"/>
+    <text x="80" y="40" font-size="24" text-anchor="middle">🔒</text>
+    <text x="80" y="75" font-family="system-ui" font-size="16" font-weight="600" text-anchor="middle" fill="#1F2937">Privacy First</text>
+    <text x="80" y="95" font-family="system-ui" font-size="12" text-anchor="middle" fill="#6B7280">Local storage only</text>
+    
+    <!-- Feature 2 -->
+    <circle cx="320" cy="60" r="40" fill="url(#zkflowGradient)" opacity="0.1"/>
+    <text x="320" y="40" font-size="24" text-anchor="middle">⚡</text>
+    <text x="320" y="75" font-family="system-ui" font-size="16" font-weight="600" text-anchor="middle" fill="#1F2937">Lightning Fast</text>
+    <text x="320" y="95" font-family="system-ui" font-size="12" text-anchor="middle" fill="#6B7280">Save 5+ hours/week</text>
+    
+    <!-- Feature 3 -->
+    <circle cx="560" cy="60" r="40" fill="url(#zkflowGradient)" opacity="0.1"/>
+    <text x="560" y="40" font-size="24" text-anchor="middle">🎯</text>
+    <text x="560" y="75" font-family="system-ui" font-size="16" font-weight="600" text-anchor="middle" fill="#1F2937">Smart Detection</text>
+    <text x="560" y="95" font-family="system-ui" font-size="12" text-anchor="middle" fill="#6B7280">Auto field mapping</text>
+    
+    <!-- Feature 4 -->
+    <circle cx="800" cy="60" r="40" fill="url(#zkflowGradient)" opacity="0.1"/>
+    <text x="800" y="40" font-size="24" text-anchor="middle">🆓</text>
+    <text x="800" y="75" font-family="system-ui" font-size="16" font-weight="600" text-anchor="middle" fill="#1F2937">Free to Use</text>
+    <text x="800" y="95" font-family="system-ui" font-size="12" text-anchor="middle" fill="#6B7280">Premium features</text>
+  </g>
+  
+  <!-- CTA -->
+  <rect x="490" y="550" width="300" height="60" rx="30" fill="url(#zkflowGradient)"/>
+  <text x="640" y="590" font-family="system-ui" font-size="20" font-weight="600" text-anchor="middle" fill="white">Download Free</text>
+  
+  <!-- Footer -->
+  <text x="640" y="680" font-family="system-ui" font-size="14" text-anchor="middle" fill="#9CA3AF">Built by aegntic - AI-Powered Development Solutions</text>
+</svg>

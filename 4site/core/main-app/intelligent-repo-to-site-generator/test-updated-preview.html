@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4site.pro - Updated Preview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Glass morphism styles */
+        .glass-card {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-button {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 12px 24px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .glass-button-primary {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(147, 51, 234, 0.8));
+            border: 1px solid rgba(59, 130, 246, 0.5);
+        }
+
+        /* Hero section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero .highlight {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 500;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        /* Features grid */
+        .features {
+            padding: 4rem 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Pricing section */
+        .pricing {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.5), rgba(15, 23, 42, 0.5));
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            padding: 2rem;
+            position: relative;
+        }
+
+        .pricing-card.popular {
+            border: 2px solid #3b82f6;
+            transform: scale(1.05);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-card .price {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .pricing-features li {
+            padding: 0.5rem 0;
+            opacity: 0.9;
+        }
+
+        .pricing-features li:before {
+            content: "✓";
+            color: #10b981;
+            margin-right: 0.5rem;
+        }
+
+        /* Logo */
+        .logo {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 2rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .pricing-card.popular {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="logo">4S</div>
+            <h1>
+                Living Websites That<br>
+                <span class="highlight">Update Themselves</span> as You Build
+            </h1>
+            <p>
+                Get online instantly while learning to build digitally. Your website creates blog posts automatically at development checkpoints.
+                Focus on building - we handle the marketing noise.
+            </p>
+            <a href="#pricing" class="glass-button glass-button-primary">
+                Start Building (FREE)
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem;">
+            Features That <span style="background: linear-gradient(135deg, #fbbf24, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Empower</span>
+        </h2>
+        <div class="features-grid">
+            <div class="glass-card feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>Living Websites</h3>
+                <p>Your website automatically updates itself and creates blog posts at development checkpoints. Focus on building - we handle the marketing noise.</p>
+            </div>
+            <div class="glass-card feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Network Visibility</h3>
+                <p>Professional recognition among curated industry leaders. Build your reputation through quality work, not financial promises.</p>
+            </div>
+            <div class="glass-card feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Automated Content Creation</h3>
+                <p>Get online instantly while learning to build digitally. Your development milestones automatically become professional content.</p>
+            </div>
+            <div class="glass-card feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Complement Not Complicate</h3>
+                <p>Seamlessly integrates with your existing workflow. Works with GitHub, enhances what you're already building without adding complexity.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem;">
+            Choose Your <span style="background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Tier</span>
+        </h2>
+        <div class="pricing-grid">
+            <!-- FREE Tier -->
+            <div class="glass-card pricing-card">
+                <h3>FREE</h3>
+                <div class="price">$0<span style="font-size: 1rem; opacity: 0.7;">/forever</span></div>
+                <p style="opacity: 0.8; margin-bottom: 1.5rem;">Get online instantly while learning to build digitally</p>
+                <ul class="pricing-features">
+                    <li>5 auto-updating websites</li>
+                    <li>Automated blog posts at development checkpoints</li>
+                    <li>8 professional templates</li>
+                    <li>No ads - elegant PRO member featuring only</li>
+                    <li>2-minute generation with standard AI processing</li>
+                </ul>
+                <a href="#" class="glass-button" style="width: 100%; text-align: center;">Start Building</a>
+            </div>
+
+            <!-- PRO Tier -->
+            <div class="glass-card pricing-card popular">
+                <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #3b82f6; padding: 4px 12px; border-radius: 6px; font-size: 0.8rem;">MOST POPULAR</div>
+                <h3>PRO</h3>
+                <div class="price">$49.49<span style="font-size: 1rem; opacity: 0.7;">/month</span></div>
+                <p style="opacity: 0.8; margin-bottom: 1.5rem;">Network visibility among curated industry leaders</p>
+                <ul class="pricing-features">
+                    <li>111 auto-updating websites (vs 5 free)</li>
+                    <li>+11 "3-month trial gift websites" via GitHub pull request donations</li>
+                    <li>Advanced automated content creation and blog generation</li>
+                    <li>Network visibility among curated industry leaders</li>
+                    <li>Professional recognition - featured in network galleries</li>
+                    <li>Remove platform attribution completely</li>
+                    <li>Sub 1-minute generation with premium AI ensemble</li>
+                </ul>
+                <a href="#" class="glass-button glass-button-primary" style="width: 100%; text-align: center;">Join Network</a>
+            </div>
+
+            <!-- BUSINESS Tier -->
+            <div class="glass-card pricing-card">
+                <h3>BUSINESS</h3>
+                <div class="price">$494.94<span style="font-size: 1rem; opacity: 0.7;">/month</span></div>
+                <p style="opacity: 0.8; margin-bottom: 1.5rem;">Team collaboration + advanced automation</p>
+                <ul class="pricing-features">
+                    <li>Advanced team automation (development milestones → content)</li>
+                    <li>Team collaboration (5-10 users)</li>
+                    <li>Advanced integrations (Slack, Jira, Linear webhooks)</li>
+                    <li>Custom brand identity throughout all team sites</li>
+                    <li>Priority support (1-hour response)</li>
+                    <li>White-label for clients (reseller ready)</li>
+                </ul>
+                <a href="#" class="glass-button" style="width: 100%; text-align: center;">Scale Team</a>
+            </div>
+
+            <!-- ENTERPRISE Tier -->
+            <div class="glass-card pricing-card">
+                <h3>ENTERPRISE</h3>
+                <div class="price">$4,949.49<span style="font-size: 1rem; opacity: 0.7;">/month</span></div>
+                <p style="opacity: 0.8; margin-bottom: 1.5rem;">Fortune 500 enterprise-grade automation</p>
+                <ul class="pricing-features">
+                    <li>Custom AI content training on your company's voice/style</li>
+                    <li>On-premise deployment with private content generation</li>
+                    <li>Unlimited users and automated websites</li>
+                    <li>Custom automation triggers (any development event → content)</li>
+                    <li>SLA guarantees (99.99% uptime)</li>
+                    <li>9-second generation (fastest in industry)</li>
+                </ul>
+                <a href="#" class="glass-button" style="width: 100%; text-align: center;">Contact Sales</a>
+            </div>
+        </div>
+
+        <!-- Important Note -->
+        <div style="max-width: 600px; margin: 3rem auto; padding: 2rem; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; text-align: center;">
+            <h4 style="margin-bottom: 1rem;">💡 Important Note</h4>
+            <p style="font-style: italic; opacity: 0.9;">
+                We focus on professional visibility and network recognition, not financial promises. 
+                Our value is in building your reputation and connecting you with industry leaders.
+            </p>
+        </div>
+    </section>
+
+    <!-- Polar.sh Integration -->
+    <section style="padding: 4rem 2rem; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));">
+        <div style="max-width: 1000px; margin: 0 auto; text-align: center;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
+                <div class="logo" style="margin: 0;">4S</div>
+                <span style="font-size: 1.5rem; opacity: 0.6;">×</span>
+                <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: bold;">P</div>
+                <span style="font-size: 1.2rem; font-weight: 600;">Polar.sh</span>
+            </div>
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">
+                Powered by <span style="background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Polar.sh</span>
+            </h2>
+            <p style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 2rem;">
+                Developer-friendly monetization that actually makes sense. Way cooler than traditional payment processors.
+            </p>
+            
+            <div class="glass-card" style="padding: 2rem; max-width: 600px; margin: 0 auto;">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <span style="font-size: 2rem;">💳</span>
+                    <div>
+                        <h3>Secure & Trusted</h3>
+                        <p style="opacity: 0.8;">Polar.sh handles all payments securely with enterprise-grade infrastructure.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">
+                    <span>🛡️ SOC 2 Compliant</span>
+                    <span>•</span>
+                    <span>PCI DSS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="padding: 2rem; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+        <div class="logo" style="margin: 0 auto 1rem; width: 48px; height: 48px;">4S</div>
+        <p style="opacity: 0.6;">© 2025 4site.pro. All rights reserved.</p>
+        <p style="opacity: 0.5; margin-top: 0.5rem; font-size: 0.9rem;">Ruthlessly developed by aeltd - powered by aegntic ecosystems</p>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        console.log('4site.pro - Updated Preview Loaded Successfully! 🚀');
+        console.log('✅ Living Websites messaging implemented');
+        console.log('✅ Four-tier pricing structure active');
+        console.log('✅ Network visibility focus (no financial promises)');
+        console.log('✅ Polar.sh integration showcased');
+        console.log('✅ Modern AI models and glass morphism UI');
+    </script>
+</body>
+</html>

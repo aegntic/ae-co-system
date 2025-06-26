@@ -1,0 +1,38 @@
+{
+  "timestamp": "2025-06-16T03:17:29.700Z",
+  "url": "http://localhost:5173",
+  "tests": [
+    {
+      "name": "Page Load",
+      "status": "PASS",
+      "message": "Page loaded successfully"
+    },
+    {
+      "name": "Homepage Screenshot",
+      "status": "PASS",
+      "message": "Full-page screenshot captured"
+    },
+    {
+      "name": "Logo Integration",
+      "status": "PASS",
+      "message": "Logo found: http://localhost:5173/4sitepro-logo.png",
+      "details": {
+        "src": "http://localhost:5173/4sitepro-logo.png",
+        "display": true,
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "name": "Glass Morphism Effects",
+      "status": "PASS",
+      "message": "Found 76 glass elements",
+      "details": {
+        "count": 76,
+        "hasBackdropFilter": true,
+        "hasGlassBackground": true
+      }
+    }
+  ],
+  "error": "SyntaxError: Failed to execute 'querySelector' on 'Document': 'button[type=\"submit\"], button:contains(\"Generate\")' is not a valid selector."
+}

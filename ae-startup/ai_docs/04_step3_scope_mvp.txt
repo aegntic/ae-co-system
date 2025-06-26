@@ -1,0 +1,23 @@
+STEP 3: SCOPE OUT THE MVP
+========================
+
+TOOL: Manus
+- A general AI agent that Greg describes as "a supercharged version of OpenAI's Operator"
+- "It's like having 100 agents working for you." - Greg
+- Popularity shot up when it launched in March (Source: Google Trends)
+- 17.8M site visits per month
+- Developed by China
+
+NOTE: Mattae's specific prompt is referenced in the original but didn't convert properly from PDF - likely contained detailed instructions for the LLM SEO agency project plan.
+
+MATTAE'S HOT TIPS:
+1. Use Wispr Flow to prompt by voice instead of typing
+2. Tell Manus (or any LLM) to "ask me anything before you get started." It gets you better outputs.
+3. Ask AI to pretend they're someone you look up to. Then ask questions like "how would [insert name] start this business?"
+4. Ask the LLM what's the best prompt to use. You will never be able to out-prompt the software that sees all the prompts.
+
+RESULTS:
+- Manus created an entire project plan — the way a product manager does
+- Then it drafted quiz questions
+- Greg downloaded a LLM SEO mini course from thevibemarketer.com to help shorten and refine the quiz questions
+- Improved results through iterative refinement

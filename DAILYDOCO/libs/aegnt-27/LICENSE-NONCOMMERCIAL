@@ -1,0 +1,68 @@
+# Non-Commercial License for aegnt-27: The Human Peak Protocol
+
+**Version 1.0 - Effective Date: December 6, 2024**
+
+This Non-Commercial License Agreement ("Agreement") governs the non-commercial use of aegnt-27: The Human Peak Protocol software ("Software").
+
+## Non-Commercial License Terms
+
+### 1. Grant of License
+You are granted a perpetual, worldwide, non-exclusive, royalty-free license to use, modify, and distribute the Software for non-commercial purposes only.
+
+### 2. Non-Commercial Use Definition
+Non-commercial use includes:
+- Personal projects and learning
+- Open source projects (with compatible licenses)
+- Academic research and education
+- Non-profit organization use
+- Hobbyist and experimental projects
+- Portfolio demonstrations
+- Internal business tools (not sold or licensed)
+
+### 3. Permitted Activities
+Under this license, you may:
+- ✅ Use the Software for personal projects
+- ✅ Study and learn from the code
+- ✅ Modify the Software for non-commercial use
+- ✅ Distribute modified versions (under same license)
+- ✅ Contribute improvements back to the project
+- ✅ Use in academic research and papers
+- ✅ Demonstrate in portfolios and presentations
+
+### 4. Prohibited Activities
+You may NOT:
+- ❌ Use in any revenue-generating application
+- ❌ Sell or license the Software or derivatives
+- ❌ Use in commercial products or services
+- ❌ Provide paid consulting using the Software
+- ❌ Remove or modify license notices
+- ❌ Use the 27 behavioral patterns for commercial gain
+
+### 5. Attribution Requirements
+You must include the following attribution in any use:
+```
+This project uses aegnt-27: The Human Peak Protocol
+https://github.com/aegntic/aegnt27
+Licensed under Non-Commercial License
+```
+
+### 6. Contributions
+Contributions to the main repository are welcome and will be licensed under the same dual-license structure.
+
+### 7. Commercial Upgrade
+If you want to use the Software commercially, you must obtain a Commercial License. Contact licensing@aegntic.com for options.
+
+### 8. No Warranty
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+### 9. Academic Use Exception
+Academic institutions may use the Software for research and educational purposes without restriction, including in funded research projects, provided results are published openly.
+
+## Transition to Commercial Use
+
+If your non-commercial project becomes commercial (generates revenue, gets funding, etc.), you have 30 days to obtain appropriate commercial licensing.
+
+---
+
+© 2024 Anthropic PBC. All rights reserved.
+For commercial licensing: licensing@aegntic.com

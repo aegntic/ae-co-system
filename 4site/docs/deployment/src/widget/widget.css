@@ -1,0 +1,175 @@
+/* 4site.pro Lead Capture Widget */
+.foursite-widget {
+  --foursite-primary: #8B5CF6;
+  --foursite-primary-dark: #7C3AED;
+  --foursite-bg: #FFFFFF;
+  --foursite-text: #1F2937;
+  --foursite-border: #E5E7EB;
+  --foursite-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  
+  position: fixed;
+  z-index: 999999;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Dark theme */
+.foursite-widget.foursite-dark {
+  --foursite-bg: #1F2937;
+  --foursite-text: #F9FAFB;
+  --foursite-border: #374151;
+}
+
+/* Positioning */
+.foursite-widget.foursite-bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+.foursite-widget.foursite-bottom-left {
+  bottom: 20px;
+  left: 20px;
+}
+
+/* Trigger button */
+.foursite-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--foursite-primary);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: var(--foursite-shadow);
+  transition: all 0.3s ease;
+}
+
+.foursite-trigger:hover {
+  background: var(--foursite-primary-dark);
+  transform: translateY(-2px);
+}
+
+.foursite-badge {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* Modal */
+.foursite-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.foursite-open .foursite-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+}
+
+.foursite-modal-content {
+  background: var(--foursite-bg);
+  color: var(--foursite-text);
+  border-radius: 16px;
+  padding: 32px;
+  width: 90%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--foursite-shadow);
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.foursite-open .foursite-modal-content {
+  transform: translateY(0);
+}
+
+/* Form styles */
+.foursite-form {
+  margin-top: 24px;
+}
+
+.foursite-field {
+  margin-bottom: 16px;
+}
+
+.foursite-field input,
+.foursite-field textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--foursite-bg);
+  color: var(--foursite-text);
+  border: 1px solid var(--foursite-border);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.foursite-field input:focus,
+.foursite-field textarea:focus {
+  outline: none;
+  border-color: var(--foursite-primary);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+/* Submit button */
+.foursite-submit {
+  width: 100%;
+  padding: 12px 24px;
+  background: var(--foursite-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.foursite-submit:hover:not(:disabled) {
+  background: var(--foursite-primary-dark);
+}
+
+.foursite-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Success state */
+.foursite-success {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.foursite-success svg {
+  margin: 0 auto 16px;
+}
+
+/* Animations */
+@keyframes foursite-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.foursite-trigger:hover svg {
+  animation: foursite-pulse 2s infinite;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .foursite-modal-content {
+    width: 95%;
+    padding: 24px;
+  }
+  
+  .foursite-badge {
+    display: none;
+  }
+}

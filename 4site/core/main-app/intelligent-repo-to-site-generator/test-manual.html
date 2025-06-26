@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Test - project4site Generation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #0f0f0f;
+            color: #ffffff;
+        }
+        .test-container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+        }
+        .test-url {
+            background: #1a1a1a;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            border: 1px solid #333;
+            margin: 12px 0;
+        }
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+        .checklist li::before {
+            content: '□';
+            margin-right: 12px;
+            font-size: 18px;
+            color: #666;
+        }
+        .checklist li.checked::before {
+            content: '✅';
+            color: #00ff88;
+        }
+        .status {
+            padding: 12px;
+            border-radius: 8px;
+            margin: 12px 0;
+            font-weight: 500;
+        }
+        .status.success {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: #00ff88;
+        }
+        .status.error {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: #ff4444;
+        }
+        .status.info {
+            background: rgba(68, 136, 255, 0.1);
+            border: 1px solid rgba(68, 136, 255, 0.3);
+            color: #4488ff;
+        }
+        .step {
+            margin: 20px 0;
+            padding: 16px;
+            border-left: 4px solid #4488ff;
+            background: rgba(68, 136, 255, 0.05);
+        }
+        .step h3 {
+            margin: 0 0 12px 0;
+            color: #4488ff;
+        }
+        .code {
+            background: #1a1a1a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Manual Test - project4site Core Functionality</h1>
+    
+    <div class="status info">
+        <strong>Test Objective:</strong> Verify that the core site generation functionality works with the aegntic repository as requested by the user.
+    </div>
+
+    <div class="test-container">
+        <h2>📍 Test Repository</h2>
+        <div class="test-url">https://github.com/aegntic/aegnticdotai</div>
+        <p>This is the repository specified by the user for testing the core product functionality.</p>
+    </div>
+
+    <div class="test-container">
+        <h2>🔧 Pre-Test Setup Verification</h2>
+        <ul class="checklist">
+            <li class="checked">✅ TypeScript compilation successful (npm run build passed)</li>
+            <li class="checked">✅ geminiService.ts updated to return SiteData instead of string</li>
+            <li class="checked">✅ Enhanced AI service integrated with structured output</li>
+            <li class="checked">✅ Type adapter function created (convertToSiteData)</li>
+            <li class="checked">✅ Environment variables configured (.env.local exists)</li>
+            <li class="checked">✅ Development server running on port 5174</li>
+        </ul>
+    </div>
+
+    <div class="test-container">
+        <h2>🎯 Manual Testing Steps</h2>
+        
+        <div class="step">
+            <h3>Step 1: Access the Application</h3>
+            <p>Navigate to: <span class="code">http://localhost:5174</span></p>
+            <p>✅ <strong>Expected:</strong> Landing page loads with glass morphism UI and input form</p>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Enter Test Repository</h3>
+            <p>In the input field, enter: <span class="code">https://github.com/aegntic/aegnticdotai</span></p>
+            <p>✅ <strong>Expected:</strong> URL validates and "Generate Site" button becomes enabled</p>
+        </div>
+
+        <div class="step">
+            <h3>Step 3: Generate Site</h3>
+            <p>Click the <span class="code">Generate Site</span> button</p>
+            <p>✅ <strong>Expected:</strong> Loading state appears with "Analyzing repository..." message</p>
+        </div>
+
+        <div class="step">
+            <h3>Step 4: Verify AI Processing</h3>
+            <p>Wait for AI generation to complete (15-30 seconds)</p>
+            <p>✅ <strong>Expected:</strong> No errors, successful processing with console logs</p>
+        </div>
+
+        <div class="step">
+            <h3>Step 5: Verify Site Preview</h3>
+            <p>After generation completes, check the preview display</p>
+            <ul class="checklist">
+                <li>Shows actual generated site (not demo content)</li>
+                <li>Displays project title from aegntic repository</li>
+                <li>Shows tech stack badges</li>
+                <li>Includes generated features list</li>
+                <li>Has proper description and content</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>Step 6: Verify Deployment Options</h3>
+            <p>Check the floating action bar at bottom of preview</p>
+            <ul class="checklist">
+                <li>🚀 Deploy to GitHub Pages button</li>
+                <li>🔄 Retry button</li>
+                <li>✏️ Edit button</li>
+                <li>NO "Deploy to Vercel" or "Download Code" options</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="test-container">
+        <h2>🔍 Success Criteria</h2>
+        <ul class="checklist">
+            <li>Repository URL input accepts aegntic repository</li>
+            <li>AI successfully analyzes the repository</li>
+            <li>Generated content is specific to aegntic.ai (not generic demo)</li>
+            <li>Site preview shows actual AI-generated content</li>
+            <li>Deployment popup shows correct options (GitHub Pages, Edit, Retry)</li>
+            <li>No type errors in browser console</li>
+            <li>Performance meets 30-second generation target</li>
+        </ul>
+    </div>
+
+    <div class="test-container">
+        <h2>🚨 Known Issue Resolution</h2>
+        <div class="status success">
+            <strong>✅ FIXED:</strong> Core product was showing static demo content instead of generating actual sites from repository URLs. 
+            The type mismatch between AI service (returning string) and UI components (expecting SiteData object) has been resolved.
+        </div>
+        
+        <p><strong>Technical fixes applied:</strong></p>
+        <ul>
+            <li>✅ Updated <span class="code">generateSiteContentFromUrl</span> to return <span class="code">Promise&lt;SiteData&gt;</span></li>
+            <li>✅ Integrated <span class="code">enhancedGeminiService</span> for structured AI output</li>
+            <li>✅ Created <span class="code">convertToSiteData</span> adapter function</li>
+            <li>✅ Extended <span class="code">SiteData</span> interface with missing fields</li>
+            <li>✅ Updated UI to show actual site preview instead of summary text</li>
+        </ul>
+    </div>
+
+    <div class="test-container">
+        <h2>🎯 Next Steps After Manual Verification</h2>
+        <p>Once manual testing confirms functionality:</p>
+        <ol>
+            <li>Document any remaining edge cases</li>
+            <li>Optimize AI prompt for better aegntic.ai content detection</li>
+            <li>Add error boundaries for production robustness</li>
+            <li>Implement form submission state fixes if needed</li>
+        </ol>
+    </div>
+
+    <script>
+        // Add interactive checkbox functionality
+        document.querySelectorAll('.checklist li').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('checked');
+            });
+        });
+
+        // Display current timestamp
+        document.body.insertAdjacentHTML('beforeend', 
+            `<div style="text-align: center; color: #666; margin-top: 40px; font-size: 14px;">
+                Test conducted at: ${new Date().toLocaleString()}
+            </div>`
+        );
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Optimized gradients for 48px -->
+    <linearGradient id="bodyGrad48" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="topFace48" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#f1f5f9;stop-opacity:0.7" />
+    </linearGradient>
+    
+    <linearGradient id="rightFace48" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e2e8f0;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#cbd5e1;stop-opacity:0.6" />
+    </linearGradient>
+    
+    <linearGradient id="screenGrad48" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:0.95" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:0.9" />
+    </linearGradient>
+
+    <linearGradient id="aiGlow48" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#047857;stop-opacity:0.8" />
+    </linearGradient>
+
+    <filter id="dropShadow48" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.5"/>
+      <feOffset dx="1" dy="2" result="offset"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge> 
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/> 
+      </feMerge>
+    </filter>
+
+    <filter id="glow48" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Main isometric device (simplified for 48px) -->
+  <!-- Device body -->
+  <polygon points="9,14 24,6 39,14 39,28 24,36 9,28" fill="url(#bodyGrad48)" filter="url(#dropShadow48)"/>
+  
+  <!-- Left face -->
+  <polygon points="9,14 9,28 17,32 17,18" fill="#94a3b8" opacity="0.7"/>
+  
+  <!-- Right face -->
+  <polygon points="31,18 31,32 39,28 39,14" fill="url(#rightFace48)"/>
+  
+  <!-- Top face -->
+  <polygon points="9,14 24,6 31,10 17,18" fill="url(#topFace48)"/>
+  
+  <!-- Screen -->
+  <polygon points="12,16 28,8 28,20 12,28" fill="url(#screenGrad48)" stroke="#1e293b" stroke-width="0.5"/>
+  
+  <!-- Screen content (simplified) -->
+  <rect x="14" y="13" width="12" height="1" fill="#64748b" opacity="0.8" transform="skewY(-15)"/>
+  <rect x="14" y="15" width="10" height="0.8" fill="#94a3b8" opacity="0.7" transform="skewY(-15)"/>
+  <rect x="14" y="17" width="13" height="0.8" fill="#94a3b8" opacity="0.7" transform="skewY(-15)"/>
+  <rect x="14" y="19" width="8" height="0.8" fill="#94a3b8" opacity="0.7" transform="skewY(-15)"/>
+  
+  <!-- Recording indicator -->
+  <ellipse cx="27" cy="10" rx="1.5" ry="1" fill="#ef4444" filter="url(#glow48)" transform="rotate(-15)"/>
+  <ellipse cx="27.5" cy="9.5" rx="1" ry="0.7" fill="#fca5a5" opacity="0.8" transform="rotate(-15)"/>
+  
+  <!-- AI indicator (simplified) -->
+  <g transform="translate(18, 33)">
+    <polygon points="0,0 5,1.5 10,0 10,5 5,6.5 0,5" fill="url(#aiGlow48)" stroke="#047857" stroke-width="0.3"/>
+    <polygon points="0,0 5,-1.5 10,0 5,1.5" fill="#34d399" opacity="0.9"/>
+    <polygon points="10,0 10,5 5,6.5 5,1.5" fill="#059669" opacity="0.8"/>
+    
+    <!-- Simple AI symbol -->
+    <circle cx="2.5" cy="2.5" r="0.5" fill="#ffffff" opacity="0.9"/>
+    <circle cx="7.5" cy="2.5" r="0.5" fill="#ffffff" opacity="0.9"/>
+    <circle cx="5" cy="4" r="0.5" fill="#ffffff" opacity="0.9"/>
+    <line x1="2.5" y1="2.5" x2="5" y2="4" stroke="#ffffff" stroke-width="0.3" opacity="0.7"/>
+    <line x1="7.5" y1="2.5" x2="5" y2="4" stroke="#ffffff" stroke-width="0.3" opacity="0.7"/>
+  </g>
+  
+  <!-- Connection line -->
+  <path d="M20,26 Q24,22 28,18" stroke="url(#aiGlow48)" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.6" filter="url(#glow48)"/>
+  
+  <!-- Highlights -->
+  <polygon points="10,15 23,7 30,11 18,19" fill="#ffffff" opacity="0.15"/>
+  <line x1="9" y1="14" x2="24" y2="6" stroke="#ffffff" stroke-width="0.5" opacity="0.4"/>
+  
+  <!-- Ambient shadow -->
+  <ellipse cx="24" cy="37" rx="12" ry="3" fill="#000000" opacity="0.08"/>
+</svg>

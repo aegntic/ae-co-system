@@ -1,0 +1,32 @@
+{
+  "name": "chrome-store-submission-package",
+  "version": "1.0.0",
+  "description": "Complete Chrome Web Store submission package for DailyDoco Pro",
+  "main": "automation/generate-marketing-assets.js",
+  "scripts": {
+    "generate-assets": "node automation/generate-marketing-assets.js",
+    "validate-manifest": "node automation/manifest-validator.js",
+    "validate-submission": "node automation/submission-validator.js",
+    "package-extension": "node automation/package-extension.js",
+    "run-all": "npm run generate-assets && npm run validate-manifest && npm run package-extension"
+  },
+  "dependencies": {
+    "puppeteer": "^21.6.1",
+    "sharp": "^0.32.6",
+    "archiver": "^6.0.1",
+    "chalk": "^4.1.2",
+    "fs-extra": "^11.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0"
+  },
+  "keywords": [
+    "chrome-extension",
+    "web-store", 
+    "marketing-assets",
+    "automation",
+    "dailydoco-pro"
+  ],
+  "author": "DailyDoco Pro Team",
+  "license": "MIT"
+}

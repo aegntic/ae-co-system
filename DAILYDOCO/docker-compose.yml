@@ -1,0 +1,133 @@
+version: '3.8'
+
+services:
+  # Web Dashboard - Real-time monitoring interface
+  web-dashboard:
+    build:
+      context: ./apps/web-dashboard
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - VITE_API_URL=http://api-server:8080
+      - VITE_WS_URL=ws://api-server:8080
+    depends_on:
+      - api-server
+    networks:
+      - dailydoco
+    volumes:
+      - dashboard_data:/app/data
+
+  # API Server - Backend coordination
+  api-server:
+    build:
+      context: ./apps/api-server
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://dailydoco:dailydoco@postgres:5432/dailydoco
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=your-jwt-secret-here
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - dailydoco
+    volumes:
+      - api_logs:/app/logs
+      - capture_storage:/app/storage
+
+  # MCP Server - AI model coordination
+  mcp-server:
+    build:
+      context: ./apps/mcp-server
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      - NODE_ENV=production
+      - API_URL=http://api-server:8080
+    depends_on:
+      - api-server
+    networks:
+      - dailydoco
+    volumes:
+      - mcp_models:/app/models
+      - mcp_cache:/app/cache
+
+  # Desktop Capture Engine (for development/testing)
+  desktop-engine:
+    build:
+      context: ./apps/desktop
+      dockerfile: Dockerfile
+    environment:
+      - RUST_LOG=info
+      - API_URL=http://api-server:8080
+    depends_on:
+      - api-server
+    networks:
+      - dailydoco
+    volumes:
+      - capture_output:/app/output
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    devices:
+      - /dev/dri:/dev/dri
+    privileged: true
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=dailydoco
+      - POSTGRES_USER=dailydoco
+      - POSTGRES_PASSWORD=dailydoco
+    ports:
+      - "5432:5432"
+    networks:
+      - dailydoco
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # Redis for caching and real-time features
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - dailydoco
+    volumes:
+      - redis_data:/data
+
+  # Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web-dashboard
+      - api-server
+    networks:
+      - dailydoco
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf
+      - ./config/ssl:/etc/nginx/ssl
+    restart: unless-stopped
+
+networks:
+  dailydoco:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  dashboard_data:
+  api_logs:
+  capture_storage:
+  mcp_models:
+  mcp_cache:
+  capture_output:

@@ -1,0 +1,53 @@
+[package]
+name = "cctm"
+version = "0.1.0"
+description = "Claude Code Terminal Manager - Revolutionary AI-Human Co-Creation Tool"
+authors = ["CCTM Team"]
+edition = "2021"
+
+[lib]
+name = "cctm_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+tauri-plugin-shell = "2"
+tauri-plugin-fs = "2"
+tauri-plugin-global-shortcut = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
+portable-pty = "0.8"
+regex = "1.10"
+uuid = { version = "1.8", features = ["v4", "serde"] }
+log = "0.4"
+env_logger = "0.11"
+thiserror = "1.0"
+anyhow = "1.0"
+dirs = "5.0"
+chrono = { version = "0.4", features = ["serde"] }
+# File system monitoring dependencies for Phase 2B
+notify = "6.1"
+ignore = "0.4"
+tokio-stream = "0.1"
+# Project detection dependencies for Phase 2B.2
+git2 = "0.18"
+toml = "0.8"
+serde_yaml = "0.9"
+async-trait = "0.1"
+# Window management dependencies
+rand = "0.8"
+
+[target.'cfg(unix)'.dependencies]
+nix = { version = "0.27", features = ["signal"] }
+
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3", features = ["processthreadsapi", "winnt"] }
+
+[dev-dependencies]
+tempfile = "3.0"
+

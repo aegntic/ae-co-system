@@ -1,0 +1,24 @@
+[package]
+name = "multi-claude-code-cctm"
+version = "0.1.0"
+edition = "2021"
+description = "multi-claude-code-CCTM: Revolutionary Hub-Engine Architecture for Claude Code orchestration"
+authors = ["aegntic team <team@aegntic.ai>"]
+license = "MIT"
+repository = "https://github.com/aegntic/multi-claude-code-cctm"
+keywords = ["ai", "claude", "terminal", "orchestration", "hub-engine"]
+
+[dependencies]
+libc = "0.2"
+
+[[bin]]
+name = "multi-claude-code-cctm-hub"
+path = "src/hub.rs"
+
+[[bin]]
+name = "multi-claude-code-cctm-engine"
+path = "src/engine.rs"
+
+[[bin]]
+name = "cctm-legacy"
+path = "cctm-tui-advanced-complete.rs"

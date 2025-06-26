@@ -1,0 +1,33 @@
+{
+  "name": "dailydoco-pro-chrome",
+  "version": "1.0.0",
+  "description": "DailyDoco Pro Chrome Extension - Elite automated documentation platform",
+  "main": "background/background.js",
+  "scripts": {
+    "build": "npm run convert-icons && npm run copy-assets && npm run minify",
+    "convert-icons": "node ../shared/convert-icons.js chrome",
+    "copy-assets": "mkdir -p dist && cp -r . dist/",
+    "minify": "echo 'Minification would happen here - terser, etc.'",
+    "package": "cd .. && zip -r chrome-extension.zip chrome/ -x '*/node_modules/*' '*/package*.json' '*/.*' '*/dist/*'",
+    "package-production": "npm run build && npm run package",
+    "dev": "echo 'Development mode - load unpacked extension from Chrome://extensions'",
+    "demo": "node ../shared/create-demo.js chrome",
+    "test": "echo 'Tests would run here'"
+  },
+  "keywords": [
+    "chrome-extension",
+    "documentation",
+    "ai",
+    "screen-recording",
+    "development",
+    "automation"
+  ],
+  "author": "DailyDoco Pro Team",
+  "license": "MIT",
+  "devDependencies": {
+    "web-ext": "^7.8.0",
+    "sharp": "^0.32.0",
+    "puppeteer": "^21.5.0",
+    "terser": "^5.24.0"
+  }
+}

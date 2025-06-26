@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zkFlow.pro Interactive Demo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 800px;
+            width: 90%;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .demo-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+        
+        .demo-subtitle {
+            font-size: 1.2rem;
+            color: #6b7280;
+            margin-bottom: 32px;
+        }
+        
+        .demo-steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 40px;
+        }
+        
+        .demo-step {
+            text-align: center;
+            padding: 24px;
+            border-radius: 12px;
+            background: #f8fafc;
+            transition: transform 0.3s ease;
+        }
+        
+        .demo-step:hover {
+            transform: translateY(-4px);
+        }
+        
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin: 0 auto 16px;
+        }
+        
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+        
+        .step-description {
+            color: #6b7280;
+            line-height: 1.5;
+        }
+        
+        .demo-cta {
+            text-align: center;
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            text-decoration: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-steps {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .demo-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1 class="demo-title">zkFlow.pro</h1>
+            <p class="demo-subtitle">Smart Form Automation for Professionals</p>
+        </div>
+        
+        <div class="demo-steps">
+            <div class="demo-step">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Record Once</h3>
+                <p class="step-description">Click record and fill out any form normally. zkFlow.pro captures every step.</p>
+            </div>
+            
+            <div class="demo-step">
+                <div class="step-number">2</div>
+                <h3 class="step-title">Replay Anywhere</h3>
+                <p class="step-description">Instantly replay your workflow on any similar form with one click.</p>
+            </div>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <h4>Privacy First</h4>
+                <p>All data stored locally on your device</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h4>Lightning Fast</h4>
+                <p>Automate forms in seconds, not minutes</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">🎯</div>
+                <h4>Smart Detection</h4>
+                <p>Automatically detects and maps form fields</p>
+            </div>
+        </div>
+        
+        <div class="demo-cta">
+            <a href="https://chrome.google.com/webstore" class="cta-button">
+                <span>📥</span>
+                Download Free from Chrome Web Store
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+{
+  "manifest_version": 3,
+  "name": "ULTRAPLAN Project Analyzer",
+  "version": "1.0.0",
+  "description": "Analyze projects and generate First Principles resolution plans",
+  "author": "ULTRAPLAN Team",
+  "homepage_url": "https://ultraplan.ai",
+  
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "scripting",
+    "webNavigation",
+    "notifications",
+    "contextMenus"
+  ],
+  
+  "host_permissions": [
+    "https://github.com/*",
+    "https://gitlab.com/*",
+    "https://bitbucket.org/*",
+    "https://api.ultraplan.ai/*",
+    "https://ultraplan.ai/*"
+  ],
+  
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["js/content-github.js"],
+      "css": ["css/content.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://gitlab.com/*"],
+      "js": ["js/content-gitlab.js"],
+      "css": ["css/content.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://bitbucket.org/*"],
+      "js": ["js/content-bitbucket.js"],
+      "css": ["css/content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ULTRAPLAN Analyzer",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png",
+    "256": "icons/icon256.png"
+  },
+  
+  "options_page": "options.html",
+  
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*",
+        "fonts/*",
+        "css/injected.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  
+  "commands": {
+    "analyze-current-page": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U",
+        "mac": "Command+Shift+U"
+      },
+      "description": "Analyze current repository"
+    },
+    "quick-analyze": {
+      "suggested_key": {
+        "default": "Alt+U",
+        "mac": "Alt+U"
+      },
+      "description": "Quick analysis of selected code"
+    }
+  },
+  
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'"
+  },
+  
+  "minimum_chrome_version": "110"
+}

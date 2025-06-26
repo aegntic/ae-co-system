@@ -1,0 +1,56 @@
+GMAIL MULTI-DOMAIN SETUP CHECKLIST
+========================================
+
+☐ Step 1: Add Send As Addresses
+  ☐ claube@prompt.fail (Claude Prompt)
+  ☐ projects@4site.pro (4Site Projects)
+  ☐ info@aegntic.com (Aegntic Info)
+  ☐ human@aegntic.ai (Aegntic AI)
+  ☐ human@ae.ltd (AE Limited)
+  ☐ vibe@ultraplan.pro (UltraPlan Pro)
+  ☐ auth@aegnt27.xyz (Aegnt27 Auth)
+  ☐ docs@dailydoco.com (DailyDoco)
+  ☐ verify@credability.pro (Credability Pro)
+  ☐ human@mattaecooper.org (Mattae Cooper)
+  ☐ chef@skool.food (Skool Food)
+  ☐ learn@1minskool.com (1 Min Skool)
+
+☐ Step 2: Create Filters
+  ☐ Filter for claube@prompt.fail → Domain-prompt.fail
+  ☐ Filter for projects@4site.pro → Domain-4site.pro
+  ☐ Filter for human@aegntic.ai → Domain-aegntic.ai
+  ☐ Filter for human@ae.ltd → Domain-ae.ltd
+  ☐ Filter for vibe@ultraplan.pro → Domain-ultraplan.pro
+  ☐ Filter for auth@aegnt27.xyz → Domain-aegnt27.xyz
+  ☐ Filter for docs@dailydoco.com → Domain-dailydoco.com
+  ☐ Filter for verify@credability.pro → Domain-credability.pro
+  ☐ Filter for human@mattaecooper.org → Domain-mattaecooper.org
+  ☐ Filter for chef@skool.food → Domain-skool.food
+  ☐ Filter for learn@1minskool.com → Domain-1minskool.com
+
+☐ Step 3: Verify Addresses
+  ☐ Verify claube@prompt.fail
+  ☐ Verify projects@4site.pro
+  ☐ Verify info@aegntic.com
+  ☐ Verify human@aegntic.ai
+  ☐ Verify human@ae.ltd
+  ☐ Verify vibe@ultraplan.pro
+  ☐ Verify auth@aegnt27.xyz
+  ☐ Verify docs@dailydoco.com
+  ☐ Verify verify@credability.pro
+  ☐ Verify human@mattaecooper.org
+  ☐ Verify chef@skool.food
+  ☐ Verify learn@1minskool.com
+
+☐ Step 4: Test Email Forwarding
+  ☐ Test claube@prompt.fail → aegntic@gmail.com
+  ☐ Test projects@4site.pro → aegntic@gmail.com
+  ☐ Test human@aegntic.ai → aegntic@gmail.com
+  ☐ Test human@ae.ltd → aegntic@gmail.com
+  ☐ Test vibe@ultraplan.pro → aegntic@gmail.com
+  ☐ Test auth@aegnt27.xyz → aegntic@gmail.com
+  ☐ Test docs@dailydoco.com → aegntic@gmail.com
+  ☐ Test verify@credability.pro → aegntic@gmail.com
+  ☐ Test human@mattaecooper.org → aegntic@gmail.com
+  ☐ Test chef@skool.food → aegntic@gmail.com
+  ☐ Test learn@1minskool.com → aegntic@gmail.com

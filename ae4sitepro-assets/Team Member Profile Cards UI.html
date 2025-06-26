@@ -1,0 +1,263 @@
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <title>Team Cards - Improved Layout</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {margin:0;padding:0;box-sizing:border-box!important;}
+    html, body {height:100%;}
+    @keyframes drop {
+      0% {top:-50%;}
+      100% {top:110%;}
+    }
+    .line-anim::after {
+      content:'';
+      display:block;
+      position:absolute;
+      height:15vh;
+      width:100%;
+      top:-50%;
+      left:0;
+      background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,#fff 75%,#fff 100%);
+      animation:drop 7s 0s infinite;
+      animation-fill-mode:forwards;
+      animation-timing-function:cubic-bezier(0.4,0.26,0,0.97);
+    }
+    .line-1::after {animation-delay:2s;}
+    .line-3::after {animation-delay:2.5s;}
+    @keyframes scroll-horizontal {
+      0% {transform:translateX(0);}
+      100% {transform:translateX(-50%);}
+    }
+    @keyframes scroll-horizontal-reverse {
+      0% {transform:translateX(-50%);}
+      100% {transform:translateX(0);}
+    }
+    .infinite-scroll {
+      animation:scroll-horizontal 32s linear infinite;
+    }
+    .infinite-scroll-reverse {
+      animation:scroll-horizontal-reverse 36s linear infinite;
+    }
+    .scroll-mask-left, .scroll-mask-right {
+      position:absolute;top:0;width:60px;height:100%;pointer-events:none;z-index:10;
+    }
+    .scroll-mask-left {
+      left:0;
+      background:linear-gradient(to right,#17171c 85%,transparent 100%);
+    }
+    .scroll-mask-right {
+      right:0;
+      background:linear-gradient(to left,#17171c 85%,transparent 100%);
+    }
+    .card-gradient-bg {
+      background: linear-gradient(45deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .font-geist { font-family: 'Geist', sans-serif !important; }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+      .font-geist { font-family: 'Geist', sans-serif !important; }
+    </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+      /* Custom font utilities */
+      .font-geist { font-family: 'Geist', sans-serif !important; }
+    </style>
+</head>
+<body class="bg-[#17171c] text-gray-100 font-sans overflow-x-hidden relative min-h-screen">
+
+  <!-- Animated Lines Background -->
+  <div class="lines absolute top-0 left-0 right-0 h-full m-auto pointer-events-none z-0" style="width:90vw;">
+    <div class="line line-anim line-1 absolute w-px h-full top-0 left-1/2" style="margin-left:-22.5vw; background:rgba(255,255,255,0.1);"></div>
+    <div class="line line-anim line-2 absolute w-px h-full top-0 left-1/2" style="background:rgba(255,255,255,0.1);"></div>
+    <div class="line line-anim line-3 absolute w-px h-full top-0 left-1/2" style="margin-left:22.5vw; background:rgba(255,255,255,0.1);"></div>
+  </div>
+
+  <!-- Headline & Subheadline -->
+  <div class="relative z-10 flex flex-col items-center max-w-3xl text-center mr-auto ml-auto pt-16 pb-4 px-4 sm:px-8 md:px-12">
+    <h1 class="md:text-5xl bg-clip-text text-5xl font-light text-slate-50 tracking-tight font-geist bg-gradient-to-r from-white via-gray-200 to-white mb-3 drop-shadow-lg">Our Team, Your Advantage</h1>
+    <p class="md:text-xl max-w-2xl text-xs font-light text-zinc-400">We've passionate team of creatives, builders, and thinkers working together to make great things happen.</p>
+  </div>
+
+  <!-- Team Cards Foreground -->
+  <div class="relative z-10 overflow-hidden py-10">
+    <div class="scroll-mask-left"></div>
+    <div class="scroll-mask-right"></div>
+    <div class="flex flex-col gap-10">
+      <!-- Top Infinite Scroll Row -->
+      <div class="whitespace-nowrap flex items-stretch relative">
+        <div class="flex gap-10 infinite-scroll">
+          <div class="flex gap-10">
+
+            <!-- Card Example (Maria Garcia, corrected alignment and text)-->
+            <div class="relative max-w-lg w-full shrink-0 overflow-hidden rounded-lg flex flex-col border border-gray-700 bg-white/10 backdrop-blur-md">
+              <div class="card-gradient-bg rounded-lg"></div>
+              <div class="relative z-10 p-6 flex flex-col gap-4">
+                <!-- Vertical centering fix: use items-center -->
+                <div class="flex flex-row items-center gap-4">
+                  <img class="w-16 h-16 rounded-full border-4 border-gray-700 object-cover" src="https://randomuser.me/api/portraits/women/47.jpg" alt="Maria Garcia">
+                  <div class="flex flex-col justify-center">
+                    <span class="font-semibold text-lg text-white">Maria Garcia</span>
+                    <span class="text-gray-400 text-sm font-medium mt-0.5">Lead Software Engineer</span>
+                  </div>
+                </div>
+                <div class="mt-1 pl-0 max-w-full">
+                  <p class="text-gray-400 text-sm font-light text-left leading-snug whitespace-normal">
+                    Maria architects robust applications and leads our talented developer team. Her focus on quality, performance, and maintainability ensures reliable software at every release. Maria is passionate about mentoring new engineers and promoting a culture of continuous learning and technical excellence. In her spare time, she enjoys contributing to open-source projects and exploring new programming paradigms to keep the team's skills sharp and up-to-date.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Other cards remain unchanged for brevity, but use the same .items-center and max-w-lg/w-full classes for alignment and wrapping -->
+
+            <div class="relative max-w-lg w-full shrink-0 overflow-hidden rounded-lg flex flex-col border border-gray-700 bg-white/10 backdrop-blur-md">
+              <div class="card-gradient-bg rounded-lg"></div>
+              <div class="relative z-10 p-6 flex flex-col gap-4">
+                <div class="flex flex-row items-center gap-4">
+                  <img class="w-16 h-16 rounded-full border-4 border-gray-700 object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Leslie Alexander">
+                  <div class="flex flex-col justify-center">
+                    <span class="font-semibold text-lg text-white">Leslie Alexander</span>
+                    <span class="text-gray-400 text-sm font-medium mt-0.5">Co-Founder / CEO</span>
+                  </div>
+                </div>
+                <div class="mt-1 pl-0 max-w-full">
+                  <p class="text-gray-400 text-sm font-light text-left leading-snug whitespace-normal">
+                    Visionary leader with a passion for innovation and growth. Leslie brings over 15 years of executive experience to the team, guiding both strategy and company culture. She excels at aligning organizational objectives with actionable plans, and is dedicated to fostering a collaborative and inclusive work environment. Leslie believes in empowering her team to achieve excellence while maintaining a clear focus on the company's long-term goals and mission.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="relative max-w-lg w-full shrink-0 overflow-hidden rounded-lg flex flex-col border border-gray-700 bg-white/10 backdrop-blur-md">
+              <div class="card-gradient-bg rounded-lg"></div>
+              <div class="relative z-10 p-6 flex flex-col gap-4">
+                <div class="flex flex-row items-center gap-4">
+                  <img class="w-16 h-16 rounded-full border-4 border-gray-700 object-cover" src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Michael Foster">
+                  <div class="flex flex-col justify-center">
+                    <span class="font-semibold text-lg text-white">Michael Foster</span>
+                    <span class="text-gray-400 text-sm font-medium mt-0.5">Co-Founder / CTO</span>
+                  </div>
+                </div>
+                <div class="mt-1 pl-0 max-w-full">
+                  <p class="text-gray-400 text-sm font-light text-left leading-snug whitespace-normal">
+                    Tech innovator focused on building scalable, robust solutions. Michael leads all engineering and product architecture initiatives. With a deep background in cloud infrastructure and software development, he ensures our technology is always ahead of industry standards. Michael inspires the team to experiment, learn, and deliver high-quality products that delight users and clients alike.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="relative max-w-lg w-full shrink-0 overflow-hidden rounded-lg flex flex-col border border-gray-700 bg-white/10 backdrop-blur-md">
+              <div class="card-gradient-bg rounded-lg"></div>
+              <div class="relative z-10 p-6 flex flex-col gap-4">
+                <div class="flex flex-row items-center gap-4">
+                  <img class="w-16 h-16 rounded-full border-4 border-gray-700 object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Sarah Williams">
+                  <div class="flex flex-col justify-center">
+                    <span class="font-semibold text-lg text-white">Sarah Williams</span>
+                    <span class="text-gray-400 text-sm font-medium mt-0.5">VP of Marketing</span>
+                  </div>
+                </div>
+                <div class="mt-1 pl-0 max-w-full">
+                  <p class="text-gray-400 text-sm font-light text-left leading-snug whitespace-normal">
+                    Creative strategist driving brand engagement and growth. Sarah is responsible for all creative, digital, and social strategies. She has a track record of launching successful campaigns that resonate with diverse audiences and build lasting connections. Sarah’s approach combines data-driven insights with storytelling, ensuring our brand voice is authentic and impactful in every channel.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- Cards Set 2 (Duplicate for infinite effect, omitted for brevity) -->
+          <div class="flex gap-10">
+            <!-- Repeat above cards as needed with .items-center and max-w-lg/w-full for alignment -->
+          </div>
+        </div>
+      </div>
+      <!-- Bottom Infinite Scroll Row (reverse direction) -->
+      <div class="whitespace-nowrap flex items-stretch relative">
+        <div class="flex gap-10 infinite-scroll-reverse">
+          <div class="flex gap-10">
+            <!-- Example: Maria Garcia for bottom row -->
+            <div class="relative max-w-lg w-full shrink-0 overflow-hidden rounded-lg flex flex-col border border-gray-700 bg-white/10 backdrop-blur-md">
+              <div class="card-gradient-bg rounded-lg"></div>
+              <div class="relative z-10 p-6 flex flex-col gap-4">
+                <div class="flex flex-row items-center gap-4">
+                  <img class="w-16 h-16 rounded-full border-4 border-gray-700 object-cover" src="https://randomuser.me/api/portraits/women/47.jpg" alt="Maria Garcia">
+                  <div class="flex flex-col justify-center">
+                    <span class="font-semibold text-lg text-white">Maria Garcia</span>
+                    <span class="text-gray-400 text-sm font-medium mt-0.5">Lead Software Engineer</span>
+                  </div>
+                </div>
+                <div class="mt-1 pl-0 max-w-full">
+                  <p class="text-gray-400 text-sm font-light text-left leading-snug whitespace-normal">
+                    Maria architects robust applications and leads our talented developer team. Her focus on quality, performance, and maintainability ensures reliable software at every release. Maria is passionate about mentoring new engineers and promoting a culture of continuous learning and technical excellence. In her spare time, she enjoys contributing to open-source projects and exploring new programming paradigms to keep the team's skills sharp and up-to-date.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Other bottom row cards, use same alignment/wrapping -->
+            <div class="relative max-w-lg w-full shrink-0 overflow-hidden rounded-lg flex flex-col border border-gray-700 bg-white/10 backdrop-blur-md">
+              <div class="card-gradient-bg rounded-lg"></div>
+              <div class="relative z-10 p-6 flex flex-col gap-4">
+                <div class="flex flex-row items-center gap-4">
+                  <img class="w-16 h-16 rounded-full border-4 border-gray-700 object-cover" src="https://randomuser.me/api/portraits/men/41.jpg" alt="Ethan Brown">
+                  <div class="flex flex-col justify-center">
+                    <span class="font-semibold text-lg text-white">Ethan Brown</span>
+                    <span class="text-gray-400 text-sm font-medium mt-0.5">Chief Operations Officer</span>
+                  </div>
+                </div>
+                <div class="mt-1 pl-0 max-w-full">
+                  <p class="text-gray-400 text-sm font-light text-left leading-snug whitespace-normal">
+                    Ensuring operational excellence company-wide, Ethan oversees logistics, HR, and day-to-day operations. His attention to detail and process optimization helps streamline workflows and improve productivity across teams. Ethan’s commitment to efficiency, consistency, and transparency makes him a vital pillar in the organization’s continued success. Outside work, Ethan is an avid cyclist and believes in the power of teamwork both in and out of the office.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="relative max-w-lg w-full shrink-0 overflow-hidden rounded-lg flex flex-col border border-gray-700 bg-white/10 backdrop-blur-md">
+              <div class="card-gradient-bg rounded-lg"></div>
+              <div class="relative z-10 p-6 flex flex-col gap-4">
+                <div class="flex flex-row items-center gap-4">
+                  <img class="w-16 h-16 rounded-full border-4 border-gray-700 object-cover" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Jessica Lee">
+                  <div class="flex flex-col justify-center">
+                    <span class="font-semibold text-lg text-white">Jessica Lee</span>
+                    <span class="text-gray-400 text-sm font-medium mt-0.5">Head of Customer Success</span>
+                  </div>
+                </div>
+                <div class="mt-1 pl-0 max-w-full">
+                  <p class="text-gray-400 text-sm font-light text-left leading-snug whitespace-normal">
+                    Jessica builds strong client relationships and ensures satisfaction at every touchpoint. Her empathetic approach and problem-solving mindset help customers feel supported and valued. She leads a dedicated team focused on delivering outstanding service and continuously improving the client experience. Jessica enjoys volunteering at local charities and is committed to making a positive impact both professionally and personally.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="relative max-w-lg w-full shrink-0 overflow-hidden rounded-lg flex flex-col border border-gray-700 bg-white/10 backdrop-blur-md">
+              <div class="card-gradient-bg rounded-lg"></div>
+              <div class="relative z-10 p-6 flex flex-col gap-4">
+                <div class="flex flex-row items-center gap-4">
+                  <img class="w-16 h-16 rounded-full border-4 border-gray-700 object-cover" src="https://randomuser.me/api/portraits/men/42.jpg" alt="David Kim">
+                  <div class="flex flex-col justify-center">
+                    <span class="font-semibold text-lg text-white">David Kim</span>
+                    <span class="text-gray-400 text-sm font-medium mt-0.5">Head of Data Science</span>
+                  </div>
+                </div>
+                <div class="mt-1 pl-0 max-w-full">
+                  <p class="text-gray-400 text-sm font-light text-left leading-snug whitespace-normal">
+                    David turns data into actionable insights for growth and product innovation. He develops advanced analytics tools and models to support key decisions throughout the company. His expertise in data mining and visualization empowers teams to identify opportunities and solve complex challenges effectively. David also enjoys teaching data workshops and is a regular speaker at industry conferences.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-10">
+            <!-- Duplicate bottom cards for infinite scrolling, omitted for brevity -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body></html>
