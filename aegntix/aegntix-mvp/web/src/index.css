@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* AegntiX Brand Colors */
+  --color-primary: #6366f1; /* Indigo-500 */
+  --color-primary-dark: #4f46e5; /* Indigo-600 */
+  --color-secondary: #ec4899; /* Pink-500 */
+  --color-accent: #10b981; /* Emerald-500 */
+  --color-warning: #f59e0b; /* Amber-500 */
+  --color-danger: #ef4444; /* Red-500 */
+
+  /* Dark Theme Base - more aligned with professional dark UIs */
+  --color-bg-deep-space: #030712; /* Deepest background, almost black */
+  --color-bg-primary: #111827; /* Primary background (e.g., main content area) was #0f0f23 */
+  --color-bg-secondary: #1f2937; /* Secondary background (e.g., sidebars, cards) was #1a1a2e */
+  --color-bg-tertiary: #374151; /* Tertiary background (e.g., hover states, subtle borders) was #16213e */
+
+  --color-text-primary: #f9fafb; /* Near white for primary text, was #ffffff */
+  --color-text-secondary: #d1d5db; /* Lighter gray for secondary text, was #a1a1aa */
+  --color-text-muted: #9ca3af; /* Muted gray for less important text, was #71717a */
+  --color-text-disabled: #4b5563; /* For disabled elements */
+
+  /* Borders */
+  --color-border-primary: #374151; /* Primary border color */
+  --color-border-secondary: #4b5563; /* Secondary, more subtle border */
+
+  /* Focus Ring */
+  --color-focus-ring: var(--color-primary);
+
+  /* Flow Colors - ensure good contrast on dark backgrounds */
+  --color-node-agent: var(--color-primary);
+  --color-node-decision: var(--color-secondary);
+  --color-node-event: var(--color-accent);
+  --color-node-condition: var(--color-warning);
+
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%; /* Ensure html and body take full height */
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--color-bg-deep-space); /* Use deepest background for body */
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden; /* Prevent body scroll, manage scroll within #root or main */
+}
+
+#root {
+  min-height: 100vh; /* Changed from height to min-height for flexibility */
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-primary); /* Primary app background */
+}
+
+/* React Flow Customizations */
+.react-flow {
+  background: var(--color-bg-primary); /* Match app background */
+}
+
+.react-flow__node {
+  font-family: var(--font-family);
+  font-size: 14px;
+  color: var(--color-text-primary); /* Ensure node text is readable */
+  background-color: var(--color-bg-secondary); /* Node background */
+  border: 1px solid var(--color-border-primary);
+  border-radius: 8px; /* Consistent border radius */
+}
+
+.react-flow__node.selected {
+    border-color: var(--color-focus-ring);
+    box-shadow: 0 0 0 2px var(--color-focus-ring);
+}
+
+.react-flow__edge {
+  stroke: var(--color-text-muted); /* More subtle edge color */
+  stroke-width: 1.5px;
+}
+
+.react-flow__edge.animated {
+  stroke-dasharray: 5;
+  animation: dashdraw 0.5s linear infinite;
+}
+
+.react-flow__edge.selected, .react-flow__edge:hover {
+  stroke: var(--color-primary);
+  stroke-width: 2px;
+}
+
+.react-flow__handle {
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border-secondary);
+}
+.react-flow__handle:hover {
+  background-color: var(--color-primary);
+}
+
+
+@keyframes dashdraw {
+  to {
+    stroke-dashoffset: -10;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Slightly wider for easier interaction */
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-bg-tertiary);
+  border-radius: 5px;
+  border: 2px solid var(--color-bg-secondary); /* Creates padding around thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Utility Classes */
+.glass-effect {
+  background: rgba(31, 41, 55, 0.6); /* Darker glass for dark theme var(--color-bg-secondary) with alpha */
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border-primary);
+  border-radius: 12px; /* Consistent border radius */
+}
+
+.neon-glow-primary { /* More specific glow */
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.4), 0 0 20px rgba(99, 102, 241, 0.2);
+}
+.neon-glow-accent {
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.4), 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Input styles for consistency */
+input[type="text"], input[type="email"], input[type="password"], textarea, select {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border-primary);
+    color: var(--color-text-primary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--color-focus-ring);
+    box-shadow: 0 0 0 2px var(--color-focus-ring);
+}
+
+button {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+    border: none;
+    cursor: pointer;
+}
+
+button.primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+button.primary:hover {
+    background-color: var(--color-primary-dark);
+}
+button.secondary {
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border-primary);
+}
+button.secondary:hover {
+    background-color: var(--color-border-primary); /* Darken slightly */
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Basic responsive text scaling */
+html {
+  font-size: 100%; /* 16px */
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 93.75%; /* 15px */
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 87.5%; /* 14px */
+  }
+}
