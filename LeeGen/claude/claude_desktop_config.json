@@ -1,0 +1,71 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/home/tabs/LeeGen"],
+      "env": {}
+    },
+    "git": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-git"],
+      "env": {}
+    },
+    "postgresql": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://leegen:changeme@localhost:5432/leegen"],
+      "env": {}
+    },
+    "docker": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-docker"],
+      "env": {}
+    },
+    "web-search": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-tavily"],
+      "env": {
+        "TAVILY_API_KEY": ""
+      }
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "env": {}
+    },
+    "prompts": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-prompts", "/home/tabs/LeeGen/claude/prompts"],
+      "env": {}
+    },
+    "sequentialthinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequentialthinking"],
+      "env": {}
+    },
+    "taskmaster": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-taskmaster"],
+      "env": {}
+    },
+    "crawl4ai": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-crawl4ai"],
+      "env": {}
+    },
+    "desktop-commander": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-desktop-commander"],
+      "env": {}
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
+      "env": {}
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-context7"],
+      "env": {}
+    }
+  }
+}

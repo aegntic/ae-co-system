@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "quick-data": {
+      "command": "/home/tabs/.local/bin/uv",
+      "args": [
+        "--directory",
+        "/home/tabs/DAILYDOCO/quick-data-mcp/quick-data-mcp",
+        "run",
+        "python",
+        "main.py"
+      ],
+      "env": {
+        "LOG_LEVEL": "INFO"
+      }
+    }
+  }
+}

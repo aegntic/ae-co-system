@@ -360,3 +360,18 @@ generated/
 # Nested git repositories (we'll handle these separately)
 **/.git/
 !.git/
+# Large files
+*.tar.gz
+*.zip
+*.exe
+*.dmg
+.venv/
+node_modules/
+target/
+dist/
+build/
+*.log
+*.tmp
+*.cache
+.DS_Store
+
