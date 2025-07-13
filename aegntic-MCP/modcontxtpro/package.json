@@ -1,0 +1,78 @@
+{
+  "name": "@aegntic/modcontxtpro",
+  "version": "1.0.0",
+  "description": "The definitive framework for building production-ready MCP servers with authentication - ModContxtPro edition",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\" \"examples/**/*.ts\"",
+    "prepublishOnly": "npm run build && npm run test",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "claude",
+    "anthropic",
+    "mcp-server",
+    "framework",
+    "authentication",
+    "oauth",
+    "cloudflare-workers",
+    "modcontxtpro"
+  ],
+  "author": "Mattae Cooper <research@aegntic.ai>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aegntic/aegntic-MCP.git",
+    "directory": "modcontxtpro"
+  },
+  "bugs": {
+    "url": "https://github.com/aegntic/aegntic-MCP/issues"
+  },
+  "homepage": "https://github.com/aegntic/aegntic-MCP/tree/main/modcontxtpro#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0",
+    "ts-jest": "^29.0.0"
+  },
+  "peerDependencies": {
+    "@cloudflare/workers-types": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@cloudflare/workers-types": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

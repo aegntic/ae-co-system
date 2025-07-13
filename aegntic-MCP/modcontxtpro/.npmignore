@@ -1,0 +1,56 @@
+# Source files
+src/
+examples/
+tests/
+docs/
+
+# Configuration files
+tsconfig.json
+.eslintrc.js
+.prettierrc
+jest.config.js
+
+# Development files
+.env
+.env.*
+*.log
+.DS_Store
+
+# Git files
+.git/
+.gitignore
+
+# IDE files
+.vscode/
+.idea/
+
+# Build tools
+scripts/
+.github/
+
+# Documentation source
+*.md
+!README.md
+!LICENSE
+
+# Test files
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+
+# Development dependencies config
+.editorconfig
+.nvmrc
+
+# CI/CD
+.travis.yml
+.circleci/
+azure-pipelines.yml
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
