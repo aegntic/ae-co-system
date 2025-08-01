@@ -29,6 +29,7 @@ import { PersonalBrandManager } from './tools/personal-brand.js';
 import { AuthenticityEngine } from './tools/authenticity-engine.js';
 import { PerformanceMonitor } from './tools/performance-monitor.js';
 import { VideoCompiler } from './tools/video-compiler.js';
+import { RemotionCompiler } from './tools/remotion-compiler.js';
 import { ProjectFingerprinter } from './tools/project-fingerprinter.js';
 import { ModularAIEngine } from './tools/ai-models.js';
 
@@ -44,6 +45,7 @@ class DailyDocoMCPServer {
   private authenticityEngine: AuthenticityEngine;
   private performanceMonitor: PerformanceMonitor;
   private videoCompiler: VideoCompiler;
+  private remotionCompiler: RemotionCompiler;
   private projectFingerprinter: ProjectFingerprinter;
   private aiEngine: ModularAIEngine;
 
@@ -64,6 +66,7 @@ class DailyDocoMCPServer {
     this.authenticityEngine = new AuthenticityEngine();
     this.performanceMonitor = new PerformanceMonitor();
     this.videoCompiler = new VideoCompiler();
+    this.remotionCompiler = new RemotionCompiler();
     this.projectFingerprinter = new ProjectFingerprinter();
     this.aiEngine = new ModularAIEngine();
 
@@ -323,6 +326,39 @@ class DailyDocoMCPServer {
               required: ['compilation_id'],
             },
           },
+          {
+            name: 'generate_video_from_script',
+            description: 'Generate video from natural language script using Remotion and TTS',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                script: { type: 'string', description: 'Natural language script with visual cues' },
+                voiceId: { type: 'string', description: 'TTS voice ID or name' },
+                template: {
+                  type: 'string',
+                  enum: ['quick_demo', 'tutorial', 'deep_dive', 'bug_fix', 'presentation', 'custom'],
+                  default: 'tutorial',
+                },
+                resolution: {
+                  type: 'string',
+                  enum: ['720p', '1080p', '1440p', '4K'],
+                  default: '1080p',
+                },
+                fps: { type: 'number', default: 30 },
+                style: {
+                  type: 'object',
+                  properties: {
+                    primaryColor: { type: 'string' },
+                    secondaryColor: { type: 'string' },
+                    backgroundColor: { type: 'string' },
+                    fontFamily: { type: 'string' },
+                    theme: { type: 'string', enum: ['light', 'dark', 'custom'] },
+                  },
+                },
+              },
+              required: ['script'],
+            },
+          },
 
           // Performance Monitoring Tools
           {
@@ -427,6 +463,8 @@ class DailyDocoMCPServer {
             return await this.videoCompiler.compileVideo(args as any);
           case 'get_compilation_status':
             return await this.videoCompiler.getCompilationStatus(args as any);
+          case 'generate_video_from_script':
+            return await this.remotionCompiler.compileVideo(args as any);
 
           // Performance Monitoring
           case 'get_system_metrics':
