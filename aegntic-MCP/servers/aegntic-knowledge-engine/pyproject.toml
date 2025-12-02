@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "crawl4ai==0.6.2",
-    "mcp==1.7.1",
+    "mcp==1.23.0",
     "python-dotenv==1.0.1",
     "sentence-transformers==3.4.0",
     "httpx==0.28.1",
