@@ -5,8 +5,8 @@ description = "Zero-cost unified knowledge engine with web crawling, RAG, memory
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "crawl4ai==0.6.2",
-    "mcp==1.7.1",
+    "crawl4ai==0.8.0",
+    "mcp==1.23.0",
     "python-dotenv==1.0.1",
     "sentence-transformers==3.4.0",
     "httpx==0.28.1",
