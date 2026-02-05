@@ -35,7 +35,7 @@ notify = "6.1"
 ignore = "0.4"
 tokio-stream = "0.1"
 # Project detection dependencies for Phase 2B.2
-git2 = "0.18"
+git2 = "0.20"
 toml = "0.8"
 serde_yaml = "0.9"
 async-trait = "0.1"
