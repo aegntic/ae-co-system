@@ -38,7 +38,7 @@
     "rate-limiter-flexible": "^3.0.8",
     "ioredis": "^5.3.2",
     "pg": "^8.11.3",
-    "nodemailer": "^6.9.8",
+    "nodemailer": "^8.0.1",
     "slack-webhook": "^2.0.3",
     "axios": "^1.6.5",
     "cheerio": "^1.0.0-rc.12",
