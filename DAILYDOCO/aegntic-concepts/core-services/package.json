@@ -10,7 +10,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "fastify": "^4.24.0",
+    "fastify": "^5.7.4",
     "cors": "^2.8.5",
     "helmet": "^7.1.0"
   },
