@@ -43,7 +43,7 @@
     "url": "https://github.com/aegntic/porkbun-mcp/issues"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^0.5.0",
+    "@modelcontextprotocol/sdk": "^1.27.1",
     "node-fetch": "^3.3.2"
   },
   "engines": {
