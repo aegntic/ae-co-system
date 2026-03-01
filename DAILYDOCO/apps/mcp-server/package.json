@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@dailydoco/shared-types": "^1.0.0",
-    "@modelcontextprotocol/sdk": "^0.4.0",
+    "@modelcontextprotocol/sdk": "^1.27.1",
     "@remotion/bundler": "^4.0.0",
     "@remotion/renderer": "^4.0.0",
     "@remotion/media-utils": "^4.0.0",
