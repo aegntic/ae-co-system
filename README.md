@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/cover-16x9.jpg" alt="ae-co-system — Unified AI & Automation Ecosystem" width="100%" />
+</p>
+
 # 🚀 ae-co-system: The AEGNTIC Ecosystem
 
 > **Elite-tier AI & automation ecosystem featuring DailyDoco Pro, aegnt-27, AegntiX, and comprehensive MCP integration**
