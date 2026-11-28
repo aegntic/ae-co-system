@@ -23,6 +23,32 @@ The **ae-co-system** is a comprehensive collection of cutting-edge AI and automa
 - **[Aegntic MCP](#aegntic-mcp)** - Dynamic MCP server ecosystem for Claude integration
 - **[ComfyUI Integration](#comfyui)** - AI-powered image/video generation and editing
 
+## What is original here
+
+| Component | Origin | Where | Tests |
+|-----------|--------|-------|-------|
+| DailyDoco Pro | Original | [`DAILYDOCO/`](DAILYDOCO/) | [`DAILYDOCO/apps/desktop/tests/`](DAILYDOCO/apps/desktop/tests/) |
+| aegnt-27 | Original | [`aegnt27/`](aegnt27/) | — |
+| 4site.pro | Original | [`4site/`](4site/) | — |
+| AegntiX | Original | [`DAILYDOCO/R&D/aegntix-ui/`](DAILYDOCO/R&D/aegntix-ui/) | [`aegntix-mvp/tests/`](DAILYDOCO/R&D/aegntix-ui/aegntix-mvp/tests/) |
+| Aegntic MCP | Original | [`aegntic-MCP/`](aegntic-MCP/) | [`aegntic-MCP/tests/`](aegntic-MCP/tests/) |
+| modcontxtpro | Original | [`aegntic-MCP/modcontxtpro/`](aegntic-MCP/modcontxtpro/) | [`tests/unit/`](aegntic-MCP/modcontxtpro/tests/unit/) |
+| CLAEM (claem-mcp-server) | Original | [`CLAEM/claem-mcp-server/`](CLAEM/claem-mcp-server/) | [`tests/`](CLAEM/claem-mcp-server/tests/) |
+| ai-collaboration-hub | Original | [`CLAEM/core-collaboration-system/ai-collaboration-hub/`](CLAEM/core-collaboration-system/ai-collaboration-hub/) | [`tests/`](CLAEM/core-collaboration-system/ai-collaboration-hub/tests/) |
+| multi-cld-code (CCTM) | Original | [`multi-cld-code/`](multi-cld-code/) | — |
+| quick-data MCP | Original | [`mcp-servers/quick-data/`](mcp-servers/quick-data/) | [`tests/`](mcp-servers/quick-data/tests/) |
+| prompt-fail | Original | [`prompt-fail/`](prompt-fail/) | [`ultraplan-platform/webapp/src/tests/`](prompt-fail/ultraplan-platform/webapp/src/tests/) |
+| zkFlow.pro | Original | [`zkFlow.pro/`](zkFlow.pro/) | — |
+| ComfyUI | Third-party (GPL-3.0, vendored upstream) | [`ComfyUI/`](ComfyUI/) | [`ComfyUI/tests/`](ComfyUI/tests/) |
+| pickd MCP | Third-party (by IndyDevDan, per its README/pyproject) | [`mcp-servers/pickd/`](mcp-servers/pickd/) | [`src/mcp_server_pickd/tests/`](mcp-servers/pickd/src/mcp_server_pickd/tests/) |
+| aegntic-knowledge-engine | Third-party (MIT © 2025 Cole Medin, per LICENSE) | [`mcp-servers/aegntic-knowledge-engine/`](mcp-servers/aegntic-knowledge-engine/) | — |
+| crawl4ai-mcp-server | Third-party (wrapper around Crawl4AI, per its README/header) | [`mcp-servers/crawl4ai-mcp-server.py`](mcp-servers/crawl4ai-mcp-server.py) | [`test_crawl4ai.py`](mcp-servers/test_crawl4ai.py) |
+| just-prompt | Third-party (vendored upstream; no licence file in-tree) | [`CLAEM/just-prompt-orchestration/just-prompt/`](CLAEM/just-prompt-orchestration/just-prompt/) | [`src/just_prompt/tests/`](CLAEM/just-prompt-orchestration/just-prompt/src/just_prompt/tests/) |
+| STEGOSAURUS-WRECKS | Third-party (AGPL-3.0, vendored upstream) | [`STEGOSAURUS-WRECKS/`](STEGOSAURUS-WRECKS/) | — |
+| youtube2prompt | Unclear (MIT; placeholder remotes, no upstream notice in-tree) | [`youtube2prompt/`](youtube2prompt/) | [`tests/`](youtube2prompt/tests/) |
+
+Third-party components are vendored under their own licences (see each component's `LICENSE`/README). "Original" means authored in this ecosystem by its owners (aegntic / Mattae Cooper) with no upstream notice in-tree.
+
 ## 🏗️ Architecture
 
 ### Technology Stack
